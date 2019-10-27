@@ -25,7 +25,7 @@ class SubscriptionCrudController extends CrudController
         */
         $this->crud->setModel('App\Models\Subscription');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/subscription');
-        $this->crud->setEntityNameStrings('subscription', 'subscriptions');
+        $this->crud->setEntityNameStrings(trans_choice('admin.subscription', 1), trans_choice('admin.subscription', 2));
 
         /*
         |--------------------------------------------------------------------------
