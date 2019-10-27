@@ -5,3 +5,4 @@
 
 <li><a href='{{ backpack_url('programtype') }}'><i class='fa fa-tasks'></i> <span>Типы программ</span></a></li>
 <li><a href='{{ backpack_url('foodprogram') }}'><i class='fa fa-cutlery'></i> <span>Программа питания</span></a></li>
+<li><a href='{{ backpack_url('relaxprogram') }}'><i class='fa fa-bell'></i> <span>Программы отдыха</span></a></li>
