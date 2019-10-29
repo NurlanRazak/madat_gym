@@ -115,7 +115,7 @@ class ProgramtrainingCrudController extends CrudController
                 'disk' => 'uploads',
                 'upload' => true,
                 'crop' => true,
-                'aspect_ration' => 0,
+                'aspect_ratio' => 0,
             ],
             [
                 'name' => 'duration',

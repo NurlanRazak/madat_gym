@@ -8,6 +8,7 @@
         <li><a href='{{ backpack_url('programtraining') }}'><i class='fa fa-thumb-tack'></i> <span>Программы (тренировки)</span></a></li>
         <li><a href='{{ backpack_url('programtype') }}'><i class='fa fa-tasks'></i> <span>Типы программ</span></a></li>
         <li><a href='{{ backpack_url('activeprogram') }}'><i class='fa fa-toggle-on'></i> <span>Активные программы</span></a></li>
+        <li><a href='{{ backpack_url('exercise') }}'><i class='fa fa-sign-language'></i> <span>Упражнения</span></a></li>
     </ul>
 </li>
 <li class="treeview">
