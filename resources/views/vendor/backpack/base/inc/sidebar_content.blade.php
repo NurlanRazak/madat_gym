@@ -15,6 +15,7 @@
   <ul class="treeview-menu">
     <li><a href='{{ backpack_url('foodprogram') }}'><i class='fa fa-cutlery'></i> <span>Программы питания</span></a></li>
     <li><a href='{{ backpack_url('meal') }}'><i class='fa fa-leaf'></i><span>Блюда</span></a></li>
+    <li><a href='{{ backpack_url('eathour') }}'><i class='fa fa-hourglass-half'></i> <span>Часы приема</span></a></li>
   </ul>
 </li>
 <li class="treeview">
