@@ -5,16 +5,16 @@ namespace App\Http\Controllers\Admin;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 
 // VALIDATION: change the requests to match your own file names if you need form validation
-use App\Http\Requests\ExerciseRequest as StoreRequest;
-use App\Http\Requests\ExerciseRequest as UpdateRequest;
+use App\Http\Requests\MealRequest as StoreRequest;
+use App\Http\Requests\MealRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
 
 /**
- * Class ExerciseCrudController
+ * Class MealCrudController
  * @package App\Http\Controllers\Admin
  * @property-read CrudPanel $crud
  */
-class ExerciseCrudController extends CrudController
+class MealCrudController extends CrudController
 {
     public function setup()
     {
@@ -23,9 +23,9 @@ class ExerciseCrudController extends CrudController
         | CrudPanel Basic Information
         |--------------------------------------------------------------------------
         */
-        $this->crud->setModel('App\Models\Exercise');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/exercise');
-        $this->crud->setEntityNameStrings(trans_choice('admin.exercise', 1), trans_choice('admin.exercise', 2));
+        $this->crud->setModel('App\Models\Meal');
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/meal');
+        $this->crud->setEntityNameStrings(trans_choice('admin.meal',1), trans_choice('admin.meal', 2));
 
         /*
         |--------------------------------------------------------------------------
@@ -42,29 +42,23 @@ class ExerciseCrudController extends CrudController
             ],
             [
                 'name' => 'name',
-                'label' => 'Название упражнения'
+                'label' => 'Название',
             ],
             [
-                'name' => 'short_desc',
-                'label' => 'Короткое описание',
-                'type' => 'text',
+                'name' => 'description',
+                'label' => 'Описание',
             ],
             [
-                'name' => 'long_desc',
-                'label' => 'Длинное описание',
-                'type' => 'text',
+                'name' => 'calorie',
+                'label' => 'Калорийность',
             ],
             [
-                'name' => 'image',
-                'label' => 'Изображение',
-                'type' => 'image',
-                'prefix' => 'uploads/',
-                'height' => '150px',
-                'width' => '150px',
+                'name' => 'weight',
+                'label' => 'Вес',
             ],
             [
-                'name' => 'video',
-                'label' => 'Видео',
+                'name' => 'price',
+                'label' => 'Цена',
             ],
             [
                 'name' => 'active',
@@ -76,33 +70,33 @@ class ExerciseCrudController extends CrudController
         $this->crud->addFields([
             [
                 'name' => 'name',
-                'label' => 'Название упражнения'
+                'label' => 'Название',
             ],
             [
-                'name' => 'short_desc',
-                'label' => 'Короткое описание',
-                'type' => 'textarea',
-            ],
-            [
-                'name' => 'long_desc',
-                'label' => 'Длинное описание',
+                'name' => 'description',
+                'label' => 'Описание',
                 'type' => 'ckeditor',
             ],
             [
-                'name' => 'image',
-                'label' => 'Изображение',
-                'type' => 'image',
-                'upload' => true,
-                'crop' => true,
-                'aspect_ratio' => 0,
-                'disk' => 'uploads',
+                'name' => 'calorie',
+                'label' => 'Калорийность',
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-md-4',
+                ],
             ],
             [
-                'name' => 'video',
-                'label' => 'Видео',
-                'type' => 'upload',
-                'upload' => true,
-                'disk' => 'uploads',
+                'name' => 'weight',
+                'label' => 'Вес',
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-md-4',
+                ],
+            ],
+            [
+                'name' => 'price',
+                'label' => 'Цена',
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-md-4',
+                ],
             ],
             [
                 'name' => 'active',
@@ -111,8 +105,7 @@ class ExerciseCrudController extends CrudController
             ],
         ]);
 
-
-        // add asterisk for fields that are required in ExerciseRequest
+        // add asterisk for fields that are required in MealRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
     }

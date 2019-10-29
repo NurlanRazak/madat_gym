@@ -18,4 +18,5 @@ Route::group([
     CRUD::resource('programtraining', 'ProgramtrainingCrudController');
     CRUD::resource('activeprogram', 'ActiveprogramCrudController');
     CRUD::resource('exercise', 'ExerciseCrudController');
+    CRUD::resource('meal', 'MealCrudController');
 }); // this should be the absolute last line of this file

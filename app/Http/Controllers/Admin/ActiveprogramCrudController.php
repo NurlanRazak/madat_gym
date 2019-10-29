@@ -35,6 +35,12 @@ class ActiveprogramCrudController extends CrudController
 
         $this->crud->addColumns([
             [
+                'name' => 'row_number',
+                'type' => 'row_number',
+                'label' => '#',
+                'orderable' => false,
+            ],
+            [
                 'name' => 'program_id',
                 'label' => 'Программа',
                 'type' => 'select',

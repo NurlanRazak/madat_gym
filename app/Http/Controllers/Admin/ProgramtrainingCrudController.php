@@ -35,6 +35,12 @@ class ProgramtrainingCrudController extends CrudController
 
         $this->crud->addColumns([
             [
+                'name' => 'row_number',
+                'type' => 'row_number',
+                'label' => '#',
+                'orderable' => false,
+            ],
+            [
                 'name' => 'name',
                 'label' => 'Название',
             ],
