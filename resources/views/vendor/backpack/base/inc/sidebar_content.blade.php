@@ -27,9 +27,11 @@
   <ul class="treeview-menu">
       <li><a href='{{ backpack_url('relaxprogram') }}'><i class='fa fa-bell'></i> <span>Программы отдыха</span></a></li>
       <li><a href='{{ backpack_url('relaxexercise') }}'><i class='fa fa-recycle'></i> <span>Упражнения</span></a></li>
+      <li><a href='{{ backpack_url('relaxtraining') }}'><i class='fa fa-bicycle'></i> <span>Тренировки (программы-упражнения)</span></a></li>
   </ul>
 </li>
 
 <li><a href="{{ backpack_url('elfinder') }}"><i class="fa fa-files-o"></i> <span>{{ trans('backpack::crud.file_manager') }}</span></a></li>
+
 
 
