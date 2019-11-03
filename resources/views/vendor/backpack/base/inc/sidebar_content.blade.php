@@ -9,7 +9,8 @@
         <li><a href='{{ backpack_url('activeprogram') }}'><i class='fa fa-toggle-on'></i> <span>Активные программы</span></a></li>
         <li><a href='{{ backpack_url('exercise') }}'><i class='fa fa-sign-language'></i> <span>Упражнения</span></a></li>
         <li><a href='{{ backpack_url('training') }}'><i class='fa fa-bicycle'></i> <span>Тренировки (программы-упражнения)</span></a></li>
-        <li><a href='{{ backpack_url('equipment') }}'><i class='fa fa-gavel'></i> <span>Оборудование</span></a></li>
+        <li><a href='{{ backpack_url('equipment') }}'><i class='fa fa-gavel'></i> <span>Оборудования</span></a></li>
+        <li><a href='{{ backpack_url('grocery') }}'><i class='fa fa-shopping-basket'></i> <span>Продукты для тренировок</span></a></li>
     </ul>
 </li>
 <li class="treeview">
@@ -29,3 +30,4 @@
 </li>
 
 <li><a href="{{ backpack_url('elfinder') }}"><i class="fa fa-files-o"></i> <span>{{ trans('backpack::crud.file_manager') }}</span></a></li>
+
