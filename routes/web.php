@@ -139,6 +139,6 @@ Route::view('others/faq', 'others.faq')->name('faq');
 Route::view('others/pricing-table', 'others.pricing-table')->name('pricing-table');
 Route::view('others/search-result', 'others.search-result')->name('search-result');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
