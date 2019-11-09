@@ -42,7 +42,7 @@ class Equipment extends Model
     */
     public function trainings()
     {
-        return $this->belongsTo('App\Models\Training', 'training_id');
+        return $this->belongsToMany('App\Models\Training', 'equipment_training', 'equipment_id', 'training_id');
     }
     /*
     |--------------------------------------------------------------------------

@@ -32,7 +32,7 @@ class EquipmentCrudController extends CrudController
         | CrudPanel Configuration
         |--------------------------------------------------------------------------
         */
-        
+
         $this->crud->addColumns([
             [
                 'name' => 'name',
@@ -52,15 +52,15 @@ class EquipmentCrudController extends CrudController
             // ],
             [
                 'name' => 'notify_day',
-                'label' => 'День оповещения', 
+                'label' => 'День оповещения',
             ],
             [
-                'name' => 'training_id',
+                'name' => 'trainings',
                 'label' => 'Тренировки',
-                'type' => 'select',
+                'type' => 'select_multiple',
                 'entity' => 'trainings',
                 'attribute' => 'name',
-                'model' => 'App\Models\Trainings', 
+                'model' => 'App\Models\Trainings',
             ],
             [
                 'name' => 'active',
@@ -89,22 +89,23 @@ class EquipmentCrudController extends CrudController
             // ],
             [
                 'name' => 'notify_day',
-                'label' => 'День оповещения', 
+                'label' => 'День оповещения',
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-6'
                 ],
             ],
             [
-                'name' => 'training_id',
+                'name' => 'trainings',
                 'label' => 'Тренировки',
-                'type' => 'select2',
+                'type' => 'select2_multiple',
                 'entity' => 'trainings',
                 'attribute' => 'name',
                 'model' => 'App\Models\Training',
+                'pivot' => true,
                 'default' => 1,
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-6'
-                ], 
+                ],
             ],
             [
                 'name' => 'active',
