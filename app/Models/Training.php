@@ -39,9 +39,9 @@ class Training extends Model
         return $this->belongsToMany('App\Models\Exercise', 'training_exercise', 'training_id', 'exercise_id');
     }
 
-    public function programtraining()
+    public function programtrainings()
     {
-        return $this->belongsTo('App\Models\Programtraining', 'programtraining_id');
+        return $this->belongsToMany('App\Models\Programtraining', 'training_programtraining', 'training_id', 'programtraining_id');
     }
 
     public function user()
