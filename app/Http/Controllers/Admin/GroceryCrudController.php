@@ -32,28 +32,28 @@ class GroceryCrudController extends CrudController
         | CrudPanel Configuration
         |--------------------------------------------------------------------------
         */
-        
+
         $this->crud->addColumns([
             [
                 'name' => 'notify_day',
-                'label' => 'День оповещения', 
+                'label' => 'День оповещения',
             ],
             [
                 'name' => 'description',
                 'label' => 'Комментарии',
             ],
             [
-                'name' => 'training_id',
+                'name' => 'trainings',
                 'label' => 'Тренировки',
-                'type' => 'select',
+                'type' => 'select_multiple',
                 'entity' => 'trainings',
                 'attribute' => 'name',
                 'model' => 'App\Models\Training',
             ],
             [
-                'name' => 'meal_id',
+                'name' => 'meals',
                 'label' => 'Блюдо',
-                'type' => 'select',
+                'type' => 'select_multiple',
                 'entity' => 'meals',
                 'attribute' => 'name',
                 'model' => 'App\Models\Meal',
@@ -68,27 +68,29 @@ class GroceryCrudController extends CrudController
         $this->crud->addFields([
             [
                 'name' => 'notify_day',
-                'label' => 'День оповещения', 
+                'label' => 'День оповещения',
             ],
             [
                 'name' => 'description',
                 'label' => 'Комментарии',
             ],
             [
-                'name' => 'training_id',
+                'name' => 'trainings',
                 'label' => 'Тренировки',
-                'type' => 'select2',
+                'type' => 'select2_multiple',
                 'entity' => 'trainings',
                 'attribute' => 'name',
                 'model' => 'App\Models\Training',
+                'pivot' => true,
             ],
             [
-                'name' => 'meal_id',
+                'name' => 'meals',
                 'label' => 'Блюдо',
-                'type' => 'select2',
+                'type' => 'select2_multiple',
                 'entity' => 'meals',
                 'attribute' => 'name',
                 'model' => 'App\Models\Meal',
+                'pivot' => true,
             ],
             [
                 'name' => 'active',

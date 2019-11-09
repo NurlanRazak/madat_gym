@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGroceriesTable extends Migration
+class CreateGroceryTrainingPivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,11 @@ class CreateGroceriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('groceries', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('notify_day');
-            $table->text('description');
+        Schema::create('grocery_training', function (Blueprint $table) {
+            $table->unsignedBigInteger('grocery_id')->nullable();
+            $table->foreign('grocery_id')->references('id')->on('groceries')->onDelete('cascade');
             $table->unsignedBigInteger('training_id')->nullable();
             $table->foreign('training_id')->references('id')->on('trainings')->onDelete('cascade');
-            $table->unsignedBigInteger('meal_id')->nullable();
-            $table->foreign('meal_id')->references('id')->on('meals')->onDelete('cascade');
-
-            $table->boolean('active')->default(false);
-            $table->timestamps();
         });
     }
 
@@ -34,6 +28,6 @@ class CreateGroceriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groceries');
+        Schema::dropIfExists('grocery_training_pivot');
     }
 }

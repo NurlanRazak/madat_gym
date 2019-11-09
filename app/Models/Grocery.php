@@ -36,12 +36,12 @@ class Grocery extends Model
     */
     public function trainings()
     {
-        return $this->belongsTo('App\Models\Training', 'training_id');
+        return $this->belongsToMany('App\Models\Training', 'grocery_training', 'grocery_id', 'training_id');
     }
 
     public function meals()
     {
-        return $this->belongsTo('App\Models\Meal', 'meal_id');
+        return $this->belongsToMany('App\Models\Meal', 'grocery_meal', 'grocery_id', 'meal_id');
     }
     /*
     |--------------------------------------------------------------------------
