@@ -33,9 +33,9 @@
 <li class="treeview">
     <a href="#"><i class="fa fa-group"></i> <span>Люди</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
-        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('user') }}"><i class="nav-icon fa fa-user"></i> <span>Пользователи</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('consumer') }}"><i class="nav-icon fa fa-user"></i> <span>Пользователи</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('user') }}"><i class="nav-icon fa fa-user"></i> <span>Сотрудники</span></a></li>
         <li class="nav-item"><a class="nav-link" href="{{ backpack_url('role') }}"><i class="nav-icon fa fa-group"></i> <span>Роли</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('permission') }}"><i class="nav-icon fa fa-key"></i> <span>Права Доступа</span></a></li>
     </ul>
 </li>
 <li><a href="{{ backpack_url('elfinder') }}"><i class="fa fa-files-o"></i> <span>{{ trans('backpack::crud.file_manager') }}</span></a></li>
