@@ -16,8 +16,8 @@ class CreateActiveprogramsTable extends Migration
         Schema::create('activeprograms', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->timestamp('date_start');
-            $table->timestamp('date_finish');
+            $table->timestamp('date_start')->nullable();
+            $table->timestamp('date_finish')->nullable();
 
             $table->unsignedBigInteger('program_id');
             $table->foreign('program_id')->references('id')->on('programtrainings')->onDelete('cascade');
