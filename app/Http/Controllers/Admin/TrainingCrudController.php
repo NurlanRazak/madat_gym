@@ -39,10 +39,10 @@ class TrainingCrudController extends CrudController
                 'label' => 'Название',
             ],
             [
-                'name' => 'exercise_id',
-                'label' => 'Упражнение',
-                'type' => 'select',
-                'entity' => 'exercise',
+                'name' => 'exercises',
+                'label' => 'Упражнения',
+                'type' => 'select_multiple',
+                'entity' => 'exercises',
                 'attribute' => 'name',
                 'model' => 'App\Models\Exercise',
             ],
@@ -52,7 +52,7 @@ class TrainingCrudController extends CrudController
                 'type' => 'select',
                 'entity' => 'programtraining',
                 'attribute' => 'name',
-                'model' => 'App\Models\Programtraining', 
+                'model' => 'App\Models\Programtraining',
             ],
             [
                 'name' => 'user_id',
@@ -72,7 +72,7 @@ class TrainingCrudController extends CrudController
             ],
             [
                 'name' => 'repetitions_number',
-                'label' => 'Количество повторений', 
+                'label' => 'Количество повторений',
             ],
             [
                 'name' => 'weight',
@@ -91,12 +91,13 @@ class TrainingCrudController extends CrudController
                 'label' => 'Название',
             ],
             [
-                'name' => 'exercise_id',
+                'name' => 'exercises',
                 'label' => 'Упражнение',
-                'type' => 'select2',
-                'entity' => 'exercise',
+                'type' => 'select2_multiple',
+                'entity' => 'exercises',
                 'attribute' => 'name',
                 'model' => 'App\Models\Exercise',
+                'pivot' => true,
             ],
             [
                 'name' => 'programtraining_id',
@@ -104,7 +105,7 @@ class TrainingCrudController extends CrudController
                 'type' => 'select2',
                 'entity' => 'programtraining',
                 'attribute' => 'name',
-                'model' => 'App\Models\Programtraining', 
+                'model' => 'App\Models\Programtraining',
             ],
             [
                 'name' => 'user_id',
@@ -130,7 +131,7 @@ class TrainingCrudController extends CrudController
             ],
             [
                 'name' => 'repetitions_number',
-                'label' => 'Количество повторений', 
+                'label' => 'Количество повторений',
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4'
                 ],
