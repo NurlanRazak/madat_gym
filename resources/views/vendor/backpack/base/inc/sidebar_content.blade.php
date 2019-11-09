@@ -30,13 +30,12 @@
       <li><a href='{{ backpack_url('relaxtraining') }}'><i class='fa fa-bicycle'></i> <span>Тренировки (программы-упражнения)</span></a></li>
   </ul>
 </li>
-<!-- Users, Roles, Permissions -->
-<li class="nav-item nav-dropdown">
-	<a class="nav-link nav-dropdown-toggle" href="#"><i class="nav-icon fa fa-group"></i> Authentication</a>
-	<ul class="nav-dropdown-items">
-	  <li class="nav-item"><a class="nav-link" href="{{ backpack_url('user') }}"><i class="nav-icon fa fa-user"></i> <span>Users</span></a></li>
-	  <li class="nav-item"><a class="nav-link" href="{{ backpack_url('role') }}"><i class="nav-icon fa fa-group"></i> <span>Roles</span></a></li>
-	  <li class="nav-item"><a class="nav-link" href="{{ backpack_url('permission') }}"><i class="nav-icon fa fa-key"></i> <span>Permissions</span></a></li>
-	</ul>
+<li class="treeview">
+    <a href="#"><i class="fa fa-group"></i> <span>Люди</span> <i class="fa fa-angle-left pull-right"></i></a>
+    <ul class="treeview-menu">
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('user') }}"><i class="nav-icon fa fa-user"></i> <span>Пользователи</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('role') }}"><i class="nav-icon fa fa-group"></i> <span>Роли</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ backpack_url('permission') }}"><i class="nav-icon fa fa-key"></i> <span>Права Доступа</span></a></li>
+    </ul>
 </li>
 <li><a href="{{ backpack_url('elfinder') }}"><i class="fa fa-files-o"></i> <span>{{ trans('backpack::crud.file_manager') }}</span></a></li>
