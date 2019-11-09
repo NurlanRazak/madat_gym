@@ -17,9 +17,9 @@ class CreatePlaneatsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('foodprogram_id');
             $table->foreign('foodprogram_id')->references('id')->on('foodprograms')->onDelete('cascade');
-            $table->unsignedBigInteger('meal_id');
+            $table->unsignedBigInteger('meal_id')->nullable();
             $table->foreign('meal_id')->references('id')->on('meals')->onDelete('cascade');
-            $table->unsignedBigInteger('eathour_id');
+            $table->unsignedBigInteger('eathour_id')->nullable();
             $table->foreign('eathour_id')->references('id')->on('eathours')->onDelete('cascade');
             $table->integer('days');
 

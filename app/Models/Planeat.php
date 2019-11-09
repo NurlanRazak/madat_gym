@@ -39,14 +39,14 @@ class Planeat extends Model
         return $this->belongsTo('App\Models\Foodprogram', 'foodprogram_id');
     }
 
-    public function meal()
+    public function meals()
     {
-        return $this->belongsTo('App\Models\Meal', 'meal_id');
+        return $this->belongsToMany('App\Models\Meal', 'planeat_meal', 'planeat_id', 'meal_id');
     }
 
-    public function eathour()
+    public function eathours()
     {
-        return $this->belongsTo('App\Models\Eathour', 'eathour_id');
+        return $this->belongsToMany('App\Models\Eathour', 'planeat_eathour', 'planeat_id', 'eathour_id');
     }
     /*
     |--------------------------------------------------------------------------
