@@ -7,7 +7,7 @@
                 </ul>
             </div>
             <div class="separator-breadcrumb border-top"></div>
-            
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -31,7 +31,7 @@
                         <div class="col-lg-2 col-12">
                             <a class="btn btn-block btn-warning" href="">продукты и оборудование</a>
                         </div>
-                            
+
                         </div>
                       </div>
                     </div>
@@ -159,7 +159,7 @@
 
             </div>
 
-            
+
 
 
 
