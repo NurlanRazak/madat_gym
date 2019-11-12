@@ -7,7 +7,7 @@
 @section('main-content')
 
 <div class="breadcrumb">
-    <h1>Оплата</h1>
+    <h1>Оплата счета</h1>
 </div>
 <div class="separator-breadcrumb border-top"></div>
 
@@ -102,9 +102,10 @@
                 <a href="#">Договор оферты</a>
           </div>
           <div class="card-footer">
-            <div class="row text-right">
+            <div class="row">
               <div class="col-lg-12 ">
-                <button type="button" class="btn btn-success m-1">
+                <img src="{{asset('assets/images/cp.jpg')}}" alt="">
+                <button type="button" class="btn btn-success m-1 float-right">
                   Оплатить
                 </button>
               </div>

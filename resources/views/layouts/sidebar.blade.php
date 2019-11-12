@@ -1,17 +1,11 @@
 <div class="side-content-wrap">
     <div class="sidebar-left open rtl-ps-none" data-perfect-scrollbar data-suppress-scroll-x="true">
         <ul class="navigation-left">
+            <!--
             <li class="nav-item {{ request()->is('dashboard/*') ? 'active' : '' }}" data-item="dashboard">
                 <a class="nav-item-hold" href="#">
                     <i class="nav-icon i-Bar-Chart"></i>
                     <span class="nav-text">Dashboard</span>
-                </a>
-                <div class="triangle"></div>
-            </li>
-            <li class="nav-item {{ request()->is('uikits/*') ? 'active' : '' }}" data-item="uikits">
-                <a class="nav-item-hold" href="#">
-                    <i class="nav-icon i-Library"></i>
-                    <span class="nav-text">UI kits</span>
                 </a>
                 <div class="triangle"></div>
             </li>
@@ -22,6 +16,14 @@
                 </a>
                 <div class="triangle"></div>
             </li>
+            -->
+            <li class="nav-item {{ request()->is('uikits/*') ? 'active' : '' }}" data-item="uikits">
+                <a class="nav-item-hold" href="#">
+                    <i class="nav-icon i-Library"></i>
+                    <span class="nav-text">UI kits</span>
+                </a>
+                <div class="triangle"></div>
+            </li>
             <li class="nav-item {{ request()->is('apps/*') ? 'active' : '' }}" data-item="apps">
                 <a class="nav-item-hold" href="#">
                     <i class="nav-icon i-Computer-Secure"></i>
@@ -29,6 +31,7 @@
                 </a>
                 <div class="triangle"></div>
             </li>
+            <!--
             <li class="nav-item {{ request()->is('forms/*') ? 'active' : '' }}" data-item="forms">
                 <a class="nav-item-hold" href="#">
                     <i class="nav-icon i-File-Clipboard-File--Text"></i>
@@ -52,7 +55,6 @@
                 </a>
                 <div class="triangle"></div>
             </li>
-
             <li class="nav-item {{ request()->is('datatables/*') ? 'active' : '' }}">
                 <a class="nav-item-hold" href="{{route('basic-tables')}}">
                     <i class="nav-icon i-File-Horizontal-Text"></i>
@@ -60,6 +62,7 @@
                 </a>
                 <div class="triangle"></div>
             </li>
+            -->
             <li class="nav-item {{ request()->is('sessions/*') ? 'active' : '' }}" data-item="sessions">
                 <a class="nav-item-hold" href="/test.html">
                     <i class="nav-icon i-Administrator"></i>
@@ -74,6 +77,7 @@
                 </a>
                 <div class="triangle"></div>
             </li>
+            <!--
             <li class="nav-item">
                 <a class="nav-item-hold" href="http://demos.ui-lib.com/gull-html-doc/" target="_blank">
                     <i class="nav-icon i-Safe-Box1"></i>
@@ -81,6 +85,7 @@
                 </a>
                 <div class="triangle"></div>
             </li>
+            -->
         </ul>
     </div>
 
@@ -88,8 +93,8 @@
         <!-- Submenu Dashboards -->
         <ul class="childNav" data-parent="dashboard">
             <li class="nav-item ">
-                <a class="{{ Route::currentRouteName()=='dashboard_version_1' ? 'open' : '' }}"
-                    href="{{route('dashboard_version_1')}}">
+                <a class="{{ Route::currentRouteName()=='main' ? 'open' : '' }}"
+                    href="{{route('main')}}">
                     <i class="nav-icon i-Clock-3"></i>
                     <span class="item-name">Version 1</span>
                 </a>
@@ -285,18 +290,21 @@
         </ul>
 
         <ul class="childNav" data-parent="apps">
+            <!-- 
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='invoice' ? 'open' : '' }}" href="{{route('invoice')}}">
                     <i class="nav-icon i-Add-File"></i>
                     <span class="item-name">Invoice</span>
                 </a>
             </li>
+            -->
             <li class="nav-item">
-                <a class="{{ Route::currentRouteName()=='inbox' ? 'open' : '' }}" href="{{route('inbox')}}">
+                <a class="{{ Route::currentRouteName()=='mail' ? 'open' : '' }}" href="{{route('mail')}}">
                     <i class="nav-icon i-Email"></i>
-                    <span class="item-name">Inbox</span>
+                    <span class="item-name">Mail</span>
                 </a>
             </li>
+            <!--
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='chat' ? 'open' : '' }}" href="{{route('chat')}}">
                     <i class="nav-icon i-Speach-Bubble-3"></i>
@@ -339,16 +347,16 @@
                     </li>
                     <li></li>
                 </ul>
-            </li>
-
-            <li class="nav-item dropdown-sidemenu">
-                <a>
+            </li
+             -->
+            <li class="nav-item">
+                <a class="{{ Route::currentRouteName()=='buy' ? 'open' : '' }}"
+                            href="{{route('buy')}}">
                     <i class="nav-icon i-Cash-Register"></i>
-                    <span class="item-name">Ecommerce <span
-                            class=" ml-2 badge badge-pill badge-danger">New</span></span>
-                    <i class="dd-arrow i-Arrow-Down"></i>
-                </a>
+                    <span class="item-name">Оплата</span>
+                </a><!--
                 <ul class="submenu">
+                    
                     <li>
                         <a class="{{ Route::currentRouteName()=='ecommerce-products' ? 'open' : '' }}"
                             href="{{route('ecommerce-products')}}">
@@ -372,17 +380,17 @@
                             <span class="item-name">Cart</span>
                         </a>
                     </li>
-
                     <li>
-                        <a class="{{ Route::currentRouteName()=='ecommerce-checkout' ? 'open' : '' }}"
-                            href="{{route('ecommerce-checkout')}}">
+                        <a class="{{ Route::currentRouteName()=='buy' ? 'open' : '' }}"
+                            href="{{route('buy')}}">
                             <i class="nav-icon i-Cash-register-2"></i>
-                            <span class="item-name">Checkout</span>
+                            <span class="item-name">buy</span>
                         </a>
                     </li>
                 </ul>
+                    -->
             </li>
-
+            <!--
             <li class="nav-item dropdown-sidemenu">
                 <a>
                     <i class="nav-icon i-Business-ManWoman"></i>
@@ -416,7 +424,7 @@
 
                 </ul>
             </li>
-
+            -->
 
         </ul>
         <ul class="childNav" data-parent="extrakits">
@@ -472,6 +480,7 @@
             </li>
         </ul>
         <ul class="childNav" data-parent="uikits">
+            <!--
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='alerts' ? 'open' : '' }}" href="{{route('alerts')}}">
                     <i class="nav-icon i-Bell1"></i>
@@ -552,13 +561,14 @@
                     <i class="nav-icon i-Loading"></i>
                     <span class="item-name">Progressbar</span>
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item">
-                <a class="{{ Route::currentRouteName()=='tables' ? 'open' : '' }}" href="{{route('tables')}}">
+                <a class="{{ Route::currentRouteName()=='history' ? 'open' : '' }}" href="{{route('history')}}">
                     <i class="nav-icon i-File-Horizontal-Text"></i>
-                    <span class="item-name">Tables</span>
+                    <span class="item-name">История покупок</span>
                 </a>
             </li>
+            <!--
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='tabs' ? 'open' : '' }}" href="{{route('tabs')}}">
                     <i class="nav-icon i-New-Tab"></i>
@@ -589,7 +599,7 @@
                     <i class="nav-icon i-Width-Window"></i>
                     <span class="item-name">Sliders</span>
                 </a>
-            </li>
+            </li>-->
         </ul>
         <ul class="childNav" data-parent="sessions">
             <li class="nav-item">
@@ -613,32 +623,39 @@
         </ul>
         <ul class="childNav" data-parent="others">
             <li class="nav-item">
-                <a href="{{route('notFound')}}">
+                <a href="{{route('oups')}}">
                     <i class="nav-icon i-Error-404-Window"></i>
                     <span class="item-name">Not Found</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="{{ Route::currentRouteName()=='pricing-table' ? 'open' : '' }}"
-                    href="{{route('pricing-table')}}">
+                <a class="{{ Route::currentRouteName()=='subscription' ? 'open' : '' }}"
+                    href="{{route('subscription')}}">
                     <i class="nav-icon i-Billing"></i>
-                    <span class="item-name">Pricing Table <span
+                    <span class="item-name">subscription<span
                             class="ml-2 badge badge-pill badge-danger">New</span></span>
                 </a>
             </li>
-
             <li class="nav-item">
-                <a class="{{ Route::currentRouteName()=='search-result' ? 'open' : '' }}"
-                    href="{{route('search-result')}}">
-                    <i class="nav-icon i-File-Search"></i>
-                    <span class="item-name">Search Result <span class="badge badge-pill badge-danger">New</span></span>
+                <a class="{{ Route::currentRouteName()=='programs' ? 'open' : '' }}"
+                    href="{{route('programs')}}">
+                    <i class="nav-icon i-Billing"></i>
+                    <span class="item-name">programs<span
+                            class="ml-2 badge badge-pill badge-danger">New</span></span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="{{ Route::currentRouteName()=='user-profile' ? 'open' : '' }}"
-                    href="{{route('user-profile')}}">
+                <a class="{{ Route::currentRouteName()=='search-results' ? 'open' : '' }}"
+                    href="{{route('search-results')}}">
+                    <i class="nav-icon i-File-Search"></i>
+                    <span class="item-name">Результаты поиска <span class="badge badge-pill badge-danger">New</span></span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="{{ Route::currentRouteName()=='profile' ? 'open' : '' }}"
+                    href="{{route('profile')}}">
                     <i class="nav-icon i-Male"></i>
-                    <span class="item-name">User Profile</span>
+                    <span class="item-name">Мой профиль</span>
                 </a>
             </li>
             <li class="nav-item">

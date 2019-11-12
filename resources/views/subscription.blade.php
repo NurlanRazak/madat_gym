@@ -5,11 +5,7 @@
 
 @section('main-content')
     <div class="breadcrumb">
-                    <h1>Pricing</h1>
-                    <ul>
-                        <li><a href="">Others</a></li>
-                        <li>Pricing Page</li>
-                    </ul>
+                    <h1>Выбор абонемента</h1>
                 </div>
 
                 <div class="separator-breadcrumb border-top"></div>
@@ -35,7 +31,7 @@
                                                             <h2 class="heading text-primary">Basic</h2>
                                                         </div>
                                                         <div class="ul-pricing__text text-mute">5gb</div>
-                                                        <div class="ul-pricing__main-number"> <h3 class="heading display-3 text-primary t-font-boldest">$10</h3></div>
+                                                        <div class="ul-pricing__main-number"> <h4 class="heading display-3 text-primary t-font-boldest" style="font-size: 3.5rem;">$10</h4></div>
                                                         <div class="ul-pricing__list">
                                                            
                                                            <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p> 
@@ -52,7 +48,7 @@
                                                             <h2 class="heading text-primary">Basic</h2>
                                                         </div>
                                                         <div class="ul-pricing__text text-mute">5gb</div>
-                                                        <div class="ul-pricing__main-number"> <h3 class="heading display-3 text-primary t-font-boldest">$10</h3></div>
+                                                        <div class="ul-pricing__main-number"> <h4 class="heading display-3 text-primary t-font-boldest" style="font-size: 3.5rem;">$10</h4></div>
                                                         <div class="ul-pricing__list">
                                                            
                                                            <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p> 
@@ -69,7 +65,7 @@
                                                             <h2 class="heading text-primary">Basic</h2>
                                                         </div>
                                                         <div class="ul-pricing__text text-mute">5gb</div>
-                                                        <div class="ul-pricing__main-number"> <h3 class="heading display-3 text-primary t-font-boldest">$10</h3></div>
+                                                        <div class="ul-pricing__main-number"> <h4 class="heading display-3 text-primary t-font-boldest" style="font-size: 3.5rem;">$10</h4></div>
                                                         <div class="ul-pricing__list">
                                                            
                                                            <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p> 
@@ -86,7 +82,7 @@
                                                             <h2 class="heading text-primary">Basic</h2>
                                                         </div>
                                                         <div class="ul-pricing__text text-mute">5gb</div>
-                                                        <div class="ul-pricing__main-number"> <h3 class="heading display-3 text-primary t-font-boldest">$10</h3></div>
+                                                        <div class="ul-pricing__main-number"> <h4 class="heading display-3 text-primary t-font-boldest" style="font-size: 3.5rem;">$10</h4></div>
                                                         <div class="ul-pricing__list">
                                                            
                                                            <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p> 
