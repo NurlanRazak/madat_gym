@@ -13,6 +13,17 @@
         {{-- theme css --}}
         <link id="gull-theme" rel="stylesheet" href="{{  asset('assets/styles/css/themes/lite-purple.css')}}">
         <link rel="stylesheet" href="{{asset('assets/styles/vendor/perfect-scrollbar.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/styles/css/owl.carousel.min.css')}}">
+                <style>
+            .owl-nav{
+                position: absolute;
+                /* margin: auto 20px; */
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                top: 50%;
+            }
+        </style>
         <script src="https://kit.fontawesome.com/d1edd4ad8f.js"></script>
         {{-- page specific css --}}
         @yield('page-css')
@@ -83,9 +94,32 @@
 
         <script src="{{asset('assets/js/sidebar.large.script.js')}}"></script>
 
-
+        <script src="{{asset('assets/js/owl.carousel.min.js')}}"></script>
 
         <script src="{{asset('assets/js/customizer.script.js')}}"></script>
+
+
+
+        <script>
+            $(document).ready(function(){
+              $(".owl-carousel").owlCarousel({
+                loop: true,
+                nav: true,
+                navText: ["<img src='{{asset('assets/images/prev.png')}}'>","<img src='{{asset('assets/images/next.png')}}'>"],
+                responsive:{
+                    0:{
+                        items:1
+                    },
+                    600:{
+                        items:1
+                    },
+                    1000:{
+                        items:3
+                    }
+                }
+            });
+            });
+        </script>
 
         {{-- laravel js --}}
         {{-- <script src="{{mix('assets/js/laravel/app.js')}}"></script> --}}

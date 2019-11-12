@@ -51,6 +51,7 @@ Route::view('uikits/lists', 'uiKits.lists')->name('lists');
 Route::view('uikits/pagination', 'uiKits.pagination')->name('pagination');
 Route::view('uikits/popover', 'uiKits.popover')->name('popover');
 Route::view('uikits/progressbar', 'uiKits.progressbar')->name('progressbar');
+Route::view('history', 'history')->name('history');
 Route::view('uikits/tables', 'uiKits.tables')->name('tables');
 Route::view('uikits/tabs', 'uiKits.tabs')->name('tabs');
 Route::view('uikits/tooltip', 'uiKits.tooltip')->name('tooltip');
@@ -73,6 +74,7 @@ Route::view('extrakits/upload', 'extraKits.upload')->name('upload');
 
 // Apps
 Route::view('apps/invoice', 'apps.invoice')->name('invoice');
+Route::view('mail', 'mail')->name('mail');
 Route::view('apps/inbox', 'apps.inbox')->name('inbox');
 Route::view('apps/chat', 'apps.chat')->name('chat');
 Route::view('apps/calendar', 'apps.calendar')->name('calendar');
@@ -83,6 +85,7 @@ Route::view('apps/ecommerce/products', 'apps.ecommerce.products')->name('ecommer
 Route::view('apps/ecommerce/product-details', 'apps.ecommerce.product-details')->name('ecommerce-product-details');
 Route::view('apps/ecommerce/cart', 'apps.ecommerce.cart')->name('ecommerce-cart');
 Route::view('apps/ecommerce/checkout', 'apps.ecommerce.checkout')->name('ecommerce-checkout');
+Route::view('buy', 'buy')->name('buy');
 
 
 Route::view('apps/contacts/lists', 'apps.contacts.lists')->name('contacts-lists');
@@ -132,12 +135,13 @@ Route::view('widgets/app', 'widgets.app')->name('widget-app');
 Route::view('widgets/weather-app', 'widgets.weather-app')->name('widget-weather-app');
 
 // others
-Route::view('others/notFound', 'others.notFound')->name('notFound');
-Route::view('others/user-profile', 'others.user-profile')->name('user-profile');
+Route::view('oups', 'oups')->name('oups');
+Route::view('profile', 'profile')->name('profile');
 Route::view('others/starter', 'starter')->name('starter');
 Route::view('others/faq', 'others.faq')->name('faq');
-Route::view('others/pricing-table', 'others.pricing-table')->name('pricing-table');
-Route::view('others/search-result', 'others.search-result')->name('search-result');
+Route::view('subscribition', 'subscribition')->name('subscribition');
+Route::view('programs', 'programs')->name('programs');
+Route::view('search-results', 'search-results')->name('search-results');
 
 Auth::routes(['verify' => true]);
 
