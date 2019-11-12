@@ -36,4 +36,5 @@ Route::group([
         Route::post('message/cancel', 'MessageController@cancel')->name('admin-message-cancel');
     });
     CRUD::resource('typepurchase', 'TypepurchaseCrudController');
+    CRUD::resource('purchase', 'PurchaseCrudController');
 }); // this should be the absolute last line of this file
