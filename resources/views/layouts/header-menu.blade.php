@@ -14,7 +14,7 @@
             <div class="header-part-right">
                 <!-- Full screen toggle -->
                 <i class="i-Full-Screen header-icon d-none d-sm-inline-block" data-fullscreen></i>
-                <!-- Grid menu Dropdown 
+                <!-- Grid menu Dropdown
                 <div class="dropdown widget_dropdown">
                     <i class="i-Safe-Box text-muted header-icon" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -55,7 +55,13 @@
                             <a class="dropdown-item">Facebook</a>
                             <a class="dropdown-item">Instagram</a>
                             <hr>
-                            <a class="dropdown-item" href="{{route('logout')}}">Выход</a>
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Выход
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                            </form>
                         </div>
                     </div>
                 </div>
