@@ -39,3 +39,5 @@
     </ul>
 </li>
 <li><a href="{{ backpack_url('elfinder') }}"><i class="fa fa-files-o"></i> <span>{{ trans('backpack::crud.file_manager') }}</span></a></li>
+
+<li><a href="{{ backpack_url('message') }}"><i class="fa fa-envelope"></i> <span>Сообщения</span></a></li>
