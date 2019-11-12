@@ -7,9 +7,11 @@ use App\Http\Requests\UserStoreCrudRequest as StoreRequest;
 use App\Http\Requests\UserUpdateCrudRequest as UpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Services\MenuService\Traits\AccessLevelsTrait;
 
 class UserCrudController extends CrudController
 {
+    use AccessLevelsTrait;
     public function setup()
     {
         /*
@@ -18,8 +20,10 @@ class UserCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel(config('backpack.permissionmanager.models.user'));
-        $this->crud->setEntityNameStrings(trans('backpack::permissionmanager.user'), trans('backpack::permissionmanager.users'));
+        $this->crud->setEntityNameStrings('Сотрудник', 'Сотрудники');
         $this->crud->setRoute(backpack_url('user'));
+        $this->setAccessLevels();
+
         $this->crud->addClause('whereHas', 'roles');
         // Columns
         $this->crud->setColumns([

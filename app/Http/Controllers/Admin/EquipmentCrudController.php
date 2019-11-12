@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\EquipmentRequest as StoreRequest;
 use App\Http\Requests\EquipmentRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
+use App\Services\MenuService\Traits\AccessLevelsTrait;
 
 /**
  * Class EquipmentCrudController
@@ -16,6 +17,7 @@ use Backpack\CRUD\CrudPanel;
  */
 class EquipmentCrudController extends CrudController
 {
+    use AccessLevelsTrait;
     public function setup()
     {
         /*
@@ -26,6 +28,7 @@ class EquipmentCrudController extends CrudController
         $this->crud->setModel('App\Models\Equipment');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/equipment');
         $this->crud->setEntityNameStrings(trans_choice('admin.equipment', 1), trans_choice('admin.equipment', 2));
+        $this->setAccessLevels();
 
         /*
         |--------------------------------------------------------------------------

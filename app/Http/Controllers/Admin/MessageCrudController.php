@@ -10,6 +10,7 @@ use App\Http\Requests\MessageRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
 use App\Models\Message;
 use App\User;
+use App\Services\MenuService\Traits\AccessLevelsTrait;
 
 /**
  * Class MessageCrudController
@@ -18,6 +19,7 @@ use App\User;
  */
 class MessageCrudController extends CrudController
 {
+    use AccessLevelsTrait;
     public function setup()
     {
         /*
@@ -28,6 +30,7 @@ class MessageCrudController extends CrudController
         $this->crud->setModel('App\Models\Message');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/message');
         $this->crud->setEntityNameStrings('сообщение', 'Сообщения');
+        $this->setAccessLevels();
 
         /*
         |--------------------------------------------------------------------------

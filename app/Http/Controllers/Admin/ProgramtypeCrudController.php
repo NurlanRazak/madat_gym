@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\ProgramtypeRequest as StoreRequest;
 use App\Http\Requests\ProgramtypeRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
+use App\Services\MenuService\Traits\AccessLevelsTrait;
 
 /**
  * Class ProgramtypeCrudController
@@ -16,6 +17,7 @@ use Backpack\CRUD\CrudPanel;
  */
 class ProgramtypeCrudController extends CrudController
 {
+    use AccessLevelsTrait;
     public function setup()
     {
         /*
@@ -26,6 +28,7 @@ class ProgramtypeCrudController extends CrudController
         $this->crud->setModel('App\Models\Programtype');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/programtype');
         $this->crud->setEntityNameStrings(trans_choice('admin.ptype', 1), trans_choice('admin.ptype', 2));
+        $this->setAccessLevels();
 
         /*
         |--------------------------------------------------------------------------

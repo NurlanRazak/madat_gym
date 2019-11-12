@@ -13,7 +13,14 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
         $crud = ['update', 'view'];
-        $classes = ['User', 'BackpackUser', 'Role', 'Permission', 'Activeprogram', 'Eathour', 'Equipment', 'Exercise', 'Foodprogram', 'Grocery', 'Meal', 'Message', 'Planeat', 'Programtraining', 'Programtype', 'Relaxexercise', 'Relaxprogram', 'Relaxtraining', 'Subscription', 'Training'];
+        $classes = [
+            'User', 'BackpackUser', 'Role', 'Permission',
+            'Activeprogram', 'Eathour', 'Equipment', 'Exercise', 'Foodprogram',
+            'Grocery', 'Meal', 'Message', 'Planeat', 'Programtraining',
+            'Programtype', 'Relaxexercise', 'Relaxprogram', 'Relaxtraining',
+            'Subscription', 'Training', 'Purchase', 'Typepurchase'
+        ];
+
         foreach($classes as $class) {
             foreach($crud as $action) {
                 Permission::firstOrCreate([

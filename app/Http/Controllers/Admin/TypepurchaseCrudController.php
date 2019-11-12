@@ -9,6 +9,8 @@ use App\Http\Requests\TypepurchaseRequest as StoreRequest;
 use App\Http\Requests\TypepurchaseRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
 use App\Models\Typepurchase;
+use App\Services\MenuService\Traits\AccessLevelsTrait;
+
 /**
  * Class TypepurchaseCrudController
  * @package App\Http\Controllers\Admin
@@ -16,6 +18,7 @@ use App\Models\Typepurchase;
  */
 class TypepurchaseCrudController extends CrudController
 {
+    use AccessLevelsTrait;
     public function setup()
     {
         /*
@@ -26,6 +29,7 @@ class TypepurchaseCrudController extends CrudController
         $this->crud->setModel('App\Models\Typepurchase');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/typepurchase');
         $this->crud->setEntityNameStrings(trans_choice('admin.typepurchase', 1), trans_choice('admin.typepurchase', 2));
+        $this->setAccessLevels();
 
         /*
         |--------------------------------------------------------------------------

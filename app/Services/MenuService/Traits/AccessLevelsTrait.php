@@ -8,13 +8,13 @@ use App\Services\MenuService\Models\Permission;
 trait AccessLevelsTrait
 {
     private $actions = [
-        'list' => ['view', 'create', 'update', 'delete'],
-        'create' => ['create'],
+        'list' => ['view', 'update'],
+        'create' => ['update'],
         'update' => ['update'],
-        'delete' => ['delete'],
-        'revisions' => ['update', 'delete'],
+        'delete' => ['update'],
+        // 'revisions' => ['update'],
         // 'reorder' => ['create', 'update'],
-        'show' => ['view', 'create', 'update', 'delete'],
+        'show' => ['view', 'update'],
         // 'clone' => ['create'],
     ];
 

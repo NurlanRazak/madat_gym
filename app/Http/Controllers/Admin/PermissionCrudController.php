@@ -6,9 +6,11 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 // VALIDATION
 use App\Http\Requests\PermissionStoreCrudRequest as StoreRequest;
 use App\Http\Requests\PermissionUpdateCrudRequest as UpdateRequest;
+use App\Services\MenuService\Traits\AccessLevelsTrait;
 
 class PermissionCrudController extends CrudController
 {
+    use AccessLevelsTrait;
     public function setup()
     {
         $role_model = config('backpack.permissionmanager.models.role');
@@ -17,6 +19,7 @@ class PermissionCrudController extends CrudController
         $this->crud->setModel($permission_model);
         $this->crud->setEntityNameStrings(trans('backpack::permissionmanager.permission_singular'), trans('backpack::permissionmanager.permission_plural'));
         $this->crud->setRoute(backpack_url('permission'));
+        $this->setAccessLevels();
 
         $this->crud->addColumn([
             'name'  => 'name',

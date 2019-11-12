@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\PlaneatRequest as StoreRequest;
 use App\Http\Requests\PlaneatRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
+use App\Services\MenuService\Traits\AccessLevelsTrait;
 
 /**
  * Class PlaneatCrudController
@@ -16,6 +17,7 @@ use Backpack\CRUD\CrudPanel;
  */
 class PlaneatCrudController extends CrudController
 {
+    use AccessLevelsTrait;
     public function setup()
     {
         /*
@@ -26,6 +28,7 @@ class PlaneatCrudController extends CrudController
         $this->crud->setModel('App\Models\Planeat');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/planeat');
         $this->crud->setEntityNameStrings(trans_choice('admin.planeat',1), trans_choice('admin.planeat', 2));
+        $this->setAccessLevels();
 
         /*
         |--------------------------------------------------------------------------

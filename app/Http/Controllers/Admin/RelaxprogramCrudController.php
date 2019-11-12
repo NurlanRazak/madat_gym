@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\RelaxprogramRequest as StoreRequest;
 use App\Http\Requests\RelaxprogramRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
+use App\Services\MenuService\Traits\AccessLevelsTrait;
 
 /**
  * Class RelaxprogramCrudController
@@ -16,6 +17,7 @@ use Backpack\CRUD\CrudPanel;
  */
 class RelaxprogramCrudController extends CrudController
 {
+    use AccessLevelsTrait;
     public function setup()
     {
         /*
@@ -26,6 +28,7 @@ class RelaxprogramCrudController extends CrudController
         $this->crud->setModel('App\Models\Relaxprogram');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/relaxprogram');
         $this->crud->setEntityNameStrings(trans_choice('admin.relaxprogram', 1), trans_choice('admin.relaxprogram', 2));
+        $this->setAccessLevels();
 
         /*
         |--------------------------------------------------------------------------

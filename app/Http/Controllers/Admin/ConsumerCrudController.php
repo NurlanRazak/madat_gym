@@ -7,9 +7,12 @@ use App\Http\Requests\UserStoreCrudRequest as StoreRequest;
 use App\Http\Requests\UserUpdateCrudRequest as UpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Services\MenuService\Traits\AccessLevelsTrait;
 
 class ConsumerCrudController extends CrudController
 {
+    use AccessLevelsTrait;
+
     public function setup()
     {
         /*
@@ -20,6 +23,9 @@ class ConsumerCrudController extends CrudController
         $this->crud->setModel(config('backpack.permissionmanager.models.user'));
         $this->crud->setEntityNameStrings(trans('backpack::permissionmanager.user'), trans('backpack::permissionmanager.users'));
         $this->crud->setRoute(backpack_url('consumer'));
+        $this->setAccessLevels();
+        $this->crud->addClause('whereDoesntHave', 'roles');
+
         // $this->crud->addClause('whereHas', 'roles');
         // Columns
         $this->crud->setColumns([

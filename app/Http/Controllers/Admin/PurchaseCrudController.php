@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\PurchaseRequest as StoreRequest;
 use App\Http\Requests\PurchaseRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
+use App\Services\MenuService\Traits\AccessLevelsTrait;
 
 /**
  * Class PurchaseCrudController
@@ -16,6 +17,7 @@ use Backpack\CRUD\CrudPanel;
  */
 class PurchaseCrudController extends CrudController
 {
+    use AccessLevelsTrait;
     public function setup()
     {
         /*
@@ -26,6 +28,7 @@ class PurchaseCrudController extends CrudController
         $this->crud->setModel('App\Models\Purchase');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/purchase');
         $this->crud->setEntityNameStrings(trans_choice('admin.purchase', 1), trans_choice('admin.purchase', 2));
+        $this->setAccessLevels();
 
         /*
         |--------------------------------------------------------------------------

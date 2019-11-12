@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\EathourRequest as StoreRequest;
 use App\Http\Requests\EathourRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
+use App\Services\MenuService\Traits\AccessLevelsTrait;
 
 /**
  * Class EathourCrudController
@@ -16,6 +17,7 @@ use Backpack\CRUD\CrudPanel;
  */
 class EathourCrudController extends CrudController
 {
+    use AccessLevelsTrait;
     public function setup()
     {
         /*
@@ -26,6 +28,7 @@ class EathourCrudController extends CrudController
         $this->crud->setModel('App\Models\Eathour');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/eathour');
         $this->crud->setEntityNameStrings(trans_choice('admin.eathour', 1), trans_choice('admin.eathour', 2));
+        $this->setAccessLevels();
 
         /*
         |--------------------------------------------------------------------------

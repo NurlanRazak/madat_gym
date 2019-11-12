@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\SubscriptionRequest as StoreRequest;
 use App\Http\Requests\SubscriptionRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
+use App\Services\MenuService\Traits\AccessLevelsTrait;
 
 /**
  * Class SubscriptionCrudController
@@ -16,6 +17,7 @@ use Backpack\CRUD\CrudPanel;
  */
 class SubscriptionCrudController extends CrudController
 {
+    use AccessLevelsTrait;
     public function setup()
     {
         /*
@@ -26,6 +28,7 @@ class SubscriptionCrudController extends CrudController
         $this->crud->setModel('App\Models\Subscription');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/subscription');
         $this->crud->setEntityNameStrings(trans_choice('admin.subscription', 1), trans_choice('admin.subscription', 2));
+        $this->setAccessLevels();
 
         /*
         |--------------------------------------------------------------------------

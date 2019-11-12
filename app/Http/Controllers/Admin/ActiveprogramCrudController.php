@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\ActiveprogramRequest as StoreRequest;
 use App\Http\Requests\ActiveprogramRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
+use App\Services\MenuService\Traits\AccessLevelsTrait;
 
 /**
  * Class ActiveprogramCrudController
@@ -16,6 +17,8 @@ use Backpack\CRUD\CrudPanel;
  */
 class ActiveprogramCrudController extends CrudController
 {
+    use AccessLevelsTrait;
+
     public function setup()
     {
         /*
@@ -26,6 +29,7 @@ class ActiveprogramCrudController extends CrudController
         $this->crud->setModel('App\Models\Activeprogram');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/activeprogram');
         $this->crud->setEntityNameStrings(trans_choice('admin.activeprogram', 1), trans_choice('admin.activeprogram', 2));
+        $this->setAccessLevels();
 
         /*
         |--------------------------------------------------------------------------

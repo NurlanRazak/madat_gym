@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\ProgramtrainingRequest as StoreRequest;
 use App\Http\Requests\ProgramtrainingRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
+use App\Services\MenuService\Traits\AccessLevelsTrait;
 
 /**
  * Class ProgramtrainingCrudController
@@ -16,6 +17,7 @@ use Backpack\CRUD\CrudPanel;
  */
 class ProgramtrainingCrudController extends CrudController
 {
+    use AccessLevelsTrait;
     public function setup()
     {
         /*
@@ -26,6 +28,7 @@ class ProgramtrainingCrudController extends CrudController
         $this->crud->setModel('App\Models\Programtraining');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/programtraining');
         $this->crud->setEntityNameStrings(trans_choice('admin.programtraining', 1), trans_choice('admin.programtraining', 2));
+        $this->setAccessLevels();
 
         /*
         |--------------------------------------------------------------------------

@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\FoodprogramRequest as StoreRequest;
 use App\Http\Requests\FoodprogramRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
+use App\Services\MenuService\Traits\AccessLevelsTrait;
 
 /**
  * Class FoodprogramCrudController
@@ -16,6 +17,7 @@ use Backpack\CRUD\CrudPanel;
  */
 class FoodprogramCrudController extends CrudController
 {
+    use AccessLevelsTrait;
     public function setup()
     {
         /*
@@ -26,6 +28,7 @@ class FoodprogramCrudController extends CrudController
         $this->crud->setModel('App\Models\Foodprogram');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/foodprogram');
         $this->crud->setEntityNameStrings(trans_choice('admin.foodprogram', 1), trans_choice('admin.foodprogram', 2));
+        $this->setAccessLevels();
 
         /*
         |--------------------------------------------------------------------------

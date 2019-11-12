@@ -19,7 +19,7 @@ trait MenuTrait
                 'label'         => 'Тренировки',
                 'sub_items'     => [
                     [
-                        'route'         => backpack_url('user'),
+                        'route'         => backpack_url('subscription'),
                         'icon'          => 'fa fa-ticket',
                         'label'         => trans_choice('admin.subscription', 2),
                         'permissions'   => [
@@ -199,6 +199,29 @@ trait MenuTrait
                 'label' => 'Сообщения',
                 'permissions' => [
                     'Message' => 'view',
+                ],
+            ],
+            [
+                'route' => '#',
+                'icon' => 'fa fa-shopping-cart',
+                'label' => 'Покупки',
+                'sub_items' => [
+                    [
+                        'route' => backpack_url('typepurchase'),
+                        'icon' => 'fa fa-shopping-bag',
+                        'label' => 'Типы покупок',
+                        'permissions' => [
+                            'Typepurchase' => 'view',
+                        ],
+                    ],
+                    [
+                        'route' => backpack_url('purchase'),
+                        'icon' => 'fa fa-dollar',
+                        'label' => 'Покупки',
+                        'permissions' => [
+                            'Purchase' => 'view',
+                        ],
+                    ],
                 ],
             ],
         ];
