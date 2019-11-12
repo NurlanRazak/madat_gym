@@ -54,6 +54,14 @@ try {
       <li><a href='{{ backpack_url('relaxtraining') }}'><i class='fa fa-bicycle'></i> <span>Тренировки (программы-упражнения)</span></a></li>
   </ul>
 </li>
+<li><a href="{{ backpack_url('message') }}"><i class="fa fa-envelope"></i> <span>Сообщения</span></a></li>
+<li class="treeview">
+  <a href="#"><i class="fa fa-shopping-cart"></i> <span>Покупки</span> <i class="fa fa-angle-left pull-right"></i></a>
+      <ul class="treeview-menu">
+            <li><a href='{{ backpack_url('typepurchase') }}'><i class='fa fa-shopping-bag'></i> <span>Типы покупок</span></a></li>
+            <li><a href='{{ backpack_url('purchase') }}'><i class='fa fa-dollar'></i> <span>Покупки</span></a></li>
+      </ul>
+</li>
 <li class="treeview">
     <a href="#"><i class="fa fa-group"></i> <span>Люди</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
@@ -64,5 +72,3 @@ try {
     </ul>
 </li>
 <li><a href="{{ backpack_url('elfinder') }}"><i class="fa fa-files-o"></i> <span>{{ trans('backpack::crud.file_manager') }}</span></a></li>
-
-<li><a href="{{ backpack_url('message') }}"><i class="fa fa-envelope"></i> <span>Сообщения</span></a></li>
