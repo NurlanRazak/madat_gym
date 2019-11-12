@@ -26,4 +26,13 @@ Route::group([
     CRUD::resource('grocery', 'GroceryCrudController');
     CRUD::resource('relaxexercise', 'RelaxexerciseCrudController');
     CRUD::resource('relaxtraining', 'RelaxtrainingCrudController');
+    CRUD::resource('message', 'MessageCrudController');
+
+    Route::group([
+        'prefix' => 'api',
+        'namespace' => '\App\Http\Controllers\Api',
+    ], function() {
+        Route::post('message/send', 'MessageController@send')->name('admin-message-send');
+        Route::post('message/cancel', 'MessageController@cancel')->name('admin-message-cancel');
+    });
 }); // this should be the absolute last line of this file
