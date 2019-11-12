@@ -41,14 +41,14 @@ class UserCrudController extends CrudController
                'attribute' => 'name', // foreign key attribute that is shown to user
                'model'     => config('permission.models.role'), // foreign key model
             ],
-            // [ // n-n relationship (with pivot table)
-            //    'label'     => trans('backpack::permissionmanager.extra_permissions'), // Table column heading
-            //    'type'      => 'select_multiple',
-            //    'name'      => 'permissions', // the method that defines the relationship in your Model
-            //    'entity'    => 'permissions', // the method that defines the relationship in your Model
-            //    'attribute' => 'name', // foreign key attribute that is shown to user
-            //    'model'     => config('permission.models.permission'), // foreign key model
-            // ],
+            [ // n-n relationship (with pivot table)
+               'label'     => trans('backpack::permissionmanager.extra_permissions'), // Table column heading
+               'type'      => 'select_multiple',
+               'name'      => 'permissions', // the method that defines the relationship in your Model
+               'entity'    => 'permissions', // the method that defines the relationship in your Model
+               'attribute' => 'name', // foreign key attribute that is shown to user
+               'model'     => config('permission.models.permission'), // foreign key model
+            ],
         ]);
 
         // Fields

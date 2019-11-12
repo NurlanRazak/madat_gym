@@ -15,6 +15,7 @@ class BackpackUser extends User
     use HasRoles;
 
     protected $table = 'users';
+    protected $guard_name = 'web';
 
     /**
      * Send the password reset notification.

@@ -20,6 +20,8 @@ class CreatePermissionTables extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('guard_name');
+            $table->string('action');
+            $table->string('model');
             $table->timestamps();
         });
 
@@ -27,6 +29,7 @@ class CreatePermissionTables extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('guard_name');
+            $table->string('key')->unique();
             $table->timestamps();
         });
 
