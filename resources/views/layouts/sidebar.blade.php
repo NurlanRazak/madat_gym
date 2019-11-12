@@ -93,8 +93,8 @@
         <!-- Submenu Dashboards -->
         <ul class="childNav" data-parent="dashboard">
             <li class="nav-item ">
-                <a class="{{ Route::currentRouteName()=='main' ? 'open' : '' }}"
-                    href="{{route('main')}}">
+                <a class="{{ Route::currentRouteName()=='dashboard_version_1' ? 'open' : '' }}"
+                    href="{{route('dashboard_version_1')}}">
                     <i class="nav-icon i-Clock-3"></i>
                     <span class="item-name">Version 1</span>
                 </a>
@@ -290,7 +290,7 @@
         </ul>
 
         <ul class="childNav" data-parent="apps">
-            <!-- 
+            <!--
             <li class="nav-item">
                 <a class="{{ Route::currentRouteName()=='invoice' ? 'open' : '' }}" href="{{route('invoice')}}">
                     <i class="nav-icon i-Add-File"></i>
@@ -356,7 +356,7 @@
                     <span class="item-name">Оплата</span>
                 </a><!--
                 <ul class="submenu">
-                    
+
                     <li>
                         <a class="{{ Route::currentRouteName()=='ecommerce-products' ? 'open' : '' }}"
                             href="{{route('ecommerce-products')}}">
@@ -629,10 +629,10 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="{{ Route::currentRouteName()=='subscription' ? 'open' : '' }}"
-                    href="{{route('subscription')}}">
+                <a class="{{ Route::currentRouteName()=='subscribition' ? 'open' : '' }}"
+                    href="{{route('subscribition')}}">
                     <i class="nav-icon i-Billing"></i>
-                    <span class="item-name">subscription<span
+                    <span class="item-name">subscribition<span
                             class="ml-2 badge badge-pill badge-danger">New</span></span>
                 </a>
             </li>
