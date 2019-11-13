@@ -46,7 +46,7 @@ class AdminMenuGenerator
         if (count($permissions))
             $ans &= $user->hasAllPermissions($permissions);
         if (count($roles))
-            $ans &= $user->hasAllRoles($roles);
+            $ans &= $user->hasAnyRole($roles);
         return $ans;
     }
 

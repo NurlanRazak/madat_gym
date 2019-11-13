@@ -224,6 +224,14 @@ trait MenuTrait
                     ],
                 ],
             ],
+            [
+                'route'         => backpack_url('elfinder'),
+                'icon'          => 'fa fa-files-o',
+                'label'         => trans('backpack::crud.file_manager'),
+                'roles'         => [
+                    'manager', 'superadmin'
+                ],
+            ],
         ];
     }
 
