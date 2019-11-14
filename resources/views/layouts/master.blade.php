@@ -23,6 +23,7 @@
                 width: 100%;
                 top: 50%;
             }
+
         </style>
         <script src="https://kit.fontawesome.com/d1edd4ad8f.js"></script>
         {{-- page specific css --}}
@@ -118,6 +119,40 @@
                     }
                 }
             });
+              $("#userdataedit").click(function (e) {
+                  e.preventDefault();
+                  console.log("click");
+                  var input = $('.userdataediti');
+                  sost = !input.prop('disabled');
+                  input.prop('disabled', sost);
+                  if($("#save").hasClass("invisible")){
+                    $("#save").removeClass("invisible");
+                  }else{
+                    $("#save").addClass("invisible");
+                  }
+                });
+              $("#save").click(function () {
+                  $("#save").addClass("invisible");
+                  $('.userdataediti').prop('disabled', true);
+              })
+              $("#userparamsedit").click(function (e) {
+                  e.preventDefault();
+                  console.log("click");
+                  var input = $('.userparamsediti');
+                  sost = !input.prop('disabled');
+                  input.prop('disabled', sost);
+                });
+              $("#userplanedit").click(function (e) {
+                  e.preventDefault();
+                  console.log("click");
+                  var input = $('.userplanediti');
+                  sost = !input.prop('disabled');
+                  input.prop('disabled', sost);
+                });
+
+              $(".profile-picture").click(function(){
+                $("input[type='file'").trigger('click');
+              });
             });
         </script>
 

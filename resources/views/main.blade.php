@@ -45,12 +45,21 @@
                             <div class="accordion" id="accordionRightIcon">
                                 <div class="card ">
                                     <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-1"
-                                                aria-expanded="false">
+                                                aria-expanded="false" style="padding-right: 50px;">
                                         <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
                                             <a data-toggle="collapse" class="text-default collapsed" href="#accordion-item-icon-right-1"
                                                 aria-expanded="false">Тренировки</a>
+                                                
                                         </h6>
-
+                                        <form>
+                                          <div class="form-row align-items-center">
+                                              <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input type="checkbox" class="custom-control-input" id="1">
+                                                <label class="custom-control-label" for="1">&nbsp;</label>
+                                              </div>
+                                          </div>
+                                        </form>
+                                        
                                     </div>
 
 
@@ -78,12 +87,20 @@
                                 </div>
 
                                 <div class="card">
-                                    <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-2">
+                                    <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-2" style="padding-right: 50px;">
                                         <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
                                             <a data-toggle="collapse" class="text-default collapsed"
                                                 href="#accordion-item-icon-right-2">Питание</a>
+                                                
                                         </h6>
-
+                                        <form>
+                                          <div class="form-row align-items-center">
+                                              <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input type="checkbox" class="custom-control-input" id="2">
+                                                <label class="custom-control-label" for="2">&nbsp;</label>
+                                              </div>
+                                          </div>
+                                        </form>
                                     </div>
 
 
@@ -112,12 +129,21 @@
 
 
                                 <div class="card ">
-                                    <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-3">
+                                    <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-3" style="padding-right: 50px;">
                                         <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
                                             <a data-toggle="collapse" class="text-default collapsed"
                                                 href="#accordion-item-icon-right-3">Отдых</a>
+                                                
                                         </h6>
-
+                                        <form>
+                                          <div class="form-row align-items-center">
+                                              <div class="custom-control custom-checkbox mr-sm-2">
+                                                <input type="checkbox" class="custom-control-input" id="3">
+                                                <label class="custom-control-label" for="3">&nbsp;</label>
+                                              </div>
+                                          </div>
+                                        </form>
+                                        
                                     </div>
 
 

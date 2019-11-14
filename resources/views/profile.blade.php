@@ -13,7 +13,10 @@
             <div class="card user-profile o-hidden mb-4">
                 <!-- <div class="header-cover" style="background-image: url({{asset('assets/images/photo-wide-5.jpeg')}}"></div> -->
                 <div class="user-info">
-                    <img class="profile-picture avatar-lg mb-2" src="{{asset('assets/images/faces/1.jpg')}}" alt="">
+                    <form action="" id="upload-container">
+                        <img class="profile-picture avatar-lg mb-2" src="{{asset('assets/images/faces/1.jpg')}}" alt="">
+                        <input id="file-input" style="display: none;" type="file" name="file" multiple>
+                    </form>
                     <p class="m-0 text-24">Timothy Carlson</p>
                 </div>
                 <div class="card-body">
@@ -42,55 +45,77 @@
                             <p>Дата активации – 11 августа 2019 | Дата завершения – 11 сентября 2019
                             </p>
                             <hr>
-                            <div class="row">
-                                <div class="col-lg-4 col-12">
+                            <div class="row mb-5">
+                                <div class="col-lg-6 col-12">
                                     <div class="alert alert-warning" role="alert">
-                                      Личный профиль
-                                      <a href="#" class="float-right"><i class="i-Edit text-16"></i></a>
+                                      ЛИЧНЫЙ ПРОФИЛЬ
+                                      <a id="userdataedit" href="" class="float-right"><i class="i-Edit text-16"></i></a>
                                     </div>
                                     <div class="mb-4">
-                                        <p class="text-primary mb-1"><i class="i-Mail text-16 mr-1"></i> ИМЯ</p>
-                                        <span>wyccave@gmail.com</span>
+                                        <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> ИМЯ</p>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control userdataediti" aria-describedby="emailHelp" value="Ислам" disabled>
+                                        </div>
                                     </div>
                                     <div class="mb-4">
-                                        <p class="text-primary mb-1"><i class="i-Mail text-16 mr-1"></i> ФАМИЛИЯ</p>
-                                        <span>wyccave@gmail.com</span>
+                                        <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> ФАМИЛИЯ</p>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control userdataediti" aria-describedby="emailHelp" value="Рузиев" disabled>
+                                        </div>
                                     </div>
                                     <div class="mb-4">
-                                        <p class="text-primary mb-1"><i class="i-Mail text-16 mr-1"></i> ОТЧЕСТВО</p>
-                                        <span>wyccave@gmail.com</span>
+                                        <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> ОТЧЕСТВО</p>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control userdataediti" aria-describedby="emailHelp" value="" disabled>
+                                        </div>
                                     </div>
                                     <div class="mb-4">
                                         <p class="text-primary mb-1"><i class="i-Mail text-16 mr-1"></i> ЭЛЕКТРОННАЯ ПОЧТА</p>
-                                        <span>wyccave@gmail.com</span>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control userdataediti" aria-describedby="emailHelp" value="wyccave@gmail.com" disabled>
+                                        </div>
                                     </div>
                                     <div class="mb-4">
                                         <p class="text-primary mb-1"><i class="i-Key text-16 mr-1"></i> ПАРОЛЬ</p>
-                                        <span>******</span>
-                                        <a href="#" class="float-right">изменить</a>
+                                        <div class="input-group">
+                                          <input type="password" class="form-control" aria-describedby="button-addon2" disabled value="1234567">
+                                          <div class="input-group-append" >
+                                            <button class="btn btn-primary" type="button" id="button-addon2" data-toggle="modal" data-target="#password">Изменить</button>
+                                          </div>
+                                        </div>
                                     </div>
-                                    
+                                    <div class="mb-4">
+                                        <div class="form-group">
+                                          <input type="submit" id="save" class="form-control userdataediti invisible" value="Сохранить" >
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-lg-4 col-12">
+                                <!--<div class="col-lg-4 col-12">
                                     <div class="alert alert-warning" role="alert">
                                       ПАРАМЕТРЫ
-                                      <a href="#" class="float-right"><i class="i-Edit text-16"></i></a>
+                                      <a id="userparamsedit" href="" class="float-right"><i class="i-Edit text-16"></i></a>
                                     </div>
                                     <div class="row">
                                         <div class="col">
                                             <p>11 авг 2915</p>
                                             <hr>
                                             <div class="mb-4">
-                                                <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Gender</p>
-                                                <span>1 Jan, 1994</span>
+                                                <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Вес</p>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
+                                                </div>
                                             </div>
                                             <div class="mb-4">
                                                 <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Email</p>
-                                                <span>example@ui-lib.com</span>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
+                                                </div>
                                             </div>
                                             <div class="mb-4">
-                                                <p class="text-primary mb-1"><i class="i-Cloud-Weather text-16 mr-1"></i> Website</p>
-                                                <span>www.ui-lib.com</span>
+                                                <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Website</p>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col">
@@ -98,15 +123,21 @@
                                             <hr>
                                             <div class="mb-4">
                                                 <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Gender</p>
-                                                <span>1 Jan, 1994</span>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
+                                                </div>
                                             </div>
                                             <div class="mb-4">
                                                 <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Email</p>
-                                                <span>example@ui-lib.com</span>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
+                                                </div>
                                             </div>
                                             <div class="mb-4">
-                                                <p class="text-primary mb-1"><i class="i-Cloud-Weather text-16 mr-1"></i> Website</p>
-                                                <span>www.ui-lib.com</span>
+                                                <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Website</p>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col">
@@ -114,27 +145,35 @@
                                             <hr>
                                             <div class="mb-4">
                                                 <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Gender</p>
-                                                <span>1 Jan, 1994</span>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
+                                                </div>
                                             </div>
                                             <div class="mb-4">
                                                 <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Email</p>
-                                                <span>example@ui-lib.com</span>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
+                                                </div>
                                             </div>
                                             <div class="mb-4">
-                                                <p class="text-primary mb-1"><i class="i-Cloud-Weather text-16 mr-1"></i> Website</p>
-                                                <span>www.ui-lib.com</span>
+                                                <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Website</p>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4 col-12">
+                                </div>-->
+                                <div class="col-lg-6 col-12">
                                 	<div class="alert alert-warning" role="alert">
                                       ЦЕЛЬ И ПЛАН
-                                      <a href="#" class="float-right"><i class="i-Edit text-16"></i></a>
+                                      <a href="" id="userplanedit" class="float-right"><i class="i-Edit text-16"></i></a>
                                     </div>
                                     <div class="mb-4">
                                         <p class="text-primary mb-1"><i class="i-Globe text-16 mr-1"></i> ПЛАН</p>
-                                        <span>ПОХУДЕНИЕ ПОСЛЕ БЕРЕМЕННОСТИ</span>
+                                        <select class="form-control userplanediti" disabled>
+                                          <option>Похудение после беременности</option>
+                                        </select>
                                     </div>
                                     <div class="alert alert-warning" role="alert">
                                       ШКАЛА ВЫПОЛНЕНЫХ ЗАДАНИЙ
@@ -147,7 +186,42 @@
                                     <a href="#" class="btn btn-block btn-danger">ОТМЕНИТЬ ПОДПИСКУ</a>
                                 </div>
                             </div>
-                            <hr>
+
+                            <div class="alert alert-warning" role="alert">
+                                      ИЗМЕНЕНИЕ ВАШИХ ПАРАМЕТРОВ
+                                      <a href="" data-toggle="modal" data-target="#params" class="float-right"><i class="i-Edit text-16"></i></a>
+                                    </div>
+
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table ">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col">#</th>
+                                          <th scope="col">Дата замера</th>
+                                          <th scope="col">Рост</th>
+                                          <th scope="col">Вес</th>
+                                          <th scope="col">Талия</th>
+                                          <th scope="col">Объем ноги</th>
+                                          <th scope="col">Объем руки</th>
+                                          <th scope="col">Действие</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">1</th>
+                                          <td>Mark</td>
+                                          <td>Otto</td>
+                                          <td>@mdo</td>
+                                          <td>@mdo</td>
+                                          <td>@mdo</td>
+                                          <td>@mdo</td>
+                                          <td><input type="submit" value="Удалить" class="btn btn-primary"></td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="timeline" role="tabpanel" aria-labelledby="timeline-tab">
                             <ul class="timeline clearfix">
@@ -459,7 +533,68 @@
                 </div>
             </div>
 
+            <div class="modal fade" id="password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Смена пароля</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group">
+                        <input type="password" class="form-control" id="newpass" placeholder="Новый пароль">
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary">Изменить</button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
+            <div class="modal fade" id="params" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Добавление изменений параметров</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group">
+                        <input type="date" class="form-control" id="newpass" placeholder="Дата замера">
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="newpass" placeholder="Рост">
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="newpass" placeholder="Вес">
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="newpass" placeholder="Талия">
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="newpass" placeholder="Объем ноги">
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="newpass" placeholder="Объем руки">
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary">Добавить замер</button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
 @endsection
 

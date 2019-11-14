@@ -199,6 +199,8 @@ $(window).on("load", function () {
   jQuery("#preloader").delay(500).fadeOut("slow");
 });
 
+
+
 /***/ }),
 
 /***/ 1:
@@ -214,3 +216,4 @@ module.exports = __webpack_require__(/*! c:\xampp\htdocs\laravel\07.admin-templa
 /***/ })
 
 /******/ });
+
