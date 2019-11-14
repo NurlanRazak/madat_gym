@@ -146,3 +146,4 @@ Route::view('search-results', 'search-results')->name('search-results');
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
+Route::redirect('home', '/');

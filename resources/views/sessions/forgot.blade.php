@@ -23,7 +23,12 @@
                         		@csrf
                                 <div class="form-group">
                                     <label for="email">Email адрес</label>
-                                    <input id="email" class="form-control form-control-rounded" type="email" name="email">
+                                    <input id="email" class="form-control form-control-rounded @error('email') is-invalid @enderror" type="email" name="email">
+                                    @error('email')
+                      					<div class="alert alert-danger" role="alert">
+                      					  <strong>{{ $message }}</strong>
+                      					</div>
+                      				@enderror
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-block btn-rounded mt-3">Восстановить пароль</button>
 

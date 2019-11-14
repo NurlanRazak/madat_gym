@@ -3,9 +3,9 @@
 @section('content')
 <div class="headerc text-center"><img src="logo.png" alt="madatgym" width="50"></div>
     <section class="jumbotron text-center">
-    	
+
     </section>
-    
+
     <div class="container">
 		@if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -19,7 +19,7 @@
     		@csrf
 			<div class="form-group">
 			  <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Ваша эклектронная почта">
-			  
+
 			  @error('email')
 					<div class="alert alert-danger" role="alert">
 					  <strong>{{ $message }}</strong>
