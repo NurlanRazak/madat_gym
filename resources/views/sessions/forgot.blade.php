@@ -19,12 +19,13 @@
             <div class="card o-hidden" style="width: 20rem; margin: auto;">
                         <div class="p-4">
                             <h1 class="mb-3 text-18">Восстановление пароля</h1>
-                            <form action="">
+                            <form method="POST" action="{{ route('password.email') }}">
+                        		@csrf
                                 <div class="form-group">
                                     <label for="email">Email адрес</label>
-                                    <input id="email" class="form-control form-control-rounded" type="email">
+                                    <input id="email" class="form-control form-control-rounded" type="email" name="email">
                                 </div>
-                                <button class="btn btn-primary btn-block btn-rounded mt-3">Восстановить пароль</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-rounded mt-3">Восстановить пароль</button>
 
                             </form>
                             <div class="mt-3 text-center">

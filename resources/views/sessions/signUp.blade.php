@@ -20,24 +20,40 @@
                         <div class="p-4">
 
                             <h1 class="mb-3 text-18">Регистрация</h1>
-                            <form action="">
+                            <form method="POST" action="{{ route('register') }}">
+                            @csrf
                                 <div class="form-group">
                                     <label for="username">Ваше имя</label>
-                                    <input id="username" class="form-control form-control-rounded" type="text">
+                                    <input id="username" class="form-control form-control-rounded" type="text" name="name">
+                                    @error('name')
+                                       <div class="alert alert-danger" role="alert">
+                                         <strong>{{ $message }}</strong>
+                                       </div>
+                                   @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email адрес</label>
-                                    <input id="email" class="form-control form-control-rounded" type="email">
+                                    <input id="email" class="form-control form-control-rounded" type="email" name="email">
+                                    @error('email')
+                      					<div class="alert alert-danger" role="alert">
+                      					  <strong>{{ $message }}</strong>
+                      					</div>
+                      				@enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Пароль</label>
-                                    <input id="password" class="form-control form-control-rounded" type="password">
+                                    <input id="password" class="form-control form-control-rounded" type="password" name="password">
+                                    @error('password')
+                      					<div class="alert alert-danger" role="alert">
+                      					  <strong>{{ $message }}</strong>
+                      					</div>
+                      				@enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="repassword">Повторите пароль</label>
-                                    <input id="repassword" class="form-control form-control-rounded" type="password">
+                                    <input id="repassword" class="form-control form-control-rounded" type="password" name="password_confirmation">
                                 </div>
-                                <button class="btn btn-primary btn-block btn-rounded mt-3">Регистрация</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-rounded mt-3">Регистрация</button>
                             </form>
                         </div>
             </div>

@@ -6,7 +6,7 @@
 
 		</section>
     <div class="container">
-		
+
     	<h1>ДОБРО ПОЖАЛОВАТЬ В MADATGYM!</h1>
     	<form method="post" action="{{ route('login') }}">
     		@csrf

@@ -19,16 +19,18 @@
             <div class="card o-hidden" style="width: 20rem; margin: auto;">
                         <div class="p-4">
                             <h1 class="mb-3 text-18">Вход</h1>
-                            <form>
+                            <form method="post" action="{{ route('login') }}">
+                                @csrf
                                 <div class="form-group">
                                     <label for="email">Email адрес</label>
-                                    <input id="email" class="form-control form-control-rounded" type="email">
+                                    <input id="email" class="form-control form-control-rounded" name="email" type="email">
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Пароль</label>
-                                    <input id="password" class="form-control form-control-rounded" type="password">
+                                    <input id="password" name="password" class="form-control form-control-rounded" type="password">
+
                                 </div>
-                                <button class="btn btn-rounded btn-primary btn-block mt-2">Вход</button>
+                                <button type="submit" class="btn btn-rounded btn-primary btn-block mt-2">Вход</button>
 
                             </form>
 
