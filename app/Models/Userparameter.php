@@ -28,13 +28,27 @@ class Userparameter extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public static function boot()
+    {
+        parent::boot();
+        static::deleting(function($obj) {
+            \Storage::disk('uploads')->delete($obj->image);
+        });
+    }
 
+    public static function getConsumerOptions() : array
+    {
+        return \App\User::whereDoesntHave('roles')->pluck('email', 'id')->toArray();
+    }
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -52,4 +66,12 @@ class Userparameter extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+    public function setImagesAttribute($value)
+    {
+        $attribute_name = "images";
+        $disk = "uploads";
+        $destination_path = "article";
+
+        $this->uploadMultipleFilesToDisk($value, $attribute_name, $disk, $destination_path);
+    }
 }
