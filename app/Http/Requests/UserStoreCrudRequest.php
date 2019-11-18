@@ -27,7 +27,19 @@ class UserStoreCrudRequest extends FormRequest
         return [
             'email'    => 'required|unique:'.config('permission.table_names.users', 'users').',email',
             'name'     => 'required',
-            'password' => 'required|confirmed',
+            'password' => 'required|confirmed|min:6',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.required' => 'Емайл должен быть заполнен',
+            'name.required' => 'Заполните Название',
+            'password.required' => 'Заполните поле пароля',
+            'password.confirmed' => 'Пароли не совпадают',
+            'unique' => 'Такой пользователь уже существует',
+            'min' => 'Пароль должен быть больше 6 символов',
         ];
     }
 }

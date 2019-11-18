@@ -44,8 +44,11 @@ class AdminMenuGenerator
         $user = backpack_user();
         $ans = true;
         if (count($permissions))
+            // $ans &= true;//$user->hasAllPermissions($permissions);
+            // dd($user->hasAllPermissions($permissions));
             $ans &= $user->hasAllPermissions($permissions);
         if (count($roles))
+            // $ans &= true;//$user->hasAllPermissions($permissions);
             $ans &= $user->hasAnyRole($roles);
         return $ans;
     }
@@ -57,6 +60,8 @@ class AdminMenuGenerator
         {
             $permission_names = array_merge($permission_names, Permission::getNamesByModelAndActions($model, $actions));
         }
+        // if (count($permission_names))
+        //     dd($permission_names);
         return $permission_names;
     }
 
