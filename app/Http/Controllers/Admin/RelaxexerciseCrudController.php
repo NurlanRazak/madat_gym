@@ -48,12 +48,12 @@ class RelaxexerciseCrudController extends CrudController
                 'label' => 'Название упражнения'
             ],
             [
-                'name' => 'short_desc',
+                'name' => 'short_description',
                 'label' => 'Короткое описание',
                 'type' => 'text',
             ],
             [
-                'name' => 'long_desc',
+                'name' => 'long_description',
                 'label' => 'Длинное описание',
                 'type' => 'text',
             ],
@@ -86,12 +86,12 @@ class RelaxexerciseCrudController extends CrudController
                 'label' => 'Название упражнения'
             ],
             [
-                'name' => 'short_desc',
+                'name' => 'short_description',
                 'label' => 'Короткое описание',
                 'type' => 'textarea',
             ],
             [
-                'name' => 'long_desc',
+                'name' => 'long_description',
                 'label' => 'Длинное описание',
                 'type' => 'ckeditor',
             ],
@@ -109,6 +109,9 @@ class RelaxexerciseCrudController extends CrudController
                 'label' => 'Видео',
                 'type' => 'upload',
                 'upload' => true,
+                'attributes' => [
+                    'accept' => 'video/*',
+                ],
                 'disk' => 'uploads',
             ],
             [
@@ -116,6 +119,9 @@ class RelaxexerciseCrudController extends CrudController
                 'label' => 'Аудио',
                 'type' => 'upload',
                 'upload' => true,
+                'attributes' => [
+                    'accept' => 'audio/*',
+                ],
                 'disk' => 'uploads',
             ],
             [

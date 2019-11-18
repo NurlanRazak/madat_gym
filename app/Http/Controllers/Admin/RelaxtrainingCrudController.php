@@ -9,6 +9,7 @@ use App\Http\Requests\RelaxtrainingRequest as StoreRequest;
 use App\Http\Requests\RelaxtrainingRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
 use App\Services\MenuService\Traits\AccessLevelsTrait;
+use App\Models\Relaxtraining;
 
 /**
  * Class RelaxtrainingCrudController
@@ -106,19 +107,29 @@ class RelaxtrainingCrudController extends CrudController
             [
                 'name' => 'users',
                 'label' => 'Пользователи',
-                'type' => 'select2_multiple',
-                'entity' => 'users',
-                'attribute' => 'name',
-                'model' => 'App\User',
-                'pivot' => true,
+                'type' => 'select2_from_array',
+                'options' => Relaxtraining::getConsumerOptions(),
             ],
             [
                 'name' => 'number_day',
                 'label' => 'Номер дня',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
             ],
             [
                 'name' => 'time',
                 'label' => 'Время',
+                'type' => 'time',
+            //     'type' => 'date_range',
+            //     'start_name' => 'start_date', // the db column that holds the start_date
+            //     'end_name' => 'end_date',
+            // // OPTIONALS
+            //     'start_default' => '2019-12-28 01:01', // default value for start_date
+            //     'end_default' => '2019-12-28 02:00', // default value for end_date
+            //     'date_range_options' => [ // options sent to daterangepicker.js
+            //         'timePicker' => true,
+            //         'locale' => ['format' => 'HH:mm']
+            //     ]
             ],
             [
                 'name' => 'active',

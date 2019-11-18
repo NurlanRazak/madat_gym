@@ -69,6 +69,8 @@ class FoodprogramCrudController extends CrudController
             [
                 'name' => 'calorie',
                 'label' => 'Калорийность в день',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-8',
                 ],
@@ -76,6 +78,8 @@ class FoodprogramCrudController extends CrudController
             [
                 'name' => 'days',
                 'label' => 'Количество дней',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4',
                 ],

@@ -64,6 +64,8 @@ class EathourCrudController extends CrudController
             [
                 'name' => 'hour_start',
                 'label' => 'Время начала',
+                'type' => 'time',
+                'default' => '09:00',
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-6',
                 ],
@@ -71,6 +73,8 @@ class EathourCrudController extends CrudController
             [
                 'name' => 'hour_finish',
                 'label' => 'Время окончания',
+                'type' => 'time',
+                'default' => '13:00',
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-6',
                 ],

@@ -99,6 +99,8 @@ class PlaneatCrudController extends CrudController
             [
                 'name' => 'days',
                 'label' => 'День в программе',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
             ],
             [
                 'name' => 'eathours',

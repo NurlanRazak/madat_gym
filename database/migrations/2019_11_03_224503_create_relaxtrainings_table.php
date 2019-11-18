@@ -17,8 +17,8 @@ class CreateRelaxtrainingsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->integer('number_day');
-            $table->float('time', 8,4);
-            
+            $table->string('time');
+
             $table->boolean('active')->default(false);
             $table->timestamps();
         });

@@ -54,13 +54,18 @@ class GroceryCrudController extends CrudController
                 'model' => 'App\Models\Training',
             ],
             [
-                'name' => 'meals',
-                'label' => 'Блюдо',
-                'type' => 'select_multiple',
-                'entity' => 'meals',
-                'attribute' => 'name',
-                'model' => 'App\Models\Meal',
+                'name' => 'groceries',
+                'label' => 'Справочника продуктов – огурцы, помидоры',
+
             ],
+            // [
+            //     'name' => 'meals',
+            //     'label' => 'Блюдо',
+            //     'type' => 'select_multiple',
+            //     'entity' => 'meals',
+            //     'attribute' => 'name',
+            //     'model' => 'App\Models\Meal',
+            // ],
             [
                 'name' => 'active',
                 'label' => 'Опубликован',
@@ -72,6 +77,8 @@ class GroceryCrudController extends CrudController
             [
                 'name' => 'notify_day',
                 'label' => 'День оповещения',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
             ],
             [
                 'name' => 'description',
@@ -87,14 +94,19 @@ class GroceryCrudController extends CrudController
                 'pivot' => true,
             ],
             [
-                'name' => 'meals',
-                'label' => 'Блюдо',
-                'type' => 'select2_multiple',
-                'entity' => 'meals',
-                'attribute' => 'name',
-                'model' => 'App\Models\Meal',
-                'pivot' => true,
+                'name' => 'groceries',
+                'label' => 'Справочника продуктов – огурцы, помидоры',
+                'type' => 'textarea',
             ],
+            // [
+            //     'name' => 'meals',
+            //     'label' => 'Блюдо',
+            //     'type' => 'select2_multiple',
+            //     'entity' => 'meals',
+            //     'attribute' => 'name',
+            //     'model' => 'App\Models\Meal',
+            //     'pivot' => true,
+            // ],
             [
                 'name' => 'active',
                 'label' => 'Опубликован',

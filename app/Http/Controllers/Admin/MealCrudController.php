@@ -83,6 +83,8 @@ class MealCrudController extends CrudController
             [
                 'name' => 'calorie',
                 'label' => 'Калорийность',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4',
                 ],
@@ -90,6 +92,8 @@ class MealCrudController extends CrudController
             [
                 'name' => 'weight',
                 'label' => 'Вес',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4',
                 ],
@@ -97,6 +101,8 @@ class MealCrudController extends CrudController
             [
                 'name' => 'price',
                 'label' => 'Цена',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4',
                 ],

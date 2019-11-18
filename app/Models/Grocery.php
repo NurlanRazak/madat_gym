@@ -19,7 +19,7 @@ class Grocery extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['notify_day', 'description', 'training_id', 'meal_id', 'active'];
+    protected $fillable = ['notify_day', 'description', 'training_id', 'meal_id', 'active', 'groceries'];
     // protected $hidden = [];
     // protected $dates = [];
 

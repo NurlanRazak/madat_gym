@@ -69,6 +69,8 @@ class RelaxprogramCrudController extends CrudController
             [
                 'name' => 'hours',
                 'label' => 'Часов в день',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-6'
                 ],
@@ -76,6 +78,8 @@ class RelaxprogramCrudController extends CrudController
             [
                 'name' => 'days',
                 'label' => 'Количество дней',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-6'
                 ],

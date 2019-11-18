@@ -34,7 +34,7 @@ class Relaxtraining extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    
+
     public function exercises()
     {
         return $this->belongsToMany('App\Models\Relaxexercise', 'relaxtrainings_relaxexercises', 'relaxtraining_id', 'exercise_id');
@@ -63,7 +63,10 @@ class Relaxtraining extends Model
     | ACCESORS
     |--------------------------------------------------------------------------
     */
-
+    public static function getConsumerOptions() : array
+    {
+        return \App\User::whereDoesntHave('roles')->pluck('email', 'id')->toArray();
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
