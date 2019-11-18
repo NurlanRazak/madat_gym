@@ -129,10 +129,14 @@ class ProgramtrainingCrudController extends CrudController
             [
                 'name' => 'duration',
                 'label' => 'Длительность (в днях)',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
             ],
             [
                 'name' => 'price',
                 'label' => 'Цена',
+                'type' => 'number',
+                'attributes' => ["step" => "0.001"],
             ],
             [
                 'name' => 'programtype_id',

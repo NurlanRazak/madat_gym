@@ -55,10 +55,14 @@ class ActiveprogramCrudController extends CrudController
             [
                 'name' => 'date_start',
                 'label' => 'Дата активации',
+                'type' => "datetime",
+                'format' => 'l',
             ],
             [
                 'name' => 'date_finish',
                 'label' => 'Дата завершения',
+                'type' => "datetime",
+                'format' => 'l',
             ],
         ]);
         $this->crud->addFields([

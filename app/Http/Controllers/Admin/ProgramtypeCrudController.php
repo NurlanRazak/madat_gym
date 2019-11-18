@@ -47,22 +47,22 @@ class ProgramtypeCrudController extends CrudController
                 'name' => 'name',
                 'label' => 'Название типа',
             ],
-            [
-                'name' => 'active',
-                'label' => 'Опубликован',
-                'type' => 'check',
-            ]
+            // [
+            //     'name' => 'active',
+            //     'label' => 'Опубликован',
+            //     'type' => 'check',
+            // ]
         ]);
         $this->crud->addFields([
             [
                 'name' => 'name',
                 'label' => 'Название типа',
             ],
-            [
-                'name' => 'active',
-                'label' => 'Опубликован',
-                'type' => 'checkbox',
-            ]
+            // [
+            //     'name' => 'active',
+            //     'label' => 'Опубликован',
+            //     'type' => 'checkbox',
+            // ]
         ]);
 
         // add asterisk for fields that are required in ProgramtypeRequest
