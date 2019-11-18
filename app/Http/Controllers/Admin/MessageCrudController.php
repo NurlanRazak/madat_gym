@@ -120,7 +120,7 @@ class MessageCrudController extends CrudController
                 'label' => 'Статус',
                 'type' => 'select_from_array',
                 'options' => Message::getStatusOptions(),
-                'default' => Message::READY,
+                'default' => Message::DRAFT,
                 'wrapperAttributes' => [
                     'class' => 'form-group col-sm-12',
                 ],

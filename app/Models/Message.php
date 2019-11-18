@@ -16,9 +16,8 @@ class Message extends Model
     |--------------------------------------------------------------------------
     */
 
-    const SENT = 2;
-    const READY = 0;
-    const CANCELED = 1;
+    const DRAFT = 0;
+    const SENT = 1;
 
     protected $table = 'messages';
     // protected $primaryKey = 'id';
@@ -66,8 +65,7 @@ class Message extends Model
     {
         return [
             static::SENT => 'Отправлено',
-            static::READY => 'Готово к отправке',
-            static::CANCELED => 'Отменено',
+            static::DRAFT => 'Черновик',
         ];
     }
     /*
