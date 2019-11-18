@@ -58,6 +58,14 @@ class EquipmentCrudController extends CrudController
                 'label' => 'День оповещения',
             ],
             [
+                'name' => 'lists',
+                'label' => 'Список оборудования',
+                'type' => 'select_multiple',
+                'entity' => 'lists',
+                'attribute' => 'name',
+                'model' => 'App\Models\Listequip',
+            ],
+            [
                 'name' => 'trainings',
                 'label' => 'Тренировки',
                 'type' => 'select_multiple',
@@ -93,6 +101,20 @@ class EquipmentCrudController extends CrudController
             [
                 'name' => 'notify_day',
                 'label' => 'День оповещения',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-md-6'
+                ],
+            ],
+            [
+                'name' => 'lists',
+                'label' => 'Список оборудования',
+                'type' => 'select2_multiple',
+                'entity' => 'lists',
+                'attribute' => 'name',
+                'model' => 'App\Models\Listequip',
+                'pivot' => true,
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-6'
                 ],

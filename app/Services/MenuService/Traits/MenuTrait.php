@@ -67,9 +67,17 @@ trait MenuTrait
                         ],
                     ],
                     [
+                        'route'        => backpack_url('listequip'),
+                        'icon'         => 'fa fa-tasks',
+                        'label'        => 'Список Оборудования',
+                        'permissions'  => [
+                            'Equipment' => 'view',
+                        ],
+                    ],
+                    [
                         'route'        => backpack_url('equipment'),
                         'icon'         => 'fa fa-gavel',
-                        'label'        => 'Оборудования',
+                        'label'        => 'Оборудование для тренировок',
                         'permissions'  => [
                             'Equipment' => 'view',
                         ],

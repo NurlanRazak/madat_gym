@@ -44,6 +44,11 @@ class Equipment extends Model
     {
         return $this->belongsToMany('App\Models\Training', 'equipment_training', 'equipment_id', 'training_id');
     }
+
+    public function lists()
+    {
+        return $this->belongsToMany('App\Models\Listequip', 'equipment_list', 'equipment_id', 'listequip_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
