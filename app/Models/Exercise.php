@@ -100,6 +100,7 @@ class Exercise extends Model
         $disk = 'uploads';
         $destination_path = "exercises/videos";
 
+        // dd($this->uploadFileToDisk($value, $attribute_name, $disk, $destination_path));
         $this->uploadFileToDisk($value, $attribute_name, $disk, $destination_path);
     }
 }

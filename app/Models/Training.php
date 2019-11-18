@@ -36,7 +36,7 @@ class Training extends Model
     */
     public function exercises()
     {
-        return $this->belongsToMany('App\Models\Exercise', 'training_exercise', 'training_id', 'exercise_id');
+        return $this->belongsToMany('App\Models\Exercise', 'training_exercise_pivot', 'training_id', 'exercise_id');
     }
 
     public function programtrainings()

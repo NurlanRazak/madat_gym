@@ -105,6 +105,9 @@ class ExerciseCrudController extends CrudController
                 'label' => 'Видео',
                 'type' => 'upload',
                 'upload' => true,
+                'attributes' => [
+                    'accept' => 'video/*',
+                ],
                 'disk' => 'uploads',
             ],
             [

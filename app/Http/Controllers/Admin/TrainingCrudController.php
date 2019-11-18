@@ -122,6 +122,8 @@ class TrainingCrudController extends CrudController
             [
                 'name' => 'day_number',
                 'label' => 'Номер дня',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4'
                 ],
@@ -129,6 +131,8 @@ class TrainingCrudController extends CrudController
             [
                 'name' => 'approaches_number',
                 'label' => 'Количество подходов',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4'
                 ],
@@ -136,6 +140,8 @@ class TrainingCrudController extends CrudController
             [
                 'name' => 'repetitions_number',
                 'label' => 'Количество повторений',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4'
                 ],
@@ -143,6 +149,8 @@ class TrainingCrudController extends CrudController
             [
                 'name' => 'weight',
                 'label' => 'Вес',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
             ],
             [
                 'name' => 'active',
