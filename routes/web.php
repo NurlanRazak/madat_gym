@@ -11,6 +11,11 @@
 |
 */
 
+Route::get('/test', function() {
+    $user = \App\User::where('email', 'qwe@gmail.com')->whereDoesntHave('roles')->first();
+    dd($user);
+});
+
 Route::get('/', function () {
     return view('dashboard.dashboardv1');
 });

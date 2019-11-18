@@ -13,7 +13,7 @@ fi
 chmod 777 -R storage
 chmod 777 -R bootstrap
 
-php artisan key:generate
+#php artisan key:generate
 
 if [ "$1" = "-d" ]; then
     php artisan migrate:fresh --force

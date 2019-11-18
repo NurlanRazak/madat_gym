@@ -168,6 +168,14 @@ trait MenuTrait
                         ],
                     ],
                     [
+                        'route'         => backpack_url('userparameter'),
+                        'icon'          => 'fa fa-user',
+                        'label'         => 'Параметры Пользователя',
+                        'permissions'   => [
+                            'User' => 'view',
+                        ],
+                    ],
+                    [
                         'route'         => backpack_url('user'),
                         'icon'          => 'fa fa-user',
                         'label'         => 'Сотрудники',

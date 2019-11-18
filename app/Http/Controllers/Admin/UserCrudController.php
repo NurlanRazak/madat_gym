@@ -8,6 +8,7 @@ use App\Http\Requests\UserUpdateCrudRequest as UpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Services\MenuService\Traits\AccessLevelsTrait;
+use Carbon\Carbon;
 
 class UserCrudController extends CrudController
 {
@@ -52,6 +53,46 @@ class UserCrudController extends CrudController
                'entity'    => 'permissions', // the method that defines the relationship in your Model
                'attribute' => 'name', // foreign key attribute that is shown to user
                'model'     => config('permission.models.permission'), // foreign key model
+            ],
+            [
+                'name' => 'iin',
+                'label' => 'ИИН',
+            ],
+            [
+                'name' => 'phone_number',
+                'label' => 'Телефон номера',
+            ],
+            [
+                'name' => 'image',
+                'label' => 'Изображение',
+                'type' => 'image',
+                'prefix' => 'uploads/',
+                'width' => '150px',
+                'height' => '150px',
+            ],
+            [
+                'name' => 'date_hired',
+                'label' => 'Дата принятия на работу',
+                'type' => 'datetime',
+                'format' => 'l',
+            ],
+            [
+                'name' => 'position',
+                'label' => 'Должность',
+            ],
+            [
+                'name' => 'date_fired',
+                'label' => 'Дата увольнения',
+                'type' => 'datetime',
+                'format' => 'l',
+            ],
+            [
+                'name' => 'address',
+                'label' => 'Адрес',
+            ],
+            [
+                'name' => 'social_media',
+                'label' => 'Соц сети',
             ],
         ]);
 
@@ -116,6 +157,67 @@ class UserCrudController extends CrudController
             //         //     'number_columns' => 3, //can be 1,2,3,4,6
             //         // ],
             //     ],
+            ],
+            [
+                'name' => 'image',
+                'label' => 'Изображение',
+                'type' => 'image',
+                'upload' => true,
+                'disk' => 'uploads',
+            ],
+            [
+                'name' => 'date_hired',
+                'label' => 'Дата принятия на работу',
+                'type' => 'datetime_picker',
+                'datetime_picker_options' => [
+                    'format' => 'DD/MM/YYYY HH:mm',
+                ],
+                'allows_null' => false,
+                'default' => Carbon::now(),
+            ],
+            [
+                'name' => 'position',
+                'label' => 'Должность',
+            ],
+            [
+                'name' => 'date_fired',
+                'label' => 'Дата увольнения',
+                'type' => 'datetime_picker',
+                'datetime_picker_options' => [
+                    'format' => 'DD/MM/YYYY HH:mm',
+                ],
+                'allows_null' => false,
+                'default' => Carbon::now(),
+            ],
+            [
+                'name' => 'address',
+                'label' => 'Адрес',
+            ],
+            [
+                'name' => 'iin',
+                'label' => 'ИИН',
+                'type' => 'text',
+                'attributes' => [
+                    'step' => 1,
+                    'min' => 0,
+                    'pattern' => "^\d+$",
+                    // 'oninput' => "$(this).val(parseInt(this.value));",
+                ],
+            ],
+            [
+                'name' => 'phone_number',
+                'label' => 'Номер телефона',
+                'type' => 'text',
+                'attributes' => [
+                    'step' => 1,
+                    'min' => 11,
+                    'pattern' => '^[7, 8]{1}[0-9]{10}$',
+                    'title' => '',
+                ],
+            ],
+            [
+                'name' => 'social_media',
+                'label' => 'Соц сети',
             ],
         ]);
     }
