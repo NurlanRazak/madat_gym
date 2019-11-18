@@ -9,7 +9,7 @@ use App\Http\Requests\PurchaseRequest as StoreRequest;
 use App\Http\Requests\PurchaseRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
 use App\Services\MenuService\Traits\AccessLevelsTrait;
-
+use App\Models\Purchase;
 /**
  * Class PurchaseCrudController
  * @package App\Http\Controllers\Admin
@@ -60,6 +60,8 @@ class PurchaseCrudController extends CrudController
             [
                 'name' => 'status',
                 'label' => 'Статус',
+                'type' => 'select_from_array',
+                'options' => Purchase::getStatusOptions(),
             ],
             [
                 'name' => 'start_date',
@@ -71,10 +73,8 @@ class PurchaseCrudController extends CrudController
             [
                 'name' => 'user_id',
                 'label' => 'Пользователь',
-                'type' => 'select2',
-                'entity' => 'user',
-                'attribute' => 'name',
-                'model' => 'App\User',
+                'type' => 'select2_from_array',
+                'options' => Purchase::getConsumerOptions(),
             ],
             [
                 'name' => 'typepurchase_id',
@@ -92,10 +92,12 @@ class PurchaseCrudController extends CrudController
             [
                 'name' => 'status',
                 'label' => 'Статус',
+                'type' => 'select2_from_array',
+                'options' => Purchase::getStatusOptions(),
             ],
             [
                 'name' => 'start_date',
-                'label' => 'Дата подписки',
+                'label' => 'Дата покупки',
                 'type' => 'date_picker',
             ],
         ]);

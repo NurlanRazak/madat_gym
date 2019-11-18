@@ -116,6 +116,8 @@ class RelaxtrainingCrudController extends CrudController
                 'type' => 'number',
                 'attributes' => ["step" => "any"],
             ],
+
+            //TODO time fix
             [
                 'name' => 'time',
                 'label' => 'Время',

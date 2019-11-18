@@ -17,8 +17,9 @@ class Purchase extends Model
     |--------------------------------------------------------------------------
     */
     //TODO consts to status
+    const PAID = 1;
+    const NOTPAID = 0;
 
-    
     protected $table = 'purchases';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
@@ -57,7 +58,18 @@ class Purchase extends Model
     | ACCESORS
     |--------------------------------------------------------------------------
     */
+    public static function getConsumerOptions() : array
+    {
+        return \App\User::whereDoesntHave('roles')->pluck('email', 'id')->toArray();
+    }
 
+    public static function getStatusOptions() : array
+    {
+        return [
+            static::PAID => 'Оплачено',
+            static::NOTPAID => 'Не оплачено'
+        ];
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
