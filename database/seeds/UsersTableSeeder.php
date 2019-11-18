@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\BackpackUser;
+use App\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        BackpackUser::create([
+        User::create([
             'email' => 'admin@admin.com',
             'login' => 'admin',
             'password' => bcrypt('adminadmin'),
@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => date('Y-m-d H:i:s'),
         ])->assignRole('superadmin');
 
-        BackpackUser::create([
+        User::create([
             'name' => 'admin',
             'login' => 'admin',
             'email' => 's.breussov@gmail.com',

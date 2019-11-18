@@ -17,7 +17,7 @@ class CreateSubscriptionsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->integer('days');
-            $table->integer('price');
+            $table->float('price');
             $table->timestamp('expires');
 
             $table->boolean('active')->default(false);

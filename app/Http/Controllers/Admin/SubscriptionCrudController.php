@@ -60,11 +60,11 @@ class SubscriptionCrudController extends CrudController
                 'label' => 'Дата истечения',
                 'type' => 'date',
             ],
-            [
-                'name' => 'active',
-                'label' => 'Опубликован',
-                'type' => 'check',
-            ],
+            // [
+            //     'name' => 'active',
+            //     'label' => 'Опубликован',
+            //     'type' => 'check',
+            // ],
         ]);
 
         $this->crud->addFields([
@@ -81,6 +81,8 @@ class SubscriptionCrudController extends CrudController
                 'attributes' => [
                     'placeholder' => 'Введите цифры',
                 ],
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-8'
                 ],
@@ -104,12 +106,14 @@ class SubscriptionCrudController extends CrudController
                 'attributes' => [
                     'placeholder' => 'Введите цифры',
                 ],
+                'type' => 'number',
+                'attributes' => ["step" => "0.001"],
             ],
-            [
-                'name' => 'active',
-                'label' => 'Опубликовать',
-                'type' => 'checkbox',
-            ],
+            // [
+            //     'name' => 'active',
+            //     'label' => 'Опубликовать',
+            //     'type' => 'checkbox',
+            // ],
         ]);
 
         // add asterisk for fields that are required in SubscriptionRequest
