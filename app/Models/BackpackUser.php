@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\User;
 use Backpack\Base\app\Models\Traits\InheritsRelationsFromParentModel;
-use Backpack\Base\app\Notifications\ResetPasswordNotification as ResetPasswordNotification;
+use App\Notifications\ResetPasswordNotification as ResetPasswordNotification;
 use Backpack\CRUD\CrudTrait;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
