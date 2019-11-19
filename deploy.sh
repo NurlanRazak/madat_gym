@@ -10,8 +10,8 @@ else
     composer dump-autoload
 fi
 
-chmod 777 -R storage
-chmod 777 -R bootstrap
+sudo chmod 777 -R storage
+sudo chmod 777 -R bootstrap
 
 #php artisan key:generate
 
@@ -24,7 +24,7 @@ fi
 php artisan cache:clear
 php artisan config:clear
 
-chmod 777 -R storage
-chmod 777 -R bootstrap
+sudo chmod 777 -R storage
+sudo chmod 777 -R bootstrap
 
 #pm2 start queue-worker.yml

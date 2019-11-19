@@ -24,7 +24,7 @@ class PermissionsTableSeeder extends Seeder
         foreach($classes as $class) {
             foreach($crud as $action) {
                 Permission::firstOrCreate([
-                    'name'      => "{$action} {$class}",
+                    'name'      => trans("menu.{$action}_{$class}"),
                     'action'    => $action,
                     'model'     => $class
                 ]);
