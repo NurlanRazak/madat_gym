@@ -9,6 +9,7 @@ use App\Models\Message;
 use Backpack\CRUD\CrudTrait;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
+use App\Notifications\ResetPassword as ResetPasswordNotification;
 
 class User extends Authenticatable implements MustVerifyEmail
 {

@@ -1,4 +1,4 @@
-{{-- @component('mail::message')
+@component('mail::message')
 {{-- Greeting --}}
 @if (! empty($greeting))
 # {{ $greeting }}
@@ -43,15 +43,14 @@
 @if (! empty($salutation))
 {{ $salutation }}
 @else
-@lang('Regards'),<br>{{ config('app.name') }}
+С уважением,<br>команда Madatgym.com
 @endif
 
 {{-- Subcopy --}}
 @isset($actionText)
 @slot('subcopy')
 @lang(
-    "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\n".
-    'into your web browser: [:actionURL](:actionURL)',
+    'Если у вас не получается перейти на страницу восстановления пароля, то вы можете скопировать данную ссылку и вставить в поисковую строку вашего  браузера: [:actionURL](:actionURL)',
     [
         'actionText' => $actionText,
         'actionURL' => $actionUrl,
@@ -60,35 +59,3 @@
 @endslot
 @endisset
 @endcomponent
---}}
-
-
-Подтвердите ваш email:
-@isset($actionText)
-<?php
-    switch ($level) {
-        case 'success':
-        case 'error':
-            $color = $level;
-            break;
-        default:
-            $color = 'primary';
-    }
-?>
-@component('mail::button', ['url' => $actionUrl, 'color' => $color])
-{{ $actionText }}
-@endcomponent
-@endisset
-
-@isset($actionText)
-@slot('subcopy')
-@lang(
-    "Если у вас возникли проблемы с нажатием \":actionText\" кнопки, скопируйте и вставьте приведенный ниже URL-адрес\n".
-    'в ваш веб-браузер: [:actionURL](:actionURL)',
-    [
-        'actionText' => $actionText,
-        'actionURL' => $actionUrl,
-    ]
-)
-@endslot
-@endisset
