@@ -45,6 +45,7 @@ class VerifyEmail extends Notification
 
         return (new MailMessage)
             ->subject(Lang::getFromJson('Подтвердите email'))
+            ->greeting(Lang::getFromJson('Добрый день!'))
             ->line(Lang::getFromJson('Пожалуйста, нажмите на кнопку внизу что бы подтвердить свой почтовый адрес.'))
             ->action(Lang::getFromJson('Подтвердить почтовый адрес'), $verificationUrl)
             ->line(Lang::getFromJson('Если вы не создавали аккаунт, пожалуйста, проигнорируйте данное письмо.'));
