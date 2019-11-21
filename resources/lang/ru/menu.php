@@ -45,5 +45,6 @@ return [
     'view_Purchase' => 'просмотр Покупок',
     'update_Typepurchase' => 'обновить Типы покупок',
     'view_Typepurchase' => 'просмотр Типы покупок',
-
+    'update_Listmeal' => 'обновить Список блюд',
+    'view_Listmeal' => 'просмотр Список блюд',
 ];

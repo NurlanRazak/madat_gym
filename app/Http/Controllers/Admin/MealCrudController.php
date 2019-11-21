@@ -52,6 +52,15 @@ class MealCrudController extends CrudController
                 'label' => 'Описание',
             ],
             [
+                'name' => 'listmeals',
+                'label' => trans_choice('admin.listmeal', 2),
+                'type' => 'select_multiple',
+                'entity' => 'listmeals',
+                'attribute' => 'name',
+                'model' => 'App\Models\Listmeal',
+                'pivot' => true,
+            ],
+            [
                 'name' => 'calorie',
                 'label' => 'Калорийность',
             ],
@@ -106,6 +115,15 @@ class MealCrudController extends CrudController
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4',
                 ],
+            ],
+            [
+                'name' => 'listmeals',
+                'label' => trans_choice('admin.listmeal', 2),
+                'type' => 'select2_multiple',
+                'entity' => 'listmeals',
+                'attribute' => 'name',
+                'model' => 'App\Models\Listmeal',
+                'pivot' => true,
             ],
             [
                 'name' => 'active',

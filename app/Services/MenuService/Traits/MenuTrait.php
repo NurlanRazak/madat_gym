@@ -106,6 +106,14 @@ trait MenuTrait
                         ],
                     ],
                     [
+                        'route'         => backpack_url('listmeal'),
+                        'icon'          => 'fa fa-cutlery',
+                        'label'         => 'Лист продуктов',
+                        'permissions'   => [
+                            'Listmeal' => 'view',
+                        ],
+                    ],
+                    [
                         'route'         => backpack_url('meal'),
                         'icon'          => 'fa fa-leaf',
                         'label'         => 'Блюда',

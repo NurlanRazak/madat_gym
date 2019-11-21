@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 
-class Meal extends Model
+class Listmeal extends Model
 {
     use CrudTrait;
 
@@ -15,11 +15,11 @@ class Meal extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'meals';
+    protected $table = 'listmeals';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'description', 'calorie', 'weight', 'price', 'active'];
+    protected $fillable = ['name', 'kalori'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -34,19 +34,13 @@ class Meal extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function listmeals()
-    {
-        return $this->belongsToMany('App\Models\Listmeal', 'meal_listmeal_pivot', 'meal_id', 'listmeal_id');
-    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
     |--------------------------------------------------------------------------
     */
-    public function scopeActive($query)
-    {
-        return $query->where('active', 1);
-    }
+
     /*
     |--------------------------------------------------------------------------
     | ACCESORS

@@ -18,7 +18,7 @@ class PermissionsTableSeeder extends Seeder
             'Activeprogram', 'Eathour', 'Equipment', 'Exercise', 'Foodprogram',
             'Grocery', 'Meal', 'Message', 'Planeat', 'Programtraining',
             'Programtype', 'Relaxexercise', 'Relaxprogram', 'Relaxtraining',
-            'Subscription', 'Training', 'Purchase', 'Typepurchase'
+            'Subscription', 'Training', 'Purchase', 'Typepurchase', 'Listmeal'
         ];
 
         foreach($classes as $class) {
