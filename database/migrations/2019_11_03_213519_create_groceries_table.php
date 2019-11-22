@@ -21,6 +21,8 @@ class CreateGroceriesTable extends Migration
             $table->foreign('training_id')->references('id')->on('trainings')->onDelete('cascade');
             $table->unsignedBigInteger('meal_id')->nullable();
             $table->foreign('meal_id')->references('id')->on('meals')->onDelete('cascade');
+            $table->unsignedBigInteger('programtraining_id')->nullable();
+            $table->foreign('programtraining_id')->references('id')->on('programtrainings')->onDelete('cascade');
             $table->text('groceries')->nullable();
             $table->boolean('active')->default(false);
             $table->timestamps();

@@ -66,13 +66,21 @@ class EquipmentCrudController extends CrudController
                 'model' => 'App\Models\Listequip',
             ],
             [
-                'name' => 'trainings',
-                'label' => 'Тренировки',
-                'type' => 'select_multiple',
-                'entity' => 'trainings',
+                'name' => 'programtraining_id',
+                'label' => 'Программы тренировок',
+                'type' => 'select',
+                'entity' => 'programtraining',
                 'attribute' => 'name',
-                'model' => 'App\Models\Trainings',
+                'model' => 'App\Models\Programtraining',
             ],
+            // [
+            //     'name' => 'trainings',
+            //     'label' => 'Тренировки',
+            //     'type' => 'select_multiple',
+            //     'entity' => 'trainings',
+            //     'attribute' => 'name',
+            //     'model' => 'App\Models\Trainings',
+            // ],
             [
                 'name' => 'active',
                 'label' => 'Опубликован',
@@ -120,18 +128,29 @@ class EquipmentCrudController extends CrudController
                 ],
             ],
             [
-                'name' => 'trainings',
-                'label' => 'Тренировки',
-                'type' => 'select2_multiple',
-                'entity' => 'trainings',
+                'name' => 'programtraining_id',
+                'label' => 'Программы тренировок',
+                'type' => 'select2',
+                'entity' => 'programtraining',
                 'attribute' => 'name',
-                'model' => 'App\Models\Training',
-                'pivot' => true,
-                'default' => 1,
+                'model' => 'App\Models\Programtraining',
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-6'
                 ],
             ],
+            // [
+            //     'name' => 'trainings',
+            //     'label' => 'Тренировки',
+            //     'type' => 'select2_multiple',
+            //     'entity' => 'trainings',
+            //     'attribute' => 'name',
+            //     'model' => 'App\Models\Training',
+            //     'pivot' => true,
+            //     'default' => 1,
+            //     'wrapperAttributes' => [
+            //         'class' => 'form-group col-md-6'
+            //     ],
+            // ],
             [
                 'name' => 'active',
                 'label' => 'Опубликован',

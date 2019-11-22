@@ -19,7 +19,7 @@ class Equipment extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'description', 'image', 'notify_day', 'training_id', 'active'];
+    protected $fillable = ['name', 'description', 'image', 'notify_day', 'training_id', 'programtraining_id', 'active'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -40,6 +40,11 @@ class Equipment extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function programtraining()
+    {
+        return $this->belongsTo('App\Models\Programtraining', 'programtraining_id');
+    }
+
     public function trainings()
     {
         return $this->belongsToMany('App\Models\Training', 'equipment_training', 'equipment_id', 'training_id');

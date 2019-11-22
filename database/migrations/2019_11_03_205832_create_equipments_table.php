@@ -21,7 +21,8 @@ class CreateEquipmentsTable extends Migration
             $table->integer('notify_day');
             $table->unsignedBigInteger('training_id')->nullable();
             $table->foreign('training_id')->references('id')->on('trainings')->onDelete('cascade');
-
+            $table->unsignedBigInteger('programtraining_id')->nullable();
+            $table->foreign('programtraining_id')->references('id')->on('programtrainings')->onDelete('cascade');
             $table->boolean('active')->default(false);
             $table->timestamps();
         });

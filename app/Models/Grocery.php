@@ -19,7 +19,7 @@ class Grocery extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['notify_day', 'description', 'training_id', 'meal_id', 'active', 'groceries'];
+    protected $fillable = ['notify_day', 'description', 'training_id', 'meal_id', 'programtraining_id', 'active', 'groceries'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -34,6 +34,11 @@ class Grocery extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function programtraining()
+    {
+        return $this->belongsTo('App\Models\Programtraining', 'programtraining_id');
+    }
+
     public function trainings()
     {
         return $this->belongsToMany('App\Models\Training', 'grocery_training', 'grocery_id', 'training_id');
