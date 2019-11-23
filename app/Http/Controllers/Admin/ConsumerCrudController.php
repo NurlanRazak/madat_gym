@@ -145,21 +145,30 @@ class ConsumerCrudController extends CrudController
             [
                 'name' => 'current_weight',
                 'label' => 'Вес текущий',
+                'type' => 'number',
+                'attibutes' => [
+                    'step' => 0.01,
+                ],
             ],
             [
                 'name' => 'height',
-                'label' => 'Рост'
+                'label' => 'Рост',
+                'type' => 'number',
+                'attributes' => [
+                    'step' => 0.01,
+
+                ],
             ],
             [
                 'name' => 'iin',
                 'label' => 'ИИН',
-                'type' => 'text',
-                'attributes' => [
-                    'step' => 1,
-                    'min' => 0,
-                    'pattern' => "^\d+$",
-                    // 'oninput' => "$(this).val(parseInt(this.value));",
-                ],
+                // 'type' => 'text',
+                // 'attributes' => [
+                //     'step' => 1,
+                //     'min' => 0,
+                //     'pattern' => "^\d+$",
+                //     // 'oninput' => "$(this).val(parseInt(this.value));",
+                // ],
             ],
             [
                 'name' => 'phone_number',
@@ -168,7 +177,7 @@ class ConsumerCrudController extends CrudController
                 'attributes' => [
                     'step' => 1,
                     'min' => 11,
-                    'pattern' => '^[7, 8]{1}[0-9]{10}$',
+                    'pattern' => '^\+?[7, 8]{1}[0-9]{10}$',
                     'title' => '',
                 ],
             ],

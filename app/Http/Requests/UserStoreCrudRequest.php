@@ -28,6 +28,7 @@ class UserStoreCrudRequest extends FormRequest
             'email'    => 'required|unique:'.config('permission.table_names.users', 'users').',email',
             'name'     => 'required',
             'password' => 'required|confirmed|min:6',
+            'iin'      => 'numeric',
         ];
     }
 
@@ -40,6 +41,7 @@ class UserStoreCrudRequest extends FormRequest
             'password.confirmed' => 'Пароли не совпадают',
             'unique' => 'Такой пользователь уже существует',
             'min' => 'Пароль должен быть больше 6 символов',
+            'iin.integer' => 'Поле должно быть заполнено цифрами',
         ];
     }
 }
