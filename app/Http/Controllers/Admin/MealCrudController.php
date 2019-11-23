@@ -29,7 +29,18 @@ class MealCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/meal');
         $this->crud->setEntityNameStrings(trans_choice('admin.meal',1), trans_choice('admin.meal', 2));
         $this->setAccessLevels();
-
+        $this->crud->addFilter([
+            'name' => 'active',
+            'type' => 'select2',
+            'label' => 'Опубликованные',
+        ], function () {
+            return [
+                1 => 'Опубликованные',
+                0 => 'Не опубликованные',
+            ];
+        }, function ($value) {
+            $this->crud->addClause('where', 'active', $value);
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration
@@ -51,15 +62,15 @@ class MealCrudController extends CrudController
                 'name' => 'description',
                 'label' => 'Описание',
             ],
-            [
-                'name' => 'listmeals',
-                'label' => trans_choice('admin.listmeal', 2),
-                'type' => 'select_multiple',
-                'entity' => 'listmeals',
-                'attribute' => 'name',
-                'model' => 'App\Models\Listmeal',
-                'pivot' => true,
-            ],
+            // [
+            //     'name' => 'listmeals',
+            //     'label' => trans_choice('admin.listmeal', 2),
+            //     'type' => 'select_multiple',
+            //     'entity' => 'listmeals',
+            //     'attribute' => 'name',
+            //     'model' => 'App\Models\Listmeal',
+            //     'pivot' => true,
+            // ],
             [
                 'name' => 'calorie',
                 'label' => 'Калорийность',
@@ -116,15 +127,15 @@ class MealCrudController extends CrudController
                     'class' => 'form-group col-md-4',
                 ],
             ],
-            [
-                'name' => 'listmeals',
-                'label' => trans_choice('admin.listmeal', 2),
-                'type' => 'select2_multiple',
-                'entity' => 'listmeals',
-                'attribute' => 'name',
-                'model' => 'App\Models\Listmeal',
-                'pivot' => true,
-            ],
+            // [
+            //     'name' => 'listmeals',
+            //     'label' => trans_choice('admin.listmeal', 2),
+            //     'type' => 'select2_multiple',
+            //     'entity' => 'listmeals',
+            //     'attribute' => 'name',
+            //     'model' => 'App\Models\Listmeal',
+            //     'pivot' => true,
+            // ],
             [
                 'name' => 'active',
                 'label' => 'Опубликован',

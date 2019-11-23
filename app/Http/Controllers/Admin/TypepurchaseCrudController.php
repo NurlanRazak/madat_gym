@@ -30,7 +30,31 @@ class TypepurchaseCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/typepurchase');
         $this->crud->setEntityNameStrings(trans_choice('admin.typepurchase', 1), trans_choice('admin.typepurchase', 2));
         $this->setAccessLevels();
-
+        $this->crud->addFilter([
+            'name' => 'active',
+            'type' => 'select2',
+            'label' => 'Опубликованные',
+        ], function () {
+            return [
+                1 => 'Опубликованные',
+                0 => 'Не опубликованные',
+            ];
+        }, function ($value) {
+            $this->crud->addClause('where', 'active', $value);
+        });
+        $this->crud->addFilter([
+            'name' => 'type',
+            'type' => 'select2',
+            'label' => 'Тип',
+        ], function() {
+            return [
+                'subscription' => 'Абонемент',
+                'items' => 'Товары',
+                'packets' => 'Пакеты',
+            ];
+        }, function ($value) {
+            $this->crud->addClause('where', 'type', $value);
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration

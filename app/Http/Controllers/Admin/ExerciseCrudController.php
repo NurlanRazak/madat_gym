@@ -29,7 +29,18 @@ class ExerciseCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/exercise');
         $this->crud->setEntityNameStrings(trans_choice('admin.exercise', 1), trans_choice('admin.exercise', 2));
         $this->setAccessLevels();
-
+        $this->crud->addFilter([
+            'name' => 'active',
+            'type' => 'select2',
+            'label' => 'Опубликованные',
+        ], function () {
+            return [
+                1 => 'Опубликованные',
+                0 => 'Не опубликованные',
+            ];
+        }, function ($value) {
+            $this->crud->addClause('where', 'active', $value);
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration

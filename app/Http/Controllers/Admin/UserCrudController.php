@@ -24,7 +24,7 @@ class UserCrudController extends CrudController
         $this->crud->setEntityNameStrings('Сотрудник', 'Сотрудники');
         $this->crud->setRoute(backpack_url('user'));
         $this->setAccessLevels();
-
+        
         $this->crud->addClause('whereHas', 'roles');
         // Columns
         $this->crud->setColumns([

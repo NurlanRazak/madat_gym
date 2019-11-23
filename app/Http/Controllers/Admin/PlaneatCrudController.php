@@ -29,7 +29,53 @@ class PlaneatCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/planeat');
         $this->crud->setEntityNameStrings(trans_choice('admin.planeat',1), trans_choice('admin.planeat', 2));
         $this->setAccessLevels();
-
+        $this->crud->addFilter([
+            'name' => 'active',
+            'type' => 'select2',
+            'label' => 'Опубликованные',
+        ], function () {
+            return [
+                1 => 'Опубликованные',
+                0 => 'Не опубликованные',
+            ];
+        }, function ($value) {
+            $this->crud->addClause('where', 'active', $value);
+        });
+        $this->crud->addFilter([
+            'name' => 'foodprogram_id',
+            'label' => 'Программа питания',
+            'type' => 'select2',
+        ], function () {
+            return \App\Models\Foodprogram::all()->pluck('name', 'id')->toArray();
+        }, function ($value) {
+            $this->crud->addClause('where', 'foodprogram_id', $value);
+        });
+        $this->crud->addFilter([
+            'name' => 'meals',
+            'label' => 'Блюда',
+            'type' => 'select2_multiple'
+        ], function() {
+            return \App\Models\Meal::all()->pluck('name', 'id')->toArray();
+        }, function ($values) {
+            foreach(json_decode($values) as $key=>$value) {
+                $this->crud->query = $this->crud->query->whereHas('meals', function ($query) use ($value) {
+                    $query->where('meal_id', $value);
+                });
+            }
+        });
+        $this->crud->addFilter([
+            'name' => 'eathours',
+            'label' => 'Часы приема',
+            'type' => 'select2_multiple',
+        ], function() {
+            return \App\Models\Eathour::all()->pluck('name', 'id')->toArray();
+        }, function ($values) {
+            foreach(json_decode($values) as $key=>$value) {
+                $this->crud->query = $this->crud->query->whereHas('eathours', function ($query) use($value) {
+                    $query->where('eathour_id', $value);
+                });
+            }
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration

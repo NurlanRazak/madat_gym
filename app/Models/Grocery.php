@@ -48,6 +48,11 @@ class Grocery extends Model
     {
         return $this->belongsToMany('App\Models\Meal', 'grocery_meal', 'grocery_id', 'meal_id');
     }
+
+    public function listmeals()
+    {
+        return $this->belongsToMany('App\Models\Listmeal', 'grocery_listmeal', 'grocery_id', 'listmeal_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

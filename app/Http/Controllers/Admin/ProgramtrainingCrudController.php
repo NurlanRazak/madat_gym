@@ -29,7 +29,45 @@ class ProgramtrainingCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/programtraining');
         $this->crud->setEntityNameStrings(trans_choice('admin.programtraining', 1), trans_choice('admin.programtraining', 2));
         $this->setAccessLevels();
-
+        $this->crud->addFilter([
+            'name' => 'active',
+            'type' => 'select2',
+            'label' => 'Опубликованные',
+        ], function() {
+            return [
+                1 => 'Опубликованные',
+                0 => 'Не опубликованные',
+            ];
+        }, function ($value) {
+            $this->crud->addClause('where', 'active', $value);
+        });
+        $this->crud->addFilter([
+            'name' => 'programtype_id',
+            'type' => 'select2',
+            'label' => 'Тип программы'
+        ], function() {
+            return \App\Models\Programtype::all()->pluck('name', 'id')->toArray();
+        }, function ($value) {
+            $this->crud->addClause('where', 'programtype_id', $value);
+        });
+        $this->crud->addFilter([
+            'name' => 'foodprogram_id',
+            'type' => 'select2',
+            'label' => 'Программа питания',
+        ], function() {
+            return \App\Models\Foodprogram::all()->pluck('name', 'id')->toArray();
+        }, function ($value) {
+            $this->crud->addClause('where', 'foodprogram_id', $value);
+        });
+        $this->crud->addFilter([
+            'name' => 'relaxprogram_id',
+            'type' => 'select2',
+            'label' => 'Программа отдыха',
+        ], function() {
+            return \App\Models\Relaxprogram::all()->pluck('name', 'id')->toArray();
+        }, function ($value) {
+            $this->crud->addClause('where', 'relaxprogram_id', $value);
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration

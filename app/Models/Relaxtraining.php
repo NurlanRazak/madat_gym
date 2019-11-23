@@ -22,7 +22,7 @@ class Relaxtraining extends Model
     protected $fillable = ['name', 'number_day', 'time', 'active'];
     // protected $hidden = [];
     // protected $dates = [];
-
+    
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
@@ -47,7 +47,7 @@ class Relaxtraining extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User', 'relaxtrainings_users_pivot', 'relaxtraining_id', 'user_id');
+        return $this->belongsToMany('App\User', 'relaxtrainings_users_pivot', 'relaxtraining_id', 'user_id')->whereDoesntHave('roles');
     }
     /*
     |--------------------------------------------------------------------------

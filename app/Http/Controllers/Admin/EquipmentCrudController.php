@@ -9,6 +9,7 @@ use App\Http\Requests\EquipmentRequest as StoreRequest;
 use App\Http\Requests\EquipmentRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
 use App\Services\MenuService\Traits\AccessLevelsTrait;
+use App\Models\Listequip;
 
 /**
  * Class EquipmentCrudController
@@ -29,7 +30,40 @@ class EquipmentCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/equipment');
         $this->crud->setEntityNameStrings(trans_choice('admin.equipment', 1), trans_choice('admin.equipment', 2));
         $this->setAccessLevels();
-
+        $this->crud->addFilter([
+            'name' => 'active',
+            'type' => 'select2',
+            'label' => 'Опубликованные',
+        ], function () {
+            return [
+                1 => 'Опубликованные',
+                0 => 'Не опубликованные',
+            ];
+        }, function ($value) {
+            $this->crud->addClause('where', 'active', $value);
+        });
+        $this->crud->addFilter([
+            'name' => 'lists',
+            'type' => 'select2_multiple',
+            'label' => 'оборудования',
+        ], function() {
+            return Listequip::all()->pluck('name', 'id')->toArray();
+        }, function($values) {
+            foreach (json_decode($values) as $key=>$value) {
+                $this->crud->query = $this->crud->query->whereHas('lists', function ($query) use ($value) {
+                    $query->where('listequip_id', $value);
+                });
+            }
+        });
+        $this->crud->addFilter([
+            'name' => 'programtraining_id',
+            'label' => 'Программы тренировок',
+            'type' => 'select2',
+        ], function () {
+            return \App\Models\Programtraining::all()->pluck('name', 'id')->toArray();
+        }, function ($value) {
+            $this->crud->addClause('where', 'programtraining_id', $value);
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration

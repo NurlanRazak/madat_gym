@@ -9,6 +9,7 @@ use App\Http\Requests\GroceryRequest as StoreRequest;
 use App\Http\Requests\GroceryRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
 use App\Services\MenuService\Traits\AccessLevelsTrait;
+use App\Models\Listmeal;
 
 /**
  * Class GroceryCrudController
@@ -29,7 +30,40 @@ class GroceryCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/grocery');
         $this->crud->setEntityNameStrings(trans_choice('admin.grocery', 1), trans_choice('admin.grocery', 2));
         $this->setAccessLevels();
-
+        $this->crud->addFilter([
+            'name' => 'active',
+            'type' => 'select2',
+            'label' => 'Опубликованные',
+        ], function () {
+            return [
+                1 => 'Опубликованные',
+                0 => 'Не опубликованные',
+            ];
+        }, function ($value) {
+            $this->crud->addClause('where', 'active', $value);
+        });
+        $this->crud->addFilter([
+            'name' => 'programtraining_id',
+            'label' => 'Программы тренировок',
+            'type' => 'select2',
+        ], function () {
+            return \App\Models\Programtraining::all()->pluck('name', 'id')->toArray();
+        }, function ($value) {
+            $this->crud->addClause('where', 'programtraining_id', $value);
+        });
+        $this->crud->addFilter([
+            'name' => 'listmeals',
+            'type' => 'select2_multiple',
+            'label' => trans_choice('admin.listmeal', 2),
+        ], function() {
+            return Listmeal::all()->pluck('name', 'id')->toArray();
+        }, function($values) {
+            foreach (json_decode($values) as $key=>$value) {
+                $this->crud->query = $this->crud->query->whereHas('listmeals', function ($query) use ($value) {
+                    $query->where('listmeal_id', $value);
+                });
+            }
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration
@@ -65,6 +99,15 @@ class GroceryCrudController extends CrudController
                 'name' => 'groceries',
                 'label' => 'Справочника продуктов – огурцы, помидоры',
 
+            ],
+            [
+                'name' => 'listmeals',
+                'label' => trans_choice('admin.listmeal', 2),
+                'type' => 'select_multiple',
+                'entity' => 'listmeals',
+                'attribute' => 'name',
+                'model' => 'App\Models\Listmeal',
+                'pivot' => true,
             ],
             // [
             //     'name' => 'meals',
@@ -113,6 +156,15 @@ class GroceryCrudController extends CrudController
                 'name' => 'groceries',
                 'label' => 'Справочника продуктов – огурцы, помидоры',
                 'type' => 'textarea',
+            ],
+            [
+                'name' => 'listmeals',
+                'label' => trans_choice('admin.listmeal', 2),
+                'type' => 'select2_multiple',
+                'entity' => 'listmeals',
+                'attribute' => 'name',
+                'model' => 'App\Models\Listmeal',
+                'pivot' => true,
             ],
             // [
             //     'name' => 'meals',

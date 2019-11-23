@@ -9,6 +9,8 @@ use App\Http\Requests\TrainingRequest as StoreRequest;
 use App\Http\Requests\TrainingRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
 use App\Services\MenuService\Traits\AccessLevelsTrait;
+use App\Models\Exercise;
+use App\Models\Programtraining;
 
 /**
  * Class TrainingCrudController
@@ -29,7 +31,53 @@ class TrainingCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/training');
         $this->crud->setEntityNameStrings(trans_choice('admin.training', 1), trans_choice('admin.training', 2));
         $this->setAccessLevels();
-
+        $this->crud->addFilter([
+            'name' => 'active',
+            'type' => 'select2',
+            'label' => 'Опубликованные',
+        ], function() {
+            return [
+                1 => 'Опубликованные',
+                0 => 'Не опубликованные',
+            ];
+        }, function ($value) {
+            $this->crud->addClause('where', 'active', $value);
+        });
+        $this->crud->addFilter([
+            'name' => 'user_id',
+            'type' => 'select2',
+            'label' => 'Пользователь',
+        ], function() {
+            return \App\User::whereDoesntHave('roles')->pluck('email', 'id')->toArray();
+        }, function ($value) {
+            $this->crud->addClause('where', 'user_id', $value);
+        });
+        $this->crud->addFilter([
+            'name' => 'exercises',
+            'type' => 'select2_multiple',
+            'label' => 'Упражнения'
+        ], function() {
+            return Exercise::all()->pluck('name', 'id')->toArray();
+        }, function($values) {
+            foreach (json_decode($values) as $key => $value) {
+                $this->crud->query = $this->crud->query->whereHas('exercises', function ($query) use ($value) {
+                    $query->where('exercise_id', $value);
+                });
+            }
+        });
+        $this->crud->addFilter([
+            'name' => 'programtrainings',
+            'type' => 'select2_multiple',
+            'label' => 'Программы тренировок',
+        ], function () {
+            return Programtraining::all()->pluck('name', 'id')->toArray();
+        }, function ($values) {
+            foreach (json_decode($values) as $key => $value) {
+                $this->crud->query = $this->crud->query->whereHas('programtrainings', function ($query) use ($value) {
+                    $query->where('programtraining_id', $value);
+                });
+            }
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration

@@ -30,7 +30,15 @@ class ActiveprogramCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/activeprogram');
         $this->crud->setEntityNameStrings(trans_choice('admin.activeprogram', 1), trans_choice('admin.activeprogram', 2));
         $this->setAccessLevels();
-
+        $this->crud->addFilter([
+            'name' => 'program_id',
+            'label' => 'Программы тренировок',
+            'type' => 'select2',
+        ], function() {
+            return \App\Models\Programtraining::all()->pluck('name', 'id')->toArray();
+        }, function($value) {
+            $this->crud->addClause('where', 'program_id', $value);
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration

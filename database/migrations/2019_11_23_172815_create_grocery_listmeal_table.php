@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMealListmealPivotTable extends Migration
+class CreateGroceryListmealTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateMealListmealPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('meal_listmeal_pivot', function (Blueprint $table) {
-            $table->unsignedBigInteger('meal_id')->nullable();
-            $table->foreign('meal_id')->references('id')->on('meals')->onDelete('cascade');
+        Schema::create('grocery_listmeal', function (Blueprint $table) {
             $table->unsignedBigInteger('listmeal_id')->nullable();
             $table->foreign('listmeal_id')->references('id')->on('listmeals')->onDelete('cascade');
+            $table->unsignedBigInteger('grocery_id')->nullable();
+            $table->foreign('grocery_id')->references('id')->on('groceries')->onDelete('cascade');
         });
     }
 
@@ -28,6 +28,6 @@ class CreateMealListmealPivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('meal_listmeal_pivot');
+        Schema::dropIfExists('grocery_listmeal');
     }
 }

@@ -29,7 +29,36 @@ class PurchaseCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/purchase');
         $this->crud->setEntityNameStrings(trans_choice('admin.purchase', 1), trans_choice('admin.purchase', 2));
         $this->setAccessLevels();
-
+        $this->crud->addFilter([
+            'name' => 'user_id',
+            'label' => 'Пользователь',
+            'type' => 'select2',
+        ], function (){
+            return \App\User::whereDoesntHave('roles')->pluck('email', 'id')->toArray();
+        }, function ($value) {
+            $this->crud->addClause('where', 'user_id', $value);
+        });
+        $this->crud->addFilter([
+            'name' => 'typepurchase_id',
+            'label' => 'Тип покупки',
+            'type' => 'select2',
+        ], function () {
+            return \App\Models\Typepurchase::all()->pluck('name', 'id')->toArray();
+        }, function ($value) {
+            $this->crud->addClause('where', 'typepurchase_id', $value);
+        });
+        $this->crud->addFilter([
+            'name' => 'status',
+            'label' => 'Статус',
+            'type' => 'select2',
+        ], function () {
+            return [
+                1 => 'Оплачено',
+                0 => 'Не оплачено',
+            ];
+        }, function($value) {
+            $this->crud->addClause('where', 'status', $value);
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration
@@ -42,7 +71,7 @@ class PurchaseCrudController extends CrudController
                 'label' => 'Пользователь',
                 'type' => 'select',
                 'entity' => 'user',
-                'attribute' => 'name',
+                'attribute' => 'email',
                 'model' => 'App\User',
             ],
             [

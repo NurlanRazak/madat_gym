@@ -30,7 +30,57 @@ class RelaxtrainingCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/relaxtraining');
         $this->crud->setEntityNameStrings(trans_choice('admin.relaxtraining', 1), trans_choice('admin.relaxtraining', 2));
         $this->setAccessLevels();
-
+        $this->crud->addFilter([
+            'name' => 'active',
+            'type' => 'select2',
+            'label' => 'Опубликованные',
+        ], function () {
+            return [
+                1 => 'Опубликованные',
+                0 => 'Не опубликованные',
+            ];
+        }, function ($value) {
+            $this->crud->addClause('where', 'active', $value);
+        });
+        $this->crud->addFilter([
+            'name' => 'exercises',
+            'label' => 'Упражнения',
+            'type' => 'select2_multiple',
+        ], function() {
+            return \App\Models\Relaxexercise::all()->pluck('name', 'id')->toArray();
+        }, function($values) {
+            foreach(json_decode($values) as $key=>$value) {
+                $this->crud->query = $this->crud->query->whereHas('exercises', function ($query) use ($value) {
+                    $query->where('exercise_id', $value);
+                });
+            }
+        });
+        $this->crud->addFilter([
+            'name' => 'programs',
+            'label' => 'Программы отдыха',
+            'type' => 'select2_multiple',
+        ], function() {
+            return \App\Models\Relaxprogram::all()->pluck('name', 'id')->toArray();
+        }, function($values) {
+            foreach (json_decode($values) as $key=>$value) {
+                $this->crud->query = $this->crud->query->whereHas('programs', function($query) use ($value) {
+                    $query->where('relaxprogram_id', $value);
+                });
+            }
+        });
+        $this->crud->addFilter([
+            'name' => 'users',
+            'label' => 'Пользователи',
+            'type' => 'select2_multiple',
+        ], function() {
+            return \App\User::whereDoesntHave('roles')->pluck('email', 'id')->toArray();
+        }, function($values) {
+            foreach (json_decode($values) as $key=>$value) {
+                $this->crud->query = $this->crud->query->whereHas('users', function ($query) use ($value) {
+                    $query->where('user_id', $value);
+                });
+            }
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration
@@ -63,7 +113,7 @@ class RelaxtrainingCrudController extends CrudController
                 'label' => 'Пользователи',
                 'type' => 'select_multiple',
                 'entity' => 'users',
-                'attribute' => 'name',
+                'attribute' => 'email',
                 'model' => 'App\User'
             ],
             [
@@ -107,8 +157,14 @@ class RelaxtrainingCrudController extends CrudController
             [
                 'name' => 'users',
                 'label' => 'Пользователи',
-                'type' => 'select2_from_array',
-                'options' => Relaxtraining::getConsumerOptions(),
+                'type' => 'select2_multiple',
+                'entity' => 'users',
+                'model' => 'App\User',
+                'attribute' => 'email',
+                'pivot' => true,
+                'options'   => (function ($query) {
+                    return $query->whereDoesntHave('roles')->get();
+                })
             ],
             [
                 'name' => 'number_day',

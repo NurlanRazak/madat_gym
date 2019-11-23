@@ -51,7 +51,18 @@ class MessageCrudController extends CrudController
 
     private function setFilters()
     {
-
+        $this->crud->addFilter([
+            'name' => 'status',
+            'type' => 'select2',
+            'label' => 'Статус',
+        ], function () {
+            return [
+                1 => 'Отправленные',
+                0 => 'Черновик',
+            ];
+        }, function ($value) {
+            $this->crud->addClause('where', 'status', $value);
+        });
     }
 
     private function setButtons()

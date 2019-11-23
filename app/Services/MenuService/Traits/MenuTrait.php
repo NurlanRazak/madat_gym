@@ -83,6 +83,14 @@ trait MenuTrait
                         ],
                     ],
                     [
+                        'route'         => backpack_url('listmeal'),
+                        'icon'          => 'fa fa-cutlery',
+                        'label'         => 'Лист продуктов',
+                        'permissions'   => [
+                            'Listmeal' => 'view',
+                        ],
+                    ],
+                    [
                         'route'        => backpack_url('grocery'),
                         'icon'         => 'fa fa-shopping-basket',
                         'label'        => 'Продукты для тренировок',
@@ -103,14 +111,6 @@ trait MenuTrait
                         'label'         => 'Программы питания',
                         'permissions'   => [
                             'Foodprogram' => 'view',
-                        ],
-                    ],
-                    [
-                        'route'         => backpack_url('listmeal'),
-                        'icon'          => 'fa fa-cutlery',
-                        'label'         => 'Лист продуктов',
-                        'permissions'   => [
-                            'Listmeal' => 'view',
                         ],
                     ],
                     [
