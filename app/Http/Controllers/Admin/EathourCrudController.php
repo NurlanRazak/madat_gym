@@ -71,6 +71,9 @@ class EathourCrudController extends CrudController
             [
                 'name' => 'name',
                 'label' => 'Название',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'hour_start',

@@ -34,12 +34,19 @@ class ListequipCrudController extends CrudController
         */
 
         $this->crud->addColumn(
-            ['name' => 'name',
-            'label' => 'Название',]
+            [
+                'name' => 'name',
+                'label' => 'Название',
+            ]
         );
         $this->crud->addField(
-            ['name' => 'name',
-            'label' => 'Название',]
+            [
+                'name' => 'name',
+                'label' => 'Название',
+                'attributes' => [
+                    'required' => 'required',
+                ],
+            ]
         );
 
         // add asterisk for fields that are required in ListequipRequest

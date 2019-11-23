@@ -90,12 +90,18 @@ class ExerciseCrudController extends CrudController
         $this->crud->addFields([
             [
                 'name' => 'name',
-                'label' => 'Название упражнения'
+                'label' => 'Название упражнения',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'short_desc',
                 'label' => 'Короткое описание',
                 'type' => 'textarea',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'long_desc',

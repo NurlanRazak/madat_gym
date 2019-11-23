@@ -94,7 +94,10 @@ class RelaxexerciseCrudController extends CrudController
         $this->crud->addFields([
             [
                 'name' => 'name',
-                'label' => 'Название упражнения'
+                'label' => 'Название упражнения',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'short_description',

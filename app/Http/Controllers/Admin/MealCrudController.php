@@ -41,6 +41,40 @@ class MealCrudController extends CrudController
         }, function ($value) {
             $this->crud->addClause('where', 'active', $value);
         });
+        $this->crud->addFilter([
+            'name' => 'calorie',
+            'label' => 'Калорийность',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'calorie', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'calorie', '<=', (float) $range->to);
+            }
+        });
+        $this->crud->addFilter([
+            'name' => 'weight',
+            'label' => 'Вес',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'weight', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'weight', '<=', (float) $range->to);
+            }
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration
@@ -94,6 +128,9 @@ class MealCrudController extends CrudController
             [
                 'name' => 'name',
                 'label' => 'Название',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'description',
@@ -108,6 +145,9 @@ class MealCrudController extends CrudController
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4',
                 ],
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'weight',
@@ -117,6 +157,9 @@ class MealCrudController extends CrudController
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4',
                 ],
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'price',
@@ -125,6 +168,9 @@ class MealCrudController extends CrudController
                 'attributes' => ["step" => "any"],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4',
+                ],
+                'attributes' => [
+                    'required' => 'required',
                 ],
             ],
             // [

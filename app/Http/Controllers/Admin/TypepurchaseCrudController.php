@@ -91,6 +91,9 @@ class TypepurchaseCrudController extends CrudController
             [
                 'name' => 'name',
                 'label' => 'Название',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'type',
@@ -101,21 +104,34 @@ class TypepurchaseCrudController extends CrudController
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4',
                 ],
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'days',
                 'label' => 'Срок',
                 // 'prefix' => '',
                 'suffix' => 'дней',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4',
+                ],
+                'attributes' => [
+                    'required' => 'required',
                 ],
             ],
             [
                 'name' => 'price',
                 'label' => 'Цена',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
                 'suffix' => 'тг','wrapperAttributes' => [
                     'class' => 'form-group col-md-4',
+                ],
+                'attributes' => [
+                    'required' => 'required',
                 ],
             ],
             [

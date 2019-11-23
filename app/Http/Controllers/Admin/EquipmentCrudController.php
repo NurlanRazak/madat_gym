@@ -126,10 +126,17 @@ class EquipmentCrudController extends CrudController
             [
                 'name' => 'name',
                 'label' => 'Название',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
+
             [
                 'name' => 'description',
                 'label' => 'Свойства',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             // [
             //     'name' => 'image',
@@ -145,6 +152,9 @@ class EquipmentCrudController extends CrudController
                 'label' => 'День оповещения',
                 'type' => 'number',
                 'attributes' => ["step" => "any"],
+                'attributes' => [
+                    'required' => 'required',
+                ],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-6'
                 ],
@@ -160,6 +170,9 @@ class EquipmentCrudController extends CrudController
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-6'
                 ],
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'programtraining_id',
@@ -170,6 +183,9 @@ class EquipmentCrudController extends CrudController
                 'model' => 'App\Models\Programtraining',
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-6'
+                ],
+                'attributes' => [
+                    'required' => 'required',
                 ],
             ],
             // [

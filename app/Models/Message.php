@@ -68,6 +68,12 @@ class Message extends Model
             static::DRAFT => 'Черновик',
         ];
     }
+
+    public static function getConsumerOptions() : array
+    {
+        return \App\User::whereDoesntHave('roles')->pluck('email', 'id')->toArray();
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

@@ -140,6 +140,9 @@ class TrainingCrudController extends CrudController
             [
                 'name' => 'name',
                 'label' => 'Название',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'exercises',
@@ -149,6 +152,9 @@ class TrainingCrudController extends CrudController
                 'attribute' => 'name',
                 'model' => 'App\Models\Exercise',
                 'pivot' => true,
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'programtrainings',
@@ -158,6 +164,9 @@ class TrainingCrudController extends CrudController
                 'attribute' => 'name',
                 'model' => 'App\Models\Programtraining',
                 'pivot' => true,
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'user_id',
@@ -166,6 +175,9 @@ class TrainingCrudController extends CrudController
                 'entity' => 'user',
                 'attribute' => 'email',
                 'model' => 'App\User',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'day_number',

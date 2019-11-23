@@ -104,6 +104,9 @@ class PurchaseCrudController extends CrudController
                 'label' => 'Пользователь',
                 'type' => 'select2_from_array',
                 'options' => Purchase::getConsumerOptions(),
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'typepurchase_id',
@@ -112,6 +115,9 @@ class PurchaseCrudController extends CrudController
                 'entity' => 'typepurchase',
                 'attribute' => 'name',
                 'model' => 'App\Models\Typepurchase',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'comment',

@@ -95,11 +95,11 @@ class GroceryCrudController extends CrudController
                 'attribute' => 'name',
                 'model' => 'App\Models\Programtraining',
             ],
-            [
-                'name' => 'groceries',
-                'label' => 'Справочника продуктов – огурцы, помидоры',
-
-            ],
+            // [
+            //     'name' => 'groceries',
+            //     'label' => 'Справочника продуктов – огурцы, помидоры',
+            //
+            // ],
             [
                 'name' => 'listmeals',
                 'label' => trans_choice('admin.listmeal', 2),
@@ -152,11 +152,11 @@ class GroceryCrudController extends CrudController
             //     'model' => 'App\Models\Training',
             //     'pivot' => true,
             // ],
-            [
-                'name' => 'groceries',
-                'label' => 'Справочника продуктов – огурцы, помидоры',
-                'type' => 'textarea',
-            ],
+            // [
+            //     'name' => 'groceries',
+            //     'label' => 'Справочника продуктов – огурцы, помидоры',
+            //     'type' => 'textarea',
+            // ],
             [
                 'name' => 'listmeals',
                 'label' => trans_choice('admin.listmeal', 2),

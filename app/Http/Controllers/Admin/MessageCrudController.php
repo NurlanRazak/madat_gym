@@ -99,9 +99,10 @@ class MessageCrudController extends CrudController
             [
                 'name' => 'users',
                 'label' => 'Получатели',
-                'type' => 'select_multiple',
-                'entity' => 'users',
-                'attribute' => 'email',
+                'type' => 'select_from_array',
+                'options' => Message::getConsumerOptions(),
+                // 'entity' => 'users',
+                // 'attribute' => 'email',
             ],
             [
                 'name' => 'content',
@@ -139,18 +140,29 @@ class MessageCrudController extends CrudController
             [
                 'name' => 'users',
                 'label' => 'Получатели',
-                'type' => 'select2_multiple',
-                'entity' => 'users',
-                'model' => User::class,
-                'attribute' => 'email',
-                'pivot' => true,
-                'attributes' => [
-                    'required' => 'required',
-                ],
+                'type' => 'select_from_array',
+                'options' => Message::getConsumerOptions(),
                 'wrapperAttributes' => [
                     'class' => 'form-group col-sm-12 required',
                 ],
+                // 'entity' => 'users',
+                // 'attribute' => 'email',
             ],
+            // [
+            //     'name' => 'users',
+            //     'label' => 'Получатели',
+            //     'type' => 'select2_multiple',
+            //     'entity' => 'users',
+            //     'model' => User::class,
+            //     'attribute' => 'email',
+            //     'pivot' => true,
+            //     'attributes' => [
+            //         'required' => 'required',
+            //     ],
+            //     'wrapperAttributes' => [
+            //         'class' => 'form-group col-sm-12 required',
+            //     ],
+            // ],
             [
                 'name' => 'seperator',
                 'type' => 'custom_html',

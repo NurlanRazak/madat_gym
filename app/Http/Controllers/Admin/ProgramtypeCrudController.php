@@ -57,6 +57,9 @@ class ProgramtypeCrudController extends CrudController
             [
                 'name' => 'name',
                 'label' => 'Название типа',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             // [
             //     'name' => 'active',

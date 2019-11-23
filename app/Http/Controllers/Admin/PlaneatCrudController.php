@@ -132,6 +132,9 @@ class PlaneatCrudController extends CrudController
                 'entity' => 'foodprogram',
                 'attribute' => 'name',
                 'model' => 'App\Models\Foodprogram',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'meals',
@@ -141,12 +144,18 @@ class PlaneatCrudController extends CrudController
                 'attribute' => 'name',
                 'model' => 'App\Models\Meal',
                 'pivot' => true,
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'days',
                 'label' => 'День в программе',
                 'type' => 'number',
                 'attributes' => ["step" => "any"],
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'eathours',
@@ -156,6 +165,9 @@ class PlaneatCrudController extends CrudController
                 'attribute' => 'name',
                 'model' => 'App\Models\Eathour',
                 'pivot' => true,
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'active',

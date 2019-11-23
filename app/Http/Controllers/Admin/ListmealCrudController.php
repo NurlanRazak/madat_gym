@@ -37,12 +37,16 @@ class ListmealCrudController extends CrudController
             [
                 'name' => 'name',
                 'label' => 'Название',
+
             ],
         ]);
         $this->crud->addFields([
             [
                 'name' => 'name',
                 'label' => 'Название',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
         ]);
         // add asterisk for fields that are required in ListmealRequest

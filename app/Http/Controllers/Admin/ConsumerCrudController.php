@@ -107,21 +107,33 @@ class ConsumerCrudController extends CrudController
                 'name'  => 'name',
                 'label' => trans('backpack::permissionmanager.name'),
                 'type'  => 'text',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name'  => 'email',
                 'label' => trans('backpack::permissionmanager.email'),
                 'type'  => 'email',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name'  => 'password',
                 'label' => trans('backpack::permissionmanager.password'),
                 'type'  => 'password',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name'  => 'password_confirmation',
                 'label' => trans('backpack::permissionmanager.password_confirmation'),
                 'type'  => 'password',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'country',

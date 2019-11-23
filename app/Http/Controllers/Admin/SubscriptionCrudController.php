@@ -29,7 +29,23 @@ class SubscriptionCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/subscription');
         $this->crud->setEntityNameStrings(trans_choice('admin.subscription', 1), trans_choice('admin.subscription', 2));
         $this->setAccessLevels();
-
+        $this->crud->addFilter([
+            'name' => 'days',
+            'label' => 'Количество дней',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'days', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'days', '<=', (float) $range->to);
+            }
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration

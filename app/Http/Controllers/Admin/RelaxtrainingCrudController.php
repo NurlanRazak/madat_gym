@@ -135,6 +135,9 @@ class RelaxtrainingCrudController extends CrudController
             [
                 'name' => 'name',
                 'label' => 'Название',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'exercises',
@@ -144,6 +147,9 @@ class RelaxtrainingCrudController extends CrudController
                 'attribute' => 'name',
                 'model' => 'App\Models\Relaxexercise',
                 'pivot' => true,
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'programs',
@@ -153,6 +159,9 @@ class RelaxtrainingCrudController extends CrudController
                 'attribute' => 'name',
                 'model' => 'App\Models\Relaxprogram',
                 'pivot' => true,
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'users',

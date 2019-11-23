@@ -14,6 +14,18 @@ class Role extends OriginalRole
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function($role) {
+            if (!$role->key) {
+                $role->key = $role->name;
+            }
+        });
+    }
+
     public static function getNameByKey(string $key) : string
     {
         $role = self::select('name')->where('key', $key)->first();

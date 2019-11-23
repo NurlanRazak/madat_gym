@@ -81,6 +81,9 @@ class ActiveprogramCrudController extends CrudController
                 'entity' => 'program',
                 'attribute' => 'name',
                 'model'     => 'App\Models\Programtraining',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'date_start',
@@ -94,6 +97,9 @@ class ActiveprogramCrudController extends CrudController
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-6'
                 ],
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'date_finish',
@@ -106,6 +112,9 @@ class ActiveprogramCrudController extends CrudController
                 ],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-6 '
+                ],
+                'attributes' => [
+                    'required' => 'required',
                 ],
             ],
         ]);

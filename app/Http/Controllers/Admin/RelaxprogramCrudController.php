@@ -76,6 +76,9 @@ class RelaxprogramCrudController extends CrudController
             [
                 'name' => 'name',
                 'label' => 'Название программы',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'hours',
@@ -85,6 +88,9 @@ class RelaxprogramCrudController extends CrudController
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-6'
                 ],
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'days',
@@ -93,6 +99,9 @@ class RelaxprogramCrudController extends CrudController
                 'attributes' => ["step" => "any"],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-6'
+                ],
+                'attributes' => [
+                    'required' => 'required',
                 ],
             ],
             [

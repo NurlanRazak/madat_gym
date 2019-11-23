@@ -24,7 +24,7 @@ class UserCrudController extends CrudController
         $this->crud->setEntityNameStrings('Сотрудник', 'Сотрудники');
         $this->crud->setRoute(backpack_url('user'));
         $this->setAccessLevels();
-        
+
         $this->crud->addClause('whereHas', 'roles');
         // Columns
         $this->crud->setColumns([
@@ -196,13 +196,13 @@ class UserCrudController extends CrudController
             [
                 'name' => 'iin',
                 'label' => 'ИИН',
-                'type' => 'text',
-                'attributes' => [
-                    'step' => 1,
-                    'min' => 0,
-                    'pattern' => "^\d+$",
-                    // 'oninput' => "$(this).val(parseInt(this.value));",
-                ],
+                // 'type' => 'text',
+                // 'attributes' => [
+                //     'step' => 1,
+                //     'min' => 0,
+                //     'pattern' => "^\d+$",
+                //     // 'oninput' => "$(this).val(parseInt(this.value));",
+                // ],
             ],
             [
                 'name' => 'phone_number',
@@ -211,7 +211,7 @@ class UserCrudController extends CrudController
                 'attributes' => [
                     'step' => 1,
                     'min' => 11,
-                    'pattern' => '^[7, 8]{1}[0-9]{10}$',
+                    'pattern' => '^\+?[7, 8]{1}[0-9]{10}$',
                     'title' => '',
                 ],
             ],

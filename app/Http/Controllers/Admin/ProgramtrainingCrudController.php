@@ -145,15 +145,24 @@ class ProgramtrainingCrudController extends CrudController
             [
                 'name' => 'name',
                 'label' => 'Название',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'agerestrict',
                 'label' => 'Возрастные ограничения',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'description',
                 'label' => 'Описание',
                 'type' => 'textarea',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'image',
@@ -169,12 +178,18 @@ class ProgramtrainingCrudController extends CrudController
                 'label' => 'Длительность (в днях)',
                 'type' => 'number',
                 'attributes' => ["step" => "any"],
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'price',
                 'label' => 'Цена',
                 'type' => 'number',
                 'attributes' => ["step" => "0.001"],
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'programtype_id',
@@ -183,6 +198,9 @@ class ProgramtrainingCrudController extends CrudController
                 'entity' => 'programtype',
                 'attribute' => 'name',
                 'model' => 'App\Models\Programtype',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'foodprogram_id',
@@ -191,6 +209,9 @@ class ProgramtrainingCrudController extends CrudController
                 'entity' => 'foodprogram',
                 'attribute' => 'name',
                 'model' => 'App\Models\Foodprogram',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'relaxprogram_id',
@@ -199,6 +220,9 @@ class ProgramtrainingCrudController extends CrudController
                 'entity' => 'relaxprogram',
                 'attribute' => 'name',
                 'model' => 'App\Models\Relaxprogram',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'active',
