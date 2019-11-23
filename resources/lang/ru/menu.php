@@ -3,8 +3,8 @@
 return [
     'update_User' => 'обновить Пользователя',
     'view_User' => 'просмотр Пользователя',
-    'update_BackpackUser' => 'обновить Админ',
-    'view_BackpackUser' => 'просмотр Админг',
+    'update_BackpackUser' => 'обновить Сотрудники',
+    'view_BackpackUser' => 'просмотр Сотрудников',
     'update_Role' => 'обновить Роль',
     'view_Role' => 'просмотр Роли',
     'update_Permission' => 'обновить Разрешения',
