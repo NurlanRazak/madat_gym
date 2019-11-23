@@ -22,13 +22,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
     const MALE=1;
     const FEMALE=2;
+    const WORKER=1;
+    const TRANER=2;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'country', 'city', 'date_birth', 'gender', 'current_weight', 'height', 'iin', 'phone_number', 'social_media', 'comment', 'date_register', 'position', 'date_hired', 'date_fired', 'address','image'
+        'name', 'email', 'password', 'country', 'type_employee', 'city', 'date_birth', 'gender', 'current_weight', 'height', 'iin', 'phone_number', 'social_media', 'comment', 'date_register', 'position', 'date_hired', 'date_fired', 'address','image'
     ];
 
     /**
@@ -53,6 +55,13 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    public static function getEmployeetypeOptions() : array
+    {
+        return [
+            static::WORKER => 'Сотрудник',
+            static::TRANER => 'Тренер',
+        ];
+    }
     /**
      * Send the password reset notification.
      *

@@ -55,6 +55,12 @@ class UserCrudController extends CrudController
                'model'     => config('permission.models.permission'), // foreign key model
             ],
             [
+                'name' => 'type_employee',
+                'label' => 'Тип сотрудника',
+                'type' => 'select_from_array',
+                'options' => \App\User::getEmployeetypeOptions(),
+            ],
+            [
                 'name' => 'iin',
                 'label' => 'ИИН',
             ],
@@ -164,6 +170,12 @@ class UserCrudController extends CrudController
                 'type' => 'image',
                 'upload' => true,
                 'disk' => 'uploads',
+            ],
+            [
+                'name' => 'type_employee',
+                'label' => 'Тип сотрудника',
+                'type' => 'select_from_array',
+                'options' => \App\User::getEmployeetypeOptions(),
             ],
             [
                 'name' => 'date_hired',

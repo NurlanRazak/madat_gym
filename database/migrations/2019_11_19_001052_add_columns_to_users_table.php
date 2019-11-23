@@ -26,6 +26,7 @@ class AddColumnsToUsersTable extends Migration
             $table->text('social_media')->nullable();
             $table->text('comment')->nullable();
             $table->timestamp('date_register')->nullable();
+            $table->tinyInteger('type_employee')->nullable();
             //сотрудники
             $table->timestamp('date_hired')->nullable();
             $table->string('position')->nullable();
