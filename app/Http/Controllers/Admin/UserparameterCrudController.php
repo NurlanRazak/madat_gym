@@ -78,6 +78,9 @@ class UserparameterCrudController extends CrudController
                 'label' => 'Пользователь',
                 'type' => 'select2_from_array',
                 'options' => Userparameter::getConsumerOptions(),
+                'attributes' => [
+                    'required' => 'required',
+                ],
 
             ],
             [

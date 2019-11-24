@@ -35,7 +35,7 @@ class UserUpdateCrudRequest extends FormRequest
             'email'    => 'required|unique:'.config('permission.table_names.users', 'users').',email,'.$this->get('id'),
             'name'     => 'required',
             'password' => 'confirmed',
-            'iin'      => 'numeric',
+            'iin'      => 'integer|nullable',
 
         ];
     }
@@ -49,6 +49,8 @@ class UserUpdateCrudRequest extends FormRequest
             'unique' => 'Такой пользователь уже существует',
             'min' => 'Пароль должен быть больше 6 символов',
             'iin.numeric' => 'Поле должно быть заполнено цифрами',
+            'iin.integer' => 'Поле должно быть заполнено цифрами',
+
         ];
     }
 }
