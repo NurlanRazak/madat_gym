@@ -89,6 +89,7 @@ class SubscriptionCrudController extends CrudController
                 'label' => 'Название абонемента',
                 'attributes' => [
                     'placeholder' => 'Введите название абонемента',
+                    'required' => 'required',
                 ],
             ],
             [
@@ -96,6 +97,8 @@ class SubscriptionCrudController extends CrudController
                 'label' => 'Количество дней',
                 'attributes' => [
                     'placeholder' => 'Введите цифры',
+                    'required' => 'required',
+
                 ],
                 'type' => 'number',
                 'attributes' => ["step" => "any"],
@@ -115,15 +118,22 @@ class SubscriptionCrudController extends CrudController
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4'
                 ],
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             [
                 'name' => 'price',
                 'label' => 'Цена',
                 'attributes' => [
                     'placeholder' => 'Введите цифры',
+                    'required' => 'required',
                 ],
                 'type' => 'number',
-                'attributes' => ["step" => "0.001"],
+                'attributes' => [
+                    "step" => "0.001",
+                ],
+
             ],
             // [
             //     'name' => 'active',
