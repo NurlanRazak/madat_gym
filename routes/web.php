@@ -16,9 +16,7 @@ Route::get('/test', function() {
     dd($user);
 });
 
-Route::get('/', function () {
-    return view('dashboard.dashboardv1');
-});
+
 // Route::view('/', 'starter')->name('starter');
 Route::get('large-compact-sidebar/dashboard/dashboard1', function () {
     // set layout sesion(key)
@@ -79,7 +77,6 @@ Route::view('extrakits/upload', 'extraKits.upload')->name('upload');
 
 // Apps
 Route::view('apps/invoice', 'apps.invoice')->name('invoice');
-Route::view('mail', 'mail')->name('mail');
 Route::view('apps/inbox', 'apps.inbox')->name('inbox');
 Route::view('apps/chat', 'apps.chat')->name('chat');
 Route::view('apps/calendar', 'apps.calendar')->name('calendar');
@@ -90,7 +87,6 @@ Route::view('apps/ecommerce/products', 'apps.ecommerce.products')->name('ecommer
 Route::view('apps/ecommerce/product-details', 'apps.ecommerce.product-details')->name('ecommerce-product-details');
 Route::view('apps/ecommerce/cart', 'apps.ecommerce.cart')->name('ecommerce-cart');
 Route::view('apps/ecommerce/checkout', 'apps.ecommerce.checkout')->name('ecommerce-checkout');
-Route::view('buy', 'buy')->name('buy');
 
 
 Route::view('apps/contacts/lists', 'apps.contacts.lists')->name('contacts-lists');
@@ -132,6 +128,7 @@ Route::view('sessions/signIn', 'sessions.signIn')->name('signIn');
 Route::view('sessions/signUp', 'sessions.signUp')->name('signUp');
 Route::view('sessions/forgot', 'sessions.forgot')->name('forgot');
 
+
 // widgets
 Route::view('widgets/card', 'widgets.card')->name('widget-card');
 Route::view('widgets/statistics', 'widgets.statistics')->name('widget-statistics');
@@ -139,16 +136,44 @@ Route::view('widgets/list', 'widgets.list')->name('widget-list');
 Route::view('widgets/app', 'widgets.app')->name('widget-app');
 Route::view('widgets/weather-app', 'widgets.weather-app')->name('widget-weather-app');
 
-// others
-Route::view('oups', 'oups')->name('oups');
-Route::view('profile', 'profile')->name('profile');
-Route::view('others/starter', 'starter')->name('starter');
-Route::view('others/faq', 'others.faq')->name('faq');
-Route::view('subscribition', 'subscribition')->name('subscribition');
-Route::view('programs', 'programs')->name('programs');
-Route::view('search-results', 'search-results')->name('search-results');
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
-Route::redirect('home', '/');
+Route::view('login', 'sessions.signIn')->name('login');
+Route::view('register', 'sessions.signUp')->name('register');
+Route::view('sessions/forgot', 'sessions.forgot')->name('forgot');
+
+Route::group(['middleware' => 'verified'], function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::redirect('home', '/');
+    // others
+    Route::view('oups', 'oups')->name('oups');
+    Route::view('profile', 'profile')->name('profile');
+    Route::view('others/starter', 'starter')->name('starter');
+    Route::view('others/faq', 'others.faq')->name('faq');
+    Route::view('subscribition', 'subscribition')->name('subscribition');
+    Route::view('programs', 'programs')->name('programs');
+    Route::view('search-results', 'search-results')->name('search-results');
+    Route::get('/', function () {
+        return view('dashboard.dashboardv1');
+    });
+
+    Route::view('buy', 'buy')->name('buy');
+    Route::view('mail', 'mail')->name('mail');
+
+
+});
+
+Route::group(
+[
+    'middleware' => 'web',
+    'prefix'     => config('backpack.base.route_prefix'),
+],
+function () {
+
+Route::get('edit-account-info', 'Auth\MyAccountController@getAccountInfoForm')->name('backpack.account.info');
+Route::post('edit-account-info', 'Auth\MyAccountController@postAccountInfoForm');
+Route::get('change-password', 'Auth\MyAccountController@getChangePasswordForm')->name('backpack.account.password');
+Route::post('change-password', 'Auth\MyAccountController@postChangePasswordForm');
+
+});

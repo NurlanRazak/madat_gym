@@ -3,7 +3,7 @@
 @section('content')
 <div class="headerc text-center"><img src="{{asset('assets/images/logo.png')}}" alt="madatgym" width="50"></div>
     <section class="jumbotron text-center">
-        
+
     </section>
     <div class="container">
         <h1>Восстановление пароля</h1>
@@ -28,7 +28,7 @@
                 @enderror
             </div>
             <div class="form-group">
-              <input id="password-confirm" type="password" class="form-control" name="password_confirm" required autocomplete="new-password" placeholder="Повтори пароль">
+              <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Повтори пароль">
             </div>
             <button type="submit" class="btn-block btn-gold active">Восстановить пароль</button>
           </form>

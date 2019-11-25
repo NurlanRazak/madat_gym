@@ -3,7 +3,9 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+use Auth;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Auth\MustVerifyEmail as MustVerify;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Message;
 use Backpack\CRUD\CrudTrait;
@@ -17,7 +19,8 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use CrudTrait;
     use HasRoles;
-
+    use MustVerify;
+    
     protected $guard_name = 'web';
 
     const MALE=1;
@@ -94,6 +97,11 @@ class User extends Authenticatable implements MustVerifyEmail
         parent::boot();
         static::deleting(function($obj) {
             \Storage::disk('uploads')->delete($obj->image);
+        });
+
+        static::created(function($obj) {
+            // dd($obj);
+            $obj->sendEmailVerificationNotification();
         });
     }
 
