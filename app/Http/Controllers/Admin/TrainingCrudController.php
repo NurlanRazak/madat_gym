@@ -213,7 +213,11 @@ class TrainingCrudController extends CrudController
                 'name' => 'weight',
                 'label' => 'Вес',
                 'type' => 'number',
-                'attributes' => ["step" => "any"],
+                'attributes' => [
+                    "step" => "any",    
+                    'required' => 'required',
+
+                ],
             ],
             [
                 'name' => 'active',

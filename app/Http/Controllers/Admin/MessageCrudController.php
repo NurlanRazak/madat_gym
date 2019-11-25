@@ -99,10 +99,11 @@ class MessageCrudController extends CrudController
             [
                 'name' => 'users',
                 'label' => 'Получатели',
-                'type' => 'select_from_array',
-                'options' => Message::getConsumerOptions(),
-                // 'entity' => 'users',
-                // 'attribute' => 'email',
+                'type' => 'select_multiple',
+                // 'options' => Message::getConsumerOptions(),
+                'entity' => 'users',
+                'attribute' => 'email',
+                'model' => 'App\User',
             ],
             [
                 'name' => 'content',
@@ -130,7 +131,7 @@ class MessageCrudController extends CrudController
             [
                 'name' => 'status',
                 'label' => 'Статус',
-                'type' => 'select_from_array',
+                'type' => 'select2_from_array',
                 'options' => Message::getStatusOptions(),
                 'default' => Message::DRAFT,
                 'wrapperAttributes' => [
@@ -139,15 +140,34 @@ class MessageCrudController extends CrudController
             ],
             [
                 'name' => 'users',
-                'label' => 'Получатели',
-                'type' => 'select_from_array',
-                'options' => Message::getConsumerOptions(),
-                'wrapperAttributes' => [
-                    'class' => 'form-group col-sm-12 required',
-                ],
-                // 'entity' => 'users',
-                // 'attribute' => 'email',
+                'label' => 'Пользователи',
+                'type' => 'select2_multiple',
+                'entity' => 'users',
+                'model' => 'App\User',
+                'attribute' => 'email',
+                'pivot' => true,
+                'options'   => (function ($query) {
+                    return $query->whereDoesntHave('roles')->get();
+                }),
+                'attributes' => [
+                        'required' => 'required',
+                    ],
             ],
+
+            // [
+            //     'name' => 'users',
+            //     'label' => 'Получатели',
+            //     'type' => 'select2_from_array',
+            //     'options' => Message::getConsumerOptions(),
+            //     'wrapperAttributes' => [
+            //         'class' => 'form-group col-sm-12 required',
+            //     ],
+            //     // 'entity' => 'users',
+            //     // 'attribute' => 'email',
+            // ],
+
+
+
             // [
             //     'name' => 'users',
             //     'label' => 'Получатели',

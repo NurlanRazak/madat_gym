@@ -39,6 +39,29 @@ class ActiveprogramCrudController extends CrudController
         }, function($value) {
             $this->crud->addClause('where', 'program_id', $value);
         });
+
+        $this->crud->addFilter([ // daterange filter
+          'type' => 'date_range',
+          'name' => 'date_start',
+          'label'=> 'Дата активации'
+        ],
+        false,
+        function($value) { // if the filter is active, apply these constraints
+          $dates = json_decode($value);
+          $this->crud->addClause('where', 'date_start', '>=', $dates->from);
+          $this->crud->addClause('where', 'date_start', '<=', $dates->to . ' 23:59:59');
+        });
+        $this->crud->addFilter([ // daterange filter
+          'type' => 'date_range',
+          'name' => 'date_finish',
+          'label'=> 'Дата завершения'
+        ],
+        false,
+        function($value) { // if the filter is active, apply these constraints
+          $dates = json_decode($value);
+          $this->crud->addClause('where', 'date_finish', '>=', $dates->from);
+          $this->crud->addClause('where', 'date_finish', '<=', $dates->to . ' 23:59:59');
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration

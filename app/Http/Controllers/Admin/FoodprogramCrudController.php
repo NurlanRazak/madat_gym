@@ -41,6 +41,40 @@ class FoodprogramCrudController extends CrudController
         }, function ($value) {
             $this->crud->addClause('where', 'active', $value);
         });
+        $this->crud->addFilter([
+            'name' => 'calorie',
+            'label' => 'Калорийность в день',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'calorie', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'calorie', '<=', (float) $range->to);
+            }
+        });
+        $this->crud->addFilter([
+            'name' => 'days',
+            'label' => 'Количество дней',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'days', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'days', '<=', (float) $range->to);
+            }
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration

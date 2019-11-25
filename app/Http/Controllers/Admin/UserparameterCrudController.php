@@ -28,7 +28,74 @@ class UserparameterCrudController extends CrudController
         $this->crud->setModel('App\Models\Userparameter');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/userparameter');
         $this->crud->setEntityNameStrings(trans_choice('admin.userparameter', 1), trans_choice('admin.userparameter', 2));
-
+        $this->crud->addFilter([
+            'name' => 'weight',
+            'label' => 'Вес',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'weight', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'weight', '<=', (float) $range->to);
+            }
+        });
+        $this->crud->addFilter([
+            'name' => 'waist',
+            'label' => 'Талия',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'waist', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'waist', '<=', (float) $range->to);
+            }
+        });
+        $this->crud->addFilter([
+            'name' => 'leg_volume',
+            'label' => 'Объем ноги',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'leg_volume', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'leg_volume', '<=', (float) $range->to);
+            }
+        });
+        $this->crud->addFilter([
+            'name' => 'arm_volume',
+            'label' => 'Объем рук',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'arm_volume', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'arm_volume', '<=', (float) $range->to);
+            }
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration

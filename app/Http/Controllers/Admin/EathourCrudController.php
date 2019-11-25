@@ -41,6 +41,24 @@ class EathourCrudController extends CrudController
         }, function ($value) {
             $this->crud->addClause('where', 'active', $value);
         });
+        $this->crud->addFilter([
+            'name' => 'hour_start',
+            'label' => 'Время начала',
+            'type' => 'text',
+        ],
+        false,
+        function ($value) {
+            $this->crud->addClause('where', 'hour_start', $value);
+        });
+        $this->crud->addFilter([
+            'name' => 'hour_finish',
+            'label' => 'Время окончания',
+            'type' => 'text',
+        ],
+        false,
+        function ($value) {
+            $this->crud->addClause('where', 'hour_finish', $value);
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration

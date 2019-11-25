@@ -25,6 +25,20 @@ class UserCrudController extends CrudController
         $this->crud->setRoute(backpack_url('user'));
         $this->setAccessLevels();
 
+        $this->crud->addFilter([
+            'type' => 'select2',
+            'name' => 'type_employee',
+            'label' => 'Тип сотрудника',
+        ], function () {
+            return [
+                1 => 'Сотрудник',
+                2 => 'Тренер',
+            ];
+        }, function ($value) {
+            $this->crud->addClause('where', 'type_employee', $value);
+        });
+
+
         $this->crud->addClause('whereHas', 'roles');
         // Columns
         $this->crud->setColumns([

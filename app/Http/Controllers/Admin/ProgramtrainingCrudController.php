@@ -68,6 +68,57 @@ class ProgramtrainingCrudController extends CrudController
         }, function ($value) {
             $this->crud->addClause('where', 'relaxprogram_id', $value);
         });
+        $this->crud->addFilter([
+            'name' => 'price',
+            'label' => 'Цена',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'price', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'price', '<=', (float) $range->to);
+            }
+        });
+        $this->crud->addFilter([
+            'name' => 'duration',
+            'label' => 'Длительность (в днях)',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'duration', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'duration', '<=', (float) $range->to);
+            }
+        });
+        $this->crud->addFilter([
+            'name' => 'agerestrict',
+            'label' => 'Возрастные ограничения',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'agerestrict', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'agerestrict', '<=', (float) $range->to);
+            }
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration

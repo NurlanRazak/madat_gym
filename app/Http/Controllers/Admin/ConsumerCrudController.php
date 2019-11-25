@@ -27,9 +27,90 @@ class ConsumerCrudController extends CrudController
         $this->crud->setRoute(backpack_url('consumer'));
         $this->setAccessLevels();
         $this->crud->addClause('whereDoesntHave', 'roles');
+        $this->crud->addFilter([
+            'name' => 'weight',
+            'label' => 'Вес',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'weight', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'weight', '<=', (float) $range->to);
+            }
+        });
+        $this->crud->addFilter([
+            'name' => 'height',
+            'label' => 'Рост',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'height', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'height', '<=', (float) $range->to);
+            }
+        });
 
+        $this->crud->addFilter([ // date filter
+                  'type' => 'date_range',
+                  'name' => 'date_register',
+                  'label' => 'Дата регистраций',
+                ],
+                false,
+                function($value) { // if the filter is active, apply these constraints
+                  // $this->crud->addClause('where', 'date_register', $value);
+                  $dates = json_decode($value);
+                  $this->crud->addClause('where', 'date_register', '>=', $dates->from);
+                  $this->crud->addClause('where', 'date_register', '<=', $dates->to . ' 23:59:59');
+                });
         // $this->crud->addClause('whereHas', 'roles');
         // Columns
+
+        $this->crud->addFilter([ // simple filter
+          'type' => 'text',
+          'name' => 'city',
+          'label' => 'Город',
+        ],
+        false,
+        function($value) { // if the filter is active
+            $this->crud->addClause('where', 'city', 'LIKE', "%$value%");
+        } );
+
+        $this->crud->addFilter([ // simple filter
+          'type' => 'text',
+          'name' => 'country',
+          'label' => 'Страна',
+        ],
+        false,
+        function($value) { // if the filter is active
+            $this->crud->addClause('where', 'country', 'LIKE', "%$value%");
+        } );
+
+
+        $this->crud->addFilter([
+            'type' => 'select2',
+            'name' => 'gender',
+            'label' => 'Пол',
+        ], function () {
+            return [
+                1 => 'Мужской пол',
+                2 => 'Женский пол',
+            ];
+        }, function ($value) {
+            $this->crud->addClause('where', 'gender', $value);
+        });
+
         $this->crud->setColumns([
             [
                 'name'  => 'name',
