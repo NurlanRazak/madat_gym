@@ -46,6 +46,23 @@ class SubscriptionCrudController extends CrudController
                 $this->crud->addClause('where', 'days', '<=', (float) $range->to);
             }
         });
+        $this->crud->addFilter([
+            'name' => 'price',
+            'label' => 'Цена',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'price', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'price', '<=', (float) $range->to);
+            }
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration
@@ -97,11 +114,12 @@ class SubscriptionCrudController extends CrudController
                 'label' => 'Количество дней',
                 'attributes' => [
                     'placeholder' => 'Введите цифры',
-                    'required' => 'required',
-
                 ],
                 'type' => 'number',
-                'attributes' => ["step" => "any"],
+                'attributes' => [
+                    'required' => 'required',
+                    "step" => "any"
+                ],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-8'
                 ],
@@ -111,10 +129,10 @@ class SubscriptionCrudController extends CrudController
                 'label' => 'Дата истечения',
                 'type' => 'datetime_picker',
                 // optional:
-                'datetime_picker_options' => [
-                    'format' => 'DD/MM/YYYY HH:mm',
-                    'language' => 'fr'
-                ],
+                // 'datetime_picker_options' => [
+                //     'format' => 'DD/MM/YYYY HH:mm',
+                //     // 'language' => 'fr'
+                // ],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4'
                 ],
@@ -127,11 +145,11 @@ class SubscriptionCrudController extends CrudController
                 'label' => 'Цена',
                 'attributes' => [
                     'placeholder' => 'Введите цифры',
-                    'required' => 'required',
                 ],
                 'type' => 'number',
                 'attributes' => [
                     "step" => "0.001",
+                    'required' => 'required',
                 ],
 
             ],

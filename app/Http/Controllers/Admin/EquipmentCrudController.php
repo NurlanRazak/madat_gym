@@ -64,6 +64,23 @@ class EquipmentCrudController extends CrudController
         }, function ($value) {
             $this->crud->addClause('where', 'programtraining_id', $value);
         });
+        $this->crud->addFilter([
+            'name' => 'notify_day',
+            'label' => 'День оповещения',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'notify_day', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'notify_day', '<=', (float) $range->to);
+            }
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration
@@ -134,9 +151,6 @@ class EquipmentCrudController extends CrudController
             [
                 'name' => 'description',
                 'label' => 'Свойства',
-                'attributes' => [
-                    'required' => 'required',
-                ],
             ],
             // [
             //     'name' => 'image',

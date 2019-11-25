@@ -64,6 +64,23 @@ class GroceryCrudController extends CrudController
                 });
             }
         });
+        $this->crud->addFilter([
+            'name' => 'notify_day',
+            'label' => 'День оповещения',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'notify_day', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'notify_day', '<=', (float) $range->to);
+            }
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration
@@ -71,6 +88,14 @@ class GroceryCrudController extends CrudController
         */
 
         $this->crud->addColumns([
+            [
+                'name' => 'programtraining_id',
+                'label' => 'Программы тренировок',
+                'type' => 'select',
+                'entity' => 'programtraining',
+                'attribute' => 'name',
+                'model' => 'App\Models\Programtraining',
+            ],
             [
                 'name' => 'notify_day',
                 'label' => 'День оповещения',
@@ -87,14 +112,6 @@ class GroceryCrudController extends CrudController
             //     'attribute' => 'name',
             //     'model' => 'App\Models\Training',
             // ],
-            [
-                'name' => 'programtraining_id',
-                'label' => 'Программы тренировок',
-                'type' => 'select',
-                'entity' => 'programtraining',
-                'attribute' => 'name',
-                'model' => 'App\Models\Programtraining',
-            ],
             // [
             //     'name' => 'groceries',
             //     'label' => 'Справочника продуктов – огурцы, помидоры',
@@ -126,22 +143,28 @@ class GroceryCrudController extends CrudController
 
         $this->crud->addFields([
             [
-                'name' => 'notify_day',
-                'label' => 'День оповещения',
-                'type' => 'number',
-                'attributes' => ["step" => "any"],
-            ],
-            [
-                'name' => 'description',
-                'label' => 'Комментарии',
-            ],
-            [
                 'name' => 'programtraining_id',
                 'label' => 'Программы тренировок',
                 'type' => 'select2',
                 'entity' => 'programtraining',
                 'attribute' => 'name',
                 'model' => 'App\Models\Programtraining',
+                'attributes' => [
+                    'required' => 'required',
+                ],
+            ],
+            [
+                'name' => 'notify_day',
+                'label' => 'День оповещения',
+                'type' => 'number',
+                'attributes' => [
+                    "step" => "any",
+                    'required' => 'required',
+                ],
+            ],
+            [
+                'name' => 'description',
+                'label' => 'Комментарии',
             ],
             // [
             //     'name' => 'trainings',
@@ -165,6 +188,9 @@ class GroceryCrudController extends CrudController
                 'attribute' => 'name',
                 'model' => 'App\Models\Listmeal',
                 'pivot' => true,
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
             // [
             //     'name' => 'meals',
