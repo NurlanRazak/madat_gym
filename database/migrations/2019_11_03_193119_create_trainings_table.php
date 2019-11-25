@@ -17,8 +17,8 @@ class CreateTrainingsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->integer('day_number');
-            $table->integer('approaches_number');
-            $table->integer('repetitions_number');
+            $table->integer('approaches_number')->nullable();
+            $table->integer('repetitions_number')->nullable();
             $table->float('weight', 8, 4)->nullable();
             $table->unsignedBigInteger('exercise_id')->nullable();
             $table->foreign('exercise_id')->references('id')->on('exercises')->onDelete('cascade');

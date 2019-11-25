@@ -175,9 +175,7 @@ class TrainingCrudController extends CrudController
                 'entity' => 'user',
                 'attribute' => 'email',
                 'model' => 'App\User',
-                'attributes' => [
-                    'required' => 'required',
-                ],
+                
             ],
             [
                 'name' => 'day_number',
@@ -214,7 +212,7 @@ class TrainingCrudController extends CrudController
                 'label' => 'Вес',
                 'type' => 'number',
                 'attributes' => [
-                    "step" => "any",    
+                    "step" => "any",
                     'required' => 'required',
 
                 ],
