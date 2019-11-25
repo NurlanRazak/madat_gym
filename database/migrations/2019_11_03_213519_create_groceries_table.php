@@ -16,7 +16,7 @@ class CreateGroceriesTable extends Migration
         Schema::create('groceries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('notify_day');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->unsignedBigInteger('training_id')->nullable();
             $table->foreign('training_id')->references('id')->on('trainings')->onDelete('cascade');
             $table->unsignedBigInteger('meal_id')->nullable();

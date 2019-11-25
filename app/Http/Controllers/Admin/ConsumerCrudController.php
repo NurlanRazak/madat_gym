@@ -111,6 +111,9 @@ class ConsumerCrudController extends CrudController
             $this->crud->addClause('where', 'gender', $value);
         });
 
+
+        $this->crud->addButtonFromView('line', 'psw', 'password.change_password', 'beginning');
+
         $this->crud->setColumns([
             [
                 'name'  => 'name',
@@ -294,6 +297,10 @@ class ConsumerCrudController extends CrudController
                 'default' => Carbon::now(),
             ],
         ]);
+
+        if(!request()->password && request()->id) {
+            $this->crud->removeField(['password', 'password_confirmation']);
+        }
     }
 
     /**

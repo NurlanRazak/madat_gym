@@ -27,6 +27,7 @@ class MessageRequest extends FormRequest
     {
         return [
             // 'name' => 'required|min:5|max:255'
+            'content' => 'required',
         ];
     }
 
@@ -50,7 +51,7 @@ class MessageRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'content.required' => 'Заполните поле сообщение',
         ];
     }
 }

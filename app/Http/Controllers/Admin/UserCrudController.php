@@ -39,8 +39,27 @@ class UserCrudController extends CrudController
         });
 
 
+        $this->crud->addFilter([
+            'type' => 'select2_multiple',
+            'name' => 'roles',
+            'label' => trans('backpack::permissionmanager.roles'),
+        ], function () {
+            return config('permission.models.role')::pluck('name', 'id')->toArray();
+        },  function ($values) {
+            foreach (json_decode($values) as $key => $value) {
+                $this->crud->query = $this->crud->query->whereHas('roles', function ($query) use ($value) {
+                    $query->where('role_id', $value);
+                });
+            }
+        });
+
+
+
         $this->crud->addClause('whereHas', 'roles');
         // Columns
+        $this->crud->addButtonFromView('line', 'psw', 'password.change_password', 'beginning');
+
+
         $this->crud->setColumns([
             [
                 'name'  => 'name',
@@ -246,6 +265,9 @@ class UserCrudController extends CrudController
                 'label' => 'Соц сети',
             ],
         ]);
+        if(!request()->password && request()->id) {
+            $this->crud->removeField(['password', 'password_confirmation']);
+        }
     }
 
     /**
