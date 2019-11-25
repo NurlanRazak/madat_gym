@@ -183,7 +183,10 @@ class TrainingCrudController extends CrudController
                 'name' => 'day_number',
                 'label' => 'Номер дня',
                 'type' => 'number',
-                'attributes' => ["step" => "any"],
+                'attributes' => [
+                    "step" => "any",
+                    'required' => 'required',
+                ],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4'
                 ],

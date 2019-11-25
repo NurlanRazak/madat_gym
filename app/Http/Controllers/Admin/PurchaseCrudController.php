@@ -95,6 +95,8 @@ class PurchaseCrudController extends CrudController
             [
                 'name' => 'start_date',
                 'label' => 'Дата подписки',
+                'type' => "datetime",
+                'format' => 'l',
             ],
         ]);
 
@@ -134,6 +136,9 @@ class PurchaseCrudController extends CrudController
                 'name' => 'start_date',
                 'label' => 'Дата покупки',
                 'type' => 'date_picker',
+                'attributes' => [
+                    'required' => 'required',
+                ],
             ],
         ]);
 

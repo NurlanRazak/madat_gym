@@ -75,6 +75,23 @@ class MealCrudController extends CrudController
                 $this->crud->addClause('where', 'weight', '<=', (float) $range->to);
             }
         });
+        $this->crud->addFilter([
+            'name' => 'price',
+            'label' => 'Цена',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'price', '>=', (float) $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'price', '<=', (float) $range->to);
+            }
+        });
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration
