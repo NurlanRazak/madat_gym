@@ -154,9 +154,7 @@ Route::group(['middleware' => 'verified'], function () {
     Route::view('subscribition', 'subscribition')->name('subscribition');
     Route::view('programs', 'programs')->name('programs');
     Route::view('search-results', 'search-results')->name('search-results');
-    Route::get('/', function () {
-        return view('dashboard.dashboardv1');
-    });
+    Route::get('/', 'HomeController@home');
 
     Route::view('buy', 'buy')->name('buy');
     Route::view('mail', 'mail')->name('mail');

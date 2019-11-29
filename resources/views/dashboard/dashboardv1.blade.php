@@ -1,9 +1,9 @@
 @extends('layouts.master')
 @section('main-content')
             <div class="breadcrumb">
-                <h1>Приветствуем, Username!</h1>
+                <h1>Приветствуем, {{ $user->name }}!</h1>
                 <ul>
-                    <li>Сегодня: ПН 5 сен. 2019г.</li>
+                    <li>Сегодня: {{ $time }}</li>
                 </ul>
             </div>
             <div class="separator-breadcrumb border-top"></div>
@@ -15,7 +15,7 @@
 
                         <div class="row apr">
                         <div class="col-lg-2 col-12 mb-1 text-center">
-                            <span class="month">11 авг. - 17 авг. 2019 г.</span>
+                            <span class="month">{{ $week }}г.</span>
                         </div>
                         <div class="col-lg-8 col-12 mb-1">
                             <ul class="days row">
