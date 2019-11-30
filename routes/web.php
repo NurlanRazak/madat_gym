@@ -157,7 +157,7 @@ Route::group(['middleware' => 'verified'], function () {
     Route::get('/', 'HomeController@home');
 
     Route::view('buy', 'buy')->name('buy');
-    Route::view('mail', 'mail')->name('mail');
+    Route::get('mail', 'MessageController@message')->name('mail');
 
 
 });

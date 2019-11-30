@@ -43,34 +43,13 @@
                                             <img class="rounded-circle" src="{{asset('/assets/images/faces/1.jpg')}}" alt="">
                                         </div>
                                         <div class="col-xs-12">
-                                            <p class="m-0">Jhon Doe</p>
-                                            <p class="text-12 text-muted">20 Dec, 2018</p>
+                                            <p class="m-0">Jhon Doe {{$mail->name}}</p>
+                                            <p class="text-12 text-muted">20 Dec, 2018 {{ $mail->updated_at->format('d F Y') }}</p>
                                         </div>
                                     </div>
-                                    <h4 class="mb-3">Confirm your email</h4>
+                                    <h4 class="mb-3">{{ $mail->name }}</h4>
                                     <div>
-                                        <p>Natus consequuntur perspiciatis esse beatae illo quos eaque.</p>
-                                        <p>Earum, quisquam, fugit? Numquam dolor magni nisi? Suscipit odit, ipsam iusto
-                                            enim culpa,
-                                            temporibus vero possimus error voluptates sequi. Iusto ipsam, nihil?
-                                            Eveniet modi maxime animi excepturi a dignissimos doloribus,
-                                            inventore sed ratione, ducimus atque earum maiores tenetur officia commodi
-                                            dicta tempora consequatur non nesciunt ipsam,
-                                            consequuntur quia fuga aspernatur impedit et? Natus, earum.</p>
-                                        <blockquote class="blockquote">
-                                            Earum, quisquam, fugit? Numquam dolor magni nisi? Suscipit odit, ipsam
-                                            iusto enim culpa,
-                                            temporibus vero possimus error voluptates sequi.
-                                        </blockquote>
-                                        <p>Earum, quisquam, fugit? Numquam dolor magni nisi? Suscipit odit, ipsam iusto
-                                            enim culpa,
-                                            temporibus vero possimus error voluptates sequi. Iusto ipsam, nihil?
-                                            Eveniet modi maxime animi excepturi a dignissimos doloribus,
-                                            inventore sed ratione, ducimus atque earum maiores tenetur officia commodi
-                                            dicta tempora consequatur non nesciunt ipsam,
-                                            consequuntur quia fuga aspernatur impedit et? Natus, earum.</p><br>
-                                        Thanks<br>
-                                        Jhone
+                                        {!! $mail->content !!}
                                     </div>
                                 </div>
 
@@ -183,7 +162,7 @@
                     </div>
                 </div>
 
-                <!-- MAIN INBOX SIDEBAR 
+                <!-- MAIN INBOX SIDEBAR
                 <div data-sidebar="main" data-sidebar-position="left" class="inbox-main-sidebar">
                     <div class="pt-3 pr-3 pb-3">
                         <i class="sidebar-close i-Close" data-sidebar-toggle="main"></i>
