@@ -23,7 +23,7 @@
                                                     <div class="col-md-12">
                                                         <div class="ul-pricing__table-1">
                                                             <div class="ul-pricing__image card-icon-bg-primary">
-                                                                <img src="{{ asset('uploads/'.$program->image) }}"/>
+                                                                <img src="{{ isset($program->image) ? asset('uploads/'.$program->image) : '' }}"/>
                                                             </div>
                                                             <div class="ul-pricing__title">
                                                                 <h2 class="heading text-primary"> {{ $program->name }}</h2>
@@ -33,7 +33,11 @@
                                                             <div class="ul-pricing__list">
                                                                <p>{{ $program->description }} </p>
                                                             </div>
-                                                            <button type="button" class="btn btn-lg btn-primary btn-rounded m-1">Выбрать и продолжить</button>
+                                                            <form action="{{ route('post-program') }}" method="POST" beforesubmit="changeProgram">
+                                                                @csrf
+                                                                <input type="hidden" name="programtraining_id" value="{{ $program->id }}"/>
+                                                                <button type="submit" class="btn btn-lg btn-primary btn-rounded m-1">Выбрать и продолжить</button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 @endforeach
@@ -45,6 +49,12 @@
                         </div>
                 </section>
 
+<script>
+    function changeProgram(e) {
+        if(!confirm('@lang('admin.change_program')'))
+        e.preventDefault();
+    }
+</script>
 
 @endsection
 

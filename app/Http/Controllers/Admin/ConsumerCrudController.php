@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Services\MenuService\Traits\AccessLevelsTrait;
 use Carbon\Carbon;
 use App\User;
+use App\Models\Programtraining;
 
 class ConsumerCrudController extends CrudController
 {
@@ -135,6 +136,14 @@ class ConsumerCrudController extends CrudController
             //    'model'     => config('permission.models.permission'), // foreign key model
             // ],
             [
+                'name' => 'programtraining_id',
+                'label' => 'Программы тренировок',
+                'type' => 'select',
+                'entity' => 'programtraining',
+                'attribute' => 'name',
+                'model' => Programtraining::class,
+            ],
+            [
                 'name' => 'country',
                 'label' => 'Страна',
             ],
@@ -218,6 +227,14 @@ class ConsumerCrudController extends CrudController
                 'attributes' => [
                     'required' => 'required',
                 ],
+            ],
+            [
+                'name' => 'programtraining_id',
+                'label' => 'Программы тренировок',
+                'type' => 'select2',
+                'entity' => 'programtraining',
+                'attribute' => 'name',
+                'model' => Programtraining::class,
             ],
             [
                 'name' => 'country',

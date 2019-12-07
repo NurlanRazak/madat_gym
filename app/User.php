@@ -15,6 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
 use App\Notifications\VerifyEmail;
 use App\Models\Pivots\MessageUser;
+use App\Models\Programtraining;
 use App\Models\Pivots\SubscriptionUser;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -36,7 +37,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'country', 'type_employee', 'city', 'date_birth', 'gender', 'current_weight', 'height', 'iin', 'phone_number', 'social_media', 'comment', 'date_register', 'position', 'date_hired', 'date_fired', 'address','image'
+        'name', 'email', 'password', 'country', 'type_employee', 'city',  'programtraining_id', 'date_birth', 'gender', 'current_weight', 'height', 'iin', 'phone_number', 'social_media', 'comment', 'date_register', 'position', 'date_hired', 'date_fired', 'address','image'
     ];
 
     /**
@@ -60,6 +61,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Subscription::class, 'subscription_user', 'user_id', 'subscription_id')
                     ->withPivot(['created_at', 'id'])
                     ->using(SubscriptionUser::class);
+    }
+
+    public function programtraining()
+    {
+        return $this->belongsTo(Programtraining::class, 'programtraining_id');
     }
 
     public static function getGenderOptions() : array
