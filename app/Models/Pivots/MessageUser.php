@@ -8,7 +8,7 @@ use App\User;
 class MessageUser
 {
 
-    public $incrementing = true;
+    public $incrementing = false;
 
     protected $table = 'message_user';
     protected $fillable = ['user_id', 'message_id', 'read_at'];

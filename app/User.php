@@ -8,12 +8,14 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Auth\MustVerifyEmail as MustVerify;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Message;
+use App\Models\Subscription;
 use Backpack\CRUD\CrudTrait;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
 use App\Notifications\VerifyEmail;
 use App\Models\Pivots\MessageUser;
+use App\Models\Pivots\SubscriptionUser;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -51,6 +53,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Message::class, 'message_user', 'user_id', 'message_id')
                     ->withPivot(['read_at'])
                     ->using(MessageUser::class);
+    }
+
+    public function subscriptions()
+    {
+        return $this->belongsToMany(Subscription::class, 'subscription_user', 'user_id', 'subscription_id')
+                    ->withPivot(['created_at', 'id'])
+                    ->using(SubscriptionUser::class);
     }
 
     public static function getGenderOptions() : array

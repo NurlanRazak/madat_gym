@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
+use App\User;
+use App\Models\Pivots\SubscriptionUser;
 
 class Subscription extends Model
 {
@@ -34,7 +36,12 @@ class Subscription extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'subscription_user', 'subscription_id', 'user_id')
+                    ->withPivot(['id', 'created_at'])
+                    ->using(SubscriptionUser::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

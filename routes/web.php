@@ -155,7 +155,11 @@ Route::group(['middleware' => 'verified'], function () {
     Route::post('subscription', 'SubscriptionController@postSubscription')->name('post-subscription');
     Route::get('programs', 'ProgramController@programs')->name('programs');
     Route::view('search-results', 'search-results')->name('search-results');
-    Route::get('/', 'HomeController@home');
+    Route::group([
+        'middleware' => 'subscribed',
+    ], function() {
+        Route::get('/', 'HomeController@home');        
+    });
 
     Route::view('buy', 'buy')->name('buy');
     Route::get('mail', 'MessageController@message')->name('mail');
