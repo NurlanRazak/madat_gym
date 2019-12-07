@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
+use App\Models\Programtraining;
 
 class Userparameter extends Model
 {
@@ -19,7 +20,7 @@ class Userparameter extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['user_id', 'date_measure', 'weight', 'waist', 'leg_volume', 'arm_volume', 'images'];
+    protected $fillable = ['user_id', 'date_measure', 'weight', 'waist', 'leg_volume', 'arm_volume', 'images', 'programtraining_id'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -48,6 +49,11 @@ class Userparameter extends Model
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');
+    }
+
+    public function programtraining()
+    {
+        return $this->belongsTo(Programtraining::class, 'programtraining_id');
     }
     /*
     |--------------------------------------------------------------------------

@@ -34,6 +34,8 @@ class AddColumnsToUsersTable extends Migration
             $table->text('address')->nullable();
             $table->string('image')->nullable();
 
+            $table->unsignedBigInteger('programtraining_id')->nullable();
+            $table->foreign('programtraining_id')->references('id')->on('programtrainings')->onDelete('cascade');
         });
     }
 
