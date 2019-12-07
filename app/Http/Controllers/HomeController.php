@@ -50,9 +50,4 @@ class HomeController extends Controller
         return view('dashboard.dashboardv1', ['user' => $user, 'time' => $time, 'week' => $week, 'today' => $today]);
     }
 
-    public function programs()
-    {
-        $val = 'here';
-        return view('programs', ['val' => $val]);
-    }
 }
