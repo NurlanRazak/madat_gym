@@ -32,7 +32,9 @@
                 <!-- Notificaiton -->
                 <div class="dropdown">
                     <a class="badge-top-container" href="{{route('mail')}}" role="button" id="dropdownNotification">
-                        <span class="badge badge-primary">3</span>
+                        @if($notification_count)
+                            <span class="badge badge-primary">{{ $notification_count }}</span>
+                        @endif
                         <i class="i-Bell text-muted header-icon"></i>
                     </a>
                 </div>

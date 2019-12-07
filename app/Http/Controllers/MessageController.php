@@ -14,9 +14,14 @@ class MessageController extends Controller
 
     public function message(Request $request)
     {
-        $user_id = $request->user()->id;
-        $mails = $request->user()->messages()->latest()->where('status', Message::SENT)->get()->groupBy('author_id');
+        $user = $request->user();
+        $user_id = $user->id;
+        $mails = $user->messages()->latest()->where('status', Message::SENT)->get()->groupBy('author_id');
         $users = User::whereIn('id', $mails->keys()->toArray())->get();
+
+        $user->messages()->where('read_at', null)->update([
+            'read_at' => \DB::raw('NOW()'),
+        ]);
 
         return view('mail', ['mails' => $mails, 'users' => $users]);
     }

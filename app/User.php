@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
 use App\Notifications\ResetPassword as ResetPasswordNotification;
 use App\Notifications\VerifyEmail;
+use App\Models\Pivots\MessageUser;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -47,7 +48,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function messages()
     {
-        return $this->belongsToMany(Message::class, 'message_user', 'user_id', 'message_id');
+        return $this->belongsToMany(Message::class, 'message_user', 'user_id', 'message_id')
+                    ->withPivot(['read_at'])
+                    ->using(MessageUser::class);
     }
 
     public static function getGenderOptions() : array

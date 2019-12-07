@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 use App\User;
+use App\Models\Pivots\MessageUser;
 
 class Message extends Model
 {
@@ -55,7 +56,9 @@ class Message extends Model
     */
     public function users()
     {
-        return $this->belongsToMany(User::class, 'message_user', 'message_id', 'user_id');
+        return $this->belongsToMany(User::class, 'message_user', 'message_id', 'user_id')
+                    ->withPivot('read_at')
+                    ->using(MessageUser::class);
     }
 
     public function author()
