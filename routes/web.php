@@ -154,6 +154,7 @@ Route::group(['middleware' => 'verified'], function () {
     Route::get('subscription', 'SubscriptionController@subscription')->name('subscription');
     Route::post('subscription', 'SubscriptionController@postSubscription')->name('post-subscription');
     Route::get('programs', 'ProgramController@programs')->name('programs');
+    Route::post('program', 'ProgramController@postProgram')->name('post-program');
     Route::view('search-results', 'search-results')->name('search-results');
     Route::group([
         'middleware' => [
