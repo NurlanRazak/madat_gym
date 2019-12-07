@@ -30,8 +30,8 @@
                                             <div class="ul-pricing__title">
                                                 <h2 class="heading text-primary">{{ $subscription->name }}</h2>
                                             </div>
-                                            <div class="ul-pricing__text text-mute">{{ $subscription->days }}</div>
-                                            <div class="ul-pricing__main-number"> <h4 class="heading display-3 text-primary t-font-boldest" style="font-size: 3.5rem;">{{  number_format($subscription->price, 0,"."," ") }}</h4></div>
+                                            <div class="ul-pricing__text text-mute">На {{ $subscription->days }} дней</div>
+                                            <div class="ul-pricing__main-number"> <h4 class="heading display-3 text-primary t-font-boldest" style="font-size: 3.5rem;">{{  number_format($subscription->price, 0,"."," ") }} ₸</h4></div>
                                             <div class="ul-pricing__list">
 
                                                <p>  </p>
