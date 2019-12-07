@@ -15,4 +15,9 @@ class SubscriptionController extends Controller
         return view('subscription', ['subscriptions' => $subscriptions]);
     }
 
+    public function postSubscription(Request $request)
+    {
+        return redirect(route('programs'));
+    }
+
 }

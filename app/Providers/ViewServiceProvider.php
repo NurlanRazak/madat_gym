@@ -26,5 +26,8 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('layouts.header-menu', NotificationCountComposer::class);
+        View::composer('layouts.master', function($view) {
+            $view->with(['user' => request()->user()]);
+        });
     }
 }

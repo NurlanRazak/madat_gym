@@ -36,7 +36,11 @@
 
                                                <p>  </p>
                                             </div>
-                                            <button type="button" class="btn btn-lg btn-primary btn-rounded m-1">Выбрать и продолжить</button>
+                                            <form action="{{ route('post-subscription') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="subscription_id" value="{{ $subscription->id }}"/>
+                                                <button type="submit" class="btn btn-lg btn-primary btn-rounded m-1">Выбрать и продолжить</button>
+                                            </form>
                                         </div>
                                     </div>
                                 @endforeach
