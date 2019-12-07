@@ -36,6 +36,7 @@ class HomeController extends Controller
         $last_day = Date::parse('sunday this week')->format('d F Y');
         $week = $first_day." - ".$last_day;
 
+        $today = Date::today()->dayOfWeek;
 
         $user = Auth::user();
         Date::setlocale(config('app.locale'));
@@ -43,6 +44,12 @@ class HomeController extends Controller
         $fc = mb_strtoupper(mb_substr($time, 0, 1));
         $time = $fc.mb_substr($time, 1);
 
-        return view('dashboard.dashboardv1', ['user' => $user, 'time' => $time, 'week' => $week]);
+        return view('dashboard.dashboardv1', ['user' => $user, 'time' => $time, 'week' => $week, 'today' => $today]);
+    }
+
+    public function programs()
+    {
+        $val = 'here';
+        return view('programs', ['val' => $val]);
     }
 }

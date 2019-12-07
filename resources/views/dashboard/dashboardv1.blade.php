@@ -19,13 +19,12 @@
                         </div>
                         <div class="col-lg-8 col-12 mb-1">
                             <ul class="days row">
-                                <li class="col"><a href="#" class="today">ПН</a></li>
-                                <li class="col"><a href="#">ВТ</a></li>
-                                <li class="col"><a href="#">СР</a></li>
-                                <li class="col"><a href="#">ЧТ</a></li>
-                                <li class="col"><a href="#">ПТ</a></li>
-                                <li class="col"><a href="#">СБ</a></li>
-                                <li class="col"><a href="#">ВС</a></li>
+                                @php
+                                    $days = array('ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС');
+                                @endphp
+                                @for ($i = 0; $i < count($days); $i++)
+                                     <li class="col"><a href="#" class="{{ ($today-1 == $i) ? 'today' : '' }}">{{ $days[$i] }}</a></li>
+                                @endfor
                             </ul>
                         </div>
                         <div class="col-lg-2 col-12">
