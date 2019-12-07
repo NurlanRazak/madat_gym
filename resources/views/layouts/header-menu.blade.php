@@ -47,7 +47,7 @@
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                             <div class="dropdown-header">
-                                <i class="i-Lock-User mr-1"></i> Timothy Carlson
+                                <i class="i-Lock-User mr-1"></i> {{ $user->name }}
                             </div>
                             <a class="dropdown-item" href="{{route('profile')}}">Профиль</a>
                             <a class="dropdown-item">Блог</a>
