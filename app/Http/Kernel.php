@@ -61,6 +61,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'subscribed' => \App\Http\Middleware\CheckSubscription::class,
+        'programchecked' => \App\Http\Middleware\CheckProgram::class,
     ];
 
     /**
@@ -78,6 +79,7 @@ class Kernel extends HttpKernel
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
         \Illuminate\Auth\Middleware\Authorize::class,
         \App\Http\Middleware\CheckSubscription::class,
+        \App\Http\Middleware\CheckProgram::class,
         //
     ];
 }

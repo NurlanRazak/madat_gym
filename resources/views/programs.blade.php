@@ -23,7 +23,7 @@
                                                     <div class="col-md-12">
                                                         <div class="ul-pricing__table-1">
                                                             <div class="ul-pricing__image card-icon-bg-primary">
-                                                                <img src="{{ asset('uploads/'.$program->image) }}"/>
+                                                                <img src="{{ isset($program->image) ? asset('uploads/'.$program->image) : '' }}"/>
                                                             </div>
                                                             <div class="ul-pricing__title">
                                                                 <h2 class="heading text-primary"> {{ $program->name }}</h2>
