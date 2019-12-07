@@ -2,13 +2,16 @@
 
 namespace App\Models\Pivots;
 
+use Illuminate\Database\Eloquent\Relations\Pivot;
+
 use App\Models\Message;
 use App\User;
 
-class MessageUser
+class MessageUser extends Pivot
 {
 
     public $incrementing = false;
+    public $timestamps = false;
 
     protected $table = 'message_user';
     protected $fillable = ['user_id', 'message_id', 'read_at'];
