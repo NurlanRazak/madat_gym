@@ -20,7 +20,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use CrudTrait;
     use HasRoles;
     use MustVerify;
-    
+
     protected $guard_name = 'web';
 
     const MALE=1;
@@ -47,7 +47,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function messages()
     {
-        return $this->hasMany(Message::class, 'message_user', 'user_id', 'message_id');
+        return $this->belongsToMany(Message::class, 'message_user', 'user_id', 'message_id');
     }
 
     public static function getGenderOptions() : array

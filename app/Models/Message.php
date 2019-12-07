@@ -23,7 +23,7 @@ class Message extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'content', 'status', 'send_date'];
+    protected $fillable = ['name', 'content', 'status', 'send_date', 'author_id'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -32,10 +32,22 @@ class Message extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function($message) {
+            if(!$message->author_id) {
+                $message->author_id = backpack_user()->id;
+            }
+        });
+    }
+
     public function isSent() : bool
     {
         return $this->status == static::SENT;
     }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -44,6 +56,11 @@ class Message extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'message_user', 'message_id', 'user_id');
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id');
     }
     /*
     |--------------------------------------------------------------------------
