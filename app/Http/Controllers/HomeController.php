@@ -37,6 +37,9 @@ class HomeController extends Controller
         $week = $first_day." - ".$last_day;
 
         $today = Date::today()->dayOfWeek;
+        if($today == 0) {
+            $today = 7;
+        }
 
         $user = Auth::user();
         Date::setlocale(config('app.locale'));
