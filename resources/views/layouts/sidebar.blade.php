@@ -629,10 +629,10 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="{{ Route::currentRouteName()=='subscribition' ? 'open' : '' }}"
-                    href="{{route('subscribition')}}">
+                <a class="{{ Route::currentRouteName()=='subscription' ? 'open' : '' }}"
+                    href="{{route('subscription')}}">
                     <i class="nav-icon i-Billing"></i>
-                    <span class="item-name">subscribition<span
+                    <span class="item-name">subscription<span
                             class="ml-2 badge badge-pill badge-danger">New</span></span>
                 </a>
             </li>

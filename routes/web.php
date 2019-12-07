@@ -151,7 +151,7 @@ Route::group(['middleware' => 'verified'], function () {
     Route::view('profile', 'profile')->name('profile');
     Route::view('others/starter', 'starter')->name('starter');
     Route::view('others/faq', 'others.faq')->name('faq');
-    Route::view('subscribition', 'subscribition')->name('subscribition');
+    Route::get('subscription', 'SubscriptionController@subscription')->name('subscription');
     Route::get('programs', 'HomeController@programs')->name('programs');
     Route::view('search-results', 'search-results')->name('search-results');
     Route::get('/', 'HomeController@home');
