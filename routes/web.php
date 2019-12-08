@@ -166,7 +166,7 @@ Route::group(['middleware' => 'verified'], function () {
             'middleware' => ['programchecked'],
         ], function() {
             Route::redirect('home', '/');
-            Route::get('/', 'HomeController@home');
+            Route::get('/', 'HomeController@home')->name('home');
         });
 
     });
