@@ -18,7 +18,9 @@ class ProfileController extends Controller
         $date_finish = Date::parse($user->subscriptions->first()->expires)->format('d F Y');
         $dates = array($date_activation, $date_finish);
 
-        return view('profile', ['user' => $user, 'dates' => $dates]);
+        $userparameters = Userparameter::where('user_id', $user->id)->get();
+    
+        return view('profile', ['user' => $user, 'dates' => $dates, 'userparameters' => $userparameters]);
     }
 
     public function imageUpload(Request $request)

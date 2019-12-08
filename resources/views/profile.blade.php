@@ -202,7 +202,6 @@
                                         <tr>
                                           <th scope="col">#</th>
                                           <th scope="col">Дата замера</th>
-                                          <th scope="col">Рост</th>
                                           <th scope="col">Вес</th>
                                           <th scope="col">Талия</th>
                                           <th scope="col">Объем ноги</th>
@@ -211,16 +210,17 @@
                                         </tr>
                                       </thead>
                                       <tbody>
+                                         @foreach($userparameters as $userparameter)
                                         <tr>
                                           <th scope="row">1</th>
-                                          <td>Mark</td>
-                                          <td>Otto</td>
-                                          <td>@mdo</td>
-                                          <td>@mdo</td>
-                                          <td>@mdo</td>
-                                          <td>@mdo</td>
+                                          <td>{{ $userparameter->date_measure }}</td>
+                                          <td>{{ $userparameter->weight }}</td>
+                                          <td>{{ $userparameter->waist }}</td>
+                                          <td>{{ $userparameter->leg_volume }}</td>
+                                          <td>{{ $userparameter->arm_volume }}</td>
                                           <td><input type="submit" value="Удалить" class="btn btn-primary"></td>
                                         </tr>
+                                        @endforeach
                                       </tbody>
                                     </table>
                                 </div>
