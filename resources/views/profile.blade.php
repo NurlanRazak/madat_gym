@@ -2,6 +2,8 @@
 @section('page-css')
 <link rel="stylesheet" href="{{asset('assets/styles/vendor/ladda-themeless.min.css')}}">
 @endsection
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 
 @section('main-content')
     <div class="breadcrumb">
@@ -13,14 +15,15 @@
             <div class="card user-profile o-hidden mb-4">
                 <!-- <div class="header-cover" style="background-image: url({{asset('assets/images/photo-wide-5.jpeg')}}"></div> -->
                 <div class="user-info">
-                    <form action="" id="upload-container">
-                        <img class="profile-picture avatar-lg mb-2" src="{{asset('assets/images/faces/1.jpg')}}" alt="">
-                        <input id="file-input" style="display: none;" type="file" name="file" multiple>
+                    <form action="{{ route('image-post') }}" id="upload-container" method="POST">
+                        @csrf
+                        <img class="profile-picture avatar-lg mb-2" src="{{ asset('assets/images/photo-wide-5.jpeg')}}" alt="">
+                        <input id="file-input" style="display: none;" type="file" name="image" multiple>
                     </form>
-                    <p class="m-0 text-24">Timothy Carlson</p>
+                    <p class="m-0 text-24">{{ $user->name }}</p>
                 </div>
                 <div class="card-body">
-                    <!-- 
+                    <!--
                     	<ul class="nav nav-tabs profile-nav mb-4" id="profileTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="true">ОБЩИЕ</a>
@@ -39,10 +42,10 @@
                 -->
 
                     <div class="tab-content" id="profileTabContent">
-                        
+
                         <div class="tab-pane fade active show" id="about" role="tabpanel" aria-labelledby="about-tab">
                             <h4>ПОДПИСКА ПОЛЬЗОВАТЕЛЯ</h4>
-                            <p>Дата активации – 11 августа 2019 | Дата завершения – 11 сентября 2019
+                            <p>Дата активации – {{ $dates[0] }} | Дата завершения – {{ $dates[1] }}
                             </p>
                             <hr>
                             <div class="row mb-5">
@@ -199,7 +202,6 @@
                                         <tr>
                                           <th scope="col">#</th>
                                           <th scope="col">Дата замера</th>
-                                          <th scope="col">Рост</th>
                                           <th scope="col">Вес</th>
                                           <th scope="col">Талия</th>
                                           <th scope="col">Объем ноги</th>
@@ -208,16 +210,17 @@
                                         </tr>
                                       </thead>
                                       <tbody>
+                                         @foreach($userparameters as $userparameter)
                                         <tr>
                                           <th scope="row">1</th>
-                                          <td>Mark</td>
-                                          <td>Otto</td>
-                                          <td>@mdo</td>
-                                          <td>@mdo</td>
-                                          <td>@mdo</td>
-                                          <td>@mdo</td>
+                                          <td>{{ $userparameter->date_measure }}</td>
+                                          <td>{{ $userparameter->weight }}</td>
+                                          <td>{{ $userparameter->waist }}</td>
+                                          <td>{{ $userparameter->leg_volume }}</td>
+                                          <td>{{ $userparameter->arm_volume }}</td>
                                           <td><input type="submit" value="Удалить" class="btn btn-primary"></td>
                                         </tr>
+                                        @endforeach
                                       </tbody>
                                     </table>
                                 </div>
@@ -569,35 +572,63 @@
                   <div class="modal-body">
                     <form>
                       <div class="form-group">
-                        <input type="date" class="form-control" id="newpass" placeholder="Дата замера">
+                        <input type="date" class="form-control" id="date_measure" name="date_measure" placeholder="Дата замера">
                       </div>
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <input type="text" class="form-control" id="newpass" placeholder="Рост">
+                      </div> -->
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="weight" name="weight" placeholder="Вес">
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="newpass" placeholder="Вес">
+                        <input type="text" class="form-control" id="waist" name="waist" placeholder="Талия">
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="newpass" placeholder="Талия">
+                        <input type="text" class="form-control" id="leg_volume" name="leg_volume" placeholder="Объем ноги">
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="newpass" placeholder="Объем ноги">
-                      </div>
-                      <div class="form-group">
-                        <input type="text" class="form-control" id="newpass" placeholder="Объем руки">
+                        <input type="text" class="form-control" id="arm_volume" name="arm_volume" placeholder="Объем руки">
                       </div>
                     </form>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-primary">Добавить замер</button>
+                    <button type="submit" id="submit" class="btn btn-primary btn-submit">Добавить замер</button>
                   </div>
                 </div>
               </div>
             </div>
 
 @endsection
+<script type="text/javascript">
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+    $(document).ready(function() {
+        $('#submit').click(function (event) {
 
+            var date_measure = $("input[name=date_measure]").val();
+            var weight = $("input[name=weight]").val();
+            var waist = $("input[name=waist]").val();
+            var leg_volume = $("input[name=leg_volume]").val();
+            var arm_volume = $("input[name=arm_volume]").val();
+
+            $.ajax({
+                type: 'POST',
+                url: '{{url("userparameter_update")}}',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data:{date_measure:date_measure, weight:weight, waist:waist, leg_volume: leg_volume, arm_volume: arm_volume},
+                success:function(data) {
+                    alert(data.success);
+                }
+            })
+        });
+
+    });
+
+</script>
 @section('page-js')
  <script src="{{asset('assets/js/vendor/spin.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/ladda.js')}}"></script>
