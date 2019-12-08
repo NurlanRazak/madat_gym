@@ -144,25 +144,30 @@ Route::view('register', 'sessions.signUp')->name('register');
 Route::view('sessions/forgot', 'sessions.forgot')->name('forgot');
 
 Route::group(['middleware' => 'verified'], function () {
-    Route::get('/home', 'HomeController@index')->name('home');
-    Route::redirect('home', '/');
     // others
+    Route::get('subscription', 'SubscriptionController@subscription')->name('subscription');
+    Route::post('subscription', 'SubscriptionController@postSubscription')->name('post-subscription');
+
     Route::view('oups', 'oups')->name('oups');
     Route::view('profile', 'profile')->name('profile');
     Route::view('others/starter', 'starter')->name('starter');
     Route::view('others/faq', 'others.faq')->name('faq');
-    Route::get('subscription', 'SubscriptionController@subscription')->name('subscription');
-    Route::post('subscription', 'SubscriptionController@postSubscription')->name('post-subscription');
-    Route::get('programs', 'ProgramController@programs')->name('programs');
-    Route::post('program', 'ProgramController@postProgram')->name('post-program');
     Route::view('search-results', 'search-results')->name('search-results');
+
     Route::group([
         'middleware' => [
             'subscribed',
-            'programchecked',
         ],
     ], function() {
-        Route::get('/', 'HomeController@home');
+        Route::get('programs', 'ProgramController@programs')->name('programs');
+        Route::post('program', 'ProgramController@postProgram')->name('post-program');
+
+        Route::group([
+            'middleware' => ['programchecked'],
+        ], function() {
+            Route::redirect('home', '/');
+            Route::get('/', 'HomeController@home');
+        });
 
     });
 
