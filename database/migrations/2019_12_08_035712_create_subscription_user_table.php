@@ -22,7 +22,7 @@ class CreateSubscriptionUserTable extends Migration
             $table->unsignedBigInteger('subscription_id');
             $table->foreign('subscription_id')->references('id')->on('subscriptions')->onDelete('cascade');
 
-            $table->timestamps();
+            $table->datetime('created_at');
         });
     }
 

@@ -2,17 +2,19 @@
 
 namespace App\Models\Pivots;
 
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use App\Models\Subscription;
 use App\User;
 
-class SubscriptionUser
+class SubscriptionUser extends Pivot
 {
 
     public $incrementing = true;
+    public $timestamps = false;
 
     protected $table = 'subscription_user';
     protected $fillable = ['user_id', 'subscription_id', 'created_at'];
-    protected $dates = ['created_at'];
+    // protected $dates = ['created_at'];
 
     public function user()
     {
