@@ -16,6 +16,7 @@ use App\Notifications\ResetPassword as ResetPasswordNotification;
 use App\Notifications\VerifyEmail;
 use App\Models\Pivots\MessageUser;
 use App\Models\Programtraining;
+use App\Models\Userparameter;
 use App\Models\Pivots\SubscriptionUser;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -61,6 +62,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Subscription::class, 'subscription_user', 'user_id', 'subscription_id')
                     ->withPivot(['created_at', 'id'])
                     ->using(SubscriptionUser::class);
+    }
+
+    public function userparameters()
+    {
+        return $this->hasMany(Userparameter::class, 'user_id');
     }
 
     public function programtraining()

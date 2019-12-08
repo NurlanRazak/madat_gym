@@ -2,6 +2,8 @@
 @section('page-css')
 <link rel="stylesheet" href="{{asset('assets/styles/vendor/ladda-themeless.min.css')}}">
 @endsection
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 
 @section('main-content')
     <div class="breadcrumb">
@@ -570,35 +572,63 @@
                   <div class="modal-body">
                     <form>
                       <div class="form-group">
-                        <input type="date" class="form-control" id="newpass" placeholder="Дата замера">
+                        <input type="date" class="form-control" id="date_measure" name="date_measure" placeholder="Дата замера">
                       </div>
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <input type="text" class="form-control" id="newpass" placeholder="Рост">
+                      </div> -->
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="weight" name="weight" placeholder="Вес">
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="newpass" placeholder="Вес">
+                        <input type="text" class="form-control" id="waist" name="waist" placeholder="Талия">
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="newpass" placeholder="Талия">
+                        <input type="text" class="form-control" id="leg_volume" name="leg_volume" placeholder="Объем ноги">
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="newpass" placeholder="Объем ноги">
-                      </div>
-                      <div class="form-group">
-                        <input type="text" class="form-control" id="newpass" placeholder="Объем руки">
+                        <input type="text" class="form-control" id="arm_volume" name="arm_volume" placeholder="Объем руки">
                       </div>
                     </form>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-primary">Добавить замер</button>
+                    <button type="submit" id="submit" class="btn btn-primary btn-submit">Добавить замер</button>
                   </div>
                 </div>
               </div>
             </div>
 
 @endsection
+<script type="text/javascript">
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+    $(document).ready(function() {
+        $('#submit').click(function (event) {
 
+            var date_measure = $("input[name=date_measure]").val();
+            var weight = $("input[name=weight]").val();
+            var waist = $("input[name=waist]").val();
+            var leg_volume = $("input[name=leg_volume]").val();
+            var arm_volume = $("input[name=arm_volume]").val();
+
+            $.ajax({
+                type: 'POST',
+                url: '{{url("userparameter_update")}}',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data:{date_measure:date_measure, weight:weight, waist:waist, leg_volume: leg_volume, arm_volume: arm_volume},
+                success:function(data) {
+                    alert(data.success);
+                }
+            })
+        });
+
+    });
+
+</script>
 @section('page-js')
  <script src="{{asset('assets/js/vendor/spin.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/ladda.js')}}"></script>

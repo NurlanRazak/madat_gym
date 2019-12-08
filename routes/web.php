@@ -159,6 +159,7 @@ Route::group(['middleware' => 'verified'], function () {
     ], function() {
         Route::get('profile', 'ProfileController@profile')->name('profile');
         Route::post('user/image', 'ProfileController@imageUpload')->name('image-post');
+        Route::post('userparameter_update', 'ProfileController@userParameters');
         Route::get('history', 'HistoryController@history')->name('history');
         Route::get('programs', 'ProgramController@programs')->name('programs');
         Route::post('program', 'ProgramController@postProgram')->name('post-program');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Userparameter;
 use Jenssegers\Date\Date;
 
 class ProfileController extends Controller
@@ -23,5 +24,20 @@ class ProfileController extends Controller
     public function imageUpload(Request $request)
     {
         dd($request);
+    }
+
+    public function userParameters(Request $request)
+    {
+        $user = $request->user();
+        $userparameter = Userparameter::insert([
+        ['user_id' => $user->id,
+            'date_measure' => $request['date_measure'],
+            'weight' => floatval($request['weight']),
+            'waist' => floatval($request['waist']),
+            'leg_volume' => floatval($request['leg_volume']),
+            'arm_volume' => floatval($request['arm_volume']),
+        ],
+        ]);
+
     }
 }
