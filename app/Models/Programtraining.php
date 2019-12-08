@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 use Illuminate\Support\Str;
+use App\Models\Activeprogram;
 
 class Programtraining extends Model
 {
@@ -55,6 +56,11 @@ class Programtraining extends Model
     public function relaxprogram()
     {
         return $this->belongsTo('App\Models\Relaxprogram', 'relaxprogram_id');
+    }
+
+    public function activeprograms()
+    {
+        return $this->hasMany(Activeprogram::class, 'program_id');
     }
 
     /*

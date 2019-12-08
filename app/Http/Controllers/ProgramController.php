@@ -12,7 +12,11 @@ class ProgramController extends Controller
     public function programs(Request $request)
     {
         $user = $request->user();
-        $programs = Programtraining::where('active', 1)->get();
+        $programs = Programtraining::whereHas('activeprograms', function($query) {
+            $query->where('date_start', '<=', \DB::raw('NOW()'))
+                  ->where('date_finish', '>=', \DB::raw('NOW()'));
+        })->where('active', 1)->get();
+
         return view('programs', ['programs' => $programs]);
     }
 
