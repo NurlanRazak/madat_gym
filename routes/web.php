@@ -54,7 +54,6 @@ Route::view('uikits/lists', 'uiKits.lists')->name('lists');
 Route::view('uikits/pagination', 'uiKits.pagination')->name('pagination');
 Route::view('uikits/popover', 'uiKits.popover')->name('popover');
 Route::view('uikits/progressbar', 'uiKits.progressbar')->name('progressbar');
-Route::view('history', 'history')->name('history');
 Route::view('uikits/tables', 'uiKits.tables')->name('tables');
 Route::view('uikits/tabs', 'uiKits.tabs')->name('tabs');
 Route::view('uikits/tooltip', 'uiKits.tooltip')->name('tooltip');
@@ -159,6 +158,7 @@ Route::group(['middleware' => 'verified'], function () {
             'subscribed',
         ],
     ], function() {
+        Route::get('history', 'HistoryController@history')->name('history');
         Route::get('programs', 'ProgramController@programs')->name('programs');
         Route::post('program', 'ProgramController@postProgram')->name('post-program');
 

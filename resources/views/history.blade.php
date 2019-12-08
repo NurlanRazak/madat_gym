@@ -27,15 +27,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Smith Doe</td>
-                                            <td>Smith Doe</td>
-                                            <td>Smith Doe</td>
-                                            <td>Smith@gmail.com</td>
-                                            <td><span class="badge badge-success">Active</span></td>
-                                            
-                                        </tr>
+                                        @foreach($subscriptions as $subscription)
+                                            <tr>
+                                                <th scope="row">{{ count($subscriptions) }}</th>
+                                                <td>{{ $subscription->name }}</td>
+                                                <td>{{ $subscription->price }}</td>
+                                                <td>{{ $subscription->days }}</td>
+                                                <td>{{ $subscription->price }}</td>
+                                                <td><span class="badge badge-success">{{ ($subscription->expires >= \Carbon\Carbon::now()) ? trans('admin.on') : trans('admin.off') }}</span></td>
+
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -240,7 +242,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-6 mb-3">
                     <div class="card text-left">
 
@@ -900,7 +902,7 @@
                 </div>
 
             </div>-->
-            
+
             <!--
             <div class="row mb-4">
 
@@ -1265,7 +1267,7 @@
                 </div>
 
             </div>-->
-            
+
             <!--
             <div class="row mb-4">
 
