@@ -23,7 +23,10 @@ class ProgramController extends Controller
     public function postProgram(Request $request)
     {
         $user = $request->user();
-        $user->update(['programtraining_id' => $request->programtraining_id]);
+        $user->update([
+            'programtraining_id' => $request->programtraining_id,
+            'programtraining_start' => \DB::raw('NOW()'),
+        ]);
 
         return redirect(route('home'));
     }

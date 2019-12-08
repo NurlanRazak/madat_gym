@@ -18,7 +18,7 @@ class CreateRelaxexercisesTable extends Migration
             $table->string('name');
             $table->text('short_description')->nullable();
             $table->longText('long_description')->nullable();
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('video')->nullable();
             $table->string('audio')->nullable();
 

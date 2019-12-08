@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 use Illuminate\Support\Str;
 use App\Models\Activeprogram;
+use App\Models\Equipment;
+use App\Models\Training;
 
 class Programtraining extends Model
 {
@@ -61,6 +63,16 @@ class Programtraining extends Model
     public function activeprograms()
     {
         return $this->hasMany(Activeprogram::class, 'program_id');
+    }
+
+    public function equipments()
+    {
+        return $this->hasMany(Equipment::class, 'programtraining_id');
+    }
+
+    public function trainings()
+    {
+        return $this->belongsToMany(Training::class, 'training_programtraining', 'programtraining_id', 'training_id');
     }
 
     /*

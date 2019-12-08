@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 
+use App\Models\Planeat;
+
 class Foodprogram extends Model
 {
     use CrudTrait;
@@ -34,7 +36,10 @@ class Foodprogram extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function planeats()
+    {
+        return $this->hasMany(Planeat::class, 'foodprogram_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

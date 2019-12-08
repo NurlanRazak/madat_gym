@@ -23,7 +23,7 @@
                                     $days = array('ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС');
                                 @endphp
                                 @for ($i = 0; $i < count($days); $i++)
-                                     <li class="col"><a href="#" class="{{ ($today-1 == $i) ? 'today' : '' }}">{{ $days[$i] }}</a></li>
+                                     <li class="col"><a href="javascript:void(0);" data-day="{{ $i+1 }}" class="day-btn {{ ($today == $i+1) ? 'today' : '' }}">{{ $days[$i] }}</a></li>
                                 @endfor
                             </ul>
                         </div>
@@ -41,114 +41,110 @@
                     <div class="card mt-4">
                         <div class="card-body">
                             <!-- right control icon -->
-                            <div class="accordion" id="accordionRightIcon">
-                                <div class="card ">
-                                    <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-1"
-                                                aria-expanded="false">
-                                        <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
-                                            <a data-toggle="collapse" class="text-default collapsed" href="#accordion-item-icon-right-1"
-                                                aria-expanded="false">Тренировки</a>
-                                        </h6>
+                            @for($i=1;$i<=7;++$i)
+                                <div class="accordion day-box" id="accordionRightIcon-{{ $i }}" style="{{ $i != $today ? 'display: none;' : '' }}">
+                                    <div class="card ">
+                                        <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-{{ $i }}-1"
+                                                    aria-expanded="false">
+                                            <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
+                                                <a data-toggle="collapse" class="text-default collapsed" href="#accordion-item-icon-right-{{ $i }}-1"
+                                                    aria-expanded="false">Тренировки</a>
+                                            </h6>
 
+                                        </div>
+
+
+
+                                        <div id="accordion-item-icon-right-{{ $i }}-1" class="collapse" data-parent="#accordionRightIcon-{{ $i }}" style="">
+                                            <div class="card-body">
+                                                <ul>
+                                                    @foreach($trainings[$i] ?? [] as $index => $training)
+                                                        <li class="row mb-4">
+                                                            <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/squat.jpg')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                            <div class="col-sm-7 col-lg-9">
+                                                                <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">{{ $index + 1 }}. {{ $training->name }}</a></b></h2>
+                                                                <p>3 подхода, 15 повторений</p>
+                                                            </div>
+                                                            <div class="col-sm-2 col-lg-1"><label for="status"><input type="checkbox" checked name="status"></label><i class="i-Yes text-24"></i></div>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card">
+                                        <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-{{ $i }}-2">
+                                            <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
+                                                <a data-toggle="collapse" class="text-default collapsed"
+                                                    href="#accordion-item-icon-right-{{ $i }}-2">Питание</a>
+                                            </h6>
+
+                                        </div>
+
+
+
+                                        <div id="accordion-item-icon-right-{{ $i }}-2" class="collapse " data-parent="#accordionRightIcon-{{ $i }}">
+                                            <div class="card-body">
+                                                <ul>
+                                                    <li class="row mb-4">
+                                                        <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/squat.jpg')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                        <div class="col-sm-7 col-lg-9">
+                                                            <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">1. Урпажнение</a></b></h2>
+                                                            <p>3 подхода, 15 повторений</p>
+                                                        </div>
+                                                        <div class="col-sm-2 col-lg-1">status</div>
+                                                    </li>
+                                                    <li class="row mb-4">
+                                                        <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/bg.jpg')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                        <div class="col-sm-7 col-lg-9">
+                                                            <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">2. Урпажнение</a></b></h2>
+                                                            <p>3 подхода, 15 повторений</p>
+                                                        </div>
+                                                        <div class="col-sm-2 col-lg-1">status</div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
 
 
+                                    <div class="card ">
+                                        <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-{{ $i }}-3">
+                                            <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
+                                                <a data-toggle="collapse" class="text-default collapsed"
+                                                    href="#accordion-item-icon-right-3">Отдых</a>
+                                            </h6>
 
-                                    <div id="accordion-item-icon-right-1" class="collapse" data-parent="#accordionRightIcon" style="">
-                                        <div class="card-body">
-                                            <ul>
-                                                <li class="row mb-4">
-                                                    <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/squat.jpg')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
-                                                    <div class="col-sm-7 col-lg-9">
-                                                        <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">1. Урпажнение</a></b></h2>
-                                                        <p>3 подхода, 15 повторений</p>
-                                                    </div>
-                                                    <div class="col-sm-2 col-lg-1"><label for="status"><input type="checkbox" checked name="status"></label><i class="i-Yes text-24"></i></div>
-                                                </li>
-                                                <li class="row mb-4">
-                                                    <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/bg.jpg')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
-                                                    <div class="col-sm-7 col-lg-9">
-                                                        <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">2. Урпажнение</a></b></h2>
-                                                        <p>3 подхода, 15 повторений</p>
-                                                    </div>
-                                                    <div class="col-sm-2 col-lg-1">status</div>
-                                                </li>
-                                            </ul>
+                                        </div>
+
+
+
+                                        <div id="accordion-item-icon-right-{{ $i }}-3" class="collapse " data-parent="#accordionRightIcon-{{ $i }}">
+                                            <div class="card-body">
+                                                <ul>
+                                                    <li class="row mb-4">
+                                                        <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/squat.jpg')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                        <div class="col-sm-7 col-lg-9">
+                                                            <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">1. Урпажнение</a></b></h2>
+                                                            <p>3 подхода, 15 повторений</p>
+                                                        </div>
+                                                        <div class="col-sm-2 col-lg-1">status</div>
+                                                    </li>
+                                                    <li class="row mb-4">
+                                                        <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/bg.jpg')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                        <div class="col-sm-7 col-lg-9">
+                                                            <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">2. Урпажнение</a></b></h2>
+                                                            <p>3 подхода, 15 повторений</p>
+                                                        </div>
+                                                        <div class="col-sm-2 col-lg-1">status</div>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="card">
-                                    <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-2">
-                                        <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
-                                            <a data-toggle="collapse" class="text-default collapsed"
-                                                href="#accordion-item-icon-right-2">Питание</a>
-                                        </h6>
-
-                                    </div>
-
-
-
-                                    <div id="accordion-item-icon-right-2" class="collapse " data-parent="#accordionRightIcon">
-                                        <div class="card-body">
-                                            <ul>
-                                                <li class="row mb-4">
-                                                    <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/squat.jpg')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
-                                                    <div class="col-sm-7 col-lg-9">
-                                                        <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">1. Урпажнение</a></b></h2>
-                                                        <p>3 подхода, 15 повторений</p>
-                                                    </div>
-                                                    <div class="col-sm-2 col-lg-1">status</div>
-                                                </li>
-                                                <li class="row mb-4">
-                                                    <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/bg.jpg')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
-                                                    <div class="col-sm-7 col-lg-9">
-                                                        <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">2. Урпажнение</a></b></h2>
-                                                        <p>3 подхода, 15 повторений</p>
-                                                    </div>
-                                                    <div class="col-sm-2 col-lg-1">status</div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="card ">
-                                    <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-3">
-                                        <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
-                                            <a data-toggle="collapse" class="text-default collapsed"
-                                                href="#accordion-item-icon-right-3">Отдых</a>
-                                        </h6>
-
-                                    </div>
-
-
-
-                                    <div id="accordion-item-icon-right-3" class="collapse " data-parent="#accordionRightIcon">
-                                        <div class="card-body">
-                                            <ul>
-                                                <li class="row mb-4">
-                                                    <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/squat.jpg')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
-                                                    <div class="col-sm-7 col-lg-9">
-                                                        <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">1. Урпажнение</a></b></h2>
-                                                        <p>3 подхода, 15 повторений</p>
-                                                    </div>
-                                                    <div class="col-sm-2 col-lg-1">status</div>
-                                                </li>
-                                                <li class="row mb-4">
-                                                    <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/bg.jpg')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
-                                                    <div class="col-sm-7 col-lg-9">
-                                                        <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">2. Урпажнение</a></b></h2>
-                                                        <p>3 подхода, 15 повторений</p>
-                                                    </div>
-                                                    <div class="col-sm-2 col-lg-1">status</div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endfor
                             <!-- /right control icon -->
                         </div>
                     </div>
@@ -202,5 +198,15 @@
      <script src="{{asset('assets/js/vendor/echarts.min.js')}}"></script>
      <script src="{{asset('assets/js/es5/echart.options.min.js')}}"></script>
      <script src="{{asset('assets/js/es5/dashboard.v1.script.js')}}"></script>
+
+     <script>
+        $(document).ready(function() {
+            $(document).on('click', '.day-btn', function(e) {
+                let day = $(e.target).data('day')
+                $('.day-box').hide()
+                $('#accordionRightIcon-' + day).show()
+            });
+        });
+     </script>
 
 @endsection

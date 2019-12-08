@@ -179,7 +179,14 @@ class RelaxtrainingCrudController extends CrudController
                 'name' => 'number_day',
                 'label' => 'Номер дня',
                 'type' => 'number',
-                'attributes' => ["step" => "any"],
+                'attributes' => [
+                    "step" => "any",
+                    'required' => 'required',
+                ],
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-sm-12 required',
+                ],
+
             ],
 
             //TODO time fix
@@ -187,6 +194,12 @@ class RelaxtrainingCrudController extends CrudController
                 'name' => 'time',
                 'label' => 'Время',
                 'type' => 'time',
+                'attributes' => [
+                    'required' => 'required',
+                ],
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-sm-12 required',
+                ],
             //     'type' => 'date_range',
             //     'start_name' => 'start_date', // the db column that holds the start_date
             //     'end_name' => 'end_date',
