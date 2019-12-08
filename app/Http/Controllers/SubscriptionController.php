@@ -21,7 +21,7 @@ class SubscriptionController extends Controller
         $user = $request->user();
 
         $lastSubscription = $user->subscriptions()
-                                 ->whereRaw("DATE_ADD(subscription_user.created_at, INTERVAL subscriptions.days DAY) >= CURDATE()")
+                                 ->whereRaw("DATE_ADD(subscription_user.created_at, INTERVAL subscriptions.days DAY) >= NOW()")
                                  ->latest()
                                  ->first();
 

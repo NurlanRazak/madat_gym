@@ -15,9 +15,13 @@ class CheckSubscription
      */
     public function handle($request, Closure $next)
     {
-
         $user = $request->user();
-        if ($user->subscriptions()->wherePivot('created_at', '>=', \DB::raw('NOW()'))->count() == 0) {
+
+        $cnt = $user->subscriptions()
+                    ->whereRaw("DATE_ADD(subscription_user.created_at, INTERVAL subscriptions.days DAY) >= CURDATE()")
+                    ->count();
+
+        if ($cnt == 0) {
             return redirect(route('subscription'));
         }
 

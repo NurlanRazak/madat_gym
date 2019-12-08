@@ -33,10 +33,10 @@
                                                             <div class="ul-pricing__list">
                                                                <p>{{ $program->description }} </p>
                                                             </div>
-                                                            <form action="{{ route('post-program') }}" method="POST" beforesubmit="changeProgram">
+                                                            <form action="{{ route('post-program') }}" method="POST">
                                                                 @csrf
                                                                 <input type="hidden" name="programtraining_id" value="{{ $program->id }}"/>
-                                                                <button type="submit" class="btn btn-lg btn-primary btn-rounded m-1">Выбрать и продолжить</button>
+                                                                <button type="button" onclick="changeProgram(this);" class="btn btn-lg btn-primary btn-rounded m-1">Выбрать и продолжить</button>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -51,8 +51,9 @@
 
 <script>
     function changeProgram(e) {
-        if(!confirm('@lang('admin.change_program')'))
-        e.preventDefault();
+        if (confirm("@lang('admin.change_program')")) {
+            e.closest('form').submit();
+        }
     }
 </script>
 
