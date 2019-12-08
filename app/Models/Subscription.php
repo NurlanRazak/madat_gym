@@ -23,7 +23,7 @@ class Subscription extends Model
     // protected $guarded = ['id'];
     protected $fillable = ['name', 'days', 'price', 'expires', 'active'];
     // protected $hidden = [];
-    // protected $dates = [];
+    protected $dates = ['expires'];
 
     /*
     |--------------------------------------------------------------------------

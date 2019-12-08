@@ -13,14 +13,15 @@
             <div class="card user-profile o-hidden mb-4">
                 <!-- <div class="header-cover" style="background-image: url({{asset('assets/images/photo-wide-5.jpeg')}}"></div> -->
                 <div class="user-info">
-                    <form action="" id="upload-container">
-                        <img class="profile-picture avatar-lg mb-2" src="{{asset('assets/images/faces/1.jpg')}}" alt="">
-                        <input id="file-input" style="display: none;" type="file" name="file" multiple>
+                    <form action="{{ route('image-post') }}" id="upload-container" method="POST">
+                        @csrf
+                        <img class="profile-picture avatar-lg mb-2" src="{{ asset('assets/images/photo-wide-5.jpeg')}}" alt="">
+                        <input id="file-input" style="display: none;" type="file" name="image" multiple>
                     </form>
-                    <p class="m-0 text-24">Timothy Carlson</p>
+                    <p class="m-0 text-24">{{ $user->name }}</p>
                 </div>
                 <div class="card-body">
-                    <!-- 
+                    <!--
                     	<ul class="nav nav-tabs profile-nav mb-4" id="profileTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="true">ОБЩИЕ</a>
@@ -39,10 +40,10 @@
                 -->
 
                     <div class="tab-content" id="profileTabContent">
-                        
+
                         <div class="tab-pane fade active show" id="about" role="tabpanel" aria-labelledby="about-tab">
                             <h4>ПОДПИСКА ПОЛЬЗОВАТЕЛЯ</h4>
-                            <p>Дата активации – 11 августа 2019 | Дата завершения – 11 сентября 2019
+                            <p>Дата активации – {{ $dates[0] }} | Дата завершения – {{ $dates[1] }}
                             </p>
                             <hr>
                             <div class="row mb-5">

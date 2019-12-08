@@ -148,7 +148,6 @@ Route::group(['middleware' => 'verified'], function () {
     Route::post('subscription', 'SubscriptionController@postSubscription')->name('post-subscription');
 
     Route::view('oups', 'oups')->name('oups');
-    Route::view('profile', 'profile')->name('profile');
     Route::view('others/starter', 'starter')->name('starter');
     Route::view('others/faq', 'others.faq')->name('faq');
     Route::view('search-results', 'search-results')->name('search-results');
@@ -158,6 +157,8 @@ Route::group(['middleware' => 'verified'], function () {
             'subscribed',
         ],
     ], function() {
+        Route::get('profile', 'ProfileController@profile')->name('profile');
+        Route::post('user/image', 'ProfileController@imageUpload')->name('image-post');
         Route::get('history', 'HistoryController@history')->name('history');
         Route::get('programs', 'ProgramController@programs')->name('programs');
         Route::post('program', 'ProgramController@postProgram')->name('post-program');
