@@ -26,7 +26,7 @@ class MessageController extends Controller
     {
         $message = Message::find($request->id);
         $message->update([
-            'status' => Message::CANCELED,
+            'status' => Message::DRAFT,
         ]);
         return response()->json([
             'success' => true,

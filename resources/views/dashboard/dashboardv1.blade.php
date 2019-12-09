@@ -57,18 +57,35 @@
 
                                         <div id="accordion-item-icon-right-{{ $i }}-1" class="collapse" data-parent="#accordionRightIcon-{{ $i }}" style="">
                                             <div class="card-body">
-                                                <ul>
-                                                    @foreach($trainings[$i] ?? [] as $index => $training)
-                                                        <li class="row mb-4">
-                                                            <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/squat.jpg')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
-                                                            <div class="col-sm-7 col-lg-9">
-                                                                <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">{{ $index + 1 }}. {{ $training->name }}</a></b></h2>
-                                                                <p>3 подхода, 15 повторений</p>
-                                                            </div>
-                                                            <div class="col-sm-2 col-lg-1"><label for="status"><input type="checkbox" checked name="status"></label><i class="i-Yes text-24"></i></div>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
+                                                @foreach($trainings[$i] ?? [] as  $training)
+                                                    <h2> {{ $training->name }}</h2>
+                                                    <h4> {{ $training->user->name }} </h4>
+                                                    <p>
+                                                        @if ($training->weight)
+                                                            {{ $training->weight }} кг,
+                                                        @endif
+                                                        @if ($training->approaches_number)
+                                                            {{ $training->approaches_number }} подхода,
+                                                        @endif
+                                                        @if ($training->repetitions_number)
+                                                            {{ $training->repetitions_number }} повторений
+                                                        @endif
+                                                    </p>
+                                                    <ul>
+                                                        @foreach($training->exercises as $index => $exercise)
+                                                            <li class="row mb-4">
+                                                                <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset('uploads/'.$exercise->image) }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-video="{{ $exercise->video }}" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                                <div class="col-sm-7 col-lg-9">
+                                                                    <h2><b><a type="button" class="h2-pointer ex-desc" data-toggle="modal" data-target="#desc" data-title="{{ $exercise->name }}" data-description="{{ $exercise->long_desc }}">{{ $index + 1 }}. {{ $exercise->name }}</a></b></h2>
+                                                                    <p>
+                                                                        {{ $exercise->short_desc }}
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-sm-2 col-lg-1"><label for="status"><input type="checkbox" checked name="status"></label><i class="i-Yes text-24"></i></div>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -86,24 +103,33 @@
 
                                         <div id="accordion-item-icon-right-{{ $i }}-2" class="collapse " data-parent="#accordionRightIcon-{{ $i }}">
                                             <div class="card-body">
-                                                <ul>
-                                                    <li class="row mb-4">
-                                                        <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/squat.jpg')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
-                                                        <div class="col-sm-7 col-lg-9">
-                                                            <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">1. Урпажнение</a></b></h2>
-                                                            <p>3 подхода, 15 повторений</p>
+                                                @foreach($planeats[$i] ?? [] as $planeat)
+                                                    <h2>{{ $planeat->name }}</h2>
+                                                    <h4>Блюда:</h4>
+                                                    @foreach($planeat->meals ?? [] as $mealindex => $meal)
+                                                        <h5>{{ $mealindex + 1 }}. {{ $meal->name }}</h5>
+                                                        <div>
+                                                            {!! $meal->description !!}
+                                                            <p>
+                                                            @if($meal->calorie)
+                                                                <strong>Калорийность: </strong> {{ $meal->calorie }}<br/>
+                                                            @endif
+                                                            @if($meal->weight)
+                                                                <strong>Вес: </strong> {{ $meal->weight }} г.<br/>
+                                                            @endif
+                                                            @if($meal->price)
+                                                                <strong>Цена: </strong> {{ number_format($meal->price, 0,"."," ") }} ₸<br/>
+                                                            @endif
+                                                            </p>
                                                         </div>
-                                                        <div class="col-sm-2 col-lg-1">status</div>
-                                                    </li>
-                                                    <li class="row mb-4">
-                                                        <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/bg.jpg')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
-                                                        <div class="col-sm-7 col-lg-9">
-                                                            <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">2. Урпажнение</a></b></h2>
-                                                            <p>3 подхода, 15 повторений</p>
-                                                        </div>
-                                                        <div class="col-sm-2 col-lg-1">status</div>
-                                                    </li>
-                                                </ul>
+                                                    @endforeach
+                                                    <h4>Часы приема:</h4>
+                                                    <p>
+                                                        @foreach($planeat->eathours ?? [] as $eatindex => $eathour)
+                                                            {{ $eatindex + 1 }}. {{ $eathour->hour_start }} - {{ $eathour->hour_finish }}</br>
+                                                        @endforeach
+                                                    </p>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -122,24 +148,22 @@
 
                                         <div id="accordion-item-icon-right-{{ $i }}-3" class="collapse " data-parent="#accordionRightIcon-{{ $i }}">
                                             <div class="card-body">
-                                                <ul>
-                                                    <li class="row mb-4">
-                                                        <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/squat.jpg')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
-                                                        <div class="col-sm-7 col-lg-9">
-                                                            <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">1. Урпажнение</a></b></h2>
-                                                            <p>3 подхода, 15 повторений</p>
-                                                        </div>
-                                                        <div class="col-sm-2 col-lg-1">status</div>
-                                                    </li>
-                                                    <li class="row mb-4">
-                                                        <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/bg.jpg')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
-                                                        <div class="col-sm-7 col-lg-9">
-                                                            <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">2. Урпажнение</a></b></h2>
-                                                            <p>3 подхода, 15 повторений</p>
-                                                        </div>
-                                                        <div class="col-sm-2 col-lg-1">status</div>
-                                                    </li>
-                                                </ul>
+                                                @foreach($relaxtrainings[$i] ?? [] as $index => $relaxtraining)
+                                                    <h4><strong>{{ $relaxtraining->time }}</strong> {{ $relaxtraining->name }}</h4>
+                                                    <ul>
+                                                        @foreach($relaxtraining->exercises as $exerciseindex => $exercise)
+                                                            <li class="row mb-4">
+                                                                <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset('uploads/'.$exercise->image) }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-video="{{ $exercise->video }}" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                                <div class="col-sm-7 col-lg-9">
+                                                                    <h5><b><a type="button" class="h2-pointer ex-desc" data-toggle="modal" data-target="#desc" data-title="{{ $exercise->name }}" data-description="{{ $exercise->long_description }}">{{ $index + 1 }}. {{ $exercise->name }}</a></b></h5>
+                                                                    <p>{{ $exercise->short_description }}</p>
+                                                                </div>
+                                                                <div class="col-sm-2 col-lg-1"><label for="status"><input type="checkbox" checked name="status"></label><i class="i-Yes text-24"></i></div>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -186,8 +210,7 @@
                             Тут описание упражнения
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
                         </div>
                     </div>
                 </div>
@@ -202,9 +225,22 @@
      <script>
         $(document).ready(function() {
             $(document).on('click', '.day-btn', function(e) {
-                let day = $(e.target).data('day')
+                let $target = $(e.target);
+                let day = $target.data('day');
+                $('.day-btn').removeClass('active-day');
+                if (day != {{ $today }}) {
+                    $target.addClass('active-day');
+                }
+
                 $('.day-box').hide()
                 $('#accordionRightIcon-' + day).show()
+            });
+
+            $(document).on('click', '.ex-desc', function(e) {
+                let desc = $(e.target).data('description')
+                let title = $(e.target).data('title')
+                $('#desc').find('.modal-title').html(desc);
+                $('#desc').find('.modal-body').html(title);
             });
         });
      </script>

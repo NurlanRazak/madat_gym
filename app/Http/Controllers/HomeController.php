@@ -40,7 +40,7 @@ class HomeController extends Controller
 
 
 
-        $passed = strtotime(Carbon::parse($user->programtraining_start)->format('Y-m-d')) - strtotime('today');
+        $passed = (strtotime(Carbon::now()->format('Y-m-d')) - strtotime(Carbon::parse($user->programtraining_start)->format('Y-m-d')))/60/60/24;
 
         $relaxtrainings_data = [];
         $relaxtrainings = $user->programtraining
@@ -49,46 +49,49 @@ class HomeController extends Controller
                                ->whereHas('users', function($query) use($user) {
                                    $query->where('id', $user->id);
                                })
-                               ->where('number_day', '>=', $passed - $today + 2)
-                               ->where('number_day', '<=', $passed - $today + 8)
+                               // ->where('number_day', '>=', $passed - $today + 2)
+                               // ->where('number_day', '<=', $passed - $today + 8)
                                ->active()
+                               ->with(['exercises' => function($q) {$q->active();}])
+                               ->orderBy('time')
                                ->get();
 
         foreach($relaxtrainings as $item) {
-            if (!isset($relaxtrainings_data[$item->number_day - $passed+ $today - 1])) {
-                $relaxtrainings_data[$item->number_day - $passed+ $today - 1] = [];
+            if (!isset($relaxtrainings_data[$item->number_day])) {
+                $relaxtrainings_data[$item->number_day] = [];
             }
-            $relaxtrainings_data[$item->number_day - $passed+ $today - 1][] = $item;
+            $relaxtrainings_data[$item->number_day][] = $item;
         }
 
         $trainings_data = [];
         $trainings = $user->programtraining
                           ->trainings()
-                          ->where('day_number', '>=', $passed - $today + 2)
-                          ->where('day_number', '<=', $passed - $today + 8)
+                          // ->where('day_number', '>=', $passed - $today + 2)
+                          // ->where('day_number', '<=', $passed - $today + 8)
+                          ->with(['exercises' => function($q) {$q->active();}])
                           ->active()
                           ->get();
 
         foreach($trainings as $item) {
-            if (!isset($trainings_data[$item->day_number - $passed+ $today - 1])) {
-                $trainings_data[$item->day_number - $passed+ $today - 1] = [];
+            if (!isset($trainings_data[$item->day_number])) {
+                $trainings_data[$item->day_number] = [];
             }
-            $trainings_data[$item->day_number - $passed+ $today - 1][] = $item;
+            $trainings_data[$item->day_number][] = $item;
         }
 
         $equipments_data = [];
         $equipments = $user->programtraining
                            ->equipments()
-                           ->where('notify_day', '>=', $passed - $today + 2)
-                           ->where('notify_day', '<=', $passed - $today + 8)
+                           // ->where('notify_day', '>=', $passed - $today + 2)
+                           // ->where('notify_day', '<=', $passed - $today + 8)
                            ->active()
                            ->get();
 
         foreach($equipments as $item) {
-            if (!isset($equipments_data[$item->days - $passed+ $today - 1])) {
-                $equipments_data[$item->days - $passed+ $today - 1] = [];
+            if (!isset($equipments_data[$item->notify_day])) {
+                $equipments_data[$item->notify_day] = [];
             }
-            $equipments_data[$item->days - $passed+ $today - 1][] = $item;
+            $equipments_data[$item->notify_day][] = $item;
         }
 
         $planeats_data = [];
@@ -98,13 +101,15 @@ class HomeController extends Controller
                          ->where('days', '>=', $passed - $today + 2)
                          ->where('days', '<=', $passed - $today + 8)
                          ->active()
+                         ->with(['meals' => function($q) {$q->active();}])
+                         ->with(['eathours' => function($q) {$q->active();}])
                          ->get();
 
         foreach($planeats as $item) {
-            if (!isset($planeats_data[$item->days - $passed+ $today - 1])) {
-                $planeats_data[$item->days - $passed+ $today - 1] = [];
+            if (!isset($planeats_data[$item->days - $passed + $today - 1])) {
+                $planeats_data[$item->days - $passed + $today - 1] = [];
             }
-            $planeats_data[$item->days - $passed+ $today - 1][] = $item;
+            $planeats_data[$item->days - $passed + $today - 1][] = $item;
         }
 
 
@@ -116,6 +121,7 @@ class HomeController extends Controller
             'planeats' => $planeats_data,
             'equipments' => $equipments_data,
             'trainings' => $trainings_data,
+            'relaxprogram' => $user->programtraining ? $user->programtraining->relaxprogram : null,
             'relaxtrainings' => $relaxtrainings_data,
         ]);
     }

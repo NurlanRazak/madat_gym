@@ -14,7 +14,7 @@
         <link id="gull-theme" rel="stylesheet" href="{{  asset('assets/styles/css/themes/lite-purple.css')}}">
         <link rel="stylesheet" href="{{asset('assets/styles/vendor/perfect-scrollbar.css')}}">
         <link rel="stylesheet" href="{{asset('assets/styles/css/owl.carousel.min.css')}}">
-                <style>
+        <style>
             .owl-nav{
                 position: absolute;
                 /* margin: auto 20px; */
@@ -22,6 +22,9 @@
                 justify-content: space-between;
                 width: 100%;
                 top: 50%;
+            }
+            .active-day {
+                background-color: #fbe697!important;
             }
 
         </style>

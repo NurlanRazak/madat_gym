@@ -47,7 +47,7 @@
                                         </div>
                                         <div class="col-xs-12">
                                             <p class="m-0">{{ $mail->author->name }}</p>
-                                            <p class="text-12 text-muted">{{ $mail->updated_at->format('d M Y') }}</p>
+                                            <p class="text-12 text-muted">{{ \Date::parse($mail->created_at)->format('d M Y') }}</p>
                                         </div>
                                     </div>
                                     <h4 class="mb-3">{{ $mail->name }}</h4>
@@ -74,7 +74,7 @@
                             <p class="m-0">{{ $mails[$user->id][0]->name }}</p>
                         </div>
                         <div class="col-xs-3 date">
-                            <span class="text-muted">{{ $mail->updated_at->format('d M Y') }}</span>
+                            <span class="text-muted">{{ \Date::parse($mail->created_at)->format('d M Y') }}</span>
                         </div>
                     </div>
                 @endforeach
