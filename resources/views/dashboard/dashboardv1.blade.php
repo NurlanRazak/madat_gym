@@ -74,7 +74,7 @@
                                                     <ul>
                                                         @foreach($training->exercises as $index => $exercise)
                                                             <li class="row mb-4">
-                                                                <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset('uploads/'.$exercise->image) }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-video="{{ $exercise->video }}" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                                <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset('uploads/'.$exercise->image) }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-video="{{ asset('uploads/'.$exercise->video) }}" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
                                                                 <div class="col-sm-7 col-lg-9">
                                                                     <h2><b><a type="button" class="h2-pointer ex-desc" data-toggle="modal" data-target="#desc" data-title="{{ $exercise->name }}" data-description="{{ $exercise->long_desc }}">{{ $index + 1 }}. {{ $exercise->name }}</a></b></h2>
                                                                     <p>
@@ -153,9 +153,12 @@
                                                     <ul>
                                                         @foreach($relaxtraining->exercises as $exerciseindex => $exercise)
                                                             <li class="row mb-4">
-                                                                <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset('uploads/'.$exercise->image) }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-video="{{ $exercise->video }}" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                                <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset('uploads/'.$exercise->image) }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-video="{{ asset('uploads/'.$exercise->video) }}" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
                                                                 <div class="col-sm-7 col-lg-9">
                                                                     <h5><b><a type="button" class="h2-pointer ex-desc" data-toggle="modal" data-target="#desc" data-title="{{ $exercise->name }}" data-description="{{ $exercise->long_description }}">{{ $index + 1 }}. {{ $exercise->name }}</a></b></h5>
+                                                                    @if($exercise->audio)
+                                                                        <audio src="{{ asset('uploads/'.$exercise->audio) }}" controls></audio>
+                                                                    @endif
                                                                     <p>{{ $exercise->short_description }}</p>
                                                                 </div>
                                                                 <div class="col-sm-2 col-lg-1"><label for="status"><input type="checkbox" checked name="status"></label><i class="i-Yes text-24"></i></div>
@@ -191,7 +194,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <video width="100%" src="{{asset('assets/images/61.mp4')}}" controls></video>
+                            <video width="100%" src="{{ asset('assets/images/61.mp4') }}" controls></video>
                         </div>
                     </div>
                 </div>
@@ -241,6 +244,11 @@
                 let title = $(e.target).data('title')
                 $('#desc').find('.modal-title').html(desc);
                 $('#desc').find('.modal-body').html(title);
+            });
+
+            $(document).on('click', '.playbtn', function(e) {
+                let video = $(e.target.closest('div')).find('button').data('video');
+                $('#vid').find('video').attr('src', video);
             });
         });
      </script>
