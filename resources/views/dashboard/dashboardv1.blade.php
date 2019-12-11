@@ -28,7 +28,7 @@
                             </ul>
                         </div>
                         <div class="col-lg-2 col-12">
-                            <a class="btn btn-block btn-warning" href="">продукты и оборудование</a>
+                            <a class="btn btn-warning" data-toggle="modal" data-target="#list">продукты и оборудование</a>
                         </div>
 
                         </div>
@@ -50,7 +50,14 @@
                                                 <a data-toggle="collapse" class="text-default collapsed" href="#accordion-item-icon-right-{{ $i }}-1"
                                                     aria-expanded="false">Тренировки</a>
                                             </h6>
-
+                                            <form>
+                                              <div class="form-row align-items-center">
+                                                  <div class="custom-control custom-checkbox mr-sm-2">
+                                                    <input type="checkbox" class="custom-control-input" id="1">
+                                                    <label class="custom-control-label" for="1">&nbsp;</label>
+                                                  </div>
+                                              </div>
+                                            </form>
                                         </div>
 
 
@@ -200,23 +207,38 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="desc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle-2" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalCenterTitle-2">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Тут описание упражнения
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                        </div>
-                    </div>
+            <!-- Modal -->
+            <div class="modal fade" id="list" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Привет друг!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body" id="forprint">
+                    <h4>Новая неделя требует от Вас больших усилий. <br> Вот, что будет нужно на эту неделю!</h4><br>
+                    <h4>Продукты: </h4>
+                    <ol>
+                        <li>Продукт</li>
+                    </ol>
+                    <br>
+                    <h4>Оборудование: </h4>
+                    <ol>
+                        <li>Штанга чугунная с*ка</li>
+                    </ol>
+                    <br>
+                    <h4>Желаем достижения новых высот!</h4>
+                    <small>Комада MAG.</small>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="printJS('forprint', 'html')">Печать</button>
+                    <button type="button" class="btn btn-primary">Отправить список на почту</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                  </div>
                 </div>
+              </div>
             </div>
 @endsection
 

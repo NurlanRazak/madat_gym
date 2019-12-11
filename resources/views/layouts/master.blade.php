@@ -107,7 +107,8 @@
         <script>
             $(document).ready(function(){
               $(".owl-carousel").owlCarousel({
-                loop: true,
+                loop: false,
+                rewind: true,
                 nav: true,
                 navText: ["<img src='{{asset('assets/images/prev.png')}}'>","<img src='{{asset('assets/images/next.png')}}'>"],
                 responsive:{

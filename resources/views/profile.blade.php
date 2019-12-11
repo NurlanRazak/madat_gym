@@ -206,6 +206,7 @@
                                           <th scope="col">Талия</th>
                                           <th scope="col">Объем ноги</th>
                                           <th scope="col">Объем руки</th>
+                                          <th scope="col">Фото</th>
                                           <th scope="col">Действие</th>
                                         </tr>
                                       </thead>
@@ -218,6 +219,7 @@
                                           <td>{{ $userparameter->waist }}</td>
                                           <td>{{ $userparameter->leg_volume }}</td>
                                           <td>{{ $userparameter->arm_volume }}</td>
+                                          <td><a data-toggle="modal" data-target="#gallery" class="btn btn-primary" style="color: #fff">Добавить / Просмотр</a></td>
                                           <td><input type="submit" value="Удалить" class="btn btn-primary"></td>
                                         </tr>
                                         @endforeach
@@ -598,6 +600,46 @@
                 </div>
               </div>
             </div>
+
+            <!-- Modal -->
+           			<div class="modal fade" id="gallery" tabindex="-1" role="dialog" aria-labelledby="gallery" aria-hidden="true">
+           			  <div class="modal-dialog modal-lg" role="document">
+           			    <div class="modal-content">
+           			      <div class="modal-header">
+           			        <h5 class="modal-title" id="exampleModalLabel">Фото</h5>
+           			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           			          <span aria-hidden="true">&times;</span>
+           			        </button>
+           			      </div>
+           			      <div class="modal-body">
+           			        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+           					  <div class="carousel-inner">
+           					    <div class="carousel-item active">
+           					      <img class="d-block w-100" src="https://cosmos-images2.imgix.net/file/spina/photo/20565/191010_nature.jpg?ixlib=rails-2.1.4&auto=format&ch=Width%2CDPR&fit=max&w=835" alt="First slide">
+           					    </div>
+           					    <div class="carousel-item">
+           					      <img class="d-block w-100" src="https://inteng-storage.s3.amazonaws.com/img/iea/zDOZxPj46k/sizes/nature-language-header_md.jpg" alt="Second slide">
+           					    </div>
+           					    <div class="carousel-item">
+           					      <img class="d-block w-100" src="https://ichef.bbci.co.uk/images/ic/640x360/p01gn345.jpg" alt="Third slide">
+           					    </div>
+           					  </div>
+           					  <a class="carousel-control-prev" href="#carouselExampleSlidesOnly" role="button" data-slide="prev">
+           					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+           					    <span class="sr-only">Previous</span>
+           					  </a>
+           					  <a class="carousel-control-next" href="#carouselExampleSlidesOnly" role="button" data-slide="next">
+           					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+           					    <span class="sr-only">Next</span>
+           					  </a>
+           					</div>
+           			      </div>
+                             <div class="modal-footer">
+                               Добавить фото:&nbsp;<input type="file">
+                             </div>
+           			    </div>
+           			  </div>
+           			</div>
 
 @endsection
 <script type="text/javascript">

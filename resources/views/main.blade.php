@@ -7,7 +7,7 @@
                 </ul>
             </div>
             <div class="separator-breadcrumb border-top"></div>
-            
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -29,9 +29,9 @@
                             </ul>
                         </div>
                         <div class="col-lg-2 col-12">
-                            <a class="btn btn-block btn-warning" href="">продукты и оборудование</a>
+                            <a class="btn btn-warning" data-toggle="modal" data-target="#list">продукты и оборудование</a>
                         </div>
-                            
+
                         </div>
                       </div>
                     </div>
@@ -49,7 +49,7 @@
                                         <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
                                             <a data-toggle="collapse" class="text-default collapsed" href="#accordion-item-icon-right-1"
                                                 aria-expanded="false">Тренировки</a>
-                                                
+
                                         </h6>
                                         <form>
                                           <div class="form-row align-items-center">
@@ -59,7 +59,7 @@
                                               </div>
                                           </div>
                                         </form>
-                                        
+
                                     </div>
 
 
@@ -91,7 +91,7 @@
                                         <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
                                             <a data-toggle="collapse" class="text-default collapsed"
                                                 href="#accordion-item-icon-right-2">Питание</a>
-                                                
+
                                         </h6>
                                         <form>
                                           <div class="form-row align-items-center">
@@ -133,7 +133,7 @@
                                         <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
                                             <a data-toggle="collapse" class="text-default collapsed"
                                                 href="#accordion-item-icon-right-3">Отдых</a>
-                                                
+
                                         </h6>
                                         <form>
                                           <div class="form-row align-items-center">
@@ -143,7 +143,7 @@
                                               </div>
                                           </div>
                                         </form>
-                                        
+
                                     </div>
 
 
@@ -179,7 +179,7 @@
 
             </div>
 
-            
+
 
 
 
@@ -216,6 +216,40 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="list" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Привет друг!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body" id="forprint">
+                    <h4>Новая неделя требует от Вас больших усилий. <br> Вот, что будет нужно на эту неделю!</h4><br>
+                    <h4>Продукты: </h4>
+                    <ol>
+                        <li>Продукт</li>
+                    </ol>
+                    <br>
+                    <h4>Оборудование: </h4>
+                    <ol>
+                        <li>Штанга чугунная с*ка</li>
+                    </ol>
+                    <br>
+                    <h4>Желаем достижения новых высот!</h4>
+                    <small>Комада MAG.</small>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="printJS('forprint', 'html')">Печать</button>
+                    <button type="button" class="btn btn-primary">Отправить список на почту</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                  </div>
+                </div>
+              </div>
+            </div>
 @endsection
 
 @section('page-js')
@@ -223,4 +257,5 @@
      <script src="{{asset('assets/js/es5/echart.options.min.js')}}"></script>
      <script src="{{asset('assets/js/es5/dashboard.v1.script.js')}}"></script>
 
+     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 @endsection

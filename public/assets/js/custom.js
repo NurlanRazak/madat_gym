@@ -1,5 +1,6 @@
 $(".owl-carousel").owlCarousel({
-	loop: true,
+	loop: false,
+    rewind: true,
 	nav: true,
 	navText: ["<img src='../../../public/assets/images/prev.png'>","<img src='../../../public/assets/images/next.png'>"],
 	responsive:{

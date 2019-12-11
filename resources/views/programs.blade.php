@@ -14,7 +14,7 @@
 
                 <section class="ul-pricing-table">
                         <div class="row">
-                            <div class="col-lg-12 col-xl-12">
+                            <div class="col-12">
                                 <div class="card mb-4">
                                     <div class="card-body">
                                         <div class="row">
