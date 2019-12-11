@@ -15,7 +15,7 @@ class ProgramController extends Controller
         $programs = Programtraining::whereHas('activeprograms', function($query) {
             $query->where('date_start', '<=', \DB::raw('NOW()'))
                   ->where('date_finish', '>=', \DB::raw('NOW()'));
-        })->where('active', 1)->get();
+        })->get();
 
         return view('programs', ['programs' => $programs]);
     }

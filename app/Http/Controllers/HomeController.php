@@ -93,7 +93,7 @@ class HomeController extends Controller
             }
             $equipments_data[$item->notify_day][] = $item;
         }
-
+        
         $planeats_data = [];
         $planeats = $user->programtraining
                          ->foodprogram

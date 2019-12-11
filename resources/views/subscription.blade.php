@@ -39,7 +39,7 @@
                                             <form action="{{ route('post-subscription') }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="subscription_id" value="{{ $subscription->id }}"/>
-                                                <button type="submit" class="btn btn-lg btn-primary btn-rounded m-1">Выбрать и продолжить</button>
+                                                <button type="button" onclick="changeSubscription(this);" class="btn btn-lg btn-primary btn-rounded m-1">Выбрать и продолжить</button>
                                             </form>
                                         </div>
                                     </div>
@@ -53,6 +53,13 @@
 
     </section>
 
+<script>
+    function changeSubscription(e) {
+        if (confirm("@lang('admin.change_subscription')")) {
+            e.closest('form').submit();
+        }
+    }
+</script>
 
 @endsection
 

@@ -66,7 +66,9 @@
                                             <div class="card-body">
                                                 @foreach($trainings[$i] ?? [] as  $training)
                                                     <h2> {{ $training->name }}</h2>
-                                                    <h4> {{ $training->user->name }} </h4>
+                                                    @if($training->user)
+                                                        <h4> {{ $training->user->name }} </h4>
+                                                    @endif
                                                     <p>
                                                         @if ($training->weight)
                                                             {{ $training->weight }} кг,
@@ -226,7 +228,7 @@
                     <br>
                     <h4>Оборудование: </h4>
                     <ol>
-                        <li>Штанга чугунная с*ка</li>
+                        <li>Штанга чугунная</li>
                     </ol>
                     <br>
                     <h4>Желаем достижения новых высот!</h4>
@@ -246,7 +248,8 @@
      <script src="{{asset('assets/js/vendor/echarts.min.js')}}"></script>
      <script src="{{asset('assets/js/es5/echart.options.min.js')}}"></script>
      <script src="{{asset('assets/js/es5/dashboard.v1.script.js')}}"></script>
-
+     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+     
      <script>
         $(document).ready(function() {
             $(document).on('click', '.day-btn', function(e) {
