@@ -38,7 +38,7 @@ class Message extends Model
         parent::boot();
 
         static::creating(function($message) {
-            if(!$message->author_id) {
+            if(!$message->author_id && backpack_user()) {
                 $message->author_id = backpack_user()->id;
             }
         });

@@ -46,7 +46,7 @@
                                             <img class="rounded-circle" src="{{asset('/assets/images/faces/1.jpg')}}" alt="">
                                         </div>
                                         <div class="col-xs-12">
-                                            <p class="m-0">{{ $mail->author->name }}</p>
+                                            <p class="m-0">{{ $mail->author ? $mail->author->name : 'Система' }}</p>
                                             <p class="text-12 text-muted">{{ \Date::parse($mail->created_at)->format('d M Y') }}</p>
                                         </div>
                                     </div>
@@ -65,13 +65,13 @@
             <div data-sidebar="secondary" class="inbox-secondary-sidebar perfect-scrollbar">
                 <i class="sidebar-close i-Close" data-sidebar-toggle="secondary"></i>
                 @foreach($users as $user)
-                    <div class="mail-item chat" data-index="{{ $user->id }}">
+                    <div class="mail-item chat" data-index="{{ $user->id ?? 0 }}">
                         <div class="avatar">
-                            <img src="{{asset('/assets/images/faces/1.jpg')}}" alt="">
+                            <img src="{{ asset('/assets/images/faces/1.jpg') }}" alt="">
                         </div>
                         <div class="col-xs-6 details">
                             <span class="name text-muted">{{ $user->name }}</span>
-                            <p class="m-0">{{ $mails[$user->id][0]->name }}</p>
+                            <p class="m-0">{{ $mails[$user->id ?? 0][0]->name }}</p>
                         </div>
                         <div class="col-xs-3 date">
                             <span class="text-muted">{{ \Date::parse($mail->created_at)->format('d M Y') }}</span>

@@ -223,12 +223,18 @@
                     <h4>Новая неделя требует от Вас больших усилий. <br> Вот, что будет нужно на эту неделю!</h4><br>
                     <h4>Продукты: </h4>
                     <ol>
-                        <li>Продукт</li>
+                        @foreach($groceries as $grocery)
+                            @foreach($grocery->listmeals as $meal)
+                                <li>{{ $meal->name }}</li>
+                            @endforeach
+                        @endforeach
                     </ol>
                     <br>
                     <h4>Оборудование: </h4>
                     <ol>
-                        <li>Штанга чугунная</li>
+                        @foreach($all_equipments as $equipment)
+                            <li>{{ $equipment->name }}</li>
+                        @endforeach
                     </ol>
                     <br>
                     <h4>Желаем достижения новых высот!</h4>
@@ -249,7 +255,7 @@
      <script src="{{asset('assets/js/es5/echart.options.min.js')}}"></script>
      <script src="{{asset('assets/js/es5/dashboard.v1.script.js')}}"></script>
      <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-     
+
      <script>
         $(document).ready(function() {
             $(document).on('click', '.day-btn', function(e) {
