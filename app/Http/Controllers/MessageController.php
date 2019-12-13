@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Message;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\FridayNotification;
+// use Queue;
 
 
 class MessageController extends Controller
@@ -32,5 +34,12 @@ class MessageController extends Controller
         ]);
 
         return view('mail', ['mails' => $mails, 'users' => $users]);
+    }
+
+    public function friday(Request $request)
+    {
+        $user = $request->user();
+        // Queue::dispatch(new FridayNotification($user));
+        return redirect()->back();
     }
 }

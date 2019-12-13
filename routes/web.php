@@ -147,6 +147,8 @@ Route::group(['middleware' => 'verified'], function () {
     Route::get('subscription', 'SubscriptionController@subscription')->name('subscription');
     Route::post('subscription', 'SubscriptionController@postSubscription')->name('post-subscription');
 
+    Route::post('friday', 'MessageController@friday')->name('friday');
+
     Route::view('oups', 'oups')->name('oups');
     Route::view('others/starter', 'starter')->name('starter');
     Route::view('others/faq', 'others.faq')->name('faq');

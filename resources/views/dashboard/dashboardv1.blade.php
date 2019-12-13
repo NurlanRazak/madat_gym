@@ -240,11 +240,12 @@
                     <h4>Желаем достижения новых высот!</h4>
                     <small>Комада MAG.</small>
                   </div>
-                  <div class="modal-footer">
+                  <form class="modal-footer" action="{{ route('friday') }}" method="POST">
+                      @csrf
                     <button type="button" class="btn btn-success" onclick="printJS('forprint', 'html')">Печать</button>
-                    <button type="button" class="btn btn-primary">Отправить список на почту</button>
+                    <button type="submit" class="btn btn-primary">Отправить список на почту</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                  </div>
+                </form>
                 </div>
               </div>
             </div>
