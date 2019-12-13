@@ -45,7 +45,7 @@
                                 <div class="accordion day-box" id="accordionRightIcon-{{ $i }}" style="{{ $i != $today ? 'display: none;' : '' }}">
                                     <div class="card ">
                                         <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-{{ $i }}-1"
-                                                    aria-expanded="false">
+                                                    aria-expanded="false" style="padding-right: 50px;">
                                             <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
                                                 <a data-toggle="collapse" class="text-default collapsed" href="#accordion-item-icon-right-{{ $i }}-1"
                                                     aria-expanded="false">Тренировки</a>
@@ -120,6 +120,14 @@
                                                     href="#accordion-item-icon-right-{{ $i }}-2">Питание</a>
                                             </h6>
 
+                                            <form>
+                                              <div class="form-row align-items-center">
+                                                  <div class="custom-control custom-checkbox mr-sm-2">
+                                                    <input type="checkbox" class="custom-control-input" id="2">
+                                                    <label class="custom-control-label" for="2">&nbsp;</label>
+                                                  </div>
+                                              </div>
+                                            </form>
                                         </div>
 
 
