@@ -26,7 +26,10 @@
             .active-day {
                 background-color: #fbe697!important;
             }
-
+            .day-disabled {
+                background: grey!important;
+                cursor: not-allowed;
+            }
         </style>
         <script src="https://kit.fontawesome.com/d1edd4ad8f.js"></script>
         {{-- page specific css --}}

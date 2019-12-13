@@ -1,4 +1,29 @@
 @extends('layouts.master')
+@php
+    $eats_data = [];
+    foreach($planeats as $day => $planeat_arr) {
+        foreach($planeat_arr as $planeat) {
+            $eats = [];
+            foreach($planeat->meals ?? [] as $meal) {
+                foreach($planeat->eathours ?? [] as $eathour) {
+                    if (!isset($eats[$eathour->hour_start])) {
+                        $eats[$eathour->hour_start] = [];
+                    }
+                    if (!isset($eats[$eathour->hour_start][$eathour->hour_finish])) {
+                        $eats[$eathour->hour_start][$eathour->hour_finish] = [];
+                    }
+                    $eats[$eathour->hour_start][$eathour->hour_finish][] = $meal;
+                }
+            }
+        }
+        foreach($eats as $key => $eat) {
+            ksort($eats[$key]);
+        }
+        ksort($eats);
+        $eats_data[$day] = $eats;
+    }
+    $eats = $eats_data;
+@endphp
 @section('main-content')
             <div class="breadcrumb">
                 <h1>Приветствуем, {{ $user->name }}!</h1>
@@ -23,7 +48,7 @@
                                     $days = array('ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС');
                                 @endphp
                                 @for ($i = 0; $i < count($days); $i++)
-                                     <li class="col"><a href="javascript:void(0);" data-day="{{ $i+1 }}" class="day-btn {{ ($today == $i+1) ? 'today' : '' }}">{{ $days[$i] }}</a></li>
+                                     <li class="col"><a href="javascript:void(0);" data-day="{{ $i+1 }}" class="day-btn {{ ($today == $i+1) ? 'today' : '' }} {{ ($today > $i + 1 + $passed) ? 'day-disabled' : '' }}">{{ $days[$i] }}</a></li>
                                 @endfor
                             </ul>
                         </div>
@@ -53,8 +78,8 @@
                                             <form>
                                               <div class="form-row align-items-center">
                                                   <div class="custom-control custom-checkbox mr-sm-2">
-                                                    <input type="checkbox" class="custom-control-input" id="1">
-                                                    <label class="custom-control-label" for="1">&nbsp;</label>
+                                                    <input type="checkbox" class="custom-control-input" {{ $user->checkExersice($i, 1) ? 'checked' : '' }} id="{{ $i }}-1" {{ $today != $i ? 'disabled' : '' }}>
+                                                    <label class="custom-control-label" for="{{ $i }}-1">&nbsp;</label>
                                                   </div>
                                               </div>
                                             </form>
@@ -69,42 +94,27 @@
                                                     @if($training->user)
                                                         <h4> {{ $training->user->name }} </h4>
                                                     @endif
-                                                    <p>
-                                                        @if ($training->weight)
-                                                            {{ $training->weight }} кг,
-                                                        @endif
-                                                        @if ($training->approaches_number)
-                                                            {{ $training->approaches_number }} подхода,
-                                                        @endif
-                                                        @if ($training->repetitions_number)
-                                                            {{ $training->repetitions_number }} повторений
-                                                        @endif
-                                                    </p>
                                                     <ul>
                                                         @foreach($training->exercises as $index => $exercise)
                                                             <li class="row mb-4">
-                                                                <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset('uploads/'.$exercise->image) }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-video="{{ asset('uploads/'.$exercise->video) }}" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                                <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset($exercise->image ? 'uploads/'.$exercise->image : 'assets/images/no-image.png') }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-video="{{ asset('uploads/'.$exercise->video) }}" {{ $exercise->video ? '' :'disabled' }}><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
                                                                 <div class="col-sm-7 col-lg-9">
-                                                                    <h2><b><a type="button" class="h2-pointer ex-desc" data-toggle="modal" data-target="#desc" data-title="{{ $exercise->name }}" data-description="{{ $exercise->long_desc }}">{{ $index + 1 }}. {{ $exercise->name }}</a></b></h2>
-
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae tempore obcaecati earum et officia minus, voluptas deserunt? Molestias, dignissimos repellat earum excepturi, vel doloribus rerum sed vero, quam voluptatibus, dicta!</p>
+                                                                    <h2 >
+                                                                        <b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">{{ $index + 1 }}. {{ $exercise->name }}</a></b>
+                                                                    </h2>
+                                                                    <p>{{ $exercise->short_desc }}</p>
                                                                     <div class="row">
                                                                         <div class="col-12 col-lg-4 text-lg-center">
-                                                                            <div class="text-lg-center">Количество подходов: <b>0</b></div>
+                                                                            <div class="text-lg-center">Количество подходов: <b>{{ $training->approaches_number ?? '-' }}</b></div>
                                                                         </div>
                                                                         <div class="col-12 col-lg-4 text-lg-center">
-                                                                            <div class="text-lg-center">Количество повторений: <b>0</b></div>
+                                                                            <div class="text-lg-center">Количество повторений: <b>{{ $training->repetitions_number ?? '-' }}</b></div>
                                                                         </div>
                                                                         <div class="col-12 col-lg-4 text-lg-center">
-                                                                            <div class="text-lg-center">Вес: <b>0</b></div>
+                                                                            <div class="text-lg-center">Вес: <b>{{ $training->weight ?? '-' }}</b></div>
                                                                         </div>
                                                                     </div>
-
-                                                                    <p>
-                                                                        {{ $exercise->short_desc }}
-                                                                    </p>
                                                                 </div>
-                                                                <div class="col-sm-2 col-lg-1"><label for="status"><input type="checkbox" checked name="status"></label><i class="i-Yes text-24"></i></div>
                                                             </li>
                                                         @endforeach
                                                     </ul>
@@ -123,8 +133,8 @@
                                             <form>
                                               <div class="form-row align-items-center">
                                                   <div class="custom-control custom-checkbox mr-sm-2">
-                                                    <input type="checkbox" class="custom-control-input" id="2">
-                                                    <label class="custom-control-label" for="2">&nbsp;</label>
+                                                    <input type="checkbox" class="custom-control-input" {{ $user->checkExersice($i, 2) ? 'checked' : '' }} id="{{ $i }}-2" {{ $today != $i ? 'disabled' : '' }}>
+                                                    <label class="custom-control-label" for="{{ $i }}-2">&nbsp;</label>
                                                   </div>
                                               </div>
                                             </form>
@@ -137,49 +147,35 @@
 
                                                 <ul>
                                                     <li class="row mb-4">
-                                                        <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/no-image.png')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
-                                                        <div class="col-sm-7 col-lg-9">
-                                                            <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">1. Урпажнение</a></b></h2>
-                                                            <p>Время приема пищи: <br> <b>с 08:00 до 19:00</b></p>
-                                                            <p>Блюда:</p>
-                                                            <ul>
-                                                                <li>Блюдо</li>
-                                                                <li>Блюдо</li>
-                                                                <li>Блюдо</li>
-                                                                <li>Блюдо</li>
-                                                                <li>Блюдо</li>
-                                                            </ul>
+                                                        <div class="col-sm-12 col-lg-12">
+                                                            @foreach($eats[$i] ?? [] as $start => $eat)
+                                                            @foreach($eat as $end => $meals)
+                                                                <p>Время приема пищи: <br> <b>с {{ $start }} до {{ $end }}</b></p>
+                                                                <p>Блюда:</p>
+                                                                <ul>
+                                                                    @foreach($meals as $meal)
+                                                                        <li>
+                                                                            {{ $meal->name }}
+                                                                            {!! $meal->description !!}
+                                                                            <p>
+                                                                                @if($meal->calorie)
+                                                                                    Калорийность: {{ $meal->calorie }}<br/>
+                                                                                @endif
+                                                                                @if($meal->weight)
+                                                                                    Вес: {{ $meal->weight }} г.<br/>
+                                                                                @endif
+                                                                                @if($meal->price)
+                                                                                    Цена: {{ number_format($meal->price, 0,"."," ") }} ₸<br/>
+                                                                                @endif
+                                                                            </p>
+                                                                        </li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            @endforeach
+                                                            @endforeach
                                                         </div>
                                                     </li>
                                                 </ul>
-
-                                                @foreach($planeats[$i] ?? [] as $planeat)
-                                                    <h2>{{ $planeat->name }}</h2>
-                                                    <h4>Блюда:</h4>
-                                                    @foreach($planeat->meals ?? [] as $mealindex => $meal)
-                                                        <h5>{{ $mealindex + 1 }}. {{ $meal->name }}</h5>
-                                                        <div>
-                                                            {!! $meal->description !!}
-                                                            <p>
-                                                            @if($meal->calorie)
-                                                                <strong>Калорийность: </strong> {{ $meal->calorie }}<br/>
-                                                            @endif
-                                                            @if($meal->weight)
-                                                                <strong>Вес: </strong> {{ $meal->weight }} г.<br/>
-                                                            @endif
-                                                            @if($meal->price)
-                                                                <strong>Цена: </strong> {{ number_format($meal->price, 0,"."," ") }} ₸<br/>
-                                                            @endif
-                                                            </p>
-                                                        </div>
-                                                    @endforeach
-                                                    <h4>Часы приема:</h4>
-                                                    <p>
-                                                        @foreach($planeat->eathours ?? [] as $eatindex => $eathour)
-                                                            {{ $eatindex + 1 }}. {{ $eathour->hour_start }} - {{ $eathour->hour_finish }}</br>
-                                                        @endforeach
-                                                    </p>
-                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -195,8 +191,8 @@
                                             <form>
                                               <div class="form-row align-items-center">
                                                   <div class="custom-control custom-checkbox mr-sm-2">
-                                                    <input type="checkbox" class="custom-control-input" id="3">
-                                                    <label class="custom-control-label" for="3">&nbsp;</label>
+                                                    <input type="checkbox" class="custom-control-input" {{ $user->checkExersice($i, 3) ? 'checked' : '' }} id="{{ $i }}-3" {{ $today != $i ? 'disabled' : '' }}>
+                                                    <label class="custom-control-label" for="{{ $i }}-3">&nbsp;</label>
                                                   </div>
                                               </div>
                                             </form>
@@ -212,20 +208,17 @@
                                                     <ul>
                                                         @foreach($relaxtraining->exercises as $exerciseindex => $exercise)
                                                             <li class="row mb-4">
-                                                                <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset('uploads/'.$exercise->image) }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-video="{{ asset('uploads/'.$exercise->video) }}" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                                <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset($exercise->image ? 'uploads/'.$exercise->image : 'assets/images/no-image.png') }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-video="{{ asset('uploads/'.$exercise->video) }}" {{ $exercise->video ? '' :'disabled' }}><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
                                                                 <div class="col-sm-7 col-lg-9">
                                                                     <h5><b><a type="button" class="h2-pointer ex-desc" data-toggle="modal" data-target="#desc" data-title="{{ $exercise->name }}" data-description="{{ $exercise->long_description }}">{{ $index + 1 }}. {{ $exercise->name }}</a></b></h5>
                                                                     @if($exercise->audio)
-                                                                        <audio src="{{ asset('uploads/'.$exercise->audio) }}" controls></audio>
+                                                                        <audio src="{{ asset('uploads/'.$exercise->audio) }}" controls  style="width: 100%;"></audio>
                                                                     @endif
 
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem magni totam incidunt quod earum facilis consectetur, ullam sit repudiandae dolor eligendi quia, delectus. Reprehenderit pariatur repellendus laudantium aspernatur, id molestiae.</p><br>
-                                                                    <p>Длительность выполнения: <b>00:15 мин.</b></p><br>
-                                                                    <audio src="{{asset('assets/images/bop.mp3')}}" style="width: 100%;" controls></audio>
-
                                                                     <p>{{ $exercise->short_description }}</p>
+                                                                    <p>Длительность выполнения: <b>00:15 мин.</b></p><br>
+
                                                                 </div>
-                                                                <div class="col-sm-2 col-lg-1"><label for="status"><input type="checkbox" checked name="status"></label><i class="i-Yes text-24"></i></div>
                                                             </li>
                                                         @endforeach
                                                     </ul>
@@ -275,7 +268,7 @@
                     </button>
                   </div>
                   <div class="modal-body" id="forprint">
-                    <h4>Новая неделя требует от Вас больших усилий. <br> Вот, что будет нужно на эту неделю!</h4><br>
+                    <h4>Вот, что будет нужно на эту неделю!</h4><br>
                     <h4>Продукты: </h4>
                     <ol>
                         @foreach($groceries as $grocery)
@@ -295,14 +288,58 @@
                     <h4>Желаем достижения новых высот!</h4>
                     <small>Комада MAG.</small>
                   </div>
-                  <div class="modal-footer">
+                  <form class="modal-footer" action="{{ route('friday') }}" method="POST">
+                      @csrf
                     <button type="button" class="btn btn-success" onclick="printJS('forprint', 'html')">Печать</button>
-                    <button type="button" class="btn btn-primary">Отправить список на почту</button>
+                    <button type="submit" class="btn btn-primary">Отправить список на почту</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                  </div>
+                </form>
                 </div>
               </div>
             </div>
+
+            <!-- Modal2 -->
+            @if($nextGroceries->count() > 0 || $nextEquipments->count() > 0)
+            <div class="modal fade" id="list2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Привет друг!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body" id="forprint2">
+                    <h4>Новая неделя требует от Вас больших усилий. <br> Вот, что будет нужно на эту неделю!</h4><br>
+                    <h4>Продукты: </h4>
+                    <ol>
+                        @foreach($nextGroceries as $grocery)
+                            @foreach($grocery->listmeals as $meal)
+                                <li>{{ $meal->name }}</li>
+                            @endforeach
+                        @endforeach
+                    </ol>
+                    <br>
+                    <h4>Оборудование: </h4>
+                    <ol>
+                        @foreach($nextEquipments as $equipment)
+                            <li>{{ $equipment->name }}</li>
+                        @endforeach
+                    </ol>
+                    <br>
+                    <h4>Желаем достижения новых высот!</h4>
+                    <small>Комада MAG.</small>
+                  </div>
+                  <form class="modal-footer" action="{{ route('friday', ['next' => 1]) }}" method="POST">
+                      @csrf
+                    <button type="button" class="btn btn-success" onclick="printJS('forprint2', 'html')">Печать</button>
+                    <button type="submit" class="btn btn-primary">Отправить список на почту</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                </form>
+                </div>
+              </div>
+            </div>
+            @endif
 @endsection
 
 @section('page-js')
@@ -316,13 +353,15 @@
             $(document).on('click', '.day-btn', function(e) {
                 let $target = $(e.target);
                 let day = $target.data('day');
-                $('.day-btn').removeClass('active-day');
-                if (day != {{ $today }}) {
-                    $target.addClass('active-day');
-                }
+                if ({{ $passed }} + day >= {{ $today }}) {
+                    $('.day-btn').removeClass('active-day');
+                    if (day != {{ $today }}) {
+                        $target.addClass('active-day');
+                    }
 
-                $('.day-box').hide()
-                $('#accordionRightIcon-' + day).show()
+                    $('.day-box').hide();
+                    $('#accordionRightIcon-' + day).show();
+                }
             });
 
             $(document).on('click', '.ex-desc', function(e) {
@@ -336,6 +375,20 @@
                 let video = $(e.target.closest('div')).find('button').data('video');
                 $('#vid').find('video').attr('src', video);
             });
+
+            $('.custom-control-input').on('change', function(e) {
+                let weekDay = e.target.id.split('-')[0];
+                let key = e.target.id.split('-')[1];
+                $.post('{{ route("exersice-done") }}', {
+                    '_token': '{{ csrf_token() }}',
+                    'key': key,
+                    'day': weekDay
+                });
+            });
+
+            @if($nextGroceries->count() || $nextEquipments->count())
+                $('#list2').modal();
+            @endif
         });
      </script>
 

@@ -18,6 +18,7 @@ use App\Models\Pivots\MessageUser;
 use App\Models\Programtraining;
 use App\Models\Userparameter;
 use App\Models\Pivots\SubscriptionUser;
+use App\DoneExersice;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -76,6 +77,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Programtraining::class, 'programtraining_id');
     }
 
+    public function doneExersices()
+    {
+        return $this->hasMany(DoneExersice::class, 'user_id');
+    }
+
     public static function getGenderOptions() : array
     {
         return [
@@ -130,6 +136,88 @@ class User extends Authenticatable implements MustVerifyEmail
             $obj->sendEmailVerificationNotification();
         });
     }
+
+    public function getTrainings()
+    {
+        return $this->programtraining
+                    ->trainings()
+                 // ->where('day_number', '>=', $passed - $today + 2)
+                 // ->where('day_number', '<=', $passed - $today + 8)
+                    ->with(['exercises' => function($q) {$q->active();}])
+                    ->active()
+                    ->get();
+    }
+
+    public function getEquipments(bool $nextWeek = false)
+    {
+        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d')) - strtotime(\Carbon\Carbon::parse($this->programtraining_start)->format('Y-m-d')))/60/60/24 + ($nextWeek ? 7 : 0);
+        $today = \Date::today()->dayOfWeek;
+        if($today == 0) {
+            $today = 7;
+        }
+
+        return $this->programtraining
+                    ->equipments()
+                    ->where('notify_day', '>=', $passed - $today + 2)
+                    ->where('notify_day', '<=', $passed - $today + 8)
+                    ->active()
+                    ->get();
+    }
+
+    public function getGroceries(bool $nextWeek = false)
+    {
+        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d')) - strtotime(\Carbon\Carbon::parse($this->programtraining_start)->format('Y-m-d')))/60/60/24 + ($nextWeek ? 7 : 0);
+        $today = \Date::today()->dayOfWeek;
+        return $this->programtraining
+                    ->groceries()
+                    ->where('notify_day', '>=', $passed - $today + 2)
+                    ->where('notify_day', '<=', $passed - $today + 8)
+                    ->active()
+                    ->get();
+    }
+
+    public function getPlaneats(bool $nextWeek = false)
+    {
+        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d')) - strtotime(\Carbon\Carbon::parse($this->programtraining_start)->format('Y-m-d')))/60/60/24 + ($nextWeek ? 7 : 0);
+        $today = \Date::today()->dayOfWeek;
+
+        return $this->programtraining
+                    ->foodprogram
+                    ->planeats()
+                    ->where('days', '>=', $passed - $today + 2)
+                    ->where('days', '<=', $passed - $today + 8)
+                    ->active()
+                    ->with(['meals' => function($q) {$q->active();}])
+                    ->with(['eathours' => function($q) {$q->active();}])
+                    ->get();
+    }
+
+    public function getRelaxtrainings()
+    {
+        $id = $this->id;
+        return $this->programtraining
+                    ->relaxprogram
+                    ->relaxtrainings()
+                    ->whereHas('users', function($query) use($id) {
+                        $query->where('id', $id);
+                    })
+                    // ->where('number_day', '>=', $passed - $today + 2)
+                    // ->where('number_day', '<=', $passed - $today + 8)
+                    ->active()
+                    ->with(['exercises' => function($q) {$q->active();}])
+                    ->orderBy('time')
+                    ->get();
+    }
+
+    public function checkExersice($weekDay, $key) : bool
+    {
+        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d')) - strtotime(\Carbon\Carbon::parse($this->programtraining_start)->format('Y-m-d')))/60/60/24;
+        $today = \Date::today()->dayOfWeek;
+
+        $day = $passed + $today - $weekDay;
+        return $this->doneExersices()->where('key', $key)->where('day_number', $day)->exists();
+    }
+
 
     public function setImageAttribute($value)
     {

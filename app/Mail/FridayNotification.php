@@ -7,18 +7,24 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+use App\User;
+
 class FridayNotification extends Mailable
 {
     use Queueable, SerializesModels;
+
+    protected $user;
+    protected $next;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $user, $next)
     {
-        //
+        $this->user = $user;
+        $this->next = ($next != 0);
     }
 
     /**
@@ -28,6 +34,15 @@ class FridayNotification extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        $groceries = $this->user->getGroceries($this->next);
+        $equipments = $this->user->getEquipments($this->next);
+
+        return $this->to($this->user->email)
+                    ->view('notifications.friday')
+                    ->with([
+                        'equipments' => $equipments,
+                        'groceries' => $groceries,
+                        'next' => $this->next,
+                    ]);
     }
 }

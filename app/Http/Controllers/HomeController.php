@@ -7,6 +7,8 @@ use Auth;
 use Carbon\Carbon;
 use Jenssegers\Date\Date;
 
+use App\DoneExersice;
+
 class HomeController extends Controller
 {
     /**
@@ -20,7 +22,7 @@ class HomeController extends Controller
     }
 
 
-    public function home()
+    public function home(Request $request)
     {
         //TODO crop day name by first слог var week and date
         $first_day = Date::parse('monday this week')->format('d F');
@@ -43,19 +45,7 @@ class HomeController extends Controller
         $passed = (strtotime(Carbon::now()->format('Y-m-d')) - strtotime(Carbon::parse($user->programtraining_start)->format('Y-m-d')))/60/60/24;
 
         $relaxtrainings_data = [];
-        $relaxtrainings = $user->programtraining
-                               ->relaxprogram
-                               ->relaxtrainings()
-                               ->whereHas('users', function($query) use($user) {
-                                   $query->where('id', $user->id);
-                               })
-                               // ->where('number_day', '>=', $passed - $today + 2)
-                               // ->where('number_day', '<=', $passed - $today + 8)
-                               ->active()
-                               ->with(['exercises' => function($q) {$q->active();}])
-                               ->orderBy('time')
-                               ->get();
-
+        $relaxtrainings = $user->getRelaxtrainings();
         foreach($relaxtrainings as $item) {
             if (!isset($relaxtrainings_data[$item->number_day])) {
                 $relaxtrainings_data[$item->number_day] = [];
@@ -64,13 +54,7 @@ class HomeController extends Controller
         }
 
         $trainings_data = [];
-        $trainings = $user->programtraining
-                          ->trainings()
-                          // ->where('day_number', '>=', $passed - $today + 2)
-                          // ->where('day_number', '<=', $passed - $today + 8)
-                          ->with(['exercises' => function($q) {$q->active();}])
-                          ->active()
-                          ->get();
+        $trainings = $user->getTrainings();
 
         foreach($trainings as $item) {
             if (!isset($trainings_data[$item->day_number])) {
@@ -80,12 +64,7 @@ class HomeController extends Controller
         }
 
         $equipments_data = [];
-        $equipments = $user->programtraining
-                           ->equipments()
-                           ->where('notify_day', '>=', $passed - $today + 2)
-                           ->where('notify_day', '<=', $passed - $today + 8)
-                           ->active()
-                           ->get();
+        $equipments = $user->getEquipments();
 
         foreach($equipments as $item) {
             if (!isset($equipments_data[$item->notify_day])) {
@@ -94,23 +73,9 @@ class HomeController extends Controller
             $equipments_data[$item->notify_day - $passed + $today - 1][] = $item;
         }
 
-        $groceries = $user->programtraining
-                           ->groceries()
-                           ->where('notify_day', '>=', $passed - $today + 2)
-                           ->where('notify_day', '<=', $passed - $today + 8)
-                           ->active()
-                           ->get();
-
+        $groceries = $user->getGroceries();
         $planeats_data = [];
-        $planeats = $user->programtraining
-                         ->foodprogram
-                         ->planeats()
-                         ->where('days', '>=', $passed - $today + 2)
-                         ->where('days', '<=', $passed - $today + 8)
-                         ->active()
-                         ->with(['meals' => function($q) {$q->active();}])
-                         ->with(['eathours' => function($q) {$q->active();}])
-                         ->get();
+        $planeats = $user->getPlaneats();
 
         foreach($planeats as $item) {
             if (!isset($planeats_data[$item->days - $passed + $today - 1])) {
@@ -119,12 +84,22 @@ class HomeController extends Controller
             $planeats_data[$item->days - $passed + $today - 1][] = $item;
         }
 
+        if ($today == 5 && (!$request->session()->has('friday_notification')) || $passed != $request->session()->get('friday_notification')) {
+            $nextGroceries = $user->getGroceries(true);
+            $nextEquipments = $user->getEquipments(true);
+            $request->session()->put('friday_notification', $passed);
+        } else {
+            $nextGroceries = collect();
+            $nextEquipments = collect();
+        }
 
         return view('dashboard.dashboardv1', [
             'user' => $user,
             'time' => $time,
             'week' => $week,
             'today' => $today,
+            'passed' => $passed,
+            'user' => $user,
             'planeats' => $planeats_data,
             'equipments' => $equipments_data,
             'groceries' => $groceries,
@@ -132,7 +107,27 @@ class HomeController extends Controller
             'trainings' => $trainings_data,
             'relaxprogram' => $user->programtraining ? $user->programtraining->relaxprogram : null,
             'relaxtrainings' => $relaxtrainings_data,
+            'nextGroceries' => $nextGroceries,
+            'nextEquipments' => $nextEquipments,
         ]);
+    }
+
+    public function toggleUserExercise(Request $request)
+    {
+        $user = $request->user();
+        $passed = (strtotime(Carbon::now()->format('Y-m-d')) - strtotime(Carbon::parse($user->programtraining_start)->format('Y-m-d')))/60/60/24;
+        $doneExersice = $user->doneExersices()->where('key', $request->key)->where('day_number', $passed)->first();
+        $today = \Date::today()->dayOfWeek;
+
+        if (!$doneExersice) {
+            $doneExersice = DoneExersice::create([
+                'user_id' => $user->id,
+                'key' => $request->key,
+                'day_number' => $passed + $today - $request->day,
+            ]);
+        } else {
+            $doneExersice->delete();
+        }
     }
 
 }

@@ -6,8 +6,6 @@ use Illuminate\Console\Command;
 
 use App\User;
 use App\Models\Message;
-use Date;
-use Carbon\Carbon;
 
 class SendFridayNotifications extends Command
 {
@@ -46,28 +44,10 @@ class SendFridayNotifications extends Command
                      ->whereHas('programtraining')
                      ->get();
 
-        $today = Date::today()->dayOfWeek;
-        if($today == 0) {
-            $today = 7;
-        }
-
         foreach($users as $user)
         {
-            $passed = (strtotime(Carbon::now()->format('Y-m-d')) - strtotime(Carbon::parse($user->programtraining_start)->format('Y-m-d')))/60/60/24 + 7;
-
-            $groceries = $user->programtraining
-                               ->groceries()
-                               ->where('notify_day', '>=', $passed - $today + 2)
-                               ->where('notify_day', '<=', $passed - $today + 8)
-                               ->active()
-                               ->get();
-
-            $equipments = $user->programtraining
-                              ->equipments()
-                              ->where('notify_day', '>=', $passed - $today + 2)
-                              ->where('notify_day', '<=', $passed - $today + 8)
-                              ->active()
-                              ->get();
+            $groceries = $user->getGroceries(true);
+            $equipments = $user->getEquipments(true);
 
             if ($groceries->count() > 0 || $equipments->count() > 0) {
 
