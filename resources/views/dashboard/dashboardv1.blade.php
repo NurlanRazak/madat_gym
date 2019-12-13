@@ -28,7 +28,7 @@
                             </ul>
                         </div>
                         <div class="col-lg-2 col-12">
-                            <a class="btn btn-warning" data-toggle="modal" data-target="#list">продукты и оборудование</a>
+                            <a class="btn btn-block btn-warning" data-toggle="modal" data-target="#list">продукты и оборудование</a>
                         </div>
 
                         </div>
@@ -86,6 +86,20 @@
                                                                 <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset('uploads/'.$exercise->image) }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-video="{{ asset('uploads/'.$exercise->video) }}" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
                                                                 <div class="col-sm-7 col-lg-9">
                                                                     <h2><b><a type="button" class="h2-pointer ex-desc" data-toggle="modal" data-target="#desc" data-title="{{ $exercise->name }}" data-description="{{ $exercise->long_desc }}">{{ $index + 1 }}. {{ $exercise->name }}</a></b></h2>
+
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae tempore obcaecati earum et officia minus, voluptas deserunt? Molestias, dignissimos repellat earum excepturi, vel doloribus rerum sed vero, quam voluptatibus, dicta!</p>
+                                                                    <div class="row">
+                                                                        <div class="col-12 col-lg-4 text-lg-center">
+                                                                            <div class="text-lg-center">Количество подходов: <b>0</b></div>
+                                                                        </div>
+                                                                        <div class="col-12 col-lg-4 text-lg-center">
+                                                                            <div class="text-lg-center">Количество повторений: <b>0</b></div>
+                                                                        </div>
+                                                                        <div class="col-12 col-lg-4 text-lg-center">
+                                                                            <div class="text-lg-center">Вес: <b>0</b></div>
+                                                                        </div>
+                                                                    </div>
+
                                                                     <p>
                                                                         {{ $exercise->short_desc }}
                                                                     </p>
@@ -100,7 +114,7 @@
                                     </div>
 
                                     <div class="card">
-                                        <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-{{ $i }}-2">
+                                        <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-{{ $i }}-2" style="padding-right: 50px;">
                                             <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
                                                 <a data-toggle="collapse" class="text-default collapsed"
                                                     href="#accordion-item-icon-right-{{ $i }}-2">Питание</a>
@@ -112,6 +126,25 @@
 
                                         <div id="accordion-item-icon-right-{{ $i }}-2" class="collapse " data-parent="#accordionRightIcon-{{ $i }}">
                                             <div class="card-body">
+
+                                                <ul>
+                                                    <li class="row mb-4">
+                                                        <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{asset('assets/images/no-image.png')}}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid"><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                        <div class="col-sm-7 col-lg-9">
+                                                            <h2 ><b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">1. Урпажнение</a></b></h2>
+                                                            <p>Время приема пищи: <br> <b>с 08:00 до 19:00</b></p>
+                                                            <p>Блюда:</p>
+                                                            <ul>
+                                                                <li>Блюдо</li>
+                                                                <li>Блюдо</li>
+                                                                <li>Блюдо</li>
+                                                                <li>Блюдо</li>
+                                                                <li>Блюдо</li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
                                                 @foreach($planeats[$i] ?? [] as $planeat)
                                                     <h2>{{ $planeat->name }}</h2>
                                                     <h4>Блюда:</h4>
@@ -145,11 +178,20 @@
 
 
                                     <div class="card ">
-                                        <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-{{ $i }}-3">
+                                        <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-{{ $i }}-3" style="padding-right: 50px;">
                                             <h6 class="card-title ul-collapse__icon--size ul-collapse__right-icon mb-0">
                                                 <a data-toggle="collapse" class="text-default collapsed"
                                                     href="#accordion-item-icon-right-3">Отдых</a>
                                             </h6>
+
+                                            <form>
+                                              <div class="form-row align-items-center">
+                                                  <div class="custom-control custom-checkbox mr-sm-2">
+                                                    <input type="checkbox" class="custom-control-input" id="3">
+                                                    <label class="custom-control-label" for="3">&nbsp;</label>
+                                                  </div>
+                                              </div>
+                                            </form>
 
                                         </div>
 
@@ -168,6 +210,11 @@
                                                                     @if($exercise->audio)
                                                                         <audio src="{{ asset('uploads/'.$exercise->audio) }}" controls></audio>
                                                                     @endif
+
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem magni totam incidunt quod earum facilis consectetur, ullam sit repudiandae dolor eligendi quia, delectus. Reprehenderit pariatur repellendus laudantium aspernatur, id molestiae.</p><br>
+                                                                    <p>Длительность выполнения: <b>00:15 мин.</b></p><br>
+                                                                    <audio src="{{asset('assets/images/bop.mp3')}}" style="width: 100%;" controls></audio>
+
                                                                     <p>{{ $exercise->short_description }}</p>
                                                                 </div>
                                                                 <div class="col-sm-2 col-lg-1"><label for="status"><input type="checkbox" checked name="status"></label><i class="i-Yes text-24"></i></div>
@@ -249,7 +296,7 @@
      <script src="{{asset('assets/js/es5/echart.options.min.js')}}"></script>
      <script src="{{asset('assets/js/es5/dashboard.v1.script.js')}}"></script>
      <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-     
+
      <script>
         $(document).ready(function() {
             $(document).on('click', '.day-btn', function(e) {

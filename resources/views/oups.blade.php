@@ -18,7 +18,7 @@
         </h1>
         <p class="text-36 subheading mb-3">Ошибка!</p>
         <p class="mb-5  text-muted text-18">Извините! Что-то пошло не так!</p>
-        <a class="btn btn-lg btn-primary btn-rounded" href="{{route('main')}}">Перейти на главную</a>
+        <a class="btn btn-lg btn-primary btn-rounded" href="{{route('home')}}">Перейти на главную</a>
     </div>
 </body>
 
