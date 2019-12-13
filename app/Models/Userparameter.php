@@ -22,7 +22,7 @@ class Userparameter extends Model
     protected $fillable = ['user_id', 'date_measure', 'weight', 'waist', 'leg_volume', 'arm_volume', 'images'];
     // protected $hidden = [];
     // protected $dates = [];
-
+    public $casts = ['images' => 'array'];
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS

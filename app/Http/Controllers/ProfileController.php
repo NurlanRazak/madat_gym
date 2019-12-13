@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Userparameter;
 use Jenssegers\Date\Date;
 use App\User;
+use Hash;
+use Auth;
 
 class ProfileController extends Controller
 {
@@ -46,6 +48,14 @@ class ProfileController extends Controller
 
     public function userUpdate(Request $request)
     {
+        dd($request, Hash::check($request['password'], Auth::user()->password, []));
+
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|confirmed'
+        ]);
+
         $user = $request->user();
         $user->update($request->all()
             // [

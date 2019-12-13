@@ -81,7 +81,7 @@
                                     <div class="mb-4">
                                         <p class="text-primary mb-1"><i class="i-Key text-16 mr-1"></i> ПАРОЛЬ</p>
                                         <div class="input-group">
-                                          <input type="password" class="form-control" name="password" id="password" aria-describedby="button-addon2" disabled value="{{ $user->password }}">
+                                          <input type="password" class="form-control" name="password" id="password" aria-describedby="button-addon2" disabled value="{{ $user->password ? 'password' : '' }}">
                                           <div class="input-group-append" >
                                             <button class="btn btn-primary" type="button" id="button-addon2" data-toggle="modal" data-target="#password">Изменить</button>
                                           </div>
@@ -214,7 +214,7 @@
                                          @foreach($userparameters as $userparameter)
                                         <tr>
                                           <th scope="row">1</th>
-                                          <td>{{ $userparameter->date_measure }}</td>
+                                          <td>{{ date('j F Y', strtotime($userparameter->date_measure)) }}</td>
                                           <td>{{ $userparameter->weight }}</td>
                                           <td>{{ $userparameter->waist }}</td>
                                           <td>{{ $userparameter->leg_volume }}</td>
@@ -614,15 +614,19 @@
            			      <div class="modal-body">
            			        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
            					  <div class="carousel-inner">
-           					    <div class="carousel-item active">
-           					      <img class="d-block w-100" src="https://cosmos-images2.imgix.net/file/spina/photo/20565/191010_nature.jpg?ixlib=rails-2.1.4&auto=format&ch=Width%2CDPR&fit=max&w=835" alt="First slide">
-           					    </div>
-           					    <div class="carousel-item">
+                                  @foreach($userparameters as $userparameter)
+                                      @foreach($userparameter->images ?? [] as $key=>$value)
+                   					    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                   					      <img class="d-block w-100" src="{{ asset('uploads/'.$value) }}" alt="First slide">
+                   					    </div>
+                                      @endforeach
+                                  @endforeach
+           					    <!-- <div class="carousel-item">
            					      <img class="d-block w-100" src="https://inteng-storage.s3.amazonaws.com/img/iea/zDOZxPj46k/sizes/nature-language-header_md.jpg" alt="Second slide">
            					    </div>
            					    <div class="carousel-item">
            					      <img class="d-block w-100" src="https://ichef.bbci.co.uk/images/ic/640x360/p01gn345.jpg" alt="Third slide">
-           					    </div>
+           					    </div> -->
            					  </div>
            					  <a class="carousel-control-prev" href="#carouselExampleSlidesOnly" role="button" data-slide="prev">
            					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
