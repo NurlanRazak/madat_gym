@@ -147,7 +147,6 @@ Route::group(['middleware' => 'verified'], function () {
     Route::get('subscription', 'SubscriptionController@subscription')->name('subscription');
     Route::post('subscription', 'SubscriptionController@postSubscription')->name('post-subscription');
 
-    Route::post('friday', 'MessageController@friday')->name('friday');
 
     Route::view('oups', 'oups')->name('oups');
     Route::view('others/starter', 'starter')->name('starter');
@@ -172,6 +171,8 @@ Route::group(['middleware' => 'verified'], function () {
         ], function() {
             Route::redirect('home', '/');
             Route::get('/', 'HomeController@home')->name('home');
+            Route::post('friday', 'MessageController@friday')->name('friday');
+            Route::post('exersice/done', 'HomeController@toggleUserExercise')->name('exersice-done');
         });
 
     });

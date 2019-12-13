@@ -7,7 +7,7 @@ use App\Models\Message;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\FridayNotification;
-// use Queue;
+use Mail;
 
 
 class MessageController extends Controller
@@ -39,7 +39,7 @@ class MessageController extends Controller
     public function friday(Request $request)
     {
         $user = $request->user();
-        // Queue::dispatch(new FridayNotification($user));
+        Mail::send(new FridayNotification($user, $request->next ?? 0));
         return redirect()->back();
     }
 }
