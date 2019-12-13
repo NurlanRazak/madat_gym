@@ -270,12 +270,18 @@
                     <h4>Новая неделя требует от Вас больших усилий. <br> Вот, что будет нужно на эту неделю!</h4><br>
                     <h4>Продукты: </h4>
                     <ol>
-                        <li>Продукт</li>
+                        @foreach($groceries as $grocery)
+                            @foreach($grocery->listmeals as $meal)
+                                <li>{{ $meal->name }}</li>
+                            @endforeach
+                        @endforeach
                     </ol>
                     <br>
                     <h4>Оборудование: </h4>
                     <ol>
-                        <li>Штанга чугунная</li>
+                        @foreach($all_equipments as $equipment)
+                            <li>{{ $equipment->name }}</li>
+                        @endforeach
                     </ol>
                     <br>
                     <h4>Желаем достижения новых высот!</h4>

@@ -82,17 +82,24 @@ class HomeController extends Controller
         $equipments_data = [];
         $equipments = $user->programtraining
                            ->equipments()
-                           // ->where('notify_day', '>=', $passed - $today + 2)
-                           // ->where('notify_day', '<=', $passed - $today + 8)
+                           ->where('notify_day', '>=', $passed - $today + 2)
+                           ->where('notify_day', '<=', $passed - $today + 8)
                            ->active()
                            ->get();
 
         foreach($equipments as $item) {
             if (!isset($equipments_data[$item->notify_day])) {
-                $equipments_data[$item->notify_day] = [];
+                $equipments_data[$item->notify_day - $passed + $today - 1] = [];
             }
-            $equipments_data[$item->notify_day][] = $item;
+            $equipments_data[$item->notify_day - $passed + $today - 1][] = $item;
         }
+
+        $groceries = $user->programtraining
+                           ->groceries()
+                           ->where('notify_day', '>=', $passed - $today + 2)
+                           ->where('notify_day', '<=', $passed - $today + 8)
+                           ->active()
+                           ->get();
 
         $planeats_data = [];
         $planeats = $user->programtraining
@@ -120,6 +127,8 @@ class HomeController extends Controller
             'today' => $today,
             'planeats' => $planeats_data,
             'equipments' => $equipments_data,
+            'groceries' => $groceries,
+            'all_equipments' => $equipments,
             'trainings' => $trainings_data,
             'relaxprogram' => $user->programtraining ? $user->programtraining->relaxprogram : null,
             'relaxtrainings' => $relaxtrainings_data,

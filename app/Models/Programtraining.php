@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Models\Activeprogram;
 use App\Models\Equipment;
 use App\Models\Training;
+use App\Models\Grocery;
 
 class Programtraining extends Model
 {
@@ -73,6 +74,11 @@ class Programtraining extends Model
     public function trainings()
     {
         return $this->belongsToMany(Training::class, 'training_programtraining', 'programtraining_id', 'training_id');
+    }
+
+    public function groceries()
+    {
+        return $this->hasMany(Grocery::class, 'programtraining_id');
     }
 
     /*

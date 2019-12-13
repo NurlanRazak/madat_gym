@@ -18,6 +18,14 @@ class MessageController extends Controller
         $user_id = $user->id;
         $mails = $user->messages()->latest()->where('status', Message::SENT)->get()->groupBy('author_id');
         $users = User::whereIn('id', $mails->keys()->toArray())->get();
+        if (isset($mails[''])) {
+            $users->push(new User([
+                'id' => 0,
+                'name' => 'Система',
+            ]));
+            $mails['0'] = $mails[''];
+            unset($mails['']);
+        }
 
         $user->messages()->where('read_at', null)->update([
             'read_at' => \DB::raw('NOW()'),
