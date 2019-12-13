@@ -57,31 +57,31 @@
                                     <div class="mb-4">
                                         <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> ИМЯ</p>
                                         <div class="form-group">
-                                            <input type="text" class="form-control userdataediti" aria-describedby="emailHelp" value="Ислам" disabled>
+                                            <input type="text" class="form-control userdataediti" name="name" id="name" aria-describedby="emailHelp" value="{{ $user->name }}" disabled>
                                         </div>
                                     </div>
                                     <div class="mb-4">
                                         <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> ФАМИЛИЯ</p>
                                         <div class="form-group">
-                                            <input type="text" class="form-control userdataediti" aria-describedby="emailHelp" value="Рузиев" disabled>
+                                            <input type="text" class="form-control userdataediti" name="last_name" id="last_name" aria-describedby="emailHelp" value="{{ $user->last_name ?? '' }}" disabled>
                                         </div>
                                     </div>
                                     <div class="mb-4">
                                         <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> ОТЧЕСТВО</p>
                                         <div class="form-group">
-                                            <input type="text" class="form-control userdataediti" aria-describedby="emailHelp" value="" disabled>
+                                            <input type="text" class="form-control userdataediti" name="middle_name" id="middle_name" aria-describedby="emailHelp" value="{{ $user->middle_name ?? '' }}" disabled>
                                         </div>
                                     </div>
                                     <div class="mb-4">
                                         <p class="text-primary mb-1"><i class="i-Mail text-16 mr-1"></i> ЭЛЕКТРОННАЯ ПОЧТА</p>
                                         <div class="form-group">
-                                            <input type="email" class="form-control userdataediti" aria-describedby="emailHelp" value="wyccave@gmail.com" disabled>
+                                            <input type="email" class="form-control userdataediti" name="email" id="email" aria-describedby="emailHelp" value="{{ $user->email }}" disabled>
                                         </div>
                                     </div>
                                     <div class="mb-4">
                                         <p class="text-primary mb-1"><i class="i-Key text-16 mr-1"></i> ПАРОЛЬ</p>
                                         <div class="input-group">
-                                          <input type="password" class="form-control" aria-describedby="button-addon2" disabled value="1234567">
+                                          <input type="password" class="form-control" name="password" id="password" aria-describedby="button-addon2" disabled value="{{ $user->password }}">
                                           <div class="input-group-append" >
                                             <button class="btn btn-primary" type="button" id="button-addon2" data-toggle="modal" data-target="#password">Изменить</button>
                                           </div>
@@ -668,6 +668,25 @@ $.ajaxSetup({
             })
         });
 
+        $('#save').click(function (event) {
+
+            var name = $("input[name=name]").val();
+            var last_name = $("input[name=last_name]").val();
+            var middle_name = $("input[name=middle_name]").val();
+            var email = $("input[name=email]").val();
+            var password = $("input[name=password]").val();
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ url("user_update") }}',
+                header: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: {name: name, last_name: last_name, middle_name: middle_name, email: email, password: password, _token: $('meta[name="csrf-token"]').attr('content')},
+                success:function(data) {
+                    alert(data.success);
+                }
+            })
+
+        });
     });
 
 </script>

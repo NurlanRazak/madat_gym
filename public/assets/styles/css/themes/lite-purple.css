@@ -1717,7 +1717,7 @@ textarea.form-control {
   display: inline-block;
   font-weight: 400;
   text-align: center;
-  white-space: nowrap;
+  white-space: normal;
   vertical-align: middle;
   user-select: none;
   border: 1px solid transparent;
@@ -24220,7 +24220,7 @@ button.ul-accordion__link {
 
 .accordion .ul-collapse__right-icon a.collapsed:before {
   font-family: 'iconsmind';
-  content: "\f083";
+  content: "\f072";
   margin: 0 8px;
   float: right;
   position: absolute;
@@ -24228,7 +24228,7 @@ button.ul-accordion__link {
 
 .accordion .ul-collapse__right-icon a:before {
   font-family: 'iconsmind';
-  content: "\f072";
+  content: "\f083";
   margin: 0 8px;
   float: right;
   position: absolute;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Userparameter;
 use Jenssegers\Date\Date;
+use App\User;
 
 class ProfileController extends Controller
 {
@@ -19,7 +20,7 @@ class ProfileController extends Controller
         $dates = array($date_activation, $date_finish);
 
         $userparameters = Userparameter::where('user_id', $user->id)->get();
-    
+
         return view('profile', ['user' => $user, 'dates' => $dates, 'userparameters' => $userparameters]);
     }
 
@@ -41,5 +42,20 @@ class ProfileController extends Controller
         ],
         ]);
 
+    }
+
+    public function userUpdate(Request $request)
+    {
+        $user = $request->user();
+        $user->update($request->all()
+            // [
+            //     'name' => $request['name'],
+            //     'last_name' => $request['last_name'],
+            //     'middle_name' => $request['middle_name'],
+            //     'email' => $request['email'],
+            //     'password' => isset($request['password']) ? bcrypt($request['password']) : $user->password,
+            // ],
+        );
+        dd($user);
     }
 }
