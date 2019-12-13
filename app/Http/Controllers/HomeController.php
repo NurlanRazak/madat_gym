@@ -98,6 +98,7 @@ class HomeController extends Controller
             'time' => $time,
             'week' => $week,
             'today' => $today,
+            'passed' => $passed,
             'user' => $user,
             'planeats' => $planeats_data,
             'equipments' => $equipments_data,

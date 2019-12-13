@@ -48,7 +48,7 @@
                                     $days = array('ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС');
                                 @endphp
                                 @for ($i = 0; $i < count($days); $i++)
-                                     <li class="col"><a href="javascript:void(0);" data-day="{{ $i+1 }}" class="day-btn {{ ($today == $i+1) ? 'today' : '' }}">{{ $days[$i] }}</a></li>
+                                     <li class="col"><a href="javascript:void(0);" data-day="{{ $i+1 }}" class="day-btn {{ ($today == $i+1) ? 'today' : '' }} {{ ($today > $i + 1 + $passed) ? 'day-disabled' : '' }}">{{ $days[$i] }}</a></li>
                                 @endfor
                             </ul>
                         </div>
@@ -353,13 +353,15 @@
             $(document).on('click', '.day-btn', function(e) {
                 let $target = $(e.target);
                 let day = $target.data('day');
-                $('.day-btn').removeClass('active-day');
-                if (day != {{ $today }}) {
-                    $target.addClass('active-day');
-                }
+                if ({{ $passed }} + day >= {{ $today }}) {
+                    $('.day-btn').removeClass('active-day');
+                    if (day != {{ $today }}) {
+                        $target.addClass('active-day');
+                    }
 
-                $('.day-box').hide()
-                $('#accordionRightIcon-' + day).show()
+                    $('.day-box').hide();
+                    $('#accordionRightIcon-' + day).show();
+                }
             });
 
             $(document).on('click', '.ex-desc', function(e) {
