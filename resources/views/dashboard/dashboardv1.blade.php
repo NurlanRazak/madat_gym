@@ -10,9 +10,9 @@
                         $eats[$eathour->hour_start] = [];
                     }
                     if (!isset($eats[$eathour->hour_start][$eathour->hour_finish])) {
-                        $eats[$eathour->hour_start][$eathour->hour_finish] = [];
+                        $eats[$eathour->hour_start][$eathour->hour_finish] = ['title' => $eathour->name, 'meals' => []];
                     }
-                    $eats[$eathour->hour_start][$eathour->hour_finish][] = $meal;
+                    $eats[$eathour->hour_start][$eathour->hour_finish]['meals'][] = $meal;
                 }
             }
         }
@@ -150,33 +150,36 @@
 
                                                 <ul>
                                                     <li class="row mb-4">
-                                                        <div class="col-sm-12 col-lg-12">
-                                                            @foreach($eats[$i] ?? [] as $start => $eat)
-                                                            @foreach($eat as $end => $meals)
-                                                                <p>Время приема пищи: <br> <b>с {{ $start }} до {{ $end }}</b></p>
-                                                                <p>Блюда:</p>
-                                                                <ul>
-                                                                    @foreach($meals as $meal)
-                                                                        <li>
-                                                                            {{ $meal->name }}
-                                                                            {!! $meal->description !!}
-                                                                            <p>
-                                                                                @if($meal->calorie)
-                                                                                    Калорийность: {{ $meal->calorie }}<br/>
-                                                                                @endif
-                                                                                @if($meal->weight)
-                                                                                    Вес: {{ $meal->weight }} г.<br/>
-                                                                                @endif
-                                                                                @if($meal->price)
-                                                                                    Цена: {{ number_format($meal->price, 0,"."," ") }} ₸<br/>
-                                                                                @endif
-                                                                            </p>
-                                                                        </li>
-                                                                    @endforeach
-                                                                </ul>
-                                                            @endforeach
-                                                            @endforeach
-                                                        </div>
+                                                        @if(count($eats[$i] ?? []) > 0)
+                                                            <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset('assets/images/no-image.png') }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-video="" disabled><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                            <div class="col-sm-7 col-lg-9">
+                                                                @foreach($eats[$i] ?? [] as $start => $eat)
+                                                                @foreach($eat as $end => $data)
+                                                                    <p>Время приема пищи: <br>{{ $data['title'] ?? '' }} <b>с {{ $start }} до {{ $end }}</b></p>
+                                                                    <p>Блюда:</p>
+                                                                    <ul>
+                                                                        @foreach($data['meals'] ?? [] as $meal)
+                                                                            <li>
+                                                                                {{ $meal->name }}
+                                                                                {!! $meal->description !!}
+                                                                                <p>
+                                                                                    @if($meal->calorie)
+                                                                                        Калорийность: {{ $meal->calorie }}<br/>
+                                                                                    @endif
+                                                                                    @if($meal->weight)
+                                                                                        Вес: {{ $meal->weight }} г.<br/>
+                                                                                    @endif
+                                                                                    @if($meal->price)
+                                                                                        Цена: {{ number_format($meal->price, 0,"."," ") }} ₸<br/>
+                                                                                    @endif
+                                                                                </p>
+                                                                            </li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                @endforeach
+                                                                @endforeach
+                                                            </div>
+                                                        @endif
                                                     </li>
                                                 </ul>
                                             </div>
