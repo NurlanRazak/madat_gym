@@ -18,12 +18,16 @@ class CheckProgram
 
         $user = $request->user();
 
+        if (!$user->programtraining_id || !$user->programtraining) {
+            return redirect(route('programs'));            
+        }
+
         $cnt = $user->programtraining->activeprograms()
                               ->where('date_start', '<=', \DB::raw('NOW()'))
                               ->where('date_finish', '>=', \DB::raw('NOW()'))
                               ->count();
 
-        if(!$user->programtraining_id || $cnt == 0) {
+        if($cnt == 0) {
             return redirect(route('programs'));
         }
         return $next($request);
