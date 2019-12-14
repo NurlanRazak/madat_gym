@@ -64,7 +64,9 @@ class SendFridayNotifications extends Command
                 if ($equipments->count() > 0) {
                     $content.="<br><h4>Оборудование: </h4><ol>";
                     foreach($equipments as $equipment) {
-                        $content.="<li>{$equipment->name}</li>";
+                        foreach($equipment->lists as $list) {
+                            $content.="<li>{$list->name}</li>";
+                        }
                     }
                     $content.="</ol>";
                 }

@@ -16,7 +16,10 @@
 <h4>Оборудование: </h4>
 <ol>
     @foreach($equipments as $equipment)
-        <li>{{ $equipment->name }}</li>
+        @foreach($equipment->lists as $list)
+            <li>{{ $list->name }}</li>
+            @endforeach
+        @endforeach
     @endforeach
 </ol>
 <br>
