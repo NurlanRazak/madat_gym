@@ -590,16 +590,16 @@
                         <input type="text" class="form-control" id="newpass" placeholder="Рост">
                       </div> -->
                       <div class="form-group">
-                        <input type="text" class="form-control" id="weight" name="weight" placeholder="Вес" required>
+                        <input type="number" step="any" class="form-control" id="weight" name="weight" placeholder="Вес" required>
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="waist" name="waist" placeholder="Талия" required>
+                        <input type="number" step="any" class="form-control" id="waist" name="waist" placeholder="Талия" required>
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="leg_volume" name="leg_volume" placeholder="Объем ноги" required>
+                        <input type="number" step="any" class="form-control" id="leg_volume" name="leg_volume" placeholder="Объем ноги" required>
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="arm_volume" name="arm_volume" placeholder="Объем руки" required>
+                        <input type="number" step="any" class="form-control" id="arm_volume" name="arm_volume" placeholder="Объем руки" required>
                       </div>
                     </form>
                   </div>
