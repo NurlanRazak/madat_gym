@@ -138,12 +138,15 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
-    public function getTrainings()
+    public function getTrainings(bool $nextWeek = false)
     {
+        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d')) - strtotime(\Carbon\Carbon::parse($this->programtraining_start)->format('Y-m-d')))/60/60/24 + ($nextWeek ? 7 : 0);
+        $today = \Date::today()->dayOfWeek;
+
         return $this->programtraining
                     ->trainings()
-                 // ->where('day_number', '>=', $passed - $today + 2)
-                 // ->where('day_number', '<=', $passed - $today + 8)
+                    ->where('day_number', '>=', $passed - $today + 2)
+                    ->where('day_number', '<=', $passed - $today + 8)
                     ->with(['exercises' => function($q) {$q->active();}])
                     ->active()
                     ->get();
@@ -194,17 +197,20 @@ class User extends Authenticatable implements MustVerifyEmail
                     ->get();
     }
 
-    public function getRelaxtrainings()
+    public function getRelaxtrainings(bool $nextWeek = false)
     {
+        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d')) - strtotime(\Carbon\Carbon::parse($this->programtraining_start)->format('Y-m-d')))/60/60/24 + ($nextWeek ? 7 : 0);
+        $today = \Date::today()->dayOfWeek;
+
         $id = $this->id;
         return $this->programtraining
                     ->relaxprogram
                     ->relaxtrainings()
-                    ->whereHas('users', function($query) use($id) {
-                        $query->where('id', $id);
-                    })
-                    // ->where('number_day', '>=', $passed - $today + 2)
-                    // ->where('number_day', '<=', $passed - $today + 8)
+                    // ->whereHas('users', function($query) use($id) {
+                    //     $query->where('id', $id);
+                    // })
+                    ->where('number_day', '>=', $passed - $today + 2)
+                    ->where('number_day', '<=', $passed - $today + 8)
                     ->active()
                     ->with(['exercises' => function($q) {$q->active();}])
                     ->orderBy('time')

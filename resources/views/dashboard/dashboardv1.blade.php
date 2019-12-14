@@ -2,8 +2,8 @@
 @php
     $eats_data = [];
     foreach($planeats as $day => $planeat_arr) {
+        $eats = [];
         foreach($planeat_arr as $planeat) {
-            $eats = [];
             foreach($planeat->meals ?? [] as $meal) {
                 foreach($planeat->eathours ?? [] as $eathour) {
                     if (!isset($eats[$eathour->hour_start])) {

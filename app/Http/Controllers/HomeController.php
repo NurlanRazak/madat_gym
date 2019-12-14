@@ -47,27 +47,27 @@ class HomeController extends Controller
         $relaxtrainings_data = [];
         $relaxtrainings = $user->getRelaxtrainings();
         foreach($relaxtrainings as $item) {
-            if (!isset($relaxtrainings_data[$item->number_day])) {
-                $relaxtrainings_data[$item->number_day] = [];
+            if (!isset($relaxtrainings_data[$item->number_day - $passed + $today - 1])) {
+                $relaxtrainings_data[$item->number_day - $passed + $today - 1] = [];
             }
-            $relaxtrainings_data[$item->number_day][] = $item;
+            $relaxtrainings_data[$item->number_day - $passed + $today - 1][] = $item;
         }
 
         $trainings_data = [];
         $trainings = $user->getTrainings();
 
         foreach($trainings as $item) {
-            if (!isset($trainings_data[$item->day_number])) {
-                $trainings_data[$item->day_number] = [];
+            if (!isset($trainings_data[$item->day_number - $passed + $today - 1])) {
+                $trainings_data[$item->day_number - $passed + $today - 1] = [];
             }
-            $trainings_data[$item->day_number][] = $item;
+            $trainings_data[$item->day_number - $passed + $today - 1][] = $item;
         }
 
         $equipments_data = [];
         $equipments = $user->getEquipments();
 
         foreach($equipments as $item) {
-            if (!isset($equipments_data[$item->notify_day])) {
+            if (!isset($equipments_data[$item->notify_day - $passed + $today - 1])) {
                 $equipments_data[$item->notify_day - $passed + $today - 1] = [];
             }
             $equipments_data[$item->notify_day - $passed + $today - 1][] = $item;
