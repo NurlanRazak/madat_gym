@@ -216,7 +216,7 @@
                                       <tbody>
                                          @foreach($userparameters as $userparameter)
                                         <tr>
-                                          <th scope="row">1</th>
+                                          <th scope="row">{{ $loop->iteration }}</th>
                                           <td>{{ date('j F Y', strtotime($userparameter->date_measure)) }}</td>
                                           <td>{{ $userparameter->weight }}</td>
                                           <td>{{ $userparameter->waist }}</td>
@@ -584,22 +584,22 @@
                   <div class="modal-body">
                     <form>
                       <div class="form-group">
-                        <input type="date" class="form-control" id="date_measure" name="date_measure" placeholder="Дата замера">
+                        <input type="date" class="form-control" id="date_measure" name="date_measure" placeholder="Дата замера" required>
                       </div>
                       <!-- <div class="form-group">
                         <input type="text" class="form-control" id="newpass" placeholder="Рост">
                       </div> -->
                       <div class="form-group">
-                        <input type="text" class="form-control" id="weight" name="weight" placeholder="Вес">
+                        <input type="text" class="form-control" id="weight" name="weight" placeholder="Вес" required>
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="waist" name="waist" placeholder="Талия">
+                        <input type="text" class="form-control" id="waist" name="waist" placeholder="Талия" required>
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="leg_volume" name="leg_volume" placeholder="Объем ноги">
+                        <input type="text" class="form-control" id="leg_volume" name="leg_volume" placeholder="Объем ноги" required>
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="arm_volume" name="arm_volume" placeholder="Объем руки">
+                        <input type="text" class="form-control" id="arm_volume" name="arm_volume" placeholder="Объем руки" required>
                       </div>
                     </form>
                   </div>
@@ -679,7 +679,7 @@ $.ajaxSetup({
                     arm_volume: arm_volume
                 },
                 success:function(data) {
-                    alert(data.success);
+                    alert("{{ trans('admin.userparameter_input') }}");
                 }
             })
         });
@@ -705,7 +705,7 @@ $.ajaxSetup({
                     _token: $('meta[name="csrf-token"]').attr('content')
                 },
                 success:function(data) {
-                    alert(data.success);
+                    alert("{{ trans('admin.user_input') }}");
                 }
             })
 
