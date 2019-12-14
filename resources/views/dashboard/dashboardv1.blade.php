@@ -103,7 +103,7 @@
                                                                 <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset($exercise->image ? 'uploads/'.$exercise->image : 'assets/images/no-image.png') }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-video="{{ asset('uploads/'.$exercise->video) }}" {{ $exercise->video ? '' :'disabled' }}><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
                                                                 <div class="col-sm-7 col-lg-9">
                                                                     <h2 >
-                                                                        <b><a type="button" class="h2-pointer" data-toggle="modal" data-target="#desc">{{ $index + 1 }}. {{ $exercise->name }}</a></b>
+                                                                        <b><a type="button" class="ex-desc h2-pointer" data-toggle="modal" data-target="#desc" data-title="{{ $exercise->name }}" data-description="{{ $exercise->long_desc }}">{{ $index + 1 }}. {{ $exercise->name }}</a></b>
                                                                     </h2>
                                                                     <p>{{ $exercise->short_desc }}</p>
                                                                     <div class="row">
@@ -300,7 +300,24 @@
                 </div>
               </div>
             </div>
-
+            <div class="modal fade" id="desc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle-2" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle-2">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Тут описание упражнения
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Modal2 -->
             @if($nextGroceries->count() > 0 || $nextEquipments->count() > 0)
             <div class="modal fade" id="list2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
@@ -370,8 +387,8 @@
             $(document).on('click', '.ex-desc', function(e) {
                 let desc = $(e.target).data('description')
                 let title = $(e.target).data('title')
-                $('#desc').find('.modal-title').html(desc);
-                $('#desc').find('.modal-body').html(title);
+                $('#desc').find('.modal-title').html(title);
+                $('#desc').find('.modal-body').html(desc);
             });
 
             $(document).on('click', '.playbtn', function(e) {

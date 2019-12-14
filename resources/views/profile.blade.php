@@ -23,26 +23,7 @@
                     <p class="m-0 text-24">{{ $user->name }}</p>
                 </div>
                 <div class="card-body">
-                    <!--
-                    	<ul class="nav nav-tabs profile-nav mb-4" id="profileTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="true">ОБЩИЕ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="timeline-tab" data-toggle="tab" href="#timeline" role="tab" aria-controls="timeline" aria-selected="false">ИСТОРИЯ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="friends-tab" data-toggle="tab" href="#friends" role="tab" aria-controls="friends" aria-selected="false">ДРУЗЬЯ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="photos-tab" data-toggle="tab" href="#photos" role="tab" aria-controls="photos" aria-selected="false">ФОТОГРАФИИ</a>
-                        </li>
-                    </ul>
-
-                -->
-
                     <div class="tab-content" id="profileTabContent">
-
                         <div class="tab-pane fade active show" id="about" role="tabpanel" aria-labelledby="about-tab">
                             <h4>ПОДПИСКА ПОЛЬЗОВАТЕЛЯ</h4>
                             <p>Дата активации – {{ $dates[0] }} | Дата завершения – {{ $dates[1] }}
