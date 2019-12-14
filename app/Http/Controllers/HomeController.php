@@ -93,6 +93,29 @@ class HomeController extends Controller
             $nextEquipments = collect();
         }
 
+        if ((!isset($trainings_data[$today]) || $trainings_data[$today]->count() == 0) && !$user->checkExersice($today, 1)) {
+            $user->doneExersices()->create([
+                'user_id' => $user->id,
+                'key' => 1,
+                'day_number' => $passed
+            ]);
+        }
+        if ((!isset($planeats_data[$today]) || $planeats_data[$today]->count() == 0) && !$user->checkExersice($today, 2)) {
+            $user->doneExersices()->create([
+                'user_id' => $user->id,
+                'key' => 2,
+                'day_number' => $passed
+            ]);
+        }
+        if ((!isset($relaxtrainings_data[$today]) || $relaxtrainings_data[$today]->count() == 0) && !$user->checkExersice($today, 3)) {
+            $user->doneExersices()->create([
+                'user_id' => $user->id,
+                'key' => 3,
+                'day_number' => $passed
+            ]);
+        }
+
+
         return view('dashboard.dashboardv1', [
             'user' => $user,
             'time' => $time,
@@ -116,14 +139,14 @@ class HomeController extends Controller
     {
         $user = $request->user();
         $passed = (strtotime(Carbon::now()->format('Y-m-d')) - strtotime(Carbon::parse($user->programtraining_start)->format('Y-m-d')))/60/60/24;
-        $doneExersice = $user->doneExersices()->where('key', $request->key)->where('day_number', $passed)->first();
         $today = \Date::today()->dayOfWeek;
-
+        $day = $passed + $today - $request->day;
+        $doneExersice = $user->doneExersices()->where('key', $request->key)->where('day_number', $day)->first();
         if (!$doneExersice) {
             $doneExersice = DoneExersice::create([
                 'user_id' => $user->id,
                 'key' => $request->key,
-                'day_number' => $passed + $today - $request->day,
+                'day_number' => $day,
             ]);
         } else {
             $doneExersice->delete();

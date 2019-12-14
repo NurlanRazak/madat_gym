@@ -28,6 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use MustVerify;
 
     protected $guard_name = 'web';
+    protected $statistics = null;
 
     const MALE=1;
     const FEMALE=2;
@@ -148,10 +149,11 @@ class User extends Authenticatable implements MustVerifyEmail
                     ->get();
     }
 
-    public function getEquipments(bool $nextWeek = false)
+    public function getEquipments(bool $nextWeek = false, $today = null)
     {
+        $today = ($today ? $today : \Date::today())->dayOfWeek;
         $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d')) - strtotime(\Carbon\Carbon::parse($this->programtraining_start)->format('Y-m-d')))/60/60/24 + ($nextWeek ? 7 : 0);
-        $today = \Date::today()->dayOfWeek;
+
         if($today == 0) {
             $today = 7;
         }
@@ -176,10 +178,10 @@ class User extends Authenticatable implements MustVerifyEmail
                     ->get();
     }
 
-    public function getPlaneats(bool $nextWeek = false)
+    public function getPlaneats(bool $nextWeek = false, $today = null)
     {
         $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d')) - strtotime(\Carbon\Carbon::parse($this->programtraining_start)->format('Y-m-d')))/60/60/24 + ($nextWeek ? 7 : 0);
-        $today = \Date::today()->dayOfWeek;
+        $today = ($today ? $today : \Date::today())->dayOfWeek;
 
         return $this->programtraining
                     ->foodprogram
@@ -213,9 +215,28 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d')) - strtotime(\Carbon\Carbon::parse($this->programtraining_start)->format('Y-m-d')))/60/60/24;
         $today = \Date::today()->dayOfWeek;
-
+        if ($today == 0) {
+            $today = 7;
+        }
         $day = $passed + $today - $weekDay;
         return $this->doneExersices()->where('key', $key)->where('day_number', $day)->exists();
+    }
+
+    public function getStatisticsAttribute()
+    {
+        if ($this->statistics) {
+            return $this->statistics;
+        }
+
+        $duration = $this->programtraining->duration;
+        $all = $duration * 3;
+        $passed = $this->doneExersices()->count();
+        if ($all == 0) {
+            $this->statistics = 100;
+        } else {
+            $this->statistics = ceil(100 * $passed / $all);
+        }
+        return $this->statistics;
     }
 
 

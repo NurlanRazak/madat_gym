@@ -48,7 +48,7 @@
                                     $days = array('ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС');
                                 @endphp
                                 @for ($i = 0; $i < count($days); $i++)
-                                     <li class="col"><a href="javascript:void(0);" data-day="{{ $i+1 }}" class="day-btn {{ ($today == $i+1) ? 'today' : '' }} {{ ($today > $i + 1 + $passed) ? 'day-disabled' : '' }}">{{ $days[$i] }}</a></li>
+                                     <li class="col"><a href="javascript:void(0);" data-day="{{ $i+1 }}" class="day-btn {{ ($today == $i+1) ? 'today' : '' }} {{ ($today > $i + 1 + $passed || $i + 1 - $today + $passed >= $user->programtraining->duration) ? 'day-disabled' : '' }}">{{ $days[$i] }}</a></li>
                                 @endfor
                             </ul>
                         </div>
@@ -67,6 +67,9 @@
                         <div class="card-body">
                             <!-- right control icon -->
                             @for($i=1;$i<=7;++$i)
+                                @if($today > $i + $passed || $i - $today + $passed >= $user->programtraining->duration)
+                                    @continue
+                                @endif
                                 <div class="accordion day-box" id="accordionRightIcon-{{ $i }}" style="{{ $i != $today ? 'display: none;' : '' }}">
                                     <div class="card ">
                                         <div class="card-header header-elements-inline" data-toggle="collapse" href="#accordion-item-icon-right-{{ $i }}-1"
@@ -353,7 +356,7 @@
             $(document).on('click', '.day-btn', function(e) {
                 let $target = $(e.target);
                 let day = $target.data('day');
-                if ({{ $passed }} + day >= {{ $today }}) {
+                if ({{ $passed }} + day >= {{ $today }} && day - {{ $today + $passed }} < {{ $user->programtraining->duration }}) {
                     $('.day-btn').removeClass('active-day');
                     if (day != {{ $today }}) {
                         $target.addClass('active-day');
@@ -379,6 +382,7 @@
             $('.custom-control-input').on('change', function(e) {
                 let weekDay = e.target.id.split('-')[0];
                 let key = e.target.id.split('-')[1];
+                console.log(weekDay);
                 $.post('{{ route("exersice-done") }}', {
                     '_token': '{{ csrf_token() }}',
                     'key': key,

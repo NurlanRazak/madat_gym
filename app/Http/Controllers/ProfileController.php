@@ -86,6 +86,7 @@ class ProfileController extends Controller
             'programtraining_id' => $request->programtraining_id,
             'programtraining_start' => \DB::raw('NOW()'),
         ]);
+        $user->doneExersices()->delete();
 
         return redirect()->back();
     }
