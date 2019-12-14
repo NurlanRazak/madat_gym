@@ -582,7 +582,7 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <form>
+                    <form id="user-info">
                       <div class="form-group">
                         <input type="date" class="form-control" id="date_measure" name="date_measure" placeholder="Дата замера" required>
                       </div>
@@ -624,13 +624,7 @@
            			      <div class="modal-body">
            			        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
            					  <div class="carousel-inner">
-                                  @foreach($userparameters as $userparameter)
-                                      @foreach($userparameter->images ?? [] as $key=>$value)
-                   					    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                   					      <img class="d-block w-100" src="{{ asset('uploads/'.$value) }}" alt="First slide">
-                   					    </div>
-                                      @endforeach
-                                  @endforeach
+
            					  </div>
            					  <a class="carousel-control-prev" href="#carouselExampleSlidesOnly" role="button" data-slide="prev">
            					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -660,13 +654,15 @@ $.ajaxSetup({
 });
     $(document).ready(function() {
         $('#submit').click(function (event) {
-
+            if (!document.getElementById('user-info').reportValidity()) {
+                return;
+            }
             var date_measure = $("input[name=date_measure]").val();
             var weight = $("input[name=weight]").val();
             var waist = $("input[name=waist]").val();
             var leg_volume = $("input[name=leg_volume]").val();
             var arm_volume = $("input[name=arm_volume]").val();
-
+            $('#params').modal('toggle');
             $.ajax({
                 type: 'POST',
                 url: '{{url("userparameter_update")}}',
