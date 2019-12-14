@@ -93,21 +93,21 @@ class HomeController extends Controller
             $nextEquipments = collect();
         }
 
-        if ((!isset($trainings_data[$today]) || $trainings_data[$today]->count() == 0) && !$user->checkExersice($today, 1)) {
+        if ((!isset($trainings_data[$today]) || count($trainings_data[$today]) == 0) && !$user->checkExersice($today, 1)) {
             $user->doneExersices()->create([
                 'user_id' => $user->id,
                 'key' => 1,
                 'day_number' => $passed
             ]);
         }
-        if ((!isset($planeats_data[$today]) || $planeats_data[$today]->count() == 0) && !$user->checkExersice($today, 2)) {
+        if ((!isset($planeats_data[$today]) || count($planeats_data[$today]) == 0) && !$user->checkExersice($today, 2)) {
             $user->doneExersices()->create([
                 'user_id' => $user->id,
                 'key' => 2,
                 'day_number' => $passed
             ]);
         }
-        if ((!isset($relaxtrainings_data[$today]) || $relaxtrainings_data[$today]->count() == 0) && !$user->checkExersice($today, 3)) {
+        if ((!isset($relaxtrainings_data[$today]) || count($relaxtrainings_data[$today]) == 0) && !$user->checkExersice($today, 3)) {
             $user->doneExersices()->create([
                 'user_id' => $user->id,
                 'key' => 3,
