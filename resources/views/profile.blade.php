@@ -656,7 +656,7 @@ $.ajaxSetup({
                     arm_volume: arm_volume
                 },
                 success:function(data) {
-                    alert(data.success);
+                    window.location.reload();
                 }
             })
         });
@@ -682,7 +682,7 @@ $.ajaxSetup({
                     _token: $('meta[name="csrf-token"]').attr('content')
                 },
                 success:function(data) {
-                    alert(data.success);
+                    window.location.reload();
                 }
             })
 
