@@ -113,7 +113,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new VerifyEmail);
+        $this->notify(new VerifyEmail());
     }
     /**
      * Get the e-mail address where password reset links are sent.
@@ -134,7 +134,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
         static::created(function($obj) {
             // dd($obj);
-            $obj->sendEmailVerificationNotification();
+            if (backpack_user()) {
+                $obj->sendEmailVerificationNotification();
+            }
         });
     }
 
