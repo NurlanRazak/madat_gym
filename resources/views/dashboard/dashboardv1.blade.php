@@ -150,12 +150,16 @@
 
                                                 <ul>
                                                     <li class="row mb-4">
+                                                        @php
+                                                            $eat_index = 1;
+                                                        @endphp
                                                         @if(count($eats[$i] ?? []) > 0)
+                                                        @foreach($eats[$i] ?? [] as $start => $eat)
+                                                        @foreach($eat as $end => $data)
                                                             <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset('assets/images/no-image.png') }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-video="" disabled><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
                                                             <div class="col-sm-7 col-lg-9">
-                                                                @foreach($eats[$i] ?? [] as $start => $eat)
-                                                                @foreach($eat as $end => $data)
-                                                                    <p>Время приема пищи: <br>{{ $data['title'] ?? '' }} <b>с {{ $start }} до {{ $end }}</b></p>
+                                                                <h2>{{ $eat_index++ }}. {{ $data['title'] ?? '' }}</h2>
+                                                                    <p>Время приема пищи: <br><b>с {{ $start }} до {{ $end }}</b></p>
                                                                     <p>Блюда:</p>
                                                                     <ul>
                                                                         @foreach($data['meals'] ?? [] as $meal)
@@ -176,9 +180,9 @@
                                                                             </li>
                                                                         @endforeach
                                                                     </ul>
-                                                                @endforeach
-                                                                @endforeach
                                                             </div>
+                                                            @endforeach
+                                                            @endforeach
                                                         @endif
                                                     </li>
                                                 </ul>
