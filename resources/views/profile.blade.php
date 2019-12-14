@@ -15,10 +15,10 @@
             <div class="card user-profile o-hidden mb-4">
                 <!-- <div class="header-cover" style="background-image: url({{asset('assets/images/photo-wide-5.jpeg')}}"></div> -->
                 <div class="user-info">
-                    <form action="{{ route('image-post') }}" id="upload-container" method="POST">
+                    <form action="{{ route('image-post') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <img class="profile-picture avatar-lg mb-2" src="{{ asset('assets/images/photo-wide-5.jpeg')}}" alt="">
-                        <input id="file-input" style="display: none;" type="file" name="image" multiple>
+                        <img class="profile-picture avatar-lg mb-2" src="{{ asset($user->image ? 'uploads/'.$user->image : 'assets/images/photo-wide-5.jpeg')}}" alt="">
+                        <input id="file-input" style="display: none;" accept="image/*" type="file" name="image">
                     </form>
                     <p class="m-0 text-24">{{ $user->name }}</p>
                 </div>
@@ -83,7 +83,7 @@
                                         <div class="input-group">
                                           <input type="password" class="form-control" name="password" id="password" aria-describedby="button-addon2" disabled value="{{ $user->password ? 'password' : '' }}">
                                           <div class="input-group-append" >
-                                            <button class="btn btn-primary" type="button" id="button-addon2" data-toggle="modal" data-target="#password">Изменить</button>
+                                            <button class="btn btn-primary" type="button" id="button-addon2" data-toggle="modal" data-target="#password-modal">Изменить</button>
                                           </div>
                                         </div>
                                     </div>
@@ -172,12 +172,15 @@
                                       ЦЕЛЬ И ПЛАН
                                       <a href="" id="userplanedit" class="float-right"><i class="i-Edit text-16"></i></a>
                                     </div>
-                                    <div class="mb-4">
+                                    <form class="mb-4" action="{{ route('program-update') }}" method="POST">
+                                        @csrf
                                         <p class="text-primary mb-1"><i class="i-Globe text-16 mr-1"></i> ПЛАН</p>
-                                        <select class="form-control userplanediti" disabled>
-                                          <option>Похудение после беременности</option>
+                                        <select class="form-control userplanediti" name="programtraining_id" disabled id="user-program">
+                                            @foreach($programs as $program)
+                                                <option value="{{ $program->id }}" {{ $program->id == $user->programtraining_id ? 'selected' : '' }}>{{ $program->name }}</option>
+                                            @endforeach
                                         </select>
-                                    </div>
+                                    </form>
                                     <div class="alert alert-warning" role="alert">
                                       ШКАЛА ВЫПОЛНЕНЫХ ЗАДАНИЙ
                                       <a href="#" class="float-right"><i class="i-Eye text-16"></i></a>
@@ -185,7 +188,7 @@
                                     <div class="progress mb-3">
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: 33%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">33%</div>
                                     </div>
-                                    <a href="#" class="btn btn-block btn-warning">ПРОДЛИТЬ ПОДПИСКУ</a>
+                                    <a href="{{ route('subscription') }}" class="btn btn-block btn-warning">ПРОДЛИТЬ ПОДПИСКУ</a>
                                     <a href="#" class="btn btn-block btn-danger">ОТМЕНИТЬ ПОДПИСКУ</a>
                                 </div>
                             </div>
@@ -219,8 +222,14 @@
                                           <td>{{ $userparameter->waist }}</td>
                                           <td>{{ $userparameter->leg_volume }}</td>
                                           <td>{{ $userparameter->arm_volume }}</td>
-                                          <td><a data-toggle="modal" data-target="#gallery" class="btn btn-primary" style="color: #fff">Добавить / Просмотр</a></td>
-                                          <td><input type="submit" value="Удалить" class="btn btn-primary"></td>
+                                          <td><a data-toggle="modal" data-target="#gallery" class="btn btn-primary param-images" style="color: #fff" data-id="{{ $userparameter->id }}" data-images="{{ json_encode($userparameter->images ?? []) }}">Добавить / Просмотр</a></td>
+                                          <td>
+                                              <form action="{{ route('userparameter', ['id' => $userparameter->id]) }}" method="post">
+                                                  @csrf
+                                                  <input type="hidden" name="_method" value="DELETE"/>
+                                                  <button type="submit" class="btn btn-primary">Удалить</button>
+                                              </form>
+                                          </td>
                                         </tr>
                                         @endforeach
                                       </tbody>
@@ -538,9 +547,9 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="password-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <form class="modal-content" action="{{ route('password-update') }}" method="POST">
                   <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Смена пароля</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -548,17 +557,18 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <form>
+                    <div>
                       <div class="form-group">
-                        <input type="password" class="form-control" id="newpass" placeholder="Новый пароль">
+                          @csrf
+                        <input type="password" name="password" class="form-control" id="newpass" placeholder="Новый пароль" required minlength="6">
                       </div>
-                    </form>
+                    </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-primary">Изменить</button>
+                    <button type="submit" class="btn btn-primary">Изменить</button>
                   </div>
-                </div>
+              </form>
               </div>
             </div>
 
@@ -621,12 +631,6 @@
                    					    </div>
                                       @endforeach
                                   @endforeach
-           					    <!-- <div class="carousel-item">
-           					      <img class="d-block w-100" src="https://inteng-storage.s3.amazonaws.com/img/iea/zDOZxPj46k/sizes/nature-language-header_md.jpg" alt="Second slide">
-           					    </div>
-           					    <div class="carousel-item">
-           					      <img class="d-block w-100" src="https://ichef.bbci.co.uk/images/ic/640x360/p01gn345.jpg" alt="Third slide">
-           					    </div> -->
            					  </div>
            					  <a class="carousel-control-prev" href="#carouselExampleSlidesOnly" role="button" data-slide="prev">
            					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -638,9 +642,11 @@
            					  </a>
            					</div>
            			      </div>
-                             <div class="modal-footer">
-                               Добавить фото:&nbsp;<input type="file">
-                             </div>
+                             <form class="modal-footer" action="{{ route('user-params-image') }}" method="POST" enctype="multipart/form-data">
+                                 @csrf
+                                 <input type="hidden" name="userparameter_id" id="params-image-id"/>
+                               Добавить фото:&nbsp;<input type="file" name="images[]" id="param-image-input" accept="image/*" multiple/>
+                            </form>
            			    </div>
            			  </div>
            			</div>
@@ -665,7 +671,13 @@ $.ajaxSetup({
                 type: 'POST',
                 url: '{{url("userparameter_update")}}',
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data:{date_measure:date_measure, weight:weight, waist:waist, leg_volume: leg_volume, arm_volume: arm_volume},
+                data:{
+                    date_measure:date_measure,
+                    weight:weight,
+                    waist:waist,
+                    leg_volume: leg_volume,
+                    arm_volume: arm_volume
+                },
                 success:function(data) {
                     alert(data.success);
                 }
@@ -684,13 +696,57 @@ $.ajaxSetup({
                 type: 'POST',
                 url: '{{ url("user_update") }}',
                 header: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: {name: name, last_name: last_name, middle_name: middle_name, email: email, password: password, _token: $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    name: name,
+                    last_name: last_name,
+                    middle_name: middle_name,
+                    email: email,
+                    password: password,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
                 success:function(data) {
                     alert(data.success);
                 }
             })
 
         });
+
+        $('.param-images').on('click', function(e) {
+            $('#params-image-id').val($(e.target).data('id'));
+            let images = $(e.target).data('images');
+            let $wrapper = $('#carouselExampleSlidesOnly');
+            let $carusel = $wrapper.find('.carousel-inner');
+            let content = '';
+
+            for(let i = 0;i<images.length; ++i) {
+                content += '<div class="carousel-item ';
+                if (i == 0) {
+                    content+=`active`
+                }
+                content+='\">';
+                content+=`<img class="d-block w-100" src="/uploads/${images[i]}" alt="First slide">`;
+                content+='</div>';
+            }
+
+            $carusel.html(content);
+        });
+
+        $('#param-image-input').on('change', function(e) {
+            e.target.closest('form').submit();
+        });
+
+        $('#file-input').on('change', function(e) {
+            e.target.closest('form').submit();
+        });
+
+        $('#user-program').on('change', function(e) {
+            if (confirm("@lang('admin.change_program')")) {
+                e.target.closest('form').submit();
+            } else {
+                e.target.value="{{ $user->programtraining_id }}";
+            }
+        });
+
     });
 
 </script>

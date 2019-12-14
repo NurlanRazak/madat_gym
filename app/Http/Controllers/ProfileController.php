@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Userparameter;
 use Jenssegers\Date\Date;
 use App\User;
+use App\Models\Programtraining;
 use Hash;
 use Auth;
 
@@ -23,12 +24,20 @@ class ProfileController extends Controller
 
         $userparameters = Userparameter::where('user_id', $user->id)->get();
 
-        return view('profile', ['user' => $user, 'dates' => $dates, 'userparameters' => $userparameters]);
+        $programs = Programtraining::whereHas('activeprograms', function($query) {
+            $query->where('date_start', '<=', \DB::raw('NOW()'))
+                  ->where('date_finish', '>=', \DB::raw('NOW()'));
+        })->get();
+
+        return view('profile', ['user' => $user, 'dates' => $dates, 'userparameters' => $userparameters, 'programs' => $programs]);
     }
 
     public function imageUpload(Request $request)
     {
-        dd($request);
+        $user = $request->user();
+        $user->image = $request->image;
+        $user->save();
+        return redirect()->back();
     }
 
     public function userParameters(Request $request)
@@ -46,26 +55,55 @@ class ProfileController extends Controller
 
     }
 
-    public function userUpdate(Request $request)
+    public function updatePassword(Request $request)
     {
-        dd($request, Hash::check($request['password'], Auth::user()->password, []));
+        $user = $request->user();
+        $password = bcrypt($request->password);
+        $user->password = $password;
+        $user->save();
+        return redirect()->back();
+    }
 
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6|confirmed'
+    public function userParameterDelete(Request $request, $id)
+    {
+        Userparameter::find($id)->delete();
+
+        return redirect()->back();
+    }
+
+    public function uploadImage(Request $request)
+    {
+        $userparameter = Userparameter::find($request->userparameter_id);
+        $userparameter->images = $request->images;
+        $userparameter->save();
+        return redirect()->back();
+    }
+
+    public function updateProgram(Request $request)
+    {
+        $user = $request->user();
+        $user->update([
+            'programtraining_id' => $request->programtraining_id,
+            'programtraining_start' => \DB::raw('NOW()'),
         ]);
 
+        return redirect()->back();
+    }
+
+    public function userUpdate(Request $request)
+    {
         $user = $request->user();
-        $user->update($request->all()
-            // [
-            //     'name' => $request['name'],
-            //     'last_name' => $request['last_name'],
-            //     'middle_name' => $request['middle_name'],
-            //     'email' => $request['email'],
-            //     'password' => isset($request['password']) ? bcrypt($request['password']) : $user->password,
-            // ],
-        );
-        dd($user);
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$user->id,
+        ]);
+        $data= $request->toArray();
+        unset($data['_token']);
+        unset($data['password']);
+
+        $user->update($data);
+        return response()->json([
+            'message' => 'ok'
+        ]);
     }
 }

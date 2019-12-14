@@ -158,7 +158,8 @@
                 });
 
               $(".profile-picture").click(function(){
-                $("input[type='file'").trigger('click');
+                  console.log()
+                $("#file-input").trigger('click');
               });
             });
         </script>

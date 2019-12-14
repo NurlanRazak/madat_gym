@@ -161,10 +161,14 @@ Route::group(['middleware' => 'verified'], function () {
         Route::get('profile', 'ProfileController@profile')->name('profile');
         Route::post('user/image', 'ProfileController@imageUpload')->name('image-post');
         Route::post('userparameter_update', 'ProfileController@userParameters');
+        Route::delete('userparameter/{id}', 'ProfileController@userParameterDelete')->name('userparameter');
         Route::post('user_update', 'ProfileController@userUpdate');
         Route::get('history', 'HistoryController@history')->name('history');
         Route::get('programs', 'ProgramController@programs')->name('programs');
         Route::post('program', 'ProgramController@postProgram')->name('post-program');
+        Route::post('image/upload', 'ProfileController@uploadImage')->name('user-params-image');
+        Route::post('password/update', 'ProfileController@updatePassword')->name('password-update');
+        Route::post('program/update', 'ProfileController@updateProgram')->name('program-update');
 
         Route::group([
             'middleware' => ['programchecked'],

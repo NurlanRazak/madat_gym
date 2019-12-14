@@ -248,6 +248,8 @@ class User extends Authenticatable implements MustVerifyEmail
         // that way, what gets saved in the database is the user-accesible URL
             $public_destination_path = Str::replaceFirst('public/', '', $destination_path);
             $this->attributes[$attribute_name] = $public_destination_path.'/'.$filename;
+        } else {
+            $this->attributes[$attribute_name] = \Storage::disk($disk)->put($destination_path, $value);
         }
     }
 
