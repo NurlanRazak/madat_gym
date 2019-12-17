@@ -43,7 +43,7 @@
                 <!-- User avatar dropdown -->
                 <div class="dropdown">
                     <div  class="user col align-self-end">
-                        <img src="{{asset('uploads/'.$user->image)}}" id="userDropdown" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="{{ $user->image ? asset('uploads/'.$user->image) : asset('assets/images/faces/1.jpg') }}" id="userDropdown" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                             <div class="dropdown-header">
