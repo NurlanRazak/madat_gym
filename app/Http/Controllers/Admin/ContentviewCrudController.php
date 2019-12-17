@@ -20,6 +20,7 @@ class ContentviewCrudController extends CrudController
 {
 
     protected $dates = null;
+    protected $range = null;
 
     public function setup()
     {
@@ -29,22 +30,6 @@ class ContentviewCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\View');
-        $models = [
-            '\App\Models\Exercise' => ['video'],
-            '\App\Models\Relaxexercise' => ['video', 'audio'],
-        ];
-        $this->crud->query = null;
-        foreach($models as $model => $types) {
-            $model_path = str_replace('\\', '\/', $model);
-            foreach($types as $type) {
-                if (!$this->crud->query) {
-                    $this->crud->query = $model::whereNotNull($type)->select(['id', 'name', \DB::raw("{$type} as 'source'")])->addSelect(\DB::raw("'{$type}' as type"))->addSelect(\DB::raw("'{$model_path}' as model"));
-                } else {
-                    $this->crud->query->unionAll($model::whereNotNull($type)->select(['id', 'name', \DB::raw("{$type} as 'source'")])->addSelect(\DB::raw("'{$type}' as type"))->addSelect(\DB::raw("'{$model_path}' as model")));
-                }
-            }
-        }
-
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/contentview');
         $this->crud->setEntityNameStrings('Просмотр контента', 'Просмотр контента');
         $this->crud->denyAccess(['create', 'update', 'delete']);
@@ -59,7 +44,62 @@ class ContentviewCrudController extends CrudController
         function($value) { // if the filter is active, apply these constraints
             $this->dates = json_decode($value);
         });
-        
+
+        $this->crud->addFilter([
+            'name' => 'cnt',
+            'label' => 'Количество просмотра',
+            'type' => 'range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $this->range = json_decode($value);
+        });
+
+        $models = [
+            '\App\Models\Exercise' => ['video'],
+            '\App\Models\Relaxexercise' => ['video', 'audio'],
+        ];
+        $this->crud->query = null;
+        foreach($models as $model => $types) {
+            $table = (new $model)->getTable();
+            $model_path = str_replace('\\', '\/', $model);
+            foreach($types as $type) {
+                $cntQueryRaw = "(SELECT count(views.id) FROM views WHERE `views`.model='".addslashes($model)."' AND views.model_id = `{$table}`.id AND `views`.type='{$type}' ";
+                if ($this->dates) {
+                    if ($this->dates->from) {
+                        $cntQueryRaw.="AND views.created_at >= '{$this->dates->from}'";
+                    }
+                    if ($this->dates->to) {
+                        $cntQueryRaw.="AND views.created_at <= '{$this->dates->to} 23:59:59'";
+                    }
+                }
+                $cntQueryRaw.=")  AS cnt";
+
+                $query = $model::whereNotNull($type)
+                                ->select(['id', 'name', \DB::raw("{$type} as 'source'")])
+                                ->addSelect(\DB::raw("'{$type}' as type"))
+                                ->addSelect(\DB::raw("'{$model_path}' as model"))
+                                ->addSelect(\DB::raw($cntQueryRaw));
+
+                if ($this->range) {
+                    if ($this->range->from) {
+                        $query->having("cnt", '>=', $this->range->from);
+                    }
+                    if ($this->range->to) {
+                        $query->having("cnt", "<=", $this->range->to);
+                    }
+                }
+                if (!$this->crud->query) {
+                    $this->crud->query = $query;
+                } else {
+                    $this->crud->query->unionAll($query);
+                }
+            }
+        }
+        // dd($this->crud->query->get());
+
         $this->crud->addColumns([
             [
                 'name' => 'row_number',
@@ -91,24 +131,6 @@ class ContentviewCrudController extends CrudController
             [
                 'name' => 'cnt',
                 'label' => 'Просмотров',
-                'type' => 'closure',
-                'function' => function($item) {
-
-                    $query= \App\View::where('model', str_replace('/', '\\', $item->model))
-                                     ->where('model_id', $item->id)
-                                     ->where('type', $item->type)
-                                     ->where('url', asset('uploads/'.$item->source));
-
-                    if($this->dates) {
-                        if ($this->dates->from) {
-                            $query->where('created_at', '>=', $this->dates->from);
-                        }
-                        if ($this->dates->to) {
-                            $query->where('created_at', '<=', $this->dates->to . ' 23:59:59');
-                        }
-                    }
-                    return $query->count();
-                }
             ],
         ]);
         /*

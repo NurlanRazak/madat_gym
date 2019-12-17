@@ -19,6 +19,8 @@ use App\Models\Programtraining;
 use App\Models\Userparameter;
 use App\Models\Pivots\SubscriptionUser;
 use App\DoneExersice;
+use App\View;
+use App\Session;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -53,6 +55,16 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function views()
+    {
+        return $this->hasMany(View::class, 'user_id');
+    }
+
+    public function sessions()
+    {
+        return $this->hasMany(Session::class, 'user_id');
+    }
 
     public function messages()
     {

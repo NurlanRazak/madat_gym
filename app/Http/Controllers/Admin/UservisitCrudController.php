@@ -18,6 +18,9 @@ use Carbon\Carbon;
  */
 class UservisitCrudController extends CrudController
 {
+
+    protected $dates = null;
+
     public function setup()
     {
         /*
@@ -25,13 +28,28 @@ class UservisitCrudController extends CrudController
         | CrudPanel Basic Information
         |--------------------------------------------------------------------------
         */
-        $this->crud->setModel('App\Models\Userparameter');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/contentview');
-        $this->crud->setEntityNameStrings(trans_choice('admin.userparameter', 1), trans_choice('admin.userparameter', 2));
-        $this->crud->denyAccess('create');
+        $this->crud->setModel('App\User');
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/uservisit');
+        $this->crud->setEntityNameStrings('Посещений пользователей', 'Посещений пользователей');
+        $this->crud->denyAccess(['create', 'update', 'delete']);
+        $this->crud->removeAllButtons();
+        $this->crud->addClause('whereDoesntHave', 'roles');
+
+        $this->crud->query->withCount('sessions');
+
+        $this->crud->addFilter([ // daterange filter
+          'type' => 'date_range',
+          'name' => 'date_start',
+          'label'=> 'Дата'
+        ],
+        false,
+        function($value) { // if the filter is active, apply these constraints
+            $this->dates = json_decode($value);
+        });
+
         $this->crud->addFilter([
-            'name' => 'weight',
-            'label' => 'Вес',
+            'name' => 'cnt',
+            'label' => 'Количество посещений',
             'type' => 'range',
             'label_from' => 'с',
             'label_to' => 'до'
@@ -40,63 +58,44 @@ class UservisitCrudController extends CrudController
         function ($value) {
             $range = json_decode($value);
             if ($range->from) {
-                $this->crud->addClause('where', 'weight', '>=', (float) $range->from);
+                $this->crud->addClause('has', 'sessions', '>=', $range->from);
             }
             if ($range->to) {
-                $this->crud->addClause('where', 'weight', '<=', (float) $range->to);
+                $this->crud->addClause('has', 'sessions', '<=', $range->to);
             }
         });
+
         $this->crud->addFilter([
-            'name' => 'waist',
-            'label' => 'Талия',
-            'type' => 'range',
-            'label_from' => 'с',
-            'label_to' => 'до'
-        ],
-        false,
-        function ($value) {
-            $range = json_decode($value);
-            if ($range->from) {
-                $this->crud->addClause('where', 'waist', '>=', (float) $range->from);
-            }
-            if ($range->to) {
-                $this->crud->addClause('where', 'waist', '<=', (float) $range->to);
-            }
+            'name' => 'users',
+            'label' => 'Пользователи',
+            'type' => 'select2_multiple',
+        ], function() {
+            return \App\User::whereDoesntHave('roles')->pluck('email', 'id')->toArray();
+        }, function($values) {
+            $values = json_decode($values);
+            $this->crud->addClause('whereIn', 'id', $values);
         });
-        $this->crud->addFilter([
-            'name' => 'leg_volume',
-            'label' => 'Объем ноги',
-            'type' => 'range',
-            'label_from' => 'с',
-            'label_to' => 'до'
-        ],
-        false,
-        function ($value) {
-            $range = json_decode($value);
-            if ($range->from) {
-                $this->crud->addClause('where', 'leg_volume', '>=', (float) $range->from);
-            }
-            if ($range->to) {
-                $this->crud->addClause('where', 'leg_volume', '<=', (float) $range->to);
-            }
-        });
-        $this->crud->addFilter([
-            'name' => 'arm_volume',
-            'label' => 'Объем рук',
-            'type' => 'range',
-            'label_from' => 'с',
-            'label_to' => 'до'
-        ],
-        false,
-        function ($value) {
-            $range = json_decode($value);
-            if ($range->from) {
-                $this->crud->addClause('where', 'arm_volume', '>=', (float) $range->from);
-            }
-            if ($range->to) {
-                $this->crud->addClause('where', 'arm_volume', '<=', (float) $range->to);
-            }
-        });
+
+
+        $this->crud->addColumns([
+            [
+                'name' => 'row_number',
+                'label' => '#',
+                'type' => 'row_number',
+            ],
+            [
+                'name' => 'email',
+                'label' => 'Пользователь',
+                'type' => 'closure',
+                'function' => function($user) {
+                    return "<a href=\"/admin/consumer/{$user->id}\">{$user->name}</a>";
+                }
+            ],
+            [
+                'name' => 'sessions_count',
+                'label' => 'Количество посещений',
+            ],
+        ]);
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration
