@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Composers\NotificationCountComposer;
+use App\Composers\AbonimentStatisticsComposer;
+use App\Composers\ProgramStatisticsComposer;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,8 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('layouts.header-menu', NotificationCountComposer::class);
+        View::composer('backpack::dashboard', AbonimentStatisticsComposer::class);
+        View::composer('backpack::dashboard', ProgramStatisticsComposer::class);
         View::composer('layouts.master', function($view) {
             $view->with(['user' => request()->user()]);
         });
