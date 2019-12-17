@@ -100,7 +100,7 @@
                                                     <ul>
                                                         @foreach($training->exercises as $index => $exercise)
                                                             <li class="row mb-4">
-                                                                <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset($exercise->image ? 'uploads/'.$exercise->image : 'assets/images/no-image.png') }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-video="{{ asset('uploads/'.$exercise->video) }}" {{ $exercise->video ? '' :'disabled' }}><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                                <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset($exercise->image ? 'uploads/'.$exercise->image : 'assets/images/no-image.png') }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-model="\App\Models\Exercise" data-entity="{{ $exercise->id }}" data-video="{{ asset('uploads/'.$exercise->video) }}" {{ $exercise->video ? '' :'disabled' }}><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
                                                                 <div class="col-sm-7 col-lg-9">
                                                                     <h2 >
                                                                         <b><a type="button" class="ex-desc h2-pointer" data-toggle="modal" data-target="#desc" data-title="{{ $exercise->name }}" data-description="{{ $exercise->long_desc }}">{{ $index + 1 }}. {{ $exercise->name }}</a></b>
@@ -218,11 +218,11 @@
                                                     <ul>
                                                         @foreach($relaxtraining->exercises as $exerciseindex => $exercise)
                                                             <li class="row mb-4">
-                                                                <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset($exercise->image ? 'uploads/'.$exercise->image : 'assets/images/no-image.png') }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-video="{{ asset('uploads/'.$exercise->video) }}" {{ $exercise->video ? '' :'disabled' }}><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                                <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset($exercise->image ? 'uploads/'.$exercise->image : 'assets/images/no-image.png') }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-model="\App\Models\Relaxexercise" data-entity="{{ $exercise->id }}" data-video="{{ asset('uploads/'.$exercise->video) }}" {{ $exercise->video ? '' :'disabled' }}><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
                                                                 <div class="col-sm-7 col-lg-9">
                                                                     <h5><b><a type="button" class="h2-pointer ex-desc" data-toggle="modal" data-target="#desc" data-title="{{ $exercise->name }}" data-description="{{ $exercise->long_description }}">{{ $index + 1 }}. {{ $exercise->name }}</a></b></h5>
                                                                     @if($exercise->audio)
-                                                                        <audio src="{{ asset('uploads/'.$exercise->audio) }}" controls  style="width: 100%;"></audio>
+                                                                        <audio src="{{ asset('uploads/'.$exercise->audio) }}" controls data-model="\App\Models\Relaxexercise" data-entity="{{ $exercise->id }}" style="width: 100%;"></audio>
                                                                     @endif
 
                                                                     <p>{{ $exercise->short_description }}</p>
@@ -403,8 +403,10 @@
             });
 
             $(document).on('click', '.playbtn', function(e) {
-                let video = $(e.target.closest('div')).find('button').data('video');
-                $('#vid').find('video').attr('src', video);
+                let btn = $(e.target.closest('div')).find('button');
+                $('#vid').find('video').attr('src', btn.data('video'));
+                $('#vid').find('video').attr('data-model', btn.data('model'));
+                $('#vid').find('video').attr('data-entity', btn.data('entity'));
             });
 
             $('.custom-control-input').on('change', function(e) {
@@ -421,6 +423,32 @@
             @if($nextGroceries->count() || $nextEquipments->count())
                 $('#list2').modal();
             @endif
+
+            $('video').on('play', function(e) {
+                let video = $(e.target);
+                let model = video.data('model');
+                let entity = video.data('entity');
+                $.post('{{ route("save-view") }}', {
+                    '_token': '{{ csrf_token() }}',
+                    'model': model,
+                    'model_id': entity,
+                    'type': 'video',
+                    'url': video.attr('src'),
+                });
+            });
+
+            $('audio').on('play', function(e) {
+                let audio = $(e.target);
+                let model = audio.data('model');
+                let entity = audio.data('entity');
+                $.post('{{ route("save-view") }}', {
+                    '_token': '{{ csrf_token() }}',
+                    'model': model,
+                    'model_id': entity,
+                    'type': 'audio',
+                    'url': audio.attr('src'),
+                });
+            });
         });
      </script>
 
