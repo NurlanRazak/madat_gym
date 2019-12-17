@@ -7,6 +7,7 @@ use App\User;
 
 class Session extends Model
 {
+    use \Backpack\CRUD\CrudTrait;
     protected $fillable = ['user_id'];
 
     public function user()
