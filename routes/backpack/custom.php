@@ -40,4 +40,8 @@ Route::group([
     CRUD::resource('userparameter', 'UserparameterCrudController');
     CRUD::resource('listequip', 'ListequipCrudController');
     CRUD::resource('listmeal', 'ListmealCrudController');
+    CRUD::resource('itembought', 'ItemboughtCrudController');
+    CRUD::resource('usedprogram', 'UsedprogramCrudController');
+    CRUD::resource('uservisit', 'UservisitCrudController');
+    CRUD::resource('contentview', 'ContentviewCrudController');
 }); // this should be the absolute last line of this file

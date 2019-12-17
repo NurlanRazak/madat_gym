@@ -249,6 +249,45 @@ trait MenuTrait
                 ],
             ],
             [
+                'route' => '#',
+                'icon' => 'fa fa-bar-chart',
+                'label' => 'Статистика',
+                'sub_items' => [
+                    [
+                        'route'         => backpack_url('itembought'),
+                        'icon'          => 'fa fa-ticket',
+                        'label'         => 'Покупки(абонементы)',
+                        'permissions'   => [
+                            'User' => 'view',
+                        ],
+                    ],
+                    [
+                        'route'         => backpack_url('usedprogram'),
+                        'icon'          => 'fa fa-thumb-tack',
+                        'label'         => 'Использованные программы',
+                        'permissions' => [
+                            'User' => 'view',
+                        ],
+                    ],
+                    [
+                        'route'         => backpack_url('uservisit'),
+                        'icon'          => 'fa fa-user',
+                        'label'         => 'Посещений пользователей',
+                        'permissions'   => [
+                            'User' => 'view',
+                        ],
+                    ],
+                    [
+                        'route'         => backpack_url('contentview'),
+                        'icon'          => 'fa fa-eye',
+                        'label'         => 'Просмотр контента',
+                        'permissions'   => [
+                            'User'  => 'view',
+                        ],
+                    ],
+                ],
+            ],
+            [
                 'route'         => backpack_url('elfinder'),
                 'icon'          => 'fa fa-files-o',
                 'label'         => trans('backpack::crud.file_manager'),
