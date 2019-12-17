@@ -84,7 +84,7 @@ class HomeController extends Controller
             $planeats_data[$item->days - $passed + $today - 1][] = $item;
         }
 
-        if ($today == 5 && (!$request->session()->has('friday_notification')) || $passed != $request->session()->get('friday_notification')) {
+        if ($today == 5 && (!$request->session()->has('friday_notification') || $passed != $request->session()->get('friday_notification'))) {
             $nextGroceries = $user->getGroceries(true);
             $nextEquipments = $user->getEquipments(true);
             $request->session()->put('friday_notification', $passed);
