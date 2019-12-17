@@ -153,4 +153,25 @@ class HomeController extends Controller
         }
     }
 
+    public function saveView(Request $request)
+    {
+        $user = $request->user();
+        $model = $request->model;
+        $model_id = $request->model_id;
+        $type = $request->type;
+        $url = $request->url ?? null;
+
+        \App\View::create([
+            'user_id' => $user->id,
+            'model' => $model,
+            'model_id' => $model_id,
+            'type' => $type,
+            'url' => $url,
+        ]);
+
+        return response()->json([
+            'success' => true,
+        ]);
+    }
+
 }

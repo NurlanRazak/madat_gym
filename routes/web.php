@@ -177,6 +177,7 @@ Route::group(['middleware' => 'verified'], function () {
             Route::get('/', 'HomeController@home')->name('home');
             Route::post('friday', 'MessageController@friday')->name('friday');
             Route::post('exersice/done', 'HomeController@toggleUserExercise')->name('exersice-done');
+            Route::post('view/save', 'HomeController@saveView')->name('save-view');
         });
 
     });
