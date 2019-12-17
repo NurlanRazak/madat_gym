@@ -59,7 +59,7 @@ class ContentviewCrudController extends CrudController
         function($value) { // if the filter is active, apply these constraints
             $this->dates = json_decode($value);
         });
-
+        
         $this->crud->addColumns([
             [
                 'name' => 'row_number',
@@ -68,7 +68,7 @@ class ContentviewCrudController extends CrudController
             ],
             [
                 'name' => 'name',
-                'label' => 'Exercise',
+                'label' => 'Упражнение',
                 'type' => 'closure',
                 'function' => function($item) {
                     $url = strtolower("/admin/".class_basename($item->model))."/{$item->id}";
@@ -77,7 +77,7 @@ class ContentviewCrudController extends CrudController
             ],
             [
                 'name' => 'type',
-                'label' => 'Entity',
+                'label' => 'Контент',
                 'type' => 'closure',
                 'function' => function($item) {
                     if ($item->type == 'video') {
@@ -90,7 +90,7 @@ class ContentviewCrudController extends CrudController
             ],
             [
                 'name' => 'cnt',
-                'label' => 'Count',
+                'label' => 'Просмотров',
                 'type' => 'closure',
                 'function' => function($item) {
 

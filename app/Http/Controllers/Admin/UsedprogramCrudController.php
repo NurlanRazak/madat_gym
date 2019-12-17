@@ -25,8 +25,8 @@ class UsedprogramCrudController extends CrudController
         | CrudPanel Basic Information
         |--------------------------------------------------------------------------
         */
-        $this->crud->setModel('App\Models\Userparameter');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/contentview');
+        $this->crud->setModel('App\Models\Programtraining');
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/usedprogram');
         $this->crud->setEntityNameStrings(trans_choice('admin.userparameter', 1), trans_choice('admin.userparameter', 2));
         $this->crud->denyAccess('create');
         $this->crud->addFilter([
