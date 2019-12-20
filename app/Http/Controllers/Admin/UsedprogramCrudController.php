@@ -25,83 +25,45 @@ class UsedprogramCrudController extends CrudController
         | CrudPanel Basic Information
         |--------------------------------------------------------------------------
         */
-        $this->crud->setModel('App\Models\Programtraining');
+        $this->crud->setModel('App\Models\Activeprogram');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/usedprogram');
-        $this->crud->setEntityNameStrings(trans_choice('admin.userparameter', 1), trans_choice('admin.userparameter', 2));
-        $this->crud->denyAccess('create');
-        $this->crud->addFilter([
-            'name' => 'weight',
-            'label' => 'Вес',
-            'type' => 'range',
-            'label_from' => 'с',
-            'label_to' => 'до'
-        ],
-        false,
-        function ($value) {
-            $range = json_decode($value);
-            if ($range->from) {
-                $this->crud->addClause('where', 'weight', '>=', (float) $range->from);
-            }
-            if ($range->to) {
-                $this->crud->addClause('where', 'weight', '<=', (float) $range->to);
-            }
+        $this->crud->setEntityNameStrings(trans_choice('admin.programtraining', 1), trans_choice('admin.programtraining', 2));
+        $this->crud->denyAccess(['create', 'update', 'delete']);
+        $this->crud->removeAllButtons();
+
+        $this->crud->query->whereHas('program', function($query) {
+            $query->whereHas('users', function($query) {
+                $query->whereDoesntHave('roles');
+            });
         });
-        $this->crud->addFilter([
-            'name' => 'waist',
-            'label' => 'Талия',
-            'type' => 'range',
-            'label_from' => 'с',
-            'label_to' => 'до'
-        ],
-        false,
-        function ($value) {
-            $range = json_decode($value);
-            if ($range->from) {
-                $this->crud->addClause('where', 'waist', '>=', (float) $range->from);
-            }
-            if ($range->to) {
-                $this->crud->addClause('where', 'waist', '<=', (float) $range->to);
-            }
-        });
-        $this->crud->addFilter([
-            'name' => 'leg_volume',
-            'label' => 'Объем ноги',
-            'type' => 'range',
-            'label_from' => 'с',
-            'label_to' => 'до'
-        ],
-        false,
-        function ($value) {
-            $range = json_decode($value);
-            if ($range->from) {
-                $this->crud->addClause('where', 'leg_volume', '>=', (float) $range->from);
-            }
-            if ($range->to) {
-                $this->crud->addClause('where', 'leg_volume', '<=', (float) $range->to);
-            }
-        });
-        $this->crud->addFilter([
-            'name' => 'arm_volume',
-            'label' => 'Объем рук',
-            'type' => 'range',
-            'label_from' => 'с',
-            'label_to' => 'до'
-        ],
-        false,
-        function ($value) {
-            $range = json_decode($value);
-            if ($range->from) {
-                $this->crud->addClause('where', 'arm_volume', '>=', (float) $range->from);
-            }
-            if ($range->to) {
-                $this->crud->addClause('where', 'arm_volume', '<=', (float) $range->to);
-            }
-        });
+
         /*
         |--------------------------------------------------------------------------
         | CrudPanel Configuration
         |--------------------------------------------------------------------------
         */
+
+        $this->crud->addColumns([
+            [
+                'name' => 'row_number',
+                'label' => '#',
+                'type' => 'row_number',
+            ],
+            [
+                'name' => 'program',
+                'label' => 'Программа',
+                'type' => 'select',
+                'attribute' => 'name',
+                'entity' => 'program',
+            ],
+            [
+                'name' => 'cnt',
+                'label' => 'Количество подписок',
+                'type' => 'select',
+                'attribute' => 'users_count',
+                'entity' => 'program',
+            ],
+        ]);
 
         // add asterisk for fields that are required in UserparameterRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');

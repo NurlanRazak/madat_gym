@@ -42,6 +42,11 @@ class Subscription extends Model
                     ->withPivot(['id', 'created_at'])
                     ->using(SubscriptionUser::class);
     }
+
+    public function rawusers()
+    {
+        return $this->hasMany(SubscriptionUser::class, 'subscription_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

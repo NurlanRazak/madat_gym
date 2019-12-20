@@ -9,6 +9,7 @@ use App\Models\Activeprogram;
 use App\Models\Equipment;
 use App\Models\Training;
 use App\Models\Grocery;
+use App\User;
 
 class Programtraining extends Model
 {
@@ -81,6 +82,11 @@ class Programtraining extends Model
         return $this->hasMany(Grocery::class, 'programtraining_id');
     }
 
+    public function users()
+    {
+        return $this->hasMany(User::class, 'programtraining_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -95,7 +101,10 @@ class Programtraining extends Model
     | ACCESORS
     |--------------------------------------------------------------------------
     */
-
+    public function getUsersCountAttribute()
+    {
+        return $this->users()->whereDoesntHave('roles')->count();
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

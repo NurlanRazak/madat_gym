@@ -35,7 +35,17 @@ class UservisitCrudController extends CrudController
         $this->crud->removeAllButtons();
         $this->crud->addClause('whereDoesntHave', 'roles');
 
-        $this->crud->query->withCount('sessions');
+        $dates = $this->dates;
+        $this->crud->query->withCount(['sessions' => function($query) use($dates) {
+            if ($dates) {
+                if ($dates->from) {
+                    $query->where('created_at', '>=', $dates->from);
+                }
+                if ($dates->to) {
+                    $query->where('created_at', '<=', $dates->to.' 23:59:59');
+                }
+            }
+        }]);
 
         $this->crud->addFilter([ // daterange filter
           'type' => 'date_range',
