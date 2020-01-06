@@ -170,7 +170,7 @@
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $user->statistics ?? 0 }}%" aria-valuenow="{{ $user->statistics ?? 0 }}" aria-valuemin="0" aria-valuemax="100">{{ $user->statistics ?? 0 }}%</div>
                                     </div>
                                     <a href="{{ route('subscription') }}" class="btn btn-block btn-warning">ПРОДЛИТЬ ПОДПИСКУ</a>
-                                    <a href="#" class="btn btn-block btn-danger">ОТМЕНИТЬ ПОДПИСКУ</a>
+                                    {{-- <a href="#" class="btn btn-block btn-danger">ОТМЕНИТЬ ПОДПИСКУ</a> --}}
                                 </div>
                             </div>
 
