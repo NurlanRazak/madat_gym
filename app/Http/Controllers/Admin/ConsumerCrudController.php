@@ -192,6 +192,14 @@ class ConsumerCrudController extends CrudController
                 'type' => 'datetime',
                 'format' => 'l',
             ],
+            [
+                'name' => 'subscriptions',
+                'label' => 'Абонементы',
+                'type' => 'select_multiple',
+                'model' => 'App\Models\Subscriptions',
+                'entity' => 'subscriptions',
+                'attribute' => 'name_date',
+            ],
         ]);
 
         // Fields

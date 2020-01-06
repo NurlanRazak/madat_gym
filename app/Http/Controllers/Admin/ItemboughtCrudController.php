@@ -33,7 +33,7 @@ class ItemboughtCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/itembought');
         $this->crud->setEntityNameStrings('Покупки(абонементы)', 'Покупки(абонементы)');
         $this->crud->denyAccess(['create', 'update', 'delete']);
-        $this->crud->removeAllButtons();
+        $this->crud->allowAccess('show');
 
         $this->crud->addFilter([
             'name' => 'users',
@@ -105,6 +105,24 @@ class ItemboughtCrudController extends CrudController
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
     }
+
+    public function show($id)
+    {
+        $content = parent::show($id);
+        $this->crud->addColumn([
+            'name' => 'users_table',
+            'label' => 'Пользователи',
+            'type' => 'table',
+            'columns' => [
+                'id' => 'ID',
+                'email' => 'E-mail',
+                'name' => 'Имя',
+            ]
+        ]);
+        $this->crud->removeColumns(['days', 'price', 'expires', 'active']);
+        return $content;
+    }
+
 
     public function store(StoreRequest $request)
     {

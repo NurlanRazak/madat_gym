@@ -61,6 +61,15 @@ class Subscription extends Model
     | ACCESORS
     |--------------------------------------------------------------------------
     */
+    public function getNameDateAttribute()
+    {
+        return "<b>{$this->name}</b>: {$this->pivot->created_at->format('Y-m-d')}";
+    }
+
+    public function getUsersTableAttribute()
+    {
+        return $this->users()->get()->toArray();
+    }
 
     /*
     |--------------------------------------------------------------------------
