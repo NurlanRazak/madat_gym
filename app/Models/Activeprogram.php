@@ -51,7 +51,7 @@ class Activeprogram extends Model
     */
     public function getAllCntAttribute()
     {
-        return $this->program->users()->count() + $this->program->programHistories()->count();
+        return $this->program->users()->whereDoesntHave('roles')->count() + $this->program->programHistories()->count();
     }
 
     /*

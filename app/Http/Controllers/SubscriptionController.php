@@ -36,15 +36,16 @@ class SubscriptionController extends Controller
             'created_at' => $nextDate,
         ]);
 
-        $cnt = $user->programtraining->activeprograms()
-                              ->where('date_start', '<=', \DB::raw('NOW()'))
-                              ->where('date_finish', '>=', \DB::raw('NOW()'))
-                              ->count();
+        if ($user->programtraining) {
+            $cnt = $user->programtraining->activeprograms()
+            ->where('date_start', '<=', \DB::raw('NOW()'))
+            ->where('date_finish', '>=', \DB::raw('NOW()'))
+            ->count();
 
-        if($cnt > 0) {
-            return redirect(route('profile'));
+            if($cnt > 0) {
+                return redirect(route('profile'));
+            }            
         }
-
         return redirect(route('programs'));
     }
 

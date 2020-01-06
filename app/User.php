@@ -164,10 +164,12 @@ class User extends Authenticatable implements MustVerifyEmail
         static::updating(function($user) {
             $programtraining_id = $user->getOriginal('programtraining_id');
             $date = $user->getOriginal('programtraining_start');
-            $user->programHistories()->create([
-                'programtraining_id' => $programtraining_id,
-                'program_date' => $date,
-            ]);
+            if ($programtraining_id) {
+                $user->programHistories()->create([
+                    'programtraining_id' => $programtraining_id,
+                    'program_date' => $date,
+                ]);                
+            }
         });
     }
 
