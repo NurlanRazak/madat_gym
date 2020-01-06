@@ -16,6 +16,9 @@ class CheckSubscription
     public function handle($request, Closure $next)
     {
         $user = $request->user();
+        if ($user->roles->count() > 0) {
+            return redirect()->to('/admin');
+        }
 
         $cnt = $user->subscriptions()
                     ->whereRaw("DATE_ADD(subscription_user.created_at, INTERVAL subscriptions.days DAY) >= CURDATE()")

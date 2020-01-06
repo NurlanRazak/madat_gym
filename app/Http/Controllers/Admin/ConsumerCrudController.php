@@ -315,7 +315,7 @@ class ConsumerCrudController extends CrudController
             ],
         ]);
 
-        if(!request()->password && request()->id) {
+        if((!request()->password || request()->password != 1) && !$this->crud->actionIs('create') && !$this->crud->actionIs('store')) {
             $this->crud->removeField(['password', 'password_confirmation']);
         }
     }

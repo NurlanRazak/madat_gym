@@ -35,6 +35,7 @@ class HomeController extends Controller
         }
 
         $user = Auth::user();
+
         Date::setlocale(config('app.locale'));
         $time = Date::parse(Carbon::now())->format('l d F Yг.');
         $fc = mb_strtoupper(mb_substr($time, 0, 1));

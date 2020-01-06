@@ -164,7 +164,7 @@ Route::group(['middleware' => 'verified'], function () {
         Route::delete('userparameter/{id}', 'ProfileController@userParameterDelete')->name('userparameter');
         Route::post('user_update', 'ProfileController@userUpdate');
         Route::get('history', 'HistoryController@history')->name('history');
-        Route::get('programs', 'ProgramController@programs')->name('programs');
+        Route::get('programs', 'ProgramController@programs')->name('programs')->middleware('hasProgram');
         Route::post('program', 'ProgramController@postProgram')->name('post-program');
         Route::post('image/upload', 'ProfileController@uploadImage')->name('user-params-image');
         Route::post('password/update', 'ProfileController@updatePassword')->name('password-update');
