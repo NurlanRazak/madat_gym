@@ -168,20 +168,20 @@ class User extends Authenticatable implements MustVerifyEmail
                 $user->programHistories()->create([
                     'programtraining_id' => $programtraining_id,
                     'program_date' => $date,
-                ]);                
+                ]);
             }
         });
     }
 
     public function getTrainings(bool $nextWeek = false)
     {
-        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d')) - strtotime(\Carbon\Carbon::parse($this->programtraining_start)->format('Y-m-d')))/60/60/24 + ($nextWeek ? 7 : 0);
+        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d h:m')) - strtotime($this->real_programtraining_start->format('Y-m-d h:m')))/60/60/24 + ($nextWeek ? 7 : 0);
         $today = \Date::today()->dayOfWeek;
 
         return $this->programtraining
                     ->trainings()
-                    ->where('day_number', '>=', $passed - $today + 2)
-                    ->where('day_number', '<=', $passed - $today + 8)
+                    ->where('day_number', '>=', $passed - $today + 1)
+                    ->where('day_number', '<=', $passed - $today + 7)
                     ->with(['exercises' => function($q) {$q->active();}])
                     ->active()
                     ->get();
@@ -190,7 +190,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getEquipments(bool $nextWeek = false, $today = null)
     {
         $today = ($today ? $today : \Date::today())->dayOfWeek;
-        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d')) - strtotime(\Carbon\Carbon::parse($this->programtraining_start)->format('Y-m-d')))/60/60/24 + ($nextWeek ? 7 : 0);
+        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d h:m')) - strtotime($this->real_programtraining_start->format('Y-m-d h:m')))/60/60/24 + ($nextWeek ? 7 : 0);
 
         if($today == 0) {
             $today = 7;
@@ -198,34 +198,34 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $this->programtraining
                     ->equipments()
-                    ->where('notify_day', '>=', $passed - $today + 2)
-                    ->where('notify_day', '<=', $passed - $today + 8)
+                    ->where('notify_day', '>=', $passed - $today + 1)
+                    ->where('notify_day', '<=', $passed - $today + 7)
                     ->active()
                     ->get();
     }
 
     public function getGroceries(bool $nextWeek = false)
     {
-        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d')) - strtotime(\Carbon\Carbon::parse($this->programtraining_start)->format('Y-m-d')))/60/60/24 + ($nextWeek ? 7 : 0);
+        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d h:m')) - strtotime($this->real_programtraining_start->format('Y-m-d h:m')))/60/60/24 + ($nextWeek ? 7 : 0);
         $today = \Date::today()->dayOfWeek;
         return $this->programtraining
                     ->groceries()
-                    ->where('notify_day', '>=', $passed - $today + 2)
-                    ->where('notify_day', '<=', $passed - $today + 8)
+                    ->where('notify_day', '>=', $passed - $today + 1)
+                    ->where('notify_day', '<=', $passed - $today + 7)
                     ->active()
                     ->get();
     }
 
     public function getPlaneats(bool $nextWeek = false, $today = null)
     {
-        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d')) - strtotime(\Carbon\Carbon::parse($this->programtraining_start)->format('Y-m-d')))/60/60/24 + ($nextWeek ? 7 : 0);
+        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d h:m')) - strtotime($this->real_programtraining_start->format('Y-m-d h:m')))/60/60/24 + ($nextWeek ? 7 : 0);
         $today = ($today ? $today : \Date::today())->dayOfWeek;
 
         return $this->programtraining
                     ->foodprogram
                     ->planeats()
-                    ->where('days', '>=', $passed - $today + 2)
-                    ->where('days', '<=', $passed - $today + 8)
+                    ->where('days', '>=', $passed - $today + 1)
+                    ->where('days', '<=', $passed - $today + 7)
                     ->active()
                     ->with(['meals' => function($q) {$q->active();}])
                     ->with(['eathours' => function($q) {$q->active();}])
@@ -234,7 +234,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getRelaxtrainings(bool $nextWeek = false)
     {
-        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d')) - strtotime(\Carbon\Carbon::parse($this->programtraining_start)->format('Y-m-d')))/60/60/24 + ($nextWeek ? 7 : 0);
+        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d h:m')) - strtotime($this->real_programtraining_start->format('Y-m-d h:m')))/60/60/24 + ($nextWeek ? 7 : 0);
         $today = \Date::today()->dayOfWeek;
 
         $id = $this->id;
@@ -244,8 +244,8 @@ class User extends Authenticatable implements MustVerifyEmail
                     // ->whereHas('users', function($query) use($id) {
                     //     $query->where('id', $id);
                     // })
-                    ->where('number_day', '>=', $passed - $today + 2)
-                    ->where('number_day', '<=', $passed - $today + 8)
+                    ->where('number_day', '>=', $passed - $today + 1)
+                    ->where('number_day', '<=', $passed - $today + 7)
                     ->active()
                     ->with(['exercises' => function($q) {$q->active();}])
                     ->orderBy('time')
@@ -254,7 +254,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function checkExersice($weekDay, $key) : bool
     {
-        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d')) - strtotime(\Carbon\Carbon::parse($this->programtraining_start)->format('Y-m-d')))/60/60/24;
+        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d h:m')) - strtotime($this->real_programtraining_start->format('Y-m-d h:m')))/60/60/24;
         $today = \Date::today()->dayOfWeek;
         if ($today == 0) {
             $today = 7;
@@ -278,6 +278,17 @@ class User extends Authenticatable implements MustVerifyEmail
             $this->statistics = ceil(100 * $passed / $all);
         }
         return $this->statistics;
+    }
+
+    public function getRealProgramtrainingStartAttribute()
+    {
+        if ($this->subscriptions()->count() > 1) {
+            $subscriptions = $this->subscriptions()->orderBy('pivot_created_at', 'desc')->get();
+            $diff = (strtotime($subscriptions[0]->pivot->created_at->format('Y-m-d h:m')) - strtotime($subscriptions[1]->pivot->created_at->format('Y-m-d h:m')))/60/60/24 - $subscriptions[0]->days;
+
+            return \Carbon\Carbon::parse($this->programtraining_start)->addDays($diff);
+        }
+        return \Carbon\Carbon::parse($this->programtraining_start);
     }
 
 

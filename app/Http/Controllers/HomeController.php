@@ -42,7 +42,7 @@ class HomeController extends Controller
 
 
 
-        $passed = (strtotime(Carbon::now()->format('Y-m-d')) - strtotime(Carbon::parse($user->programtraining_start)->format('Y-m-d')))/60/60/24;
+        $passed = (strtotime(Carbon::now()->format('Y-m-d h:m')) - strtotime($user->real_programtraining_start->format('Y-m-d h:m')))/60/60/24;
 
         $relaxtrainings_data = [];
         $relaxtrainings = $user->getRelaxtrainings();
@@ -138,7 +138,7 @@ class HomeController extends Controller
     public function toggleUserExercise(Request $request)
     {
         $user = $request->user();
-        $passed = (strtotime(Carbon::now()->format('Y-m-d')) - strtotime(Carbon::parse($user->programtraining_start)->format('Y-m-d')))/60/60/24;
+        $passed = (strtotime(Carbon::now()->format('Y-m-d h:m')) - strtotime(Carbon::parse($user->real_programtraining_start)->format('Y-m-d h:m')))/60/60/24;
         $today = \Date::today()->dayOfWeek;
         $day = $passed + $today - $request->day;
         $doneExersice = $user->doneExersices()->where('key', $request->key)->where('day_number', $day)->first();
