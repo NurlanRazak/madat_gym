@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 
-class Activeprogram extends Model
+class ProgramHistory extends Model
 {
     use CrudTrait;
 
@@ -15,11 +15,13 @@ class Activeprogram extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'activeprograms';
+    protected $table = 'program_histories';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['date_start', 'date_finish', 'program_id'];
+    protected $fillable = [
+        'user_id', 'programtraining_id', 'program_date',
+    ];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -34,9 +36,14 @@ class Activeprogram extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function program()
+    public function user()
     {
-        return $this->belongsTo('App\Models\Programtraining', 'program_id');
+        return $this->belongsTo('App\User', 'user_id');
+    }
+
+    public function programtraining()
+    {
+        return $this->belongsTo('App\Models\Programtraining', 'programtraining_id');
     }
     /*
     |--------------------------------------------------------------------------
@@ -49,10 +56,6 @@ class Activeprogram extends Model
     | ACCESORS
     |--------------------------------------------------------------------------
     */
-    public function getAllCntAttribute()
-    {
-        return $this->program->users()->count() + $this->program->programHistories()->count();
-    }
 
     /*
     |--------------------------------------------------------------------------

@@ -100,6 +100,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(DoneExersice::class, 'user_id');
     }
 
+    public function programHistories()
+    {
+        return $this->hasMany('App\Models\ProgramHistory', 'user_id');
+    }
+
     public static function getGenderOptions() : array
     {
         return [
@@ -154,6 +159,15 @@ class User extends Authenticatable implements MustVerifyEmail
             if (backpack_user()) {
                 $obj->sendEmailVerificationNotification();
             }
+        });
+
+        static::updating(function($user) {
+            $programtraining_id = $user->getOriginal('programtraining_id');
+            $date = $user->getOriginal('programtraining_start');
+            $user->programHistories()->create([
+                'programtraining_id' => $programtraining_id,
+                'program_date' => $date,
+            ]);
         });
     }
 

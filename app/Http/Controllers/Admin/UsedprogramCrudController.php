@@ -31,9 +31,13 @@ class UsedprogramCrudController extends CrudController
         $this->crud->denyAccess(['create', 'update', 'delete']);
         $this->crud->removeAllButtons();
 
-        $this->crud->query->whereHas('program', function($query) {
-            $query->whereHas('users', function($query) {
-                $query->whereDoesntHave('roles');
+        $this->crud->query->where(function($q) {
+            $q->whereHas('program', function($query) {
+                $query->whereHas('users', function($query) {
+                    $query->whereDoesntHave('roles');
+                });
+            })->orWhereHas('program', function($q) {
+                $q->whereHas('programHistories');
             });
         });
 
@@ -57,12 +61,14 @@ class UsedprogramCrudController extends CrudController
                 'entity' => 'program',
             ],
             [
-                'name' => 'cnt',
+                'name' => 'all_cnt',
                 'label' => 'Количество подписок',
-                'type' => 'select',
-                'attribute' => 'users_count',
-                'entity' => 'program',
             ],
+            // [
+            //     'name' => 'all_users',
+            //     'label' => 'Пользователи',
+            //     'type' => 'table',
+            // ],
         ]);
 
         // add asterisk for fields that are required in UserparameterRequest

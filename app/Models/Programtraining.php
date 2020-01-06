@@ -87,6 +87,11 @@ class Programtraining extends Model
         return $this->hasMany(User::class, 'programtraining_id');
     }
 
+    public function programHistories()
+    {
+        return $this->hasMany('App\Models\ProgramHistory', 'programtraining_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
