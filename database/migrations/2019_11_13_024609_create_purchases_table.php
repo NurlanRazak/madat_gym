@@ -23,7 +23,7 @@ class CreatePurchasesTable extends Migration
 
             $table->text('comment')->nullable();
             $table->tinyInteger('status')->default(0);
-            $table->date('start_date')->default(Carbon::now());
+            $table->timestamp('start_date')->default(DB::raw('CURRENT_TIMESTAMP'));
 
             $table->timestamps();
         });

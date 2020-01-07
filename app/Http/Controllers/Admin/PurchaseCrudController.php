@@ -75,6 +75,14 @@ class PurchaseCrudController extends CrudController
                 'model' => 'App\User',
             ],
             [
+                'name' => 'subscription',
+                'label' => 'Абонемент',
+                'type' => 'select',
+                'entity' => 'subscription',
+                'attribute' => 'name',
+                'model' => 'App\Models\Subscription',
+            ],
+            [
                 'name' => 'typepurchase_id',
                 'label' => 'Тип покупки',
                 'type' => 'select',
@@ -94,7 +102,7 @@ class PurchaseCrudController extends CrudController
             ],
             [
                 'name' => 'start_date',
-                'label' => 'Дата подписки',
+                'label' => 'Дата покупки',
                 'type' => "datetime",
                 'format' => 'l',
             ],

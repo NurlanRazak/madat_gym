@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Subscription;
 use App\Models\Purchase;
 use App\Models\Pivots\SubscriptionUser;
+use App\Notifications\PaymentNotify;
 
 class PaymentController extends Controller
 {
@@ -89,13 +90,15 @@ class PaymentController extends Controller
     {
         $purchase_id = $request->purchase_id;
         $purchase = Purchase::findOrFail($purchase_id);
-        // TODO: Send email
 
         return $this->successPurchase($purchase);
     }
 
     private function successPurchase(Purchase $purchase)
     {
+        if ($purchase->status == Purchase::PAID) {
+            abort(400, "Вы оплатили за абонемент");
+        }
         $purchase->status = Purchase::PAID;
         $purchase->save();
 
@@ -105,7 +108,7 @@ class PaymentController extends Controller
 
         $lastSubscription = $user->subscriptions()
                                  ->whereRaw("DATE_ADD(subscription_user.created_at, INTERVAL subscriptions.days DAY) >= NOW()")
-                                 ->latest()
+                                 ->orderBy('pivot_created_at', 'desc')
                                  ->first();
 
         $nextDate = \DB::raw('NOW()');
@@ -118,6 +121,14 @@ class PaymentController extends Controller
             'user_id' => $user->id,
             'created_at' => $nextDate,
         ]);
+        $new_subscription = SubscriptionUser::find($subscriptionUser->id);
+        // TODO: Send email
+        $date_start = \Carbon\Carbon::parse($new_subscription->created_at);
+        $date_finish = \Carbon\Carbon::parse($new_subscription->created_at)->addDays($new_subscription->subscription->days);
+
+        $message = [$subscription->name, $date_start, $date_finish];
+        $user->notify(new PaymentNotify($message));
+
 
         return redirect()->to('/');
     }
