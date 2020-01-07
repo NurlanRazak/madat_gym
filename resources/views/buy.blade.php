@@ -75,6 +75,7 @@
       <form id="paymentForm" class="col-lg-8" autocomplete="off" action="{{ route('checkout') }}" method="POST">
           @csrf
           <input type="hidden" name="code" id="ch-code" />
+          <input type="hidden" name="name" id="ch-name" />
         <div class="card">
           <div class="card-body">
             <div class="card-title">Детали счета</div>
@@ -138,6 +139,7 @@ let createCryptogram = function () {
 
     if (result.success) {
         $('#ch-code').val(result.packet)
+        $('#ch-name').val($('#inputEmail12').val())
         $('#paymentForm').submit()
     }
     else {

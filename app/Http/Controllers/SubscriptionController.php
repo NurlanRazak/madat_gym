@@ -19,6 +19,8 @@ class SubscriptionController extends Controller
     public function postSubscription(Request $request)
     {
         $user = $request->user();
+        $subscription = Subscription::findOrFail($request->subscription_id);
+        $request->session()->put('subscription_id', $subscription->id);
 
         $lastSubscription = $user->subscriptions()
                                  ->whereRaw("DATE_ADD(subscription_user.created_at, INTERVAL subscriptions.days DAY) >= NOW()")
@@ -31,7 +33,7 @@ class SubscriptionController extends Controller
         }
 
         $subscriptionUser = SubscriptionUser::create([
-            'subscription_id' => $request->subscription_id,
+            'subscription_id' => $subscription->id,
             'user_id' => $user->id,
             'created_at' => $nextDate,
         ]);
@@ -44,7 +46,7 @@ class SubscriptionController extends Controller
 
             if($cnt > 0) {
                 return redirect(route('profile'));
-            }            
+            }
         }
         return redirect(route('programs'));
     }
