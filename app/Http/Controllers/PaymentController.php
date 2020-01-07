@@ -12,8 +12,8 @@ class PaymentController extends Controller
             'CardCryptogramPacket' => $request->code,
             'Amount' => '10',
             'Currency' => 'KZT',
-            'IpAddress' => '185.98.7.185',
-            'Name' => 'qwe',
+            'IpAddress' => config('services.payment.ip_address'),
+            'Name' => $request->name,
         ];
         $data_string = json_encode($data);
 
@@ -24,7 +24,7 @@ class PaymentController extends Controller
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
         ));
-        curl_setopt($ch, CURLOPT_USERPWD, "pk_95513bc124ddb9539e435ccde251c:68cdb270b9629d8707694c12b022a390");
+        curl_setopt($ch, CURLOPT_USERPWD, config('services.payment.public_id').":".config('services.payment.api_key'));
 
         $result = curl_exec($ch);
         return $result;

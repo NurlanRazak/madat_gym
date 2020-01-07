@@ -40,4 +40,10 @@ return [
         ],
     ],
 
+    'payment' => [
+        'public_id' => env('PUBLIC_ID'),
+        'api_key' => env('API_KEY'),
+        'ip_address' => env('IP_ADDRESS'),
+    ],
+
 ];
