@@ -41,7 +41,7 @@ return [
     ],
 
     'payment' => [
-        'public_id' => env('PUBLIC_ID'),
+        'public_id' => env('PUBLIC_ID', 'test_api_00000000000000000000001'),
         'api_key' => env('API_KEY'),
         'ip_address' => env('IP_ADDRESS'),
     ],

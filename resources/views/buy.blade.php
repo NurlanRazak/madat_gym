@@ -32,23 +32,24 @@
                   </tr>
                 </thead>
                 <tbody>
-
-                  <tr class="">
-                  	<td>1</td>
-                    <td scope="row">
-                      <div class="ul-product-cart__detail d-inline-block align-middle ">
-                        <a href="">
-                          <h6 class="heading">Nike Air Jordan</h6>
-                        </a>
-                      </div>
-                    </td>
-                    <td>$2,000</td>
-                    <td>4</td>
-                    <td>$8,000</td>
-                    <td>
-                      <a href=""><i class="i-Close-Window text-19 text-danger font-weight-700"></i></a>
-                    </td>
-                  </tr>
+                    @foreach($items as $item)
+                      <tr class="">
+                      	<td>{{ $loop->iteration }}</td>
+                        <td scope="row">
+                          <div class="ul-product-cart__detail d-inline-block align-middle ">
+                            <a href="">
+                              <h6 class="heading">{{ $item['name'] }}</h6>
+                            </a>
+                          </div>
+                        </td>
+                        <td>{{ $item['price'] }}</td>
+                        <td>{{ $item['cnt'] }}</td>
+                        <td>{{ $item['total'] }}</td>
+                        <td>
+                          <a href=""><i class="i-Close-Window text-19 text-danger font-weight-700"></i></a>
+                        </td>
+                      </tr>
+                    @endforeach
                 </tbody>
               </table>
             </div>
@@ -62,7 +63,7 @@
                         <th scope="row" class="text-primary text-16">
                           Итого:
                         </th>
-                        <td class="font-weight-700 text-16">$5,015</td>
+                        <td class="font-weight-700 text-16">{{ $total }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -156,7 +157,7 @@ $('#paymentBtn').click(function(e) {
     e.preventDefault();
     checkout = new cp.Checkout(
         // public id из личного кабинета
-        "test_api_00000000000000000000001",
+        "{{ config('services.payment.public_id') }}",
         // тег, содержащий поля данных карты
         document.getElementById("paymentForm")
     );

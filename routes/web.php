@@ -183,7 +183,7 @@ Route::group(['middleware' => 'verified'], function () {
 
     });
 
-    Route::view('buy', 'buy')->name('buy');
+    Route::get('buy', 'PaymentController@index')->name('buy');
     Route::get('mail', 'MessageController@message')->name('mail');
 
 

@@ -3,14 +3,45 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Subscription;
 
 class PaymentController extends Controller
 {
 
+    public function index(Request $request)
+    {
+        $subscription_id = $request->session()->get('subscription_id');
+        $items = [];
+        $total = 0;
+
+        if ($subscription_id) {
+            $subscription = Subscription::findOrFail($subscription_id);
+
+            $total += $subscription->price;
+
+            $items[] = [
+                'name' => $subscription->name,
+                'price' => $subscription->price,
+                'cnt' => 1,
+                'total' => $subscription->price,
+            ];
+        }
+
+        return view('buy', compact('items', 'total'));
+    }
+
     public function checkout(Request $request) {
+        $subscription_id = $request->session()->get('subscription_id');
+        $total = 0;
+        if ($subscription_id) {
+            $subscription = Subscription::findOrFail($subscription_id);
+            $total += $subscription->price;
+        }
+
+
         $data = [
             'CardCryptogramPacket' => $request->code,
-            'Amount' => '10',
+            'Amount' => $total,
             'Currency' => 'KZT',
             'IpAddress' => config('services.payment.ip_address'),
             'Name' => $request->name,
@@ -28,5 +59,7 @@ class PaymentController extends Controller
 
         $result = curl_exec($ch);
         return $result;
+
+        $request->session()->forget('subscription_id');
     }
 }
