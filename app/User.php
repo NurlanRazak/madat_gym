@@ -76,7 +76,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function subscriptions()
     {
         return $this->belongsToMany(Subscription::class, 'subscription_user', 'user_id', 'subscription_id')
-                    ->withPivot(['created_at', 'id'])
+                    ->withPivot(['created_at', 'id', 'bought_at'])
                     ->using(SubscriptionUser::class);
     }
 

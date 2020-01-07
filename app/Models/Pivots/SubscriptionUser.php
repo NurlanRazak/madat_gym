@@ -14,7 +14,7 @@ class SubscriptionUser extends Pivot
 
     protected $table = 'subscription_user';
     protected $fillable = ['user_id', 'subscription_id', 'created_at'];
-    // protected $dates = ['created_at'];
+    protected $dates = ['bought_at'];
 
     public function user()
     {

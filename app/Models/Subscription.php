@@ -40,7 +40,7 @@ class Subscription extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'subscription_user', 'subscription_id', 'user_id')
-                    ->withPivot(['id', 'created_at'])
+                    ->withPivot(['id', 'created_at', 'bought_at'])
                     ->using(SubscriptionUser::class);
     }
 
