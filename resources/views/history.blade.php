@@ -21,7 +21,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col">Товар</th>
                                             <th scope="col">Цена</th>
-                                            <th scope="col">Количество</th>
+                                            <th scope="col">Количество дней</th>
                                             <th scope="col">Стоимость</th>
                                             <th scope="col">Статус</th>
                                         </tr>
@@ -29,7 +29,7 @@
                                     <tbody>
                                         @foreach($subscriptions as $subscription)
                                             <tr>
-                                                <th scope="row">{{ count($subscriptions) }}</th>
+                                                <th scope="row">{{ $loop->iteration }}</th>
                                                 <td>{{ $subscription->name }}</td>
                                                 <td>{{ $subscription->price }}</td>
                                                 <td>{{ $subscription->days }}</td>
