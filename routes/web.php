@@ -17,6 +17,7 @@ Route::get('/test', function() {
 });
 
 Route::post('/checkout', 'PaymentController@checkout')->name('checkout');
+Route::post('/checkout/success', 'PaymentController@successCheckout')->name('checkout-success');
 
 // Route::view('/', 'starter')->name('starter');
 Route::get('large-compact-sidebar/dashboard/dashboard1', function () {

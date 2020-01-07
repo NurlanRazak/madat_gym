@@ -22,33 +22,17 @@ class SubscriptionController extends Controller
         $subscription = Subscription::findOrFail($request->subscription_id);
         $request->session()->put('subscription_id', $subscription->id);
 
-        $lastSubscription = $user->subscriptions()
-                                 ->whereRaw("DATE_ADD(subscription_user.created_at, INTERVAL subscriptions.days DAY) >= NOW()")
-                                 ->latest()
-                                 ->first();
-
-        $nextDate = \DB::raw('NOW()');
-        if($lastSubscription) {
-            $nextDate = \DB::raw("DATE_ADD(\"{$lastSubscription->pivot->created_at}\", INTERVAL {$lastSubscription->days} DAY)");
-        }
-
-        $subscriptionUser = SubscriptionUser::create([
-            'subscription_id' => $subscription->id,
-            'user_id' => $user->id,
-            'created_at' => $nextDate,
-        ]);
-
-        if ($user->programtraining) {
-            $cnt = $user->programtraining->activeprograms()
-            ->where('date_start', '<=', \DB::raw('NOW()'))
-            ->where('date_finish', '>=', \DB::raw('NOW()'))
-            ->count();
-
-            if($cnt > 0) {
-                return redirect(route('profile'));
-            }
-        }
-        return redirect(route('programs'));
+        // if ($user->programtraining) {
+        //     $cnt = $user->programtraining->activeprograms()
+        //     ->where('date_start', '<=', \DB::raw('NOW()'))
+        //     ->where('date_finish', '>=', \DB::raw('NOW()'))
+        //     ->count();
+        //
+        //     if($cnt > 0) {
+        //         return redirect(route('profile'));
+        //     }
+        // }
+        return redirect()->to('/buy');
     }
 
 }

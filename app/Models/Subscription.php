@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 use App\User;
 use App\Models\Pivots\SubscriptionUser;
+use App\Models\Purchase;
 
 class Subscription extends Model
 {
@@ -47,6 +48,12 @@ class Subscription extends Model
     {
         return $this->hasMany(SubscriptionUser::class, 'subscription_id');
     }
+
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class, 'subscription_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
