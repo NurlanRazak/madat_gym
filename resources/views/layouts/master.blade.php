@@ -35,6 +35,7 @@
         <script src="https://kit.fontawesome.com/d1edd4ad8f.js"></script>
         {{-- page specific css --}}
         @yield('page-css')
+        @yield('head-js')
     </head>
 
 

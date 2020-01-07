@@ -72,7 +72,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-8">
+      <form id="paymentForm" class="col-lg-8" autocomplete="off">
         <div class="card">
           <div class="card-body">
             <div class="card-title">Детали счета</div>
@@ -82,22 +82,26 @@
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="inputtext11" class="ul-form__label">Номер карты:</label>
-                    <input type="text" class="form-control" id="inputtext11" placeholder="Имя на карте" />
+                    <input type="text" class="form-control" id="inputtext11" placeholder="Номер карты" data-cp="cardNumber" />
                   </div>
                   <div class="form-group col-md-6">
                     <label for="inputEmail12" class="ul-form__label">Имя владельца:</label>
-                    <input type="text" class="form-control" id="inputEmail12" placeholder="VASYA PUPKIN" />
+                    <input type="text" class="form-control" id="inputEmail12" placeholder="VASYA PUPKIN" data-cp="name" />
                   </div>
                   <div class="form-group col-md-6">
                     <label for="inputtext11" class="ul-form__label">Действует до:</label>
-                    <input type="text" class="form-control" id="inputtext11" placeholder="мм/гг" />
+                    <input type="text" class="form-control" id="inputtext11" placeholder="мм" data-cp="expDateMonth" />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="inputtext11" class="ul-form__label">Действует до:</label>
+                    <input type="text" class="form-control" id="inputtext12" placeholder="мм/гг" data-cp="expDateYear" />
                   </div>
                   <div class="form-group col-md-6">
                     <label for="inputEmail12" class="ul-form__label">Код CVV:</label>
-                    <input type="text" class="form-control" id="inputEmail12" placeholder="CVC" />
+                    <input type="text" class="form-control" id="inputEmail12" placeholder="CVC" data-cp="cvv" />
                   </div>
                 </div>
-              </div>
+            </div>
             </div>
                 <a href="#">Договор оферты</a>
           </div>
@@ -105,23 +109,57 @@
             <div class="row">
               <div class="col-lg-12 ">
                 <img src="{{asset('assets/images/cp.jpg')}}" alt="">
-                <button type="button" class="btn btn-success m-1 float-right">
+                <button type="submit" class="btn btn-success m-1 float-right">
                   Оплатить
                 </button>
               </div>
             </div>
           </div>
         </div>
-      </div>
+    </form>
     </div>
   </section>
 
+@endsection
 
-
+@section('head-js')
+    <script src="https://widget.cloudpayments.ru/bundles/checkout"></script>
 @endsection
 
 @section('page-js')
+<script>
 
+let checkout;
 
+let createCryptogram = function () {
+    var result = checkout.createCryptogramPacket();
+
+    if (result.success) {
+        $.post('/checkout', {
+            token: result.packet
+        });
+    }
+    else {
+        // найдены ошибки в введённых данных, объект `result.messages` формата:
+        // { name: "В имени держателя карты слишком много символов", cardNumber: "Неправильный номер карты" }
+        // где `name`, `cardNumber` соответствуют значениям атрибутов `<input ... data-cp="cardNumber">`
+       for (var msgName in result.messages) {
+           alert(result.messages[msgName]);
+       }
+    }
+};
+
+$('#paymentForm').submit(function(e) {
+    e.preventDefault();
+    checkout = new cp.Checkout(
+        // public id из личного кабинета
+        "test_api_00000000000000000000001",
+        // тег, содержащий поля данных карты
+        document.getElementById("paymentForm")
+    );
+    createCryptogram()
+})
+
+</script>
 
 @endsection
