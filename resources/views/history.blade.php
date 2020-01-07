@@ -33,7 +33,7 @@
                                                 <td>{{ $subscription->name }}</td>
                                                 <td>{{ $subscription->price }}</td>
                                                 <td>{{ $subscription->days }}</td>
-                                                <td>{{ $subscription->created_at->format('d.m.Y') }}</td>
+                                                <td>{{ $subscription->pivot->bought_at ? $subscription->pivot->bought_at->format('d.m.Y') : "-" }}</td>
                                                 <td><span class="badge badge-success">
                                                     @php
                                                         $is_active = (
