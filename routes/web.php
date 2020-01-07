@@ -16,6 +16,7 @@ Route::get('/test', function() {
     dd($user);
 });
 
+Route::post('/checkout', 'PaymentController@checkout')->name('checkout');
 
 // Route::view('/', 'starter')->name('starter');
 Route::get('large-compact-sidebar/dashboard/dashboard1', function () {

@@ -18,8 +18,8 @@ class CheckProgram
 
         $user = $request->user();
 
-        if (!$user->programtraining_id || !$user->programtraining) {
-            return redirect(route('programs'));            
+        if (!$user->programtraining) {
+            return redirect(route('programs'));
         }
 
         $cnt = $user->programtraining->activeprograms()

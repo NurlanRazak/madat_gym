@@ -269,6 +269,10 @@ class User extends Authenticatable implements MustVerifyEmail
             return $this->statistics;
         }
 
+        if (!$this->programtraining) {
+            return 0;
+        }
+
         $duration = $this->programtraining->duration;
         $all = $duration * 3;
         $passed = $this->doneExersices()->count();

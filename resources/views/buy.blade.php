@@ -72,7 +72,9 @@
           </div>
         </div>
       </div>
-      <form id="paymentForm" class="col-lg-8" autocomplete="off">
+      <form id="paymentForm" class="col-lg-8" autocomplete="off" action="{{ route('checkout') }}" method="POST">
+          @csrf
+          <input type="hidden" name="code" id="ch-code" />
         <div class="card">
           <div class="card-body">
             <div class="card-title">Детали счета</div>
@@ -109,7 +111,7 @@
             <div class="row">
               <div class="col-lg-12 ">
                 <img src="{{asset('assets/images/cp.jpg')}}" alt="">
-                <button type="submit" class="btn btn-success m-1 float-right">
+                <button type="button" id="paymentBtn" class="btn btn-success m-1 float-right">
                   Оплатить
                 </button>
               </div>
@@ -135,9 +137,8 @@ let createCryptogram = function () {
     var result = checkout.createCryptogramPacket();
 
     if (result.success) {
-        $.post('/checkout', {
-            token: result.packet
-        });
+        $('#ch-code').val(result.packet)
+        $('#paymentForm').submit()
     }
     else {
         // найдены ошибки в введённых данных, объект `result.messages` формата:
@@ -149,7 +150,7 @@ let createCryptogram = function () {
     }
 };
 
-$('#paymentForm').submit(function(e) {
+$('#paymentBtn').click(function(e) {
     e.preventDefault();
     checkout = new cp.Checkout(
         // public id из личного кабинета
