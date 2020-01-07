@@ -22,19 +22,27 @@
                                             <th scope="col">Товар</th>
                                             <th scope="col">Цена</th>
                                             <th scope="col">Количество</th>
-                                            <th scope="col">Стоимость</th>
+                                            <th scope="col">Дата покупки</th>
                                             <th scope="col">Статус</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($subscriptions as $subscription)
                                             <tr>
-                                                <th scope="row">{{ count($subscriptions) }}</th>
+                                                <th scope="row">{{ $loop->iteration }}</th>
                                                 <td>{{ $subscription->name }}</td>
                                                 <td>{{ $subscription->price }}</td>
                                                 <td>{{ $subscription->days }}</td>
-                                                <td>{{ $subscription->price }}</td>
-                                                <td><span class="badge badge-success">{{ ($subscription->expires >= \Carbon\Carbon::now()) ? trans('admin.on') : trans('admin.off') }}</span></td>
+                                                <td>{{ $subscription->created_at->format('d.m.Y') }}</td>
+                                                <td><span class="badge badge-success">
+                                                    @php
+                                                        $is_active = (
+                                                            $subscription->pivot->created_at->format('Y-m-d') <= \Carbon\Carbon::now()->format('Y-m-d') &&
+                                                            $subscription->pivot->created_at->addDays($subscription->days)->format('Y-m-d') > \Carbon\Carbon::now()->format('Y-m-d')
+                                                        );
+                                                    @endphp
+                                                    {{ $is_active ? trans('admin.on') : trans('admin.off') }}
+                                                </span></td>
 
                                             </tr>
                                         @endforeach
