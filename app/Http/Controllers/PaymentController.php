@@ -46,6 +46,7 @@ class PaymentController extends Controller
             'IpAddress' => config('services.payment.ip_address'),
             'Name' => $request->name,
         ];
+
         $data_string = json_encode($data);
 
         $ch = curl_init('https://api.cloudpayments.ru/payments/cards/charge');
