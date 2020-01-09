@@ -286,8 +286,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getRealProgramtrainingStartAttribute()
     {
-        if ($this->subscriptions()->count() > 1) {
-            $subscriptions = $this->subscriptions()->orderBy('pivot_created_at', 'desc')->get();
+        if ($this->subscriptions()->where('bought_at', '>=', $this->programtraining_start)->count() > 1) {
+            $subscriptions = $this->subscriptions()->where('bought_at', '>=', $this->programtraining_start)->orderBy('pivot_created_at', 'desc')->get();
             $diff = (strtotime($subscriptions[0]->pivot->created_at->format('Y-m-d h:m')) - strtotime($subscriptions[1]->pivot->created_at->format('Y-m-d h:m')))/60/60/24 - $subscriptions[0]->days;
 
             return \Carbon\Carbon::parse($this->programtraining_start)->addDays($diff);
