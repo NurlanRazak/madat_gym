@@ -18,7 +18,6 @@
     @foreach($equipments as $equipment)
         @foreach($equipment->lists as $list)
             <li>{{ $list->name }}</li>
-            @endforeach
         @endforeach
     @endforeach
 </ol>
