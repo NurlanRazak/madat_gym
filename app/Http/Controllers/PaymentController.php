@@ -86,7 +86,7 @@ class PaymentController extends Controller
         }
 
         // Back with message
-        return response()->back();
+        return redirect()->back()->with(['message' => $result->CardHolderMessage, 'type' => 'error']);
     }
 
     public function successCheckout(Request $request)

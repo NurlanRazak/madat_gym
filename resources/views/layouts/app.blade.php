@@ -19,7 +19,14 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+            <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+            @if(Session::has('message'))
+                <script>
+                    toastr.{{ Session::get('type', 'info') }}("{{ Session::get('message') }}");
+                </script>
+            @endif
     <style>
 	@font-face{
 	font-family: HelveticaLight;

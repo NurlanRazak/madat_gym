@@ -15,6 +15,8 @@
         <link id="gull-theme" rel="stylesheet" href="{{  asset('assets/styles/css/themes/lite-purple.css')}}">
         <link rel="stylesheet" href="{{asset('assets/styles/vendor/perfect-scrollbar.css')}}">
         <link rel="stylesheet" href="{{asset('assets/styles/css/owl.carousel.min.css')}}">
+        <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
         <style>
             .owl-nav{
                 position: absolute;
@@ -107,6 +109,12 @@
 
         <script src="{{asset('assets/js/customizer.script.js')}}"></script>
 
+                <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+                @if(Session::has('message'))
+                    <script>
+                        toastr.{{ Session::get('type', 'info') }}("{{ Session::get('message') }}");
+                    </script>
+                @endif
 
 
         <script>
