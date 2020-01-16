@@ -80,7 +80,7 @@ class PaymentController extends Controller
             return $this->successPurchase($purchase);
         }
 
-        if ($result->Model && $result->Model->AcsUrl && $result->Model->PaReq) {
+        if ($result->Model && isset($result->Model->AcsUrl) && isset($result->Model->PaReq)) {
             $request->session()->forget('subscription_id');
             return view('success_payment', compact('result', 'purchase'));
         }
