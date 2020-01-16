@@ -56,6 +56,9 @@ class PaymentController extends Controller
             'Currency' => 'KZT',
             'IpAddress' => config('services.payment.ip_address'),
             'Name' => $request->name,
+            'Email' => $user->email,
+            'AccountId' => $user->id,
+            'InvoiceId' => $purchase->id,
         ];
 
         $data_string = json_encode($data);
