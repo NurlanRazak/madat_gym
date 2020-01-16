@@ -21,6 +21,8 @@ use App\Models\Pivots\SubscriptionUser;
 use App\DoneExersice;
 use App\View;
 use App\Session;
+use Image;
+use Storage;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -301,39 +303,43 @@ class User extends Authenticatable implements MustVerifyEmail
         return \Carbon\Carbon::parse($this->programtraining_start);
     }
 
-
-    public function setImageAttribute($value)
+    public function setImageAttribute($value, $attribute_name = 'image')
     {
-        $attribute_name = "image";
-        $disk = 'uploads'; // or use your own disk, defined in config/filesystems.php
-        $destination_path = "users/employee"; // path relative to the disk above
+        $disk = "uploads";
+        $destination_path = "users/employee";
 
-        // if the image was erased
         if ($value==null) {
-            // delete the image from disk
-            \Storage::disk($disk)->delete($this->{$attribute_name});
-
-            // set null in the database column
+            if (isset($this->attributes[$attribute_name])) {
+                try {
+                    if (strpos($this->attributes[$attribute_name], "$destination_path")) {
+                         $path = str_replace(asset($destination_path).'/', '', $this->attributes[$attribute_name]);
+                        \Storage::disk($disk)->delete($path);
+                    }
+                } catch (\Excepetion $e) {}
+            }
             $this->attributes[$attribute_name] = null;
         }
 
-        // if a base64 was sent, store it in the db
         if (starts_with($value, 'data:image'))
         {
-            // 0. Make the image
-            $image = \Image::make($value)->encode('jpg', 90);
-            // 1. Generate a filename.
+            if (isset($this->attributes[$attribute_name])) {
+                try {
+                    if (strpos($this->attributes[$attribute_name], "$destination_path")) {
+                         $path = str_replace(asset($destination_path).'/', '', $this->attributes[$attribute_name]);
+                        \Storage::disk($disk)->delete($path);
+                    }
+                } catch (\Excepetion $e) {}
+            }
+
+            $image = Image::make($value);
             $filename = md5($value.time()).'.jpg';
-            // 2. Store the image on disk.
-            \Storage::disk($disk)->put($destination_path.'/'.$filename, $image->stream());
-            // 3. Save the public path to the database
-        // but first, remove "public/" from the path, since we're pointing to it from the root folder
-        // that way, what gets saved in the database is the user-accesible URL
+            Storage::disk($disk)->put($destination_path.'/'.$filename, $image->stream());
+
             $public_destination_path = Str::replaceFirst('public/', '', $destination_path);
             $this->attributes[$attribute_name] = $public_destination_path.'/'.$filename;
-        } else {
-            $this->attributes[$attribute_name] = \Storage::disk($disk)->put($destination_path, $value);
+
         }
     }
+
 
 }
