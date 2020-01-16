@@ -85,8 +85,11 @@ class PaymentController extends Controller
             return view('success_payment', compact('result', 'purchase'));
         }
 
-        // Back with message
-        return redirect()->back()->with(['message' => $result->CardHolderMessage, 'type' => 'error']);
+        if ($result->Model && isset($result->Model->CardHolderMessage)) {
+            // Back with message
+            return redirect()->back()->with(['message' => $result->Model->CardHolderMessage, 'type' => 'error']);
+        }
+        return redirect()->back()->with(['message' => 'Упс... Что то пошло не так :(', 'type' => 'error']);
     }
 
     public function successCheckout(Request $request)
