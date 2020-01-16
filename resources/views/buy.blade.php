@@ -102,7 +102,7 @@
                   </div>
                   <div class="form-group col-md-6">
                     <label for="inputEmail12" class="ul-form__label">Код CVV:</label>
-                    <input type="number" class="form-control" id="inputEmail12" placeholder="CVC" data-cp="cvv" step="1" min="100" max="999" required />
+                    <input type="text" size="3" pattern="^\d{3}$" title="123" class="form-control" id="inputEmail12" placeholder="CVC" data-cp="cvv"  required />
                   </div>
                 </div>
             </div>
