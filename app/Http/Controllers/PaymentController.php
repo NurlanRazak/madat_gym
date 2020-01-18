@@ -77,7 +77,7 @@ class PaymentController extends Controller
 
         if ($result->Success) {
             $request->session()->forget('subscription_id');
-            return $this->successPurchase($purchase);
+	    return $this->successPurchase($purchase);
         }
 
         if ($result->Model && isset($result->Model->AcsUrl) && isset($result->Model->PaReq)) {
