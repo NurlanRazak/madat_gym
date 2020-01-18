@@ -94,10 +94,40 @@ class PaymentController extends Controller
 
     public function successCheckout(Request $request)
     {
+        if(!$request->MD || !$request->PaRes) {
+            return redirect()->to('/')->with(['message' => 'Упс... Что то пошло не так :(', 'type' => 'error']);
+        }
         $purchase_id = $request->purchase_id;
         $purchase = Purchase::findOrFail($purchase_id);
 
-        return $this->successPurchase($purchase);
+        $data = [
+            'TransactionId' => $request->MD,
+            'PaRes' => $request->PaRes,
+        ];
+        $data_string = json_encode($data);
+
+        $ch = curl_init('https://api.cloudpayments.ru/payments/cards/post3ds');
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+        ));
+        curl_setopt($ch, CURLOPT_USERPWD, config('services.payment.public_id').":".config('services.payment.api_key'));
+
+        $result = curl_exec($ch);
+        $result = json_decode($result);
+
+        if ($result->Success) {
+            return $this->successPurchase($purchase);
+        }
+
+        if ($result->Model && isset($result->Model->CardHolderMessage)) {
+            // Back with message
+            return redirect()->back()->with(['message' => $result->Model->CardHolderMessage, 'type' => 'error']);
+        }
+
+        return redirect()->to('/')->with(['message' => 'Упс... Что то пошло не так :(', 'type' => 'error']);
     }
 
     private function successPurchase(Purchase $purchase)
@@ -135,8 +165,7 @@ class PaymentController extends Controller
         $message = [$subscription->name, $date_start, $date_finish];
         $user->notify(new PaymentNotify($message));
 
-
-        return redirect()->to('/');
+        return redirect()->to('/')->with(['message' => 'Оплата прошла успешно!', 'type' => 'success']);
     }
 
 }
