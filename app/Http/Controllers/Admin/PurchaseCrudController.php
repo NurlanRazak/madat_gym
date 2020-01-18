@@ -104,7 +104,7 @@ class PurchaseCrudController extends CrudController
                 'name' => 'start_date',
                 'label' => 'Дата покупки',
                 'type' => "datetime",
-                'format' => 'l h:m',
+                'format' => 'l HH:mm',
             ],
         ]);
 
