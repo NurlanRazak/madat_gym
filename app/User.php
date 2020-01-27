@@ -336,7 +336,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
             $public_destination_path = Str::replaceFirst('public/', '', $destination_path);
             $this->attributes[$attribute_name] = $public_destination_path.'/'.$filename;
-
+        } else if($value) {
+            $this->attributes[$attribute_name] = Storage::disk($disk)->put($destination_path, $value);
         }
     }
 

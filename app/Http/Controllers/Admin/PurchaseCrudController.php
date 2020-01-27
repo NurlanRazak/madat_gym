@@ -48,6 +48,24 @@ class PurchaseCrudController extends CrudController
             $this->crud->addClause('where', 'typepurchase_id', $value);
         });
         $this->crud->addFilter([
+            'name' => 'start_date',
+            'label' => 'Дата',
+            'type' => 'date_range',
+            'label_from' => 'с',
+            'label_to' => 'до'
+        ],
+        false,
+        function ($value) {
+            $range = json_decode($value);
+            if ($range->from) {
+                $this->crud->addClause('where', 'start_date', '>=', $range->from);
+            }
+            if ($range->to) {
+                $this->crud->addClause('where', 'start_date', '<=', $range->to);
+            }
+        });
+
+        $this->crud->addFilter([
             'name' => 'status',
             'label' => 'Статус',
             'type' => 'select2',
