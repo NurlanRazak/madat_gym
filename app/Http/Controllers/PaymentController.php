@@ -53,7 +53,7 @@ class PaymentController extends Controller
         $data = [
             'CardCryptogramPacket' => $request->code,
             'Amount' => $total,
-            'Currency' => 'KZT',
+            'Currency' => 'USD',
             'IpAddress' => config('services.payment.ip_address'),
             'Name' => $request->name,
             'Email' => $user->email,
