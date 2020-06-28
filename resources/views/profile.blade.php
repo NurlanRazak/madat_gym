@@ -176,6 +176,18 @@
                                         Почтовый адрес - {{ (($user->email_verified_at != null) ? 'подтвержден' : 'не был подтвержден' ) }}
 
                                     </div>
+
+                                    <div class="alert alert-warning" role="alert">
+                                        История покупок
+
+                                        @foreach($user->subscriptions as $subscription)
+                                            <p> #{{ $loop->iteration }} Название подписки - {{ $subscription->name }}</p>
+                                            <p>Цена - {{ $subscription->price }}</p>
+                                            <p>Дата истечения срока действия - {{ $subscription->expires->format('d M Y') }}</p>
+                                            <p>Дата покупки -  {{ $subscription->created_at->format('d M Y') }}
+                                            <br>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
 
