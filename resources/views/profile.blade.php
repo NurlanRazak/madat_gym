@@ -171,6 +171,11 @@
                                     </div>
                                     <a href="{{ route('subscription') }}" class="btn btn-block btn-warning">ПРОДЛИТЬ ПОДПИСКУ</a>
                                     {{-- <a href="#" class="btn btn-block btn-danger">ОТМЕНИТЬ ПОДПИСКУ</a> --}}
+                                    <br>
+                                    <div class="alert alert-warning" role="alert">
+                                        Почтовый адрес - {{ (($user->email_verified_at != null) ? 'подтвержден' : 'не был подтвержден' ) }}
+
+                                    </div>
                                 </div>
                             </div>
 
