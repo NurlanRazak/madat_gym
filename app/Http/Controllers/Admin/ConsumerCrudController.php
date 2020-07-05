@@ -122,6 +122,10 @@ class ConsumerCrudController extends CrudController
                 'type'  => 'text',
             ],
             [
+                'name' => 'email_verified_at',
+                'label' => trans('admin.email_verified_at'),
+            ],
+            [
                 'name'  => 'email',
                 'label' => trans('backpack::permissionmanager.email'),
                 'type'  => 'email',
