@@ -183,8 +183,8 @@
                                         @foreach($user->subscriptions as $subscription)
                                             <p> #{{ $loop->iteration }} Название подписки - {{ $subscription->name }}</p>
                                             <p>Цена - {{ $subscription->price }}</p>
-                                            <p>Дата истечения срока действия - {{ $subscription->expires->format('d M Y') }}</p>
-                                            <p>Дата покупки -  {{ $subscription->created_at->format('d M Y') }}
+                                            <p>Дата истечения срока действия - {{ Date::parse($subscription->expires)->format('d M Y') }}</p>
+                                            <p>Дата покупки -  {{ Date::parse($subscription->created_at)->format('d M Y') }}
                                             <br>
                                         @endforeach
                                     </div>
