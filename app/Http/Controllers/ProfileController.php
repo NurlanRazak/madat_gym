@@ -7,6 +7,7 @@ use App\Models\Userparameter;
 use Jenssegers\Date\Date;
 use App\User;
 use App\Models\Programtraining;
+use App\Models\ProgramHistory;
 use Hash;
 use Auth;
 
@@ -36,12 +37,16 @@ class ProfileController extends Controller
 
         $userparameters = Userparameter::where('user_id', $user->id)->get();
 
+        $program_histories = Programtraining::whereHas('programHistories', function($query) use($user) {
+            $query->where('user_id', $user->id);
+        })->get();
+
         $programs = Programtraining::whereHas('activeprograms', function($query) {
             $query->where('date_start', '<=', \DB::raw('NOW()'))
                   ->where('date_finish', '>=', \DB::raw('NOW()'));
         })->get();
 
-        return view('profile', ['user' => $user, 'dates' => $dates, 'userparameters' => $userparameters, 'programs' => $programs]);
+        return view('profile', ['user' => $user, 'program_histories' => $program_histories, 'dates' => $dates, 'userparameters' => $userparameters, 'programs' => $programs]);
     }
 
     public function imageUpload(Request $request)

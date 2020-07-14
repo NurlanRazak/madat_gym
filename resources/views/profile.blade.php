@@ -189,6 +189,15 @@
                                         @endforeach
                                     </div>
                                 </div>
+                                <div class="col-lg-6 col-12">
+                                    <div class="alert alert-warning" role="alert">
+                                        Список программ
+                                        @foreach($program_histories as $program)
+                                            <p>#{{ $loop->iteration }} Название: {{ $program->name }}. Описание: {{ $program->description }}</p>
+
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="alert alert-warning" role="alert">
