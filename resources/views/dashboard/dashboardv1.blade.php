@@ -23,6 +23,8 @@
         $eats_data[$day] = $eats;
     }
     $eats = $eats_data;
+
+
 @endphp
 @section('page-css')
 
@@ -272,9 +274,7 @@
                 <div class="col-md-12">
                     <div class="card mb-4 o-hidden">
                         <div class="card-body">
-                            <div id="calendar"></div>
-
-
+                            <div id="calendar" data-events="{{ json_encode($events) }}"></div>
                         </div>
                     </div>
                 </div>

@@ -44,60 +44,65 @@ $(document).ready(function() {
         eventLimit: true,
 
 
-        events: [{
-            title: "Break time",
-            start: new Date(year, month, 1),
-            allDay: !0,
-            color: "#ffc107"
-        }, {
-            title: "Office Hour",
-            start: new Date(year, month, 3)
-        }, {
-            title: "Work on a Project",
-            start: new Date(year, month, 9),
-            end: new Date(year, month, 12),
-            allDay: !0,
-            color: "#d22346"
-        }, {
-            title: "Work on a Project",
-            start: new Date(year, month, 17),
-            end: new Date(year, month, 19),
-            allDay: !0,
-            color: "#d22346"
-        }, {
-            id: 999,
-            title: "Go to Long Drive",
-            start: new Date(year, month, date - 1, 15, 0)
-        }, {
-            id: 999,
-            title: "Go to Long Drive",
-            start: new Date(year, month, date + 3, 15, 0)
-        }, {
-            title: "Work on a New Project",
-            start: new Date(year, month, date - 3),
-            end: new Date(year, month, date - 3),
-            allDay: !0,
-            color: "#ffc107"
-        }, {
-            title: "Food ",
-            start: new Date(year, month, date + 7, 15, 0),
-            color: "#4caf50"
-        }, {
-            title: "Go to Library",
-            start: new Date(year, month, date, 8, 0),
-            end: new Date(year, month, date, 14, 0),
-            color: "#ffc107"
-        }, {
-            title: "Go for Walk",
-            start: new Date(year, month, 25),
-            end: new Date(year, month, 27),
-            allDay: !0,
-            color: "#ffc107"
-        }, {
-            title: "Work on a Project",
-            start: new Date(year, month, date + 8, 20, 0),
-            end: new Date(year, month, date + 8, 22, 0)
-        }]
+        events: $('#calendar').data('events').map(function(item) {
+            item.start =  new Date(Date.parse(item.start))
+            item.end =  new Date(Date.parse(item.end))
+            return item
+        })
+        // [{
+        //     title: "Break time",
+        //     start: new Date(year, month, 1),
+        //     allDay: !0,
+        //     color: "#ffc107"
+        // }, {
+        //     title: "Office Hour",
+        //     start: new Date(year, month, 3)
+        // }, {
+        //     title: "Work on a Project",
+        //     start: new Date(year, month, 9),
+        //     end: new Date(year, month, 12),
+        //     allDay: !0,
+        //     color: "#d22346"
+        // }, {
+        //     title: "Work on a Project",
+        //     start: new Date(year, month, 17),
+        //     end: new Date(year, month, 19),
+        //     allDay: !0,
+        //     color: "#d22346"
+        // }, {
+        //     id: 999,
+        //     title: "Go to Long Drive",
+        //     start: new Date(year, month, date - 1, 15, 0)
+        // }, {
+        //     id: 999,
+        //     title: "Go to Long Drive",
+        //     start: new Date(year, month, date + 3, 15, 0)
+        // }, {
+        //     title: "Work on a New Project",
+        //     start: new Date(year, month, date - 3),
+        //     end: new Date(year, month, date - 3),
+        //     allDay: !0,
+        //     color: "#ffc107"
+        // }, {
+        //     title: "Food ",
+        //     start: new Date(year, month, date + 7, 15, 0),
+        //     color: "#4caf50"
+        // }, {
+        //     title: "Go to Library",
+        //     start: new Date(year, month, date, 8, 0),
+        //     end: new Date(year, month, date, 14, 0),
+        //     color: "#ffc107"
+        // }, {
+        //     title: "Go for Walk",
+        //     start: new Date(year, month, 25),
+        //     end: new Date(year, month, 27),
+        //     allDay: !0,
+        //     color: "#ffc107"
+        // }, {
+        //     title: "Work on a Project",
+        //     start: new Date(year, month, date + 8, 20, 0),
+        //     end: new Date(year, month, date + 8, 22, 0)
+        // }]
     });
 
 

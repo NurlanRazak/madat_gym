@@ -136,6 +136,47 @@ class Programtraining extends Model
     {
         return $this->users()->whereDoesntHave('roles')->count();
     }
+
+    public function getEvents($start_date)
+    {
+        $events = [];
+
+        foreach($this->trainings()->active()->get() as $training) {
+            $day = \Carbon\Carbon::parse($start_date)->addDays($training->day_number - 1);
+            $events[] = [
+                'title' => $training->name,
+                'allDay' => false,
+                'start' => $day->setTime(16, 0)->format('D M d Y H:i:s O'),
+                'end' => $day->setTime(17, 0)->format('D M d Y H:i:s O'),
+                'color' => '#d22346',
+            ];
+        }
+        foreach($this->relaxprogram->relaxtrainings()->active()->get() as $relaxtraining) {
+            $day = \Carbon\Carbon::parse($start_date)->addDays($relaxtraining->number_day - 1);
+            $events[] = [
+                'title' => $relaxtraining->name,
+                'allDay' => false,
+                'start' => $day->setTime(explode(':', $relaxtraining->time)[0] ?? 0, explode(':', $relaxtraining->time)[1] ?? 0)->format('D M d Y H:i:s O'),
+                'end' => $day->setTime(explode(':', $relaxtraining->time)[0] ?? 0, explode(':', $relaxtraining->time)[1] ?? 0)->addMinutes(15)->format('D M d Y H:i:s O'),
+                'color' => '#ffc107',
+            ];
+        }
+
+        foreach($this->foodprogram->planeats()->active()->get() as $planeat) {
+            $day = \Carbon\Carbon::parse($start_date)->addDays($planeat->days - 1);
+            foreach($planeat->eathours ?? [] as $eathour) {
+                $events[] = [
+                    'title' => $eathour->name,
+                    'allDay' => false,
+                    'start' => $day->setTime(explode(':', $eathour->hour_start)[0] ?? 0, explode(':', $eathour->hour_start)[1] ?? 0)->format('D M d Y H:i:s O'),
+                    'end' => $day->setTime(explode(':', $eathour->hour_finish)[0] ?? 0, explode(':', $eathour->hour_finish)[1] ?? 0)->format('D M d Y H:i:s O'),
+                    'color' => '#4caf50',
+                ];
+            }
+        }
+
+        return $events;
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

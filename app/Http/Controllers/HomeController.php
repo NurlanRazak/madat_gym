@@ -116,8 +116,8 @@ class HomeController extends Controller
             ]);
         }
 
-
         return view('dashboard.dashboardv1', [
+            'events' => $user->programtraining->getEvents($user->real_programtraining_start),
             'user' => $user,
             'time' => $time,
             'week' => $week,
