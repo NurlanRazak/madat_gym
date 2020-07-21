@@ -177,6 +177,30 @@
                                     </div>
                                     <a href="{{ route('subscription') }}" class="btn btn-block btn-warning">ПРОДЛИТЬ ПОДПИСКУ</a>
                                     {{-- <a href="#" class="btn btn-block btn-danger">ОТМЕНИТЬ ПОДПИСКУ</a> --}}
+                                    <br>
+                                    <div class="alert alert-warning" role="alert">
+                                        Почтовый адрес - {{ (($user->email_verified_at != null) ? 'подтвержден' : 'не был подтвержден' ) }}
+                                    </div>
+
+                                    <div class="alert alert-warning" role="alert">
+                                        История покупок
+                                        @foreach($user->subscriptions as $subscription)
+                                            <p> #{{ $loop->iteration }} Название подписки - {{ $subscription->name }}</p>
+                                            <p>Цена - {{ $subscription->price }}</p>
+                                            <p>Дата истечения срока действия - {{ Date::parse($subscription->expires)->format('d M Y') }}</p>
+                                            <p>Дата покупки -  {{ Date::parse($subscription->created_at)->format('d M Y') }}
+                                            <br>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                    <div class="alert alert-warning" role="alert">
+                                        Список программ
+                                        @foreach($program_histories as $program)
+                                            <p>#{{ $loop->iteration }} Название: {{ $program->name }}. Описание: {{ $program->description }}</p>
+
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
 

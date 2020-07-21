@@ -23,4 +23,4 @@
 </ol>
 <br>
 <h4>Желаем достижения новых высот!</h4>
-<small>Комада MAG.</small>
+<small>Комада Madatgym.</small>
