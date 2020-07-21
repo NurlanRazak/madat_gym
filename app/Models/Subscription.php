@@ -89,6 +89,20 @@ class Subscription extends Model
         ];
     }
 
+    public static function getCurrencyIcons()
+    {
+        return [
+            static::KZT => '₸',
+            static::USD => '$',
+            static::EUR => '€',
+        ];
+    }
+
+    public function getCurrencyIcon()
+    {
+        return static::getCurrencyIcons()[$this->currency];
+    }
+
     public function getCurrencyKey(int $currency)
     {
         return static::getCurrencyKeys()[$currency];

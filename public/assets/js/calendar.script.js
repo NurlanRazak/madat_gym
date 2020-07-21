@@ -27,11 +27,6 @@ $(document).ready(function() {
 
     /* initialize the calendar
     -----------------------------------------------------------------*/
-    var newDate = new Date,
-        date = newDate.getDate(),
-        month = newDate.getMonth(),
-        year = newDate.getFullYear();
-
     $('#calendar').fullCalendar({
         header: {
             left: 'prev,next today',
