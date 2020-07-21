@@ -22,11 +22,15 @@ class Purchase extends Model
     const PAID = 1;
     const NOTPAID = 0;
 
+    const KZT = 0;
+    const USD = 1;
+    const EUR = 2;
+
     protected $table = 'purchases';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['user_id', 'typepurchase_id', 'comment', 'status', 'start_date', 'subscription_id', 'programtraining_id'];
+    protected $fillable = ['user_id', 'typepurchase_id', 'comment', 'status', 'start_date', 'subscription_id', 'programtraining_id', 'currency'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -66,11 +70,35 @@ class Purchase extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+
     /*
     |--------------------------------------------------------------------------
     | ACCESORS
     |--------------------------------------------------------------------------
     */
+    public static function getCurrencyOptions()
+    {
+        return [
+            static::KZT => 'Тенге',
+            static::USD => 'Доллар',
+            static::EUR => 'Евро',
+        ];
+    }
+
+    public static function getCurrencyKeys()
+    {
+        return [
+            static::KZT => 'KZT',
+            static::USD => 'USD',
+            static::EUR => 'EUR',
+        ];
+    }
+
+    public function getCurrencyKey(int $currency)
+    {
+        return static::getCurrencyKeys()[$currency];
+    }
+
     public static function getConsumerOptions() : array
     {
         return \App\User::whereDoesntHave('roles')->pluck('email', 'id')->toArray();
