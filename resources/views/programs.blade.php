@@ -30,7 +30,7 @@
                                                             <div class="ul-pricing__list">
                                                                <p>{{ $program->description }} </p>
                                                             </div>
-                                                            <form action="{{ route('post-program') }}" method="POST">
+                                                            <form action="{{ ((int)$program->price) ? route('buy-program') : route('post-program') }}" method="POST">
                                                                 @csrf
                                                                 <input type="hidden" name="programtraining_id" value="{{ $program->id }}"/>
                                                                 <button type="button" onclick="changeProgram(this);" class="btn btn-lg btn-primary btn-rounded m-1">Выбрать и продолжить</button>
