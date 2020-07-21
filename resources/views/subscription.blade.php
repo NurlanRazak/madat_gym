@@ -24,9 +24,6 @@
                                 @foreach($subscriptions as $subscription)
                                     <div class="col-md-12">
                                         <div class="ul-pricing__table-1">
-                                            <div class="ul-pricing__image card-icon-bg-primary">
-                                                <i class="i-Bicycle1"></i>
-                                            </div>
                                             <div class="ul-pricing__title">
                                                 <h2 class="heading text-primary">{{ $subscription->name }}</h2>
                                             </div>

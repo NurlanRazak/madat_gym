@@ -24,16 +24,28 @@
     }
     $eats = $eats_data;
 @endphp
+@section('page-css')
+
+  <link rel="stylesheet" href="{{asset('assets/styles/vendor/calendar/fullcalendar.min.css')}}">
+@endsection
 @section('main-content')
             <div class="breadcrumb">
                 <h1>Приветствуем, {{ $user->name }}!</h1>
-                <ul>
+                <ul id="nav-tab" role="tablist">
                     <li>Сегодня: {{ $time }}</li>
+                    <li>Текущая программа: <b>Похудение после беременности</b></li>
                 </ul>
             </div>
             <div class="separator-breadcrumb border-top"></div>
-
-            <div class="row">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Сегодня</a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Календарь</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                       <div class="card-body">
@@ -94,6 +106,7 @@
                                             <div class="card-body">
                                                 @foreach($trainings[$i] ?? [] as  $training)
                                                     <h2> {{ $training->name }}</h2>
+                                                    <h4>16:00 - 17:00</h4>
                                                     @if($training->user)
                                                         <h4> {{ $training->user->name }} </h4>
                                                     @endif
@@ -107,14 +120,17 @@
                                                                     </h2>
                                                                     <p>{{ $exercise->short_desc }}</p>
                                                                     <div class="row">
-                                                                        <div class="col-12 col-lg-4 text-lg-center">
+                                                                        <div class="col-12 col-lg-3 text-lg-center">
                                                                             <div class="text-lg-center">Количество подходов: <b>{{ $training->approaches_number ?? '-' }}</b></div>
                                                                         </div>
-                                                                        <div class="col-12 col-lg-4 text-lg-center">
+                                                                        <div class="col-12 col-lg-3 text-lg-center">
                                                                             <div class="text-lg-center">Количество повторений: <b>{{ $training->repetitions_number ?? '-' }}</b></div>
                                                                         </div>
-                                                                        <div class="col-12 col-lg-4 text-lg-center">
+                                                                        <div class="col-12 col-lg-3 text-lg-center">
                                                                             <div class="text-lg-center">Вес: <b>{{ $training->weight ?? '-' }}</b></div>
+                                                                        </div>
+                                                                        <div class="col-12 col-lg-3 text-lg-center">
+                                                                            <div class="text-lg-center">Время выполнения: <b>{{ $training->time ?? '-' }}</b></div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -122,6 +138,7 @@
                                                         @endforeach
                                                     </ul>
                                                 @endforeach
+                                                    <p>* Время указанное тут рекомендуемое. Вы можете настроить временной диапазон под свой график</p>
                                             </div>
                                         </div>
                                     </div>
@@ -147,7 +164,8 @@
 
                                         <div id="accordion-item-icon-right-{{ $i }}-2" class="collapse " data-parent="#accordionRightIcon-{{ $i }}">
                                             <div class="card-body">
-
+                                                <h2>Завтрак</h2>
+                                                <h4>6:00 - 9:00</h4>
                                                 <ul>
                                                     <li class="row mb-4">
                                                         @php
@@ -214,7 +232,8 @@
                                         <div id="accordion-item-icon-right-{{ $i }}-3" class="collapse " data-parent="#accordionRightIcon-{{ $i }}">
                                             <div class="card-body">
                                                 @foreach($relaxtrainings[$i] ?? [] as $index => $relaxtraining)
-                                                    <h4><strong>{{ $relaxtraining->time }}</strong> {{ $relaxtraining->name }}</h4>
+                                                    <h2>{{ $relaxtraining->name }}</h2>
+                                                    <h4>{{ $relaxtraining->time }}</h4>
                                                     <ul>
                                                         @foreach($relaxtraining->exercises as $exerciseindex => $exercise)
                                                             <li class="row mb-4">
@@ -246,6 +265,22 @@
 
 
 
+            </div>
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="row">
+                <div class="col-md-12">
+                    <div class="card mb-4 o-hidden">
+                        <div class="card-body">
+                            <div id="calendar"></div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+                </div>
             </div>
 
 
@@ -302,7 +337,6 @@
                   </div>
                   <form class="modal-footer" action="{{ route('friday') }}" method="POST">
                       @csrf
-                    <button type="button" class="btn btn-success" onclick="printJS('forprint', 'html')">Печать</button>
                     <button type="submit" class="btn btn-primary">Отправить список на почту</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
                 </form>
@@ -363,7 +397,6 @@
                   </div>
                   <form class="modal-footer" action="{{ route('friday', ['next' => 1]) }}" method="POST">
                       @csrf
-                    <button type="button" class="btn btn-success" onclick="printJS('forprint2', 'html')">Печать</button>
                     <button type="submit" class="btn btn-primary">Отправить список на почту</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
                 </form>
@@ -378,7 +411,10 @@
      <script src="{{asset('assets/js/es5/echart.options.min.js')}}"></script>
      <script src="{{asset('assets/js/es5/dashboard.v1.script.js')}}"></script>
      <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-
+     <script src="{{asset('assets/js/vendor/calendar/jquery-ui.min.js')}}"></script>
+     <script src="{{asset('assets/js/vendor/calendar/moment.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/calendar/fullcalendar.min.js')}}"></script>
+    <script src="{{asset('assets/js/calendar.script.js')}}"></script>
      <script>
         $(document).ready(function() {
             $(document).on('click', '.day-btn', function(e) {

@@ -33,23 +33,15 @@ $(document).ready(function() {
         year = newDate.getFullYear();
 
     $('#calendar').fullCalendar({
-
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month,agendaWeek,agendaDay'
+            right: ''
         },
         themeSystem: "bootstrap4",
-        droppable: true,
-        editable: true,
-        eventLimit: true, // allow "more" link when too many events
-        drop: function() {
-            // is the "remove after drop" checkbox checked?
-            if ($('#drop-remove').is(':checked')) {
-                // if so, remove the element from the "Draggable Events" list
-                $(this).remove();
-            }
-        },
+        initialView: "dayGridWeek",
+        editable: false,
+        eventLimit: true,
 
 
         events: [{
@@ -110,19 +102,5 @@ $(document).ready(function() {
 
 
 
-
-
-
-
-
-    jQuery(".js-form-add-event").on("submit", function(e) {
-        e.preventDefault();
-
-        var data = $('#newEvent').val();
-        $('#newEvent').val('');
-        $('#external-events').prepend('<li class="list-group-item bg-success fc-event">' + data + '</li>');
-
-        initEvent();
-    });
 
 });

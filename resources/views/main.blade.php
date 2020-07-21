@@ -243,7 +243,6 @@
                     <small>Комада MAG.</small>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-success" onclick="printJS('forprint', 'html')">Печать</button>
                     <button type="button" class="btn btn-primary">Отправить список на почту</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
                   </div>

@@ -17,7 +17,7 @@
                 <div class="user-info">
                     <form action="{{ route('image-post') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <img class="profile-picture avatar-lg mb-2" src="{{ asset($user->image ? 'uploads/'.$user->image : 'assets/images/photo-wide-5.jpeg')}}" alt="">
+                        <img class="profile-picture avatar-lg mb-2" src="{{ asset($user->image ? 'uploads/'.$user->image : 'assets/images/no-image.png')}}" alt="">
                         <input id="file-input" style="display: none;" accept="image/*" type="file" name="image">
                     </form>
                     <p class="m-0 text-24">{{ $user->name }}</p>
@@ -53,6 +53,12 @@
                                             <input type="text" class="form-control userdataediti" name="middle_name" id="middle_name" aria-describedby="emailHelp" value="{{ $user->middle_name ?? '' }}" disabled>
                                         </div>
                                     </div>
+                                    <form class="mb-4">
+                                        <p class="text-primary mb-1"><i class="i-Globe text-16 mr-1"></i> ПОЛ</p>
+                                        <select class="form-control userdataediti" name="sex" disabled id="sex">
+                                                <option value="{{ $user->sex }}"></option>
+                                        </select>
+                                    </form>
                                     <div class="mb-4">
                                         <p class="text-primary mb-1"><i class="i-Mail text-16 mr-1"></i> ЭЛЕКТРОННАЯ ПОЧТА</p>
                                         <div class="form-group">
@@ -171,32 +177,6 @@
                                     </div>
                                     <a href="{{ route('subscription') }}" class="btn btn-block btn-warning">ПРОДЛИТЬ ПОДПИСКУ</a>
                                     {{-- <a href="#" class="btn btn-block btn-danger">ОТМЕНИТЬ ПОДПИСКУ</a> --}}
-                                    <br>
-                                    <div class="alert alert-warning" role="alert">
-                                        Почтовый адрес - {{ (($user->email_verified_at != null) ? 'подтвержден' : 'не был подтвержден' ) }}
-
-                                    </div>
-
-                                    <div class="alert alert-warning" role="alert">
-                                        История покупок
-
-                                        @foreach($user->subscriptions as $subscription)
-                                            <p> #{{ $loop->iteration }} Название подписки - {{ $subscription->name }}</p>
-                                            <p>Цена - {{ $subscription->price }}</p>
-                                            <p>Дата истечения срока действия - {{ Date::parse($subscription->expires)->format('d M Y') }}</p>
-                                            <p>Дата покупки -  {{ Date::parse($subscription->created_at)->format('d M Y') }}
-                                            <br>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-12">
-                                    <div class="alert alert-warning" role="alert">
-                                        Список программ
-                                        @foreach($program_histories as $program)
-                                            <p>#{{ $loop->iteration }} Название: {{ $program->name }}. Описание: {{ $program->description }}</p>
-
-                                        @endforeach
-                                    </div>
                                 </div>
                             </div>
 
@@ -241,6 +221,52 @@
                                         @endforeach
                                       </tbody>
                                     </table>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="alert alert-warning" role="alert">
+                                      ИСТОРИЯ ПОКУПОК
+                                      <a href="" class="float-right"></a>
+                                    </div>
+                                    <div class="table-responsive">
+                                    <table class="table ">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col">#</th>
+                                          <th scope="col">Дата замера</th>
+                                          <th scope="col">Вес</th>
+                                          <th scope="col">Талия</th>
+                                          <th scope="col">Объем ноги</th>
+                                          <th scope="col">Объем руки</th>
+                                          <th scope="col">Фото</th>
+                                          <th scope="col">Действие</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                         @foreach($userparameters as $userparameter)
+                                        <tr>
+                                          <th scope="row">{{ $loop->iteration }}</th>
+                                          <td>{{ date('j F Y', strtotime($userparameter->date_measure)) }}</td>
+                                          <td>{{ $userparameter->weight }}</td>
+                                          <td>{{ $userparameter->waist }}</td>
+                                          <td>{{ $userparameter->leg_volume }}</td>
+                                          <td>{{ $userparameter->arm_volume }}</td>
+                                          <td><a data-toggle="modal" data-target="#gallery" class="btn btn-primary param-images" style="color: #fff" data-id="{{ $userparameter->id }}" data-images="{{ json_encode($userparameter->images ?? []) }}">Добавить / Просмотр</a></td>
+                                          <td>
+                                              <form action="{{ route('userparameter', ['id' => $userparameter->id]) }}" method="post">
+                                                  @csrf
+                                                  <input type="hidden" name="_method" value="DELETE"/>
+                                                  <button type="submit" class="btn btn-primary">Удалить</button>
+                                              </form>
+                                          </td>
+                                        </tr>
+                                        @endforeach
+                                      </tbody>
+                                    </table>
+                                </div>
                                 </div>
                             </div>
                         </div>
