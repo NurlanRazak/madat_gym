@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 use App\Models\Typepurchase;
 use App\Models\Subscription;
+use App\Models\Programtraining;
 use App\User;
 
 class Purchase extends Model
@@ -25,7 +26,7 @@ class Purchase extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['user_id', 'typepurchase_id', 'comment', 'status', 'start_date', 'subscription_id'];
+    protected $fillable = ['user_id', 'typepurchase_id', 'comment', 'status', 'start_date', 'subscription_id', 'programtraining_id'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -53,6 +54,11 @@ class Purchase extends Model
     public function subscription()
     {
         return $this->belongsTo(Subscription::class, 'subscription_id');
+    }
+
+    public function programtraing()
+    {
+        return $this->belongsTo(Programtraining::class, 'programtraining_id');
     }
 
     /*

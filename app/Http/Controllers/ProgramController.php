@@ -20,6 +20,17 @@ class ProgramController extends Controller
         return view('programs', ['programs' => $programs]);
     }
 
+    public function buyProgram(Request $request)
+    {
+        $user = $request->user();
+
+        $programtraining = Programtraining::findOrFail($request->programtraining_id);
+        $request->session()->put('programtraining_id', $programtraining->id);
+
+        return redirect()->to('/buy');
+    }
+
+
     public function postProgram(Request $request)
     {
         $user = $request->user();
