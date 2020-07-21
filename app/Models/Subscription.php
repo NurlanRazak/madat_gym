@@ -12,6 +12,9 @@ class Subscription extends Model
 {
     use CrudTrait;
 
+    const KZT = 0;
+    const USD = 1;
+    const EUR = 2;
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
@@ -22,7 +25,7 @@ class Subscription extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'days', 'price', 'expires', 'active'];
+    protected $fillable = ['name', 'days', 'price', 'expires', 'active', 'currency'];
     // protected $hidden = [];
     protected $dates = ['expires'];
 
@@ -68,6 +71,29 @@ class Subscription extends Model
     | ACCESORS
     |--------------------------------------------------------------------------
     */
+    public static function getCurrencyOptions()
+    {
+        return [
+            static::KZT => 'Тенге',
+            static::USD => 'Доллар',
+            static::EUR => 'Евро',
+        ];
+    }
+
+    public static function getCurrencyKeys()
+    {
+        return [
+            static::KZT => 'KZT',
+            static::USD => 'USD',
+            static::EUR => 'EUR',
+        ];
+    }
+
+    public function getCurrencyKey(int $currency)
+    {
+        return static::getCurrencyKeys()[$currency];
+    }
+
     public function getNameDateAttribute()
     {
         return "<b>{$this->name}</b>: {$this->pivot->created_at->format('Y-m-d')}";

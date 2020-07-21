@@ -15,6 +15,9 @@ class Programtraining extends Model
 {
     use CrudTrait;
 
+    const KZT = 0;
+    const USD = 1;
+    const EUR = 2;
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
@@ -25,7 +28,7 @@ class Programtraining extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'agerestrict', 'description', 'image', 'duration', 'price', 'programtype_id', 'foodprogram_id', 'relaxprogram_id', 'active'];
+    protected $fillable = ['name', 'agerestrict', 'description', 'image', 'duration', 'price', 'programtype_id', 'foodprogram_id', 'relaxprogram_id', 'active', 'currency'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -106,6 +109,29 @@ class Programtraining extends Model
     | ACCESORS
     |--------------------------------------------------------------------------
     */
+    public static function getCurrencyOptions()
+    {
+        return [
+            static::KZT => 'Тенге',
+            static::USD => 'Доллар',
+            static::EUR => 'Евро',
+        ];
+    }
+
+    public static function getCurrencyKeys()
+    {
+        return [
+            static::KZT => 'KZT',
+            static::USD => 'USD',
+            static::EUR => 'EUR',
+        ];
+    }
+
+    public function getCurrencyKey(int $currency)
+    {
+        return static::getCurrencyKeys()[$currency];
+    }
+
     public function getUsersCountAttribute()
     {
         return $this->users()->whereDoesntHave('roles')->count();

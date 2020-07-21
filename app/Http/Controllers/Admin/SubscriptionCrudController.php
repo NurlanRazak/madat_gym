@@ -89,6 +89,12 @@ class SubscriptionCrudController extends CrudController
                 'label' => 'Цена',
             ],
             [
+                'name' => 'currency',
+                'label' => 'Валюта',
+                'type' => 'select_from_array',
+                'options' => \App\Models\Subscription::getCurrencyOptions(),
+            ],
+            [
                 'name' => 'expires',
                 'label' => 'Дата истечения',
                 'type' => 'date',
@@ -143,16 +149,26 @@ class SubscriptionCrudController extends CrudController
             [
                 'name' => 'price',
                 'label' => 'Цена',
-                'attributes' => [
-                    'placeholder' => 'Введите цифры',
-                ],
                 'type' => 'number',
                 'attributes' => [
                     "step" => "0.001",
                     'required' => 'required',
+                    'placeholder' => 'Введите цифры',
                 ],
-
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-sm-8 required'
+                ],
             ],
+            [
+                'name' => 'currency',
+                'label' => 'Валюта',
+                'type' => 'select2_from_array',
+                'options' => \App\Models\Subscription::getCurrencyOptions(),
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-sm-4'
+                ],
+            ],
+
             // [
             //     'name' => 'active',
             //     'label' => 'Опубликовать',

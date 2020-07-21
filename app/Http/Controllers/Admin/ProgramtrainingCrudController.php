@@ -162,6 +162,12 @@ class ProgramtrainingCrudController extends CrudController
                 'label' => 'Цена',
             ],
             [
+                'name' => 'currency',
+                'label' => 'Валюта',
+                'type' => 'select_from_array',
+                'options' => \App\Models\Programtraining::getCurrencyOptions(),
+            ],
+            [
                 'name' => 'programtype_id',
                 'label' => 'Тип программы',
                 'type' => 'select',
@@ -237,9 +243,21 @@ class ProgramtrainingCrudController extends CrudController
                 'name' => 'price',
                 'label' => 'Цена',
                 'type' => 'number',
-                'attributes' => ["step" => "0.001"],
                 'attributes' => [
                     'required' => 'required',
+                    "step" => "0.001"
+                ],
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-sm-8 required'
+                ],
+            ],
+            [
+                'name' => 'currency',
+                'label' => 'Валюта',
+                'type' => 'select2_from_array',
+                'options' => \App\Models\Programtraining::getCurrencyOptions(),
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-sm-4'
                 ],
             ],
             [
