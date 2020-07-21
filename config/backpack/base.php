@@ -19,10 +19,10 @@ return [
     'logo_mini' => '<b>M</b>G',
 
     // Developer or company name. Shown in footer.
-    'developer_name' => 'Nurlan Razak',
+    'developer_name' => 'MadatGym',
 
     // Developer website. Link in footer.
-    'developer_link' => 'http://tryout.kz',
+    'developer_link' => 'http://my.madatgym.com',
 
     // Show powered by Laravel Backpack in the footer?
     'show_powered_by' => false,
