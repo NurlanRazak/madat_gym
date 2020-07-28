@@ -36,7 +36,11 @@
                                                                 Будет активирована
                                                             @else
                                                                 @if(\Auth::user()->hasProgram($program))
-                                                                    Acticate 
+                                                                    <form action="{{ route('change-program') }}" method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="programtraining_id" value="{{ $program->id }}"/>
+                                                                        <button type="button" onclick="changeProgram(this);" class="btn btn-lg btn-primary btn-rounded m-1">Активировать</button>
+                                                                    </form>
                                                                 @else
                                                                     <form action="{{ ((int)$program->price) ? route('buy-program') : route('post-program') }}" method="POST">
                                                                         @csrf

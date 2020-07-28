@@ -198,7 +198,6 @@
                                         Список программ
                                         @foreach($program_histories as $program)
                                             <p>#{{ $loop->iteration }} Название: {{ $program->name }}. Описание: {{ $program->description }}</p>
-
                                         @endforeach
                                     </div>
                                 </div>

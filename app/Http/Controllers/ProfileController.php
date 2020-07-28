@@ -99,11 +99,14 @@ class ProfileController extends Controller
     public function updateProgram(Request $request)
     {
         $user = $request->user();
-        $user->update([
-            'programtraining_id' => $request->programtraining_id,
-            'programtraining_start' => \DB::raw('NOW()'),
-        ]);
-        $user->doneExersices()->delete();
+        $program = Programtraining::where('id', $request->programtraining_id)->first();
+        $updating = $user->changeUserProgram($program);
+
+        // $user->update([
+        //     'programtraining_id' => $request->programtraining_id,
+        //     'programtraining_start' => \DB::raw('NOW()'),
+        // ]);
+        // $user->doneExersices()->delete();
 
         return redirect()->back();
     }
