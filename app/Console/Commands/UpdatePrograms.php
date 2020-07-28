@@ -39,11 +39,7 @@ class UpdatePrograms extends Command
     {
         $items = ProgramtrainingUser::where('status', ProgramtrainingUser::WILL_BE_ACTIVE)->get();
         foreach($items as $item) {
-            ProgramtrainingUser::where('user_id', $item->user_id)->where('status', ProgramtrainingUser::ACTIVE)->update([
-                'status' => ProgramtrainingUser::NOT_ACTIVE,
-            ]);
-            $item->status = ProgramtrainingUser::ACTIVE;
-            $item->save();
+            $item->user->setCurrentUserProgram($item->programtraining);
         }
 
     }

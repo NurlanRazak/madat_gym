@@ -51,8 +51,7 @@ class DecreaseProgramDays extends Command
                 }
 
                 if ($next) {
-                    $next->status = ProgramtrainingUser::ACTIVE;
-                    $next->save();
+                    $next->user->setCurrentUserProgram($next->programtraining);
                 }
             } else {
                 $item->save();

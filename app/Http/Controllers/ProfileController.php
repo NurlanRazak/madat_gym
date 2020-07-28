@@ -100,7 +100,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $program = Programtraining::where('id', $request->programtraining_id)->first();
-        $updating = $user->changeUserProgram($program);
+        $updating = $user->setNextUserProgram($program);
 
         // $user->update([
         //     'programtraining_id' => $request->programtraining_id,

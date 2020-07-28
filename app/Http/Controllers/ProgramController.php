@@ -35,7 +35,7 @@ class ProgramController extends Controller
     {
         $user = $request->user();
         // TODO: set next program
-        $updating = $user->changeUserProgram(Programtraining::where('id', $request->programtraining_id)->first());
+        $updating = $user->setNextUserProgram(Programtraining::where('id', $request->programtraining_id)->first());
 
         $user->update([
             'programtraining_id' => $request->programtraining_id,
@@ -48,7 +48,7 @@ class ProgramController extends Controller
     public function changeProgram(Request $request)
     {
         $user = $request->user();
-        $updating = $user->changeUserProgram(Programtraining::where('id', $request->programtraining_id)->first());
+        $updating = $user->setNextUserProgram(Programtraining::where('id', $request->programtraining_id)->first());
 
     }
 }
