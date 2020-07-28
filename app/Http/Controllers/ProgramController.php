@@ -36,12 +36,6 @@ class ProgramController extends Controller
         $user = $request->user();
         // TODO: set next program
         $updating = $user->setNextUserProgram(Programtraining::where('id', $request->programtraining_id)->first());
-
-        $user->update([
-            'programtraining_id' => $request->programtraining_id,
-            'programtraining_start' => \DB::raw('NOW()'),
-        ]);
-        $user->doneExersices()->delete();
         return redirect(route('home'));
     }
 
