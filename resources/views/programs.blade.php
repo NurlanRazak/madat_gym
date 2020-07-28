@@ -30,11 +30,21 @@
                                                             <div class="ul-pricing__list">
                                                                <p>{{ $program->description }} </p>
                                                             </div>
-                                                            <form action="{{ ((int)$program->price) ? route('buy-program') : route('post-program') }}" method="POST">
-                                                                @csrf
-                                                                <input type="hidden" name="programtraining_id" value="{{ $program->id }}"/>
-                                                                <button type="button" onclick="changeProgram(this);" class="btn btn-lg btn-primary btn-rounded m-1">Выбрать и продолжить</button>
-                                                            </form>
+                                                            @if (\Auth::user()->isActive($program))
+                                                                Активная
+                                                            @elseif(\Auth::user()->isNext($program))
+                                                                Будет активирована
+                                                            @else
+                                                                @if(\Auth::user()->hasProgram($program))
+                                                                    Acticate 
+                                                                @else
+                                                                    <form action="{{ ((int)$program->price) ? route('buy-program') : route('post-program') }}" method="POST">
+                                                                        @csrf
+                                                                        <input type="hidden" name="programtraining_id" value="{{ $program->id }}"/>
+                                                                        <button type="button" onclick="changeProgram(this);" class="btn btn-lg btn-primary btn-rounded m-1">Выбрать и продолжить</button>
+                                                                    </form>
+                                                                @endif
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 @endforeach

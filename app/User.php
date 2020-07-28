@@ -315,6 +315,26 @@ class User extends Authenticatable implements MustVerifyEmail
         return $res;
     }
 
+    public function getNextProgramtrainingAttribute()
+    {
+        return $this->programtrainings()->where('status', ProgramtrainingUser::WILL_BE_ACTIVE)->first();
+    }
+
+    public function isActive($program) : bool
+    {
+        return $this->programtraining_id == $program->id;
+    }
+
+    public function isNext($program) : bool
+    {
+        return $this->next_programtraining ? $this->next_programtraining->id == $program->id : false;
+    }
+
+    public function hasProgram($program) : bool
+    {
+        return $this->programtrainings()->wherePivot('programtraining_id', $program->id)->exists();
+    }
+
     public function setImageAttribute($value, $attribute_name = 'image')
     {
         $disk = "uploads";
