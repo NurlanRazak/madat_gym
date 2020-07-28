@@ -369,6 +369,16 @@ class User extends Authenticatable implements MustVerifyEmail
         ProgramtrainingUser::where('user_id', $this->id)->where('status', ProgramtrainingUser::WILL_BE_ACTIVE)->update([
             'status' => ProgramtrainingUser::NOT_ACTIVE,
         ]);
+
+        $content = 'Программа - '.$program->name.' будет активирована в следующий понедельник.';
+
+        $this->messages()->create([
+            'author_id' => static::role('superadmin')->first()->id,
+            'status' => Message::SENT,
+            'name' => 'Программа изменена',
+            'content' => $content,
+        ]);
+
         return $this->programtrainings()->sync([
             $program->id => [
                 'bought_at' => null,
