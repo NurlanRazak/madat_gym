@@ -210,7 +210,7 @@
                                             </p>
                                         @endforeach
                                         @php
-                                            $next = \Auth::user()->getNextProgram();
+                                            $next = \Auth::user()->next_programtraining;
                                         @endphp
                                         @if($next)
                                             <p>#{{ $i }} Название: {{ $next->name }}. Описание: {{ $next->description }}. Статус - Будет активирована</p>
