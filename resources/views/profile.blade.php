@@ -157,7 +157,7 @@
                                 <div class="col-lg-6 col-12">
                                 	<div class="alert alert-warning" role="alert">
                                       ЦЕЛЬ И ПЛАН
-                                      <a href="" id="userplanedit" class="float-right"><i class="i-Edit text-16"></i></a>
+                                      <a href="/programs" class="float-right"><i class="i-Edit text-16"></i></a>
                                     </div>
                                     <form class="mb-4" action="{{ route('program-update') }}" method="POST">
                                         @csrf
