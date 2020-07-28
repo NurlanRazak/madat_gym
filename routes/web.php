@@ -21,11 +21,10 @@ Route::get('/test', function() {
     //     'days_left' => 0,
     //     'total_days' => 10,
     // ]);
-    $user->programtrainings()->sync([
+    $user->programtrainings()->attach([
         $programtraining->id => [
             'bought_at' => null,
-            'days_left' => 0,
-            'total_days' => 10,
+            'days_left' => 10,
         ],
     ]);
 

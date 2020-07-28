@@ -42,10 +42,18 @@ class DecreaseProgramDays extends Command
         foreach($items as $item) {
             $item->days_left = $item->days_left - 1;
             if ($item->days_left < 0) {
-                $next = $item->user->next_programtraining;
+
+                $next = ProgramtrainingUser::where('user_id', $item->user_id)->where('status', ProgramtrainingUser::WILL_BE_ACTIVE)->first();
                 $item->delete();
-                $next->status = ProgramtrainingUser::ACTIVE;
-                $next->save();
+
+                if (!$next) {
+                    $next = ProgramtrainingUser::where('user_id', $item->user_id)->where('status', ProgramtrainingUser::NOT_ACTIVE)->first();
+                }
+
+                if ($next) {
+                    $next->status = ProgramtrainingUser::ACTIVE;
+                    $next->save();
+                }
             } else {
                 $item->save();
             }

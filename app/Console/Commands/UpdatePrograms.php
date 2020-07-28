@@ -43,7 +43,7 @@ class UpdatePrograms extends Command
                 'status' => ProgramtrainingUser::NOT_ACTIVE,
             ]);
             $item->status = ProgramtrainingUser::ACTIVE;
-            $itme->save();
+            $item->save();
         }
 
     }
