@@ -18,7 +18,7 @@ class ProgramtrainingUser extends Pivot
     public $timestamps = false;
 
     protected $table = 'programtraining_user';
-    protected $fillable = ['user_id', 'subscription_id', 'created_at', 'status'];
+    protected $fillable = ['user_id', 'programtraining_id', 'bought_at', 'status', 'days_left', 'total_days'];
     protected $dates = ['bought_at'];
 
     public function user()
@@ -26,7 +26,7 @@ class ProgramtrainingUser extends Pivot
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function subscription()
+    public function programtraining()
     {
         return $this->belongsTo(Programtraining::class, 'programtraining_id');
     }

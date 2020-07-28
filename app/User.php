@@ -18,6 +18,7 @@ use App\Models\Pivots\MessageUser;
 use App\Models\Programtraining;
 use App\Models\Userparameter;
 use App\Models\Pivots\SubscriptionUser;
+use App\Models\Pivots\ProgramtrainingUser;
 use App\DoneExersice;
 use App\View;
 use App\Session;
@@ -97,6 +98,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Programtraining::class, 'programtraining_id');
     }
 
+    public function programtrainings()
+    {
+        return $this->belongsToMany(Programtraining::class, 'programtraining_user', 'user_id', 'programtraining_id')
+                    ->withPivot(['status', 'bought_at', 'days_left', 'total_days'])
+                    ->using(ProgramtrainingUser::class);
+    }
+
     public function doneExersices()
     {
         return $this->hasMany(DoneExersice::class, 'user_id');
@@ -166,7 +174,7 @@ class User extends Authenticatable implements MustVerifyEmail
         static::updating(function($user) {
             $programtraining_id = $user->getOriginal('programtraining_id');
             $date = $user->getOriginal('programtraining_start');
-            if ($programtraining_id) {
+            if ($user->isDirty('programtraining_id') && $programtraining_id) {
                 $user->programHistories()->create([
                     'programtraining_id' => $programtraining_id,
                     'program_date' => $date,
@@ -271,6 +279,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->doneExersices()->where('key', $key)->where('day_number', $day)->exists();
     }
 
+    // TODO: fix
     public function getStatisticsAttribute()
     {
         if ($this->statistics) {
@@ -294,12 +303,16 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getRealProgramtrainingStartAttribute()
     {
+        $res = \Carbon\Carbon::parse($this->programtraining_start);
+        if (false) {
+            // TODO:
+        }
         if ($this->subscriptions()->where('subscription_user.bought_at', '>=', $this->programtraining_start)->count() > 1) {
             $subscriptions = $this->subscriptions()->where('subscription_user.bought_at', '>=', $this->programtraining_start)->orderBy('subscription_user.created_at', 'desc')->get();
             $diff = (strtotime($subscriptions[0]->pivot->created_at->format('Y-m-d h:m')) - strtotime($subscriptions[1]->pivot->created_at->format('Y-m-d h:m')))/60/60/24 - $subscriptions[0]->days;
-            return \Carbon\Carbon::parse($this->programtraining_start)->addDays(max($diff, 0));
+            return $res->addDays(max($diff, 0));
         }
-        return \Carbon\Carbon::parse($this->programtraining_start);
+        return $res;
     }
 
     public function setImageAttribute($value, $attribute_name = 'image')

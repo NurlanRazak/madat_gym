@@ -12,8 +12,23 @@
 */
 
 Route::get('/test', function() {
-    $user = \App\User::where('email', 'qwe@gmail.com')->whereDoesntHave('roles')->first();
-    dd($user);
+    $user = \App\User::where('email', 'nurik9293709@gmail.com')->first();
+    $programtraining = \App\Models\Programtraining::first();
+    // \App\Models\Pivots\ProgramtrainingUser::create([
+    //     'user_id' => $user->id,
+    //     'programtraining_id' => $programtraining->id,
+    //     'bought_at' => null,
+    //     'days_left' => 0,
+    //     'total_days' => 10,
+    // ]);
+    $user->programtrainings()->sync([
+        $programtraining->id => [
+            'bought_at' => null,
+            'days_left' => 0,
+            'total_days' => 10,
+        ],
+    ]);
+
 });
 
 Route::post('/checkout', 'PaymentController@checkout')->name('checkout');
