@@ -40,6 +40,13 @@ class DecreaseProgramDays extends Command
     {
         $items = ProgramtrainingUser::where('status', ProgramtrainingUser::ACTIVE)->get();
         foreach($items as $item) {
+            $cnt = $item->user->subscriptions()
+                        ->whereRaw("DATE_ADD(subscription_user.created_at, INTERVAL subscriptions.days DAY) >= CURDATE()")
+                        ->count();
+
+            if ($cnt == 0) {
+                continue;
+            }
             $item->days_left = $item->days_left - 1;
             if ($item->days_left < 0) {
 
