@@ -317,7 +317,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getNextProgramtrainingAttribute()
     {
-        return $this->programtrainings()->where('status', ProgramtrainingUser::WILL_BE_ACTIVE)->first();
+        return $this->programtrainings()->wherePivot('status', ProgramtrainingUser::WILL_BE_ACTIVE)->first();
     }
 
     public function isActive($program) : bool
