@@ -34,6 +34,7 @@ class ProgramController extends Controller
     public function postProgram(Request $request)
     {
         $user = $request->user();
+        // TODO: set next program
         $user->update([
             'programtraining_id' => $request->programtraining_id,
             'programtraining_start' => \DB::raw('NOW()'),

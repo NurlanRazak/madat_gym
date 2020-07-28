@@ -26,6 +26,10 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('message:friday')
                  ->fridays();
+        $schedule->command('programs:decrease')
+                 ->daily()->at('00:10');
+        $schedule->command('programs:next')
+                 ->weekly()->at('23:59');
     }
 
     /**

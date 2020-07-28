@@ -172,6 +172,7 @@ class PaymentController extends Controller
         $subscription = $purchase->subscription;
         $programtraining = $purchase->programtraing;
         if ($programtraining) {
+            // TODO: set next program
             $user->update([
                 'programtraining_id' => $programtraining->id,
                 'programtraining_start' => \DB::raw('NOW()'),
