@@ -196,9 +196,25 @@
                                 <div class="col-lg-6 col-12">
                                     <div class="alert alert-warning" role="alert">
                                         Список программ
+                                        @php
+                                            $i = 1;
+                                        @endphp
                                         @foreach($program_histories as $program)
-                                            <p>#{{ $loop->iteration }} Название: {{ $program->name }}. Описание: {{ $program->description }}</p>
+                                            <p>
+                                                #{{ $i++ }} Название: {{ $program->name }}. Описание: {{ $program->description }}. Статус -
+                                                @if (\Auth::user()->isActive($program))
+                                                    Активная
+                                                @else
+                                                    Использовано
+                                                @endif
+                                            </p>
                                         @endforeach
+                                        @php
+                                            $next = \Auth::user()->getNextProgram();
+                                        @endphp
+                                        @if($next)
+                                            <p>#{{ $i }} Название: {{ $next->name }}. Описание: {{ $next->description }}. Статус - Будет активирована</p>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

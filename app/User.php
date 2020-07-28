@@ -172,12 +172,10 @@ class User extends Authenticatable implements MustVerifyEmail
         });
 
         static::updating(function($user) {
-            $programtraining_id = $user->getOriginal('programtraining_id');
-            $date = $user->getOriginal('programtraining_start');
-            if ($user->isDirty('programtraining_id') && $programtraining_id) {
+            if ($user->isDirty('programtraining_id')) {
                 $user->programHistories()->create([
-                    'programtraining_id' => $programtraining_id,
-                    'program_date' => $date,
+                    'programtraining_id' => $$user->programtraining_id,
+                    'program_date' => now(),
                 ]);
             }
         });
@@ -333,6 +331,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasProgram($program) : bool
     {
         return $this->programtrainings()->wherePivot('programtraining_id', $program->id)->exists();
+    }
+
+    public function getNextProgram()
+    {
+        return $this->programtrainings()->wherePivot('status', ProgramtrainingUser::WILL_BE_ACTIVE)->first();
     }
 
     public function setCurrentUserProgram($program)
