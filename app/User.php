@@ -173,9 +173,29 @@ class User extends Authenticatable implements MustVerifyEmail
 
         static::updating(function($user) {
             if ($user->isDirty('programtraining_id')) {
+                $program = Programtraining::findOrFail($user->programtraining_id);
+                if (!$user->programtrainings()->wherePivot('status', ProgramtrainingUser::ACTIVE)->exists()) {
+                    $user->programtrainings()->attach([
+                        $user->programtraining_id => [
+                            'bought_at' => null,
+                            'total_days' => $program->duration,
+                            'days_left' => $program->duration,
+                            'status' => ProgramtrainingUser::ACTIVE,
+                        ],
+                    ]);
+                }
                 $user->programHistories()->create([
-                    'programtraining_id' => $$user->programtraining_id,
+                    'programtraining_id' => $user->programtraining_id,
                     'program_date' => now(),
+                ]);
+
+                $content = 'Программа - '.$program->name.' активирована.';
+
+                $user->messages()->create([
+                        'author_id' => static::role('superadmin')->first()->id,
+                        'status' => Message::SENT,
+                        'name' => 'Программа активна',
+                        'content' => $content,
                 ]);
             }
         });
@@ -183,8 +203,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getTrainings(bool $nextWeek = false)
     {
-        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d h:m')) - strtotime($this->real_programtraining_start->format('Y-m-d h:m')))/60/60/24 + ($nextWeek ? 7 : 0);
-        $passed = intval($passed);
+        $passed = $this->getProgramtrainginDaysPassed() + ($nextWeek ? 7 : 0);
+
         $today = \Date::today()->dayOfWeek;
 
         return $this->programtraining
@@ -198,9 +218,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getEquipments(bool $nextWeek = false, $today = null)
     {
+        $passed = $this->getProgramtrainginDaysPassed() + ($nextWeek ? 7 : 0);
+
         $today = ($today ? $today : \Date::today())->dayOfWeek;
-        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d h:m')) - strtotime($this->real_programtraining_start->format('Y-m-d h:m')))/60/60/24 + ($nextWeek ? 7 : 0);
-        $passed = intval($passed);
+
 
         if($today == 0) {
             $today = 7;
@@ -216,9 +237,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getGroceries(bool $nextWeek = false)
     {
-        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d h:m')) - strtotime($this->real_programtraining_start->format('Y-m-d h:m')))/60/60/24 + ($nextWeek ? 7 : 0);
-        $passed = intval($passed);
+        $passed = $this->getProgramtrainginDaysPassed() + ($nextWeek ? 7 : 0);
+
         $today = \Date::today()->dayOfWeek;
+
         return $this->programtraining
                     ->groceries()
                     ->where('notify_day', '>=', $passed - $today + 1)
@@ -229,8 +251,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getPlaneats(bool $nextWeek = false, $today = null)
     {
-        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d h:m')) - strtotime($this->real_programtraining_start->format('Y-m-d h:m')))/60/60/24 + ($nextWeek ? 7 : 0);
-        $passed = intval($passed);
+        $passed = $this->getProgramtrainginDaysPassed() + ($nextWeek ? 7 : 0);
+
         $today = ($today ? $today : \Date::today())->dayOfWeek;
 
         return $this->programtraining
@@ -246,8 +268,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getRelaxtrainings(bool $nextWeek = false)
     {
-        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d h:m')) - strtotime($this->real_programtraining_start->format('Y-m-d h:m')))/60/60/24 + ($nextWeek ? 7 : 0);
-        $passed = intval($passed);
+        $passed = $this->getProgramtrainginDaysPassed() + ($nextWeek ? 7 : 0);
+
         $today = \Date::today()->dayOfWeek;
 
         $id = $this->id;
@@ -267,8 +289,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function checkExersice($weekDay, $key) : bool
     {
-        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d h:m')) - strtotime($this->real_programtraining_start->format('Y-m-d h:m')))/60/60/24;
-        $passed = intval($passed);
+        $passed = $this->getProgramtrainginDaysPassed();
+
         $today = \Date::today()->dayOfWeek;
         if ($today == 0) {
             $today = 7;
@@ -299,23 +321,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->statistics;
     }
 
-    public function getRealProgramtrainingStartAttribute()
-    {
-        $res = \Carbon\Carbon::parse($this->programtraining_start);
-        if (false) {
-            // TODO:
-        }
-        if ($this->subscriptions()->where('subscription_user.bought_at', '>=', $this->programtraining_start)->count() > 1) {
-            $subscriptions = $this->subscriptions()->where('subscription_user.bought_at', '>=', $this->programtraining_start)->orderBy('subscription_user.created_at', 'desc')->get();
-            $diff = (strtotime($subscriptions[0]->pivot->created_at->format('Y-m-d h:m')) - strtotime($subscriptions[1]->pivot->created_at->format('Y-m-d h:m')))/60/60/24 - $subscriptions[0]->days;
-            return $res->addDays(max($diff, 0));
-        }
-        return $res;
-    }
-
     public function getNextProgramtrainingAttribute()
     {
         return $this->programtrainings()->wherePivot('status', ProgramtrainingUser::WILL_BE_ACTIVE)->first();
+    }
+
+    public function getCurrentProgramtrainingAttribute()
+    {
+        return $this->programtrainings()->wherePivot('status', ProgramtrainingUser::ACTIVE)->wherePivot('programtraining_id', $this->programtraining_id)->first();
     }
 
     public function isActive($program) : bool
@@ -333,9 +346,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->programtrainings()->wherePivot('programtraining_id', $program->id)->exists();
     }
 
-    public function getNextProgram()
+    public function getProgramtrainginDaysPassed() : int
     {
-        return $this->programtrainings()->wherePivot('status', ProgramtrainingUser::WILL_BE_ACTIVE)->first();
+        $program = $this->current_programtraining;
+        if (!$program) {
+            return 0;
+        }
+        return $program->pivot->total_days - $program->pivot->days_left;
     }
 
     public function setCurrentUserProgram($program)
@@ -351,9 +368,10 @@ class User extends Authenticatable implements MustVerifyEmail
                 'status' => ProgramtrainingUser::ACTIVE,
             ]);
         } else {
-            $this->programtrainings()->sync([
+            $this->programtrainings()->attach([
                 $program->id => [
                     'bought_at' => null,
+                    'total_days' => $program->duration,
                     'days_left' => $program->duration,
                     'status' => ProgramtrainingUser::ACTIVE,
                 ],
@@ -361,6 +379,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         $this->programtraining_id = $program->id;
+        $this->programtraining_start = now();
         $this->save();
     }
 
@@ -369,7 +388,6 @@ class User extends Authenticatable implements MustVerifyEmail
         ProgramtrainingUser::where('user_id', $this->id)->where('status', ProgramtrainingUser::WILL_BE_ACTIVE)->update([
             'status' => ProgramtrainingUser::NOT_ACTIVE,
         ]);
-
         $content = 'Программа - '.$program->name.' будет активирована в следующий понедельник.';
 
         $this->messages()->create([
@@ -379,7 +397,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'content' => $content,
         ]);
 
-        return $this->programtrainings()->sync([
+        return $this->programtrainings()->attach([
             $program->id => [
                 'bought_at' => null,
                 'days_left' => $program->duration,

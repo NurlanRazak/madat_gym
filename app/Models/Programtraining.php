@@ -151,12 +151,12 @@ class Programtraining extends Model
         return $this->users()->whereDoesntHave('roles')->count();
     }
 
-    public function getEvents($start_date)
+    public function getEvents($passed)
     {
         $events = [];
 
         foreach($this->trainings()->active()->get() as $training) {
-            $day = \Carbon\Carbon::parse($start_date)->addDays($training->day_number - 1);
+            $day = now()->addDays($passed + $training->day_number - 1);
             $events[] = [
                 'title' => $training->name,
                 'allDay' => false,
@@ -166,7 +166,7 @@ class Programtraining extends Model
             ];
         }
         foreach($this->relaxprogram->relaxtrainings()->active()->get() as $relaxtraining) {
-            $day = \Carbon\Carbon::parse($start_date)->addDays($relaxtraining->number_day - 1);
+            $day = now()->addDays($passed + $relaxtraining->number_day - 1);
             $events[] = [
                 'title' => $relaxtraining->name,
                 'allDay' => false,
@@ -177,7 +177,7 @@ class Programtraining extends Model
         }
 
         foreach($this->foodprogram->planeats()->active()->get() as $planeat) {
-            $day = \Carbon\Carbon::parse($start_date)->addDays($planeat->days - 1);
+            $day = now()->addDays($passed + $planeat->days - 1);
             foreach($planeat->eathours ?? [] as $eathour) {
                 $events[] = [
                     'title' => $eathour->name,

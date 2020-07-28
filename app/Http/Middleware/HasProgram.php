@@ -26,8 +26,8 @@ class HasProgram
                               ->where('date_finish', '>=', \DB::raw('NOW()'))
                               ->count();
 
-        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d h:m')) - strtotime($user->real_programtraining_start->format('Y-m-d h:m')))/60/60/24;
-        $passed = intval($passed);
+        $passed = $user->getProgramtrainginDaysPassed();
+
         if ($cnt > 0 && $passed < $user->programtraining->duration) {
             // return redirect()->to('/');
         }

@@ -23,6 +23,7 @@ class CheckProgram
             return redirect(route('programs'));
         }
 
+        // QUESTION: 
         $cnt = $user->programtraining->activeprograms()
                               ->where('date_start', '<=', \DB::raw('NOW()'))
                               ->where('date_finish', '>=', \DB::raw('NOW()'))
@@ -32,8 +33,8 @@ class CheckProgram
             return redirect(route('programs'));
         }
 
-        $passed = (strtotime(\Carbon\Carbon::now()->format('Y-m-d h:m')) - strtotime($user->real_programtraining_start->format('Y-m-d h:m')))/60/60/24;
-        $passed = intval($passed);
+        $passed = $user->getProgramtrainginDaysPassed();
+
         if ($passed >= $user->programtraining->duration) {
             return redirect(route('programs'));
         }

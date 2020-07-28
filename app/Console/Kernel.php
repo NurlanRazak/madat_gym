@@ -30,6 +30,8 @@ class Kernel extends ConsoleKernel
                  ->daily()->at('00:10');
         $schedule->command('programs:next')
                  ->weekly()->at('23:59');
+        $schedule->command('message:monday')
+                 ->mondays()->at('06:00');
     }
 
     /**
