@@ -361,6 +361,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         $this->programtraining_id = $program->id;
+        $this->programtraining_start = now();
         $this->save();
     }
 
