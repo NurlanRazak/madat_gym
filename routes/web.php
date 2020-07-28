@@ -183,6 +183,7 @@ Route::group(['middleware' => 'verified'], function () {
         Route::get('history', 'HistoryController@history')->name('history');
         Route::get('programs', 'ProgramController@programs')->name('programs')->middleware('hasProgram');
         Route::post('program', 'ProgramController@postProgram')->name('post-program');
+        Route::post('change/program', 'ProgramController@changeProgram')->name('change-program');
         Route::post('buyprogram', 'ProgramController@buyProgram')->name('buy-program');
         Route::post('image/upload', 'ProfileController@uploadImage')->name('user-params-image');
         Route::post('password/update', 'ProfileController@updatePassword')->name('password-update');

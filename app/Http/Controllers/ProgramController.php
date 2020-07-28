@@ -41,4 +41,10 @@ class ProgramController extends Controller
         $user->doneExersices()->delete();
         return redirect(route('home'));
     }
+
+    public function changeProgram(Request $request)
+    {
+        $user = $request->user();
+        dd($request);
+    }
 }

@@ -335,6 +335,17 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->programtrainings()->wherePivot('programtraining_id', $program->id)->exists();
     }
 
+    public function changeUserProgram($program)
+    {
+        return $this->programtrainings()->sync([
+            $program->id => [
+                'bought_at' => null,
+                'days_left' => $program->duration,
+                'status' => ProgramtrainingUser::WILL_BE_ACTIVE,
+            ],
+        ]);
+    }
+
     public function setImageAttribute($value, $attribute_name = 'image')
     {
         $disk = "uploads";
