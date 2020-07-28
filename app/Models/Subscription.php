@@ -103,9 +103,9 @@ class Subscription extends Model
         return static::getCurrencyIcons()[$this->currency];
     }
 
-    public function getCurrencyKey(int $currency)
+    public function getCurrencyKey()
     {
-        return static::getCurrencyKeys()[$currency];
+        return static::getCurrencyKeys()[$this->currency];
     }
 
     public function getNameDateAttribute()

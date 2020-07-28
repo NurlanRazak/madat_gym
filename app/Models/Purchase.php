@@ -94,9 +94,9 @@ class Purchase extends Model
         ];
     }
 
-    public function getCurrencyKey(int $currency)
+    public function getCurrencyKey()
     {
-        return static::getCurrencyKeys()[$currency];
+        return static::getCurrencyKeys()[$this->currency];
     }
 
     public static function getConsumerOptions() : array
