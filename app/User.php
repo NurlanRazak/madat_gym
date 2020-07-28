@@ -173,8 +173,18 @@ class User extends Authenticatable implements MustVerifyEmail
 
         static::updating(function($user) {
             if ($user->isDirty('programtraining_id')) {
+                if (!$user->programtrainings()->wherePivot('status', ProgramtrainingUser::ACTIVE)->exists()) {
+                    $program = Programtraining::findOrFail($user->programtraining_id);
+                    $user->programtrainings()->attach([
+                        $user->programtraining_id => [
+                            'bought_at' => null,
+                            'days_left' => $program->duration,
+                            'status' => ProgramtrainingUser::ACTIVE,
+                        ],
+                    ]);
+                }
                 $user->programHistories()->create([
-                    'programtraining_id' => $$user->programtraining_id,
+                    'programtraining_id' => $user->programtraining_id,
                     'program_date' => now(),
                 ]);
             }
@@ -351,7 +361,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 'status' => ProgramtrainingUser::ACTIVE,
             ]);
         } else {
-            $this->programtrainings()->sync([
+            $this->programtrainings()->attach([
                 $program->id => [
                     'bought_at' => null,
                     'days_left' => $program->duration,
@@ -370,7 +380,7 @@ class User extends Authenticatable implements MustVerifyEmail
         ProgramtrainingUser::where('user_id', $this->id)->where('status', ProgramtrainingUser::WILL_BE_ACTIVE)->update([
             'status' => ProgramtrainingUser::NOT_ACTIVE,
         ]);
-        return $this->programtrainings()->sync([
+        return $this->programtrainings()->attach([
             $program->id => [
                 'bought_at' => null,
                 'days_left' => $program->duration,
