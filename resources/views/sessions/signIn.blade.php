@@ -36,6 +36,7 @@
 
                             <div class="mt-3 text-center">
                                 <a href="{{route('forgot')}}" class="text-muted"><u>Забыли пароль?</u></a>
+                                <a href="{{route('register')}}" class="text-muted"><u>Регистрация</u></a>
                             </div>
                         </div>
             </div>

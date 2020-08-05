@@ -33,6 +33,11 @@
                 background: grey!important;
                 cursor: not-allowed;
             }
+            .sub_event{
+                background: rgb(102, 51, 153);
+                border-radius: 3px;
+                padding: 5px;
+           }
         </style>
         <script src="https://kit.fontawesome.com/d1edd4ad8f.js"></script>
         {{-- page specific css --}}
