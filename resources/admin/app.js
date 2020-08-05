@@ -19,6 +19,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('calendar', require('./components/CalendarComponent.vue').default);
 Vue.component('subscription', require('./components/SubscriptionLineChartComponent.vue').default);
 Vue.component('program', require('./components/ProgramLineChartComponent.vue').default);
 
