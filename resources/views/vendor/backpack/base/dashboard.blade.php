@@ -16,12 +16,12 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <div class="box">
-                <div class="box-header with-border">
-                    <div class="box-title">{{ trans('backpack::base.login_status') }}</div>
+            <div class="box" id="admin">
+                <div>
+                    <calendar></calendar>
                 </div>
 
-                <div class="box-body" id="admin">
+                <div class="box-body">
                     <div>
                         <div class="row">
                             <div class="col-sm-6">

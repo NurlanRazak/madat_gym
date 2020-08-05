@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\View;
 use App\Composers\NotificationCountComposer;
 use App\Composers\AbonimentStatisticsComposer;
 use App\Composers\ProgramStatisticsComposer;
+use App\Composers\CalendarComposer;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -30,6 +31,8 @@ class ViewServiceProvider extends ServiceProvider
         View::composer('layouts.header-menu', NotificationCountComposer::class);
         View::composer('backpack::dashboard', AbonimentStatisticsComposer::class);
         View::composer('backpack::dashboard', ProgramStatisticsComposer::class);
+        View::composer('backpack::dashboard', CalendarComposer::class);
+
         View::composer('layouts.master', function($view) {
             $view->with(['user' => request()->user()]);
         });
