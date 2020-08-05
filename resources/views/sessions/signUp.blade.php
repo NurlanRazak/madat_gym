@@ -13,10 +13,24 @@
 <body>
     <div class="auth-layout-wrap" style="background-image: url({{asset('assets/images/bg.jpg')}})">
         <div class="auth-content">
-                            <div class="auth-logo text-center mb-4">
+            <div class="card o-hidden">
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <div class="pl-3 auth-right">
+                            <div class="auth-logo text-center mt-4 mb-4">
                                 <img src="{{asset('assets/images/logo.png')}}" alt="">
                             </div>
-            <div class="card o-hidden" style="width: 20rem; margin: auto;">
+                            <div class="w-100 mb-4">
+                                Добро пожаловать в онлайн фитнес madatgym! Давай начнем с регистрации в нашей системе.
+
+                            </div>
+                            <div class="flex-grow-1"></div>
+                            <div class="w-100 mb-4">
+                              регистрируясь, я принимаю <a href="#">политику конфиденциальности</a> madatgym и <a href="#">договор публичной оферты</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="p-4">
 
                             <h1 class="mb-3 text-18">Регистрация</h1>
@@ -56,12 +70,40 @@
                                 <button type="submit" class="btn btn-primary btn-block btn-rounded mt-3">Регистрация</button>
                             </form>
                         </div>
+                    </div>
             </div>
         </div>
     </div>
 
     <script src="{{asset('assets/js/common-bundle-script.js')}}"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfJ9KsZAAAAAJGfZVpRwmunLDoeJBU5E1nzDOIw"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+         <script>
+           // when form is submit
+            //$('#form').submit(function() {
+                // we stoped it
+                event.preventDefault();
+                var email = $('#email').val();
+                var password = $("#password").val();
+                // needs for recaptacha ready
+                grecaptcha.ready(function() {
+                    // do request for recaptcha token
+                    // response is promise with passed token
+                    grecaptcha.execute('6LfJ9KsZAAAAAJGfZVpRwmunLDoeJBU5E1nzDOIw', {action: 'register'}).then(function(token) {
+                        // add token to form
+                        $('#form').prepend('<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
+                            $.post("form.php",{email: email, password: password, token: token}, function(result) {
+                                    console.log(result);
+                                    if(result.success) {
 
+                                    } else {
+                                            alert('Кажется вы робот!')
+                                    }
+                            });
+                    });;
+                });
+          //});
+         </script>
     <script src="{{asset('assets/js/script.js')}}"></script>
 </body>
 
