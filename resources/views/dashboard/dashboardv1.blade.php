@@ -37,6 +37,11 @@
                     <li>Сегодня: {{ $time }}</li>
                     <li>Текущая программа: <b>Похудение после беременности</b></li>
                 </ul>
+                <input type="number" max="24" min="1" oninput="getval(this.value)" id="startval" placeholder="Укажите время в часах">
+                <input type="button" id="start" value="Старт">
+                <div id="timer">
+                    <div class="values"></div>
+                </div>
             </div>
             <div class="separator-breadcrumb border-top"></div>
             <nav>
@@ -415,8 +420,42 @@
      <script src="{{asset('assets/js/vendor/calendar/moment.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/calendar/fullcalendar.min.js')}}"></script>
     <script src="{{asset('assets/js/calendar.script.js')}}"></script>
+    <script src="{{asset('assets/js/easytimer.min.js')}}"></script>
      <script>
         $(document).ready(function() {
+            var newDate = new Date,
+                date = newDate.getDate(),
+                month = newDate.getMonth(),
+                year = newDate.getFullYear();
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'agendaDay,agendaWeek'
+                },
+                themeSystem: "bootstrap4",
+                defaultView: 'agendaWeek',
+                editable: false,
+                eventLimit: true,
+                events: [{
+                    title: "Завтрак",
+                    start: new Date(year, month, date, 8, 0),
+                    end: new Date(year, month, date, 10, 0),
+                    color: "#ffc107",
+                    customRender: true
+                }],
+                eventRender: function(event, element, view) {
+				  if (event.customRender == true)
+				  {
+				    var el = element.html();
+				    element.html("<div>" +  el + "<ul class='sub_event'><li>Блюдо 1</li><li>Блюдо 2</li></ul></div>");
+				    //...etc
+				  }
+				}
+            });
+
+
+
             $(document).on('click', '.day-btn', function(e) {
                 let $target = $(e.target);
                 let day = $target.data('day');
@@ -486,6 +525,31 @@
                 });
             });
         });
+
+        var log;
+      var getval = function(val) {
+            log = val;
+          }
+          let timer = new easytimer.Timer();
+          $("#start").on('click', function(e){
+              if(log > 24){
+                  alert("Укажите время в пределах от 1 до 24 часов");
+              }else if(log < 1){
+                  alert("Укажите время в пределах от 1 до 24 часов");
+              } else{
+              console.log(log);
+              $("#start").hide();
+              $("#startval").hide();
+              timer.start({countdown: true, startValues: {seconds: log * 3600}});
+              timer.addEventListener('secondsUpdated', function (e) {
+                  $('#timer .values').html(timer.getTimeValues().toString());
+              });
+              timer.addEventListener('targetAchieved', function (e) {
+                  $('#timer .values').html('Время вышло!');
+                  $("#start").show();
+                  $("#startval").show();
+              });}
+          });
      </script>
 
 @endsection
