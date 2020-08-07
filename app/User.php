@@ -388,6 +388,12 @@ class User extends Authenticatable implements MustVerifyEmail
         ProgramtrainingUser::where('user_id', $this->id)->where('status', ProgramtrainingUser::WILL_BE_ACTIVE)->update([
             'status' => ProgramtrainingUser::NOT_ACTIVE,
         ]);
+
+
+        if (!ProgramtrainingUser::where('user_id', $this->id)->where('status', ProgramtrainingUser::ACTIVE)->exists()) {
+            return $this->setCurrentUserProgram($program);
+        }
+
         $content = 'Программа - '.$program->name.' будет активирована в следующий понедельник.';
 
         $this->messages()->create([
@@ -396,6 +402,13 @@ class User extends Authenticatable implements MustVerifyEmail
             'name' => 'Программа изменена',
             'content' => $content,
         ]);
+
+        $pivot = ProgramtrainingUser::where('user_id', $this->id)->where('programtraining_id', $program->id)->where('days_left', '>=', 0)->first();
+        if ($pivot) {
+            return $pivot->update([
+                'status' => ProgramtrainingUser::WILL_BE_ACTIVE,
+            ]);
+        }
 
         return $this->programtrainings()->attach([
             $program->id => [
