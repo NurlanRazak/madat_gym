@@ -43,6 +43,6 @@ class ProgramController extends Controller
     {
         $user = $request->user();
         $updating = $user->setNextUserProgram(Programtraining::where('id', $request->programtraining_id)->first());
-
+        return redirect(route('home'));
     }
 }
