@@ -202,7 +202,7 @@ class RelaxtrainingCrudController extends CrudController
                 'type' => 'time',
                 'default' => '09:00',
                 'wrapperAttributes' => [
-                    'class' => 'form-group col-md-6',
+                    'class' => 'form-group col-md-6 required',
                 ],
             ],
             [
@@ -211,7 +211,7 @@ class RelaxtrainingCrudController extends CrudController
                 'type' => 'time',
                 'default' => '13:00',
                 'wrapperAttributes' => [
-                    'class' => 'form-group col-md-6',
+                    'class' => 'form-group col-md-6 required',
                 ],
             ],
             //TODO time fix
