@@ -109,6 +109,14 @@ class RelaxtrainingCrudController extends CrudController
                 'model' => 'App\Models\Relaxprogram'
             ],
             [
+                'name' => 'hour_start',
+                'label' => 'Время начала',
+            ],
+            [
+                'name' => 'hour_finish',
+                'label' => 'Время окончания',
+            ],
+            [
                 'name' => 'users',
                 'label' => 'Пользователи',
                 'type' => 'select_multiple',
@@ -188,29 +196,46 @@ class RelaxtrainingCrudController extends CrudController
                 ],
 
             ],
-
-            //TODO time fix
             [
-                'name' => 'time',
-                'label' => 'Время',
+                'name' => 'hour_start',
+                'label' => 'Время начала',
                 'type' => 'time',
-                'attributes' => [
-                    'required' => 'required',
-                ],
+                'default' => '09:00',
                 'wrapperAttributes' => [
-                    'class' => 'form-group col-sm-12 required',
+                    'class' => 'form-group col-md-6',
                 ],
-            //     'type' => 'date_range',
-            //     'start_name' => 'start_date', // the db column that holds the start_date
-            //     'end_name' => 'end_date',
-            // // OPTIONALS
-            //     'start_default' => '2019-12-28 01:01', // default value for start_date
-            //     'end_default' => '2019-12-28 02:00', // default value for end_date
-            //     'date_range_options' => [ // options sent to daterangepicker.js
-            //         'timePicker' => true,
-            //         'locale' => ['format' => 'HH:mm']
-            //     ]
             ],
+            [
+                'name' => 'hour_finish',
+                'label' => 'Время окончания',
+                'type' => 'time',
+                'default' => '13:00',
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-md-6',
+                ],
+            ],
+            //TODO time fix
+            // [
+            //     'name' => 'time',
+            //     'label' => 'Время',
+            //     'type' => 'time',
+            //     'attributes' => [
+            //         'required' => 'required',
+            //     ],
+            //     'wrapperAttributes' => [
+            //         'class' => 'form-group col-sm-12 required',
+            //     ],
+            // //     'type' => 'date_range',
+            // //     'start_name' => 'start_date', // the db column that holds the start_date
+            // //     'end_name' => 'end_date',
+            // // // OPTIONALS
+            // //     'start_default' => '2019-12-28 01:01', // default value for start_date
+            // //     'end_default' => '2019-12-28 02:00', // default value for end_date
+            // //     'date_range_options' => [ // options sent to daterangepicker.js
+            // //         'timePicker' => true,
+            // //         'locale' => ['format' => 'HH:mm']
+            // //     ]
+            // ],
             [
                 'name' => 'active',
                 'label' => 'Опубликован',

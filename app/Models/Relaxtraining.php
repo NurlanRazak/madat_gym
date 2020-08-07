@@ -19,10 +19,10 @@ class Relaxtraining extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'number_day', 'time', 'active'];
+    protected $fillable = ['name', 'number_day', 'time', 'hour_start', 'hour_finish', 'active'];
     // protected $hidden = [];
     // protected $dates = [];
-    
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS

@@ -106,6 +106,14 @@ class TrainingCrudController extends CrudController
                 'model' => 'App\Models\Programtraining',
             ],
             [
+                'name' => 'hour_start',
+                'label' => 'Время начала',
+            ],
+            [
+                'name' => 'hour_finish',
+                'label' => 'Время окончания',
+            ],
+            [
                 'name' => 'user_id',
                 'label' => 'Пользователь',
                 'type' => 'select',
@@ -175,7 +183,25 @@ class TrainingCrudController extends CrudController
                 'entity' => 'user',
                 'attribute' => 'email',
                 'model' => 'App\User',
-                
+
+            ],
+            [
+                'name' => 'hour_start',
+                'label' => 'Время начала',
+                'type' => 'time',
+                'default' => '09:00',
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-md-6',
+                ],
+            ],
+            [
+                'name' => 'hour_finish',
+                'label' => 'Время окончания',
+                'type' => 'time',
+                'default' => '13:00',
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-md-6',
+                ],
             ],
             [
                 'name' => 'day_number',

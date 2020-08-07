@@ -19,7 +19,7 @@ class Training extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'day_number', 'approaches_number', 'repetitions_number', 'weight', 'exercise_id', 'programtraining_id', 'user_id', 'active'];
+    protected $fillable = ['name', 'day_number', 'approaches_number', 'repetitions_number', 'weight', 'exercise_id', 'programtraining_id', 'user_id', 'hour_start', 'hour_finish', 'active'];
     // protected $hidden = [];
     // protected $dates = [];
 
