@@ -160,8 +160,8 @@ class Programtraining extends Model
             $events[] = [
                 'title' => $training->name,
                 'allDay' => false,
-                'start' => $day->setTime(16, 0)->format('D M d Y H:i:s O'),
-                'end' => $day->setTime(17, 0)->format('D M d Y H:i:s O'),
+                'start' => $day->setTime(explode(':', $training->hour_start)[0] ?? 0, explode(':', $training->hour_start)[1] ?? 0)->format('D M d Y H:i:s O'),
+                'end' => $day->setTime(explode(':', $training->hour_finish)[0] ?? 0, explode(':', $training->hour_finish)[1] ?? 0)->format('D M d Y H:i:s O'),
                 'color' => '#d22346',
             ];
         }
@@ -170,8 +170,8 @@ class Programtraining extends Model
             $events[] = [
                 'title' => $relaxtraining->name,
                 'allDay' => false,
-                'start' => $day->setTime(explode(':', $relaxtraining->time)[0] ?? 0, explode(':', $relaxtraining->time)[1] ?? 0)->format('D M d Y H:i:s O'),
-                'end' => $day->setTime(explode(':', $relaxtraining->time)[0] ?? 0, explode(':', $relaxtraining->time)[1] ?? 0)->addMinutes(15)->format('D M d Y H:i:s O'),
+                'start' => $day->setTime(explode(':', $relaxtraining->hour_start)[0] ?? 0, explode(':', $relaxtraining->hour_start)[1] ?? 0)->format('D M d Y H:i:s O'),
+                'end' => $day->setTime(explode(':', $relaxtraining->hour_finish)[0] ?? 0, explode(':', $relaxtraining->hour_finish)[1] ?? 0)->format('D M d Y H:i:s O'),
                 'color' => '#ffc107',
             ];
         }

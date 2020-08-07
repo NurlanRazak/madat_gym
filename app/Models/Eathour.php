@@ -34,7 +34,10 @@ class Eathour extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function planeats()
+    {
+        return $this->belongsToMany(\App\Models\Planeat::class, 'planeat_eathour', 'eathour_id', 'planeat_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

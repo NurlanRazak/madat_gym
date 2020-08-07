@@ -283,7 +283,7 @@ class User extends Authenticatable implements MustVerifyEmail
                     ->where('number_day', '<=', $passed - $today + 7)
                     ->active()
                     ->with(['exercises' => function($q) {$q->active();}])
-                    ->orderBy('time')
+                    ->orderBy('hour_start')
                     ->get();
     }
 

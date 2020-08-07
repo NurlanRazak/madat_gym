@@ -18,7 +18,11 @@
         <div class="col-md-12">
             <div class="box" id="admin">
                 <div>
-                    <calendar></calendar>
+                    <calendar
+                        :current_program="{{ request()->program_id ?? 0 }}"
+                        :groups="{{ json_encode($groups) }}"
+                        :programs="{{ json_encode($programs) }}"
+                    ></calendar>
                 </div>
 
                 <div class="box-body">

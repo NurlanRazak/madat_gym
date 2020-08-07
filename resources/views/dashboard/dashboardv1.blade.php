@@ -113,7 +113,7 @@
                                             <div class="card-body">
                                                 @foreach($trainings[$i] ?? [] as  $training)
                                                     <h2> {{ $training->name }}</h2>
-                                                    <h4>16:00 - 17:00</h4>
+                                                    <h4>{{ $training->hour_start }} - {{ $training->hour_finish }}</h4>
                                                     @if($training->user)
                                                         <h4> {{ $training->user->name }} </h4>
                                                     @endif
@@ -240,7 +240,7 @@
                                             <div class="card-body">
                                                 @foreach($relaxtrainings[$i] ?? [] as $index => $relaxtraining)
                                                     <h2>{{ $relaxtraining->name }}</h2>
-                                                    <h4>{{ $relaxtraining->time }}</h4>
+                                                    <h4>{{ $relaxtraining->hour_start }} - {{ $relaxtraining->hour_finish }}</h4>
                                                     <ul>
                                                         @foreach($relaxtraining->exercises as $exerciseindex => $exercise)
                                                             <li class="row mb-4">

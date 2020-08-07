@@ -1803,9 +1803,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['programs', 'current_program', 'groups'],
   data: function data() {
     return {
+      data: this.groups,
+      program_id: this.current_program ? this.current_program : this.programs.length ? this.programs[0].id : null,
       days: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
       actions: [{
         label: 'Создать неделю',
@@ -1817,20 +1833,27 @@ __webpack_require__.r(__webpack_exports__);
         action: 'createGroup'
       }, {
         label: 'Добавить упражнение',
-        class: 'yellow',
+        class: 'training',
         action: 'createExercise'
       }, {
         label: 'Добавить блюдо',
-        class: 'orange',
+        class: 'planeat',
         action: 'createMeal'
       }, {
         label: 'Добавить занятие',
-        class: 'red',
+        class: 'relaxtraining',
         action: 'createAction'
-      }]
+      }],
+      activeWeek: this.groups && Object.keys(this.groups).length ? Object.keys(this.groups)[0] : null
     };
   },
+  mounted: function mounted() {
+    console.log(this.data);
+  },
   methods: {
+    setActiveWeek: function setActiveWeek(week) {
+      this.activeWeek = week;
+    },
     callAction: function callAction(action) {
       this[action]();
     },
@@ -18083,7 +18106,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.weeks-wrapper[data-v-9232cc04] {\n    padding: 10px;\n    display: flex;\n}\n.top[data-v-9232cc04] {\n    width: 100%;\n}\n.bottom[data-v-9232cc04] {\n    width: 100%;\n}\n.left-action[data-v-9232cc04] {\n    margin: 3px;\n    padding: 5px;\n}\n.weeks[data-v-9232cc04] {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    padding: 10px;\n    text-align: center;\n    border: 1px solid grey;\n}\n.week[data-v-9232cc04] {\n    padding: 5px;\n}\n.content[data-v-9232cc04] {\n    display: flex;\n    justify-content: space-between;\n    border: 1px solid grey;\n    padding: 10px;\n    padding-bottom: 0;\n    margin: 10px;\n    margin-top: 20px;\n}\n.task[data-v-9232cc04] {\n    cursor: pointer;\n    padding: 10px;\n    margin: 10px;\n    border: 1px solid grey;\n    border-radius: 5px;\n    background-color: lightgrey;\n}\n.day[data-v-9232cc04] {\n    width:100%;\n    text-align: center;\n    display: flex;\n    flex-direction: column;\n}\n.day-title[data-v-9232cc04] {\n    padding: 10px;\n    border-bottom: 1px solid grey;\n}\n.day-content[data-v-9232cc04] {\n    height: 500px;\n}\n.day:not(:last-child) .d-content[data-v-9232cc04] {\n    border-right: 1px solid grey;\n}\n.head[data-v-9232cc04] {\n    padding: 5px;\n    margin: 10px;\n    margin-top: 0;\n    border: 1px solid grey;\n}\n.action[data-v-9232cc04] {\n    padding: 5px 20px;\n    margin: 5px;\n    border-radius: 5px;\n    font-weight: 450;\n}\n.action.green[data-v-9232cc04] {\n    background-color: rgba(130, 200, 100, .5);\n    border: 1px solid rgba(130, 200, 100, 1);\n}\n.action.red[data-v-9232cc04] {\n    background-color: rgba(255, 100, 100, .5);\n    border: 1px solid rgba(255, 100, 100, 1);\n}\n.action.transparent[data-v-9232cc04] {\n    background-color: transparent;\n    border: 1px solid black;\n}\n.action.yellow[data-v-9232cc04] {\n    background-color: rgba(250, 230, 160, .5);\n    border: 1px solid rgba(250, 230, 160, 1);\n}\n.action.orange[data-v-9232cc04] {\n    background-color: rgba(220, 180, 150, .4);\n    border: 1px solid rgba(200, 170, 150, 1);\n}\n.save[data-v-9232cc04] {\n    padding: 5px;\n    margin: 10px;\n    margin-bottom: 0;\n    border: 1px solid grey;\n    text-align: right;\n}\n.save-action[data-v-9232cc04] {\n    padding: 5px;\n    margin: 3px;\n}\n", ""]);
+exports.push([module.i, "\n.weeks-wrapper[data-v-9232cc04] {\n    padding: 10px;\n    display: flex;\n}\n.top[data-v-9232cc04] {\n    width: 100%;\n}\n.bottom[data-v-9232cc04] {\n    width: 100%;\n}\n.left-action[data-v-9232cc04] {\n    margin: 3px;\n    padding: 5px;\n}\n.weeks[data-v-9232cc04] {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    padding: 10px;\n    text-align: center;\n    border: 1px solid grey;\n}\n.week[data-v-9232cc04] {\n    padding: 5px;\n}\n.content[data-v-9232cc04] {\n    display: flex;\n    justify-content: space-between;\n    border: 1px solid grey;\n    padding: 10px;\n    padding-bottom: 0;\n    margin: 10px;\n    margin-top: 20px;\n}\n.task[data-v-9232cc04] {\n    cursor: pointer;\n    padding: 10px;\n    margin: 10px;\n    border: 1px solid grey;\n    border-radius: 5px;\n    background-color: lightgrey;\n}\n.task-training[data-v-9232cc04] {\n    background-color:\n}\n.task-content[data-v-9232cc04] {\n    padding: 10px;\n}\n.task-item[data-v-9232cc04] {\n    padding: 2px;\n    margin: 5px;\n    background-color: rgba(178, 215, 247, 1);\n    border: 1px solid rgb(50 148 250);\n}\n.day[data-v-9232cc04] {\n    width:100%;\n    text-align: center;\n    display: flex;\n    flex-direction: column;\n}\n.day-title[data-v-9232cc04] {\n    padding: 10px;\n    border-bottom: 1px solid grey;\n}\n.day[data-v-9232cc04]:not(:last-child) {\n    border-right: 1px solid grey;\n}\n.head[data-v-9232cc04] {\n    padding: 5px;\n    margin: 10px;\n    margin-top: 0;\n    border: 1px solid grey;\n}\n.action[data-v-9232cc04] {\n    padding: 5px 20px;\n    margin: 5px;\n    border-radius: 5px;\n    font-weight: 450;\n}\n.green[data-v-9232cc04] {\n    background-color: rgba(130, 200, 100, .5);\n    border: 1px solid rgba(130, 200, 100, 1);\n}\n.relaxtraining[data-v-9232cc04] {\n    background-color: rgba(255, 100, 100, .5);\n    border: 1px solid rgba(255, 100, 100, 1);\n}\n.transparent[data-v-9232cc04] {\n    background-color: transparent;\n    border: 1px solid black;\n}\n.training[data-v-9232cc04] {\n    background-color: rgba(250, 230, 160, .5);\n    border: 1px solid rgba(250, 230, 160, 1);\n}\n.planeat[data-v-9232cc04] {\n    background-color: rgba(220, 180, 150, .4);\n    border: 1px solid rgba(200, 170, 150, 1);\n}\n.save[data-v-9232cc04] {\n    padding: 5px;\n    margin: 10px;\n    margin-bottom: 0;\n    border: 1px solid grey;\n    text-align: right;\n}\n.save-action[data-v-9232cc04] {\n    padding: 5px;\n    margin: 3px;\n}\n", ""]);
 
 // exports
 
@@ -54233,6 +54256,46 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
+    _c("form", { attrs: { action: "" } }, [
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.program_id,
+              expression: "program_id"
+            }
+          ],
+          attrs: { name: "program_id" },
+          on: {
+            change: function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.program_id = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            }
+          }
+        },
+        _vm._l(_vm.programs, function(program) {
+          return _c(
+            "option",
+            { key: program.id, domProps: { value: program.id } },
+            [_vm._v(_vm._s(program.name))]
+          )
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "row weeks-wrapper" }, [
       _c("div", { staticClass: "col-sm-1 weeks" }, [
         _c(
@@ -54241,22 +54304,24 @@ var render = function() {
           [
             _c("h4", [_vm._v("Недели")]),
             _vm._v(" "),
-            _vm._l(_vm.days, function(day, index) {
-              return _c("div", { key: index, staticClass: "week" }, [
+            _vm._l(Object.keys(_vm.data), function(week) {
+              return _c("div", { key: week, staticClass: "week" }, [
                 _c(
                   "button",
                   {
+                    class: { "--active": _vm.activeWeek == week },
                     on: {
                       click: function($event) {
                         $event.preventDefault()
+                        _vm.setActiveWeek(week)
                       }
                     }
                   },
                   [
                     _vm._v(
                       "\n                        " +
-                        _vm._s(index) +
-                        "th week\n                    "
+                        _vm._s(week) +
+                        " неделя\n                    "
                     )
                   ]
                 )
@@ -54304,14 +54369,39 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "d-content day-content" },
-                _vm._l(5, function(index) {
-                  return _c("div", { key: index, staticClass: "task" }, [
-                    _vm._v(
-                      "\n                            task " +
-                        _vm._s(index) +
-                        "\n                        "
-                    )
-                  ])
+                _vm._l(_vm.data[_vm.activeWeek][index], function(group, index) {
+                  return _c(
+                    "div",
+                    { key: index, class: ["task", "" + group.type] },
+                    [
+                      _c("div", [_vm._v(_vm._s(group.name))]),
+                      _vm._v(" "),
+                      _c("div", [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(group.hour_start) +
+                            " - " +
+                            _vm._s(group.hour_finish) +
+                            "\n                            "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "task-content" },
+                        _vm._l(group.items, function(item, index) {
+                          return _c("div", { staticClass: "task-item" }, [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(item.name) +
+                                "\n                                "
+                            )
+                          ])
+                        }),
+                        0
+                      )
+                    ]
+                  )
                 }),
                 0
               )

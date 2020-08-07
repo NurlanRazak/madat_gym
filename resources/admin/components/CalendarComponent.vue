@@ -1,12 +1,17 @@
 <template>
     <div class="container-fluid">
+        <form action="">
+            <select name="program_id" v-model="program_id">
+                <option :value="program.id" v-for="program in programs" :key="program.id">{{ program.name }}</option>
+            </select>
+        </form>
         <div class="row weeks-wrapper">
             <div class="col-sm-1 weeks">
                 <div class="top">
                     <h4>Недели</h4>
-                    <div class="week" v-for="(day, index) in days" :key="index" >
-                        <button @click.prevent="">
-                            {{ index }}th week
+                    <div class="week" v-for="week in Object.keys(data)" :key="week" >
+                        <button @click.prevent="setActiveWeek(week)" :class="{'--active': activeWeek == week}">
+                            {{ week }} неделя
                         </button>
                     </div>
                 </div>
@@ -23,8 +28,16 @@
                     <div class="day" v-for="(day, index) in days" :key="index">
                         <div class="d-content day-title">{{ day }}</div>
                         <div class="d-content day-content">
-                            <div class="task" v-for="index in 5" :key="index">
-                                task {{ index }}
+                            <div :class="['task', `${group.type}`]" v-for="(group, index) in data[activeWeek][index]" :key="index">
+                                <div>{{ group.name }}</div>
+                                <div>
+                                    {{ group.hour_start }} - {{ group.hour_finish }}
+                                </div>
+                                <div class="task-content">
+                                    <div class="task-item" v-for="(item, index) in group.items">
+                                        {{ item.name }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -40,21 +53,35 @@
 
 <script>
 export default {
+    props: [
+        'programs',
+        'current_program',
+        'groups'
+    ],
     data() {
         return {
+            data: this.groups,
+            program_id: this.current_program ? this.current_program : (this.programs.length ? this.programs[0].id : null),
             days: [
                 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье',
             ],
             actions: [
                 {label:'Создать неделю', class: 'green', action: 'createWeek'},
                 {label:'Добавить группу', class: 'transparent', action: 'createGroup'},
-                {label:'Добавить упражнение', class: 'yellow', action: 'createExercise'},
-                {label:'Добавить блюдо', class: 'orange', action: 'createMeal'},
-                {label:'Добавить занятие', class: 'red', action: 'createAction'},
+                {label:'Добавить упражнение', class: 'training', action: 'createExercise'},
+                {label:'Добавить блюдо', class: 'planeat', action: 'createMeal'},
+                {label:'Добавить занятие', class: 'relaxtraining', action: 'createAction'},
             ],
+            activeWeek: (this.groups && Object.keys(this.groups).length) ? Object.keys(this.groups)[0] : null,
         }
     },
+    mounted() {
+        console.log(this.data)
+    },
     methods: {
+        setActiveWeek(week) {
+            this.activeWeek = week
+        },
         callAction(action) {
             this[action]()
         },
@@ -120,6 +147,18 @@ export default {
     border-radius: 5px;
     background-color: lightgrey;
 }
+.task-training {
+    background-color:
+}
+.task-content {
+    padding: 10px;
+}
+.task-item {
+    padding: 2px;
+    margin: 5px;
+    background-color: rgba(178, 215, 247, 1);
+    border: 1px solid rgb(50 148 250);
+}
 .day {
     width:100%;
     text-align: center;
@@ -130,10 +169,8 @@ export default {
     padding: 10px;
     border-bottom: 1px solid grey;
 }
-.day-content {
-    height: 500px;
-}
-.day:not(:last-child) .d-content {
+
+.day:not(:last-child) {
     border-right: 1px solid grey;
 }
 .head {
@@ -148,23 +185,23 @@ export default {
     border-radius: 5px;
     font-weight: 450;
 }
-.action.green {
+.green {
     background-color: rgba(130, 200, 100, .5);
     border: 1px solid rgba(130, 200, 100, 1);
 }
-.action.red {
+.relaxtraining {
     background-color: rgba(255, 100, 100, .5);
     border: 1px solid rgba(255, 100, 100, 1);
 }
-.action.transparent {
+.transparent {
     background-color: transparent;
     border: 1px solid black;
 }
-.action.yellow {
+.training {
     background-color: rgba(250, 230, 160, .5);
     border: 1px solid rgba(250, 230, 160, 1);
 }
-.action.orange {
+.planeat {
     background-color: rgba(220, 180, 150, .4);
     border: 1px solid rgba(200, 170, 150, 1);
 }
