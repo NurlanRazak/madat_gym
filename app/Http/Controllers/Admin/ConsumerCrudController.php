@@ -204,6 +204,46 @@ class ConsumerCrudController extends CrudController
                 'entity' => 'subscriptions',
                 'attribute' => 'name_date',
             ],
+            [
+                'name' => 'type_employee',
+                'label' => 'Тип персонала',
+            ],
+            [
+                'name' => 'date_hired',
+                'label' => 'Дата принятия на работу',
+            ],
+            [
+                'name' => 'date_fired',
+                'label' => 'Дата увольнения',
+            ],
+            [
+                'name' => 'position',
+                'label' => 'Должность',
+            ],
+            [
+                'name' => 'address',
+                'label' => 'Адресс',
+            ],
+            [
+                'name' => 'image',
+                'label' => 'Изображения',
+                'type' => 'image',
+                'prefix' => 'uploads/',
+                'width' => '150px',
+                'height' => 'auto',
+            ],
+            [
+                'name' => 'programtraining_start',
+                'label' => 'Дата начало тек. программы',
+            ],
+            [
+                'name' => 'last_name',
+                'label' => 'Фамилия'
+            ],
+            [
+                'name' => 'middle_name',
+                'label' => 'Отчество',
+            ],
         ]);
 
         // Fields
