@@ -383,6 +383,20 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->save();
     }
 
+    public function addUserProgram($program)
+    {
+        $pivot = ProgramtrainingUser::where('user_id', $this->id)->where('programtraining_id', $program->id)->where('days_left', '>=', 0)->first();
+        if (!$pivot) {
+            $this->programtrainings()->attach([
+                $program->id => [
+                    'bought_at' => null,
+                    'days_left' => $program->duration,
+                    'status' => ProgramtrainingUser::NOT_ACTIVE,
+                ],
+            ]);
+        }
+    }
+
     public function setNextUserProgram($program)
     {
         ProgramtrainingUser::where('user_id', $this->id)->where('status', ProgramtrainingUser::WILL_BE_ACTIVE)->update([

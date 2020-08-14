@@ -172,7 +172,7 @@ class PaymentController extends Controller
         $subscription = $purchase->subscription;
         $programtraining = $purchase->programtraing;
         if ($programtraining) {
-            $user->setNextUserProgram($programtraining);
+            $user->addUserProgram($programtraining);
             // $user->doneExersices()->delete();
             return redirect(route('home'));
         }
