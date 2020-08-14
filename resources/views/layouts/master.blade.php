@@ -54,9 +54,8 @@
         <!-- Pre Loader Strat  -->
         <div class='loadscreen' id="preloader">
 
-            <div class="loader spinner-bubble spinner-bubble-primary">
-
-
+            <div class="loader">
+                  <img src="{{ asset('assets/images/logo.png')}}" alt="pre" width="50" class="li">
             </div>
         </div>
         <!-- Pre Loader end  -->
@@ -72,12 +71,10 @@
             {{-- end of header menu --}}
 
 
-
-            @include('layouts.sidebar')
             {{-- end of left sidebar --}}
 
             <!-- ============ Body content start ============= -->
-            <div class="main-content-wrap sidenav-open d-flex flex-column">
+             <div class="main-content-wrap d-flex flex-column">
                 <div class="main-content">
                     @yield('main-content')
                 </div>
