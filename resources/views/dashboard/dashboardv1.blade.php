@@ -35,7 +35,7 @@
                 <h1>Приветствуем, {{ $user->name }}!</h1>
                 <ul id="nav-tab" role="tablist">
                     <li>Сегодня: {{ $time }}</li>
-                    <li>Текущая программа: <b>Похудение после беременности</b></li>
+                    <li>Текущая программа: <b>{{ $user->programtraining->name }}</b></li>
                 </ul>
                 <input type="number" max="24" min="1" oninput="getval(this.value)" id="startval" placeholder="Укажите время в часах">
                 <input type="button" id="start" value="Старт">
@@ -419,7 +419,7 @@
      <script src="{{asset('assets/js/vendor/calendar/jquery-ui.min.js')}}"></script>
      <script src="{{asset('assets/js/vendor/calendar/moment.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/calendar/fullcalendar.min.js')}}"></script>
-    <script src="{{asset('assets/js/calendar.script.js')}}"></script>
+    {{-- <script src="{{asset('assets/js/calendar.script.js')}}"></script> --}}
     <script src="{{asset('assets/js/easytimer.min.js')}}"></script>
      <script>
         $(document).ready(function() {
@@ -437,13 +437,7 @@
                 defaultView: 'agendaWeek',
                 editable: false,
                 eventLimit: true,
-                events: [{
-                    title: "Завтрак",
-                    start: new Date(year, month, date, 8, 0),
-                    end: new Date(year, month, date, 10, 0),
-                    color: "#ffc107",
-                    customRender: true
-                }],
+                events: @json($events),
                 eventRender: function(event, element, view) {
 				  if (event.customRender == true)
 				  {
