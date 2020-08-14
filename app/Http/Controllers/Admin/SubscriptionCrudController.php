@@ -137,7 +137,6 @@ class SubscriptionCrudController extends CrudController
                 // optional:
                 // 'datetime_picker_options' => [
                 //     'format' => 'DD/MM/YYYY HH:mm',
-                //     // 'language' => 'fr'
                 // ],
                 'wrapperAttributes' => [
                     'class' => 'form-group col-md-4'
