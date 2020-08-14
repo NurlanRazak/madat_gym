@@ -39,7 +39,10 @@ class ProfileController extends Controller
 
         $program_histories = Programtraining::whereHas('programHistories', function($query) use($user) {
             $query->where('user_id', $user->id);
+        })->orWhereHas('allUsers', function($query) use($user) {
+            $query->where('user_id', $user->id);
         })->get();
+
 
         $programs = Programtraining::whereHas('activeprograms', function($query) {
             $query->where('date_start', '<=', \DB::raw('NOW()'))

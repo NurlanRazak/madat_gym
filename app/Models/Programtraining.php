@@ -90,6 +90,13 @@ class Programtraining extends Model
         return $this->hasMany(User::class, 'programtraining_id');
     }
 
+    public function allUsers()
+    {
+        return $this->belongsToMany(User::class, 'programtraining_user', 'programtraining_id', 'user_id')
+                    ->withPivot(['status', 'bought_at', 'days_left', 'total_days'])
+                    ->using(ProgramtrainingUser::class);
+    }
+
     public function programHistories()
     {
         return $this->hasMany('App\Models\ProgramHistory', 'programtraining_id');

@@ -282,20 +282,19 @@
                                               <th scope="row">{{ $i++ }}</th>
                                               <td>{{ $program->name }}</td>
                                               <td>{{ $program->description }}</td>
-                                              <td>@if (\Auth::user()->isActive($program)) Активная @else Использовано @endif </td>
+                                              <td>
+                                                  @if (\Auth::user()->isActive($program))
+                                                    Активная
+                                                  @elseif(\Auth::user()->next_programtraining && \Auth::user()->next_programtraining->id == $program->id)
+                                                    Будет активирована
+                                                  @elseif(\Auth::user()->hasProgram($program))
+                                                    Добавлено
+                                                  @else
+                                                    Использовано
+                                                  @endif
+                                              </td>
                                             </tr>
                                         @endforeach
-                                        @php
-                                            $next = \Auth::user()->next_programtraining;
-                                        @endphp
-                                        @if($next)
-                                            <tr>
-                                              <th scope="row">{{ $i++ }}</th>
-                                              <td>{{ $next->name }}</td>
-                                              <td>{{ $next->description }} </td>
-                                              <td>Будет активирована </td>
-                                            </tr>
-                                        @endif
                                       </tbody>
                                     </table>
                                 </div>
