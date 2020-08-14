@@ -172,7 +172,6 @@
                                         <div id="accordion-item-icon-right-{{ $i }}-2" class="collapse " data-parent="#accordionRightIcon-{{ $i }}">
                                             <div class="card-body">
                                                 <h2>Завтрак</h2>
-                                                <h4>6:00 - 9:00</h4>
                                                 <ul>
                                                     <li class="row mb-4">
                                                         @php
@@ -240,7 +239,7 @@
                                             <div class="card-body">
                                                 @foreach($relaxtrainings[$i] ?? [] as $index => $relaxtraining)
                                                     <h2>{{ $relaxtraining->name }}</h2>
-                                                    <h4>{{ $relaxtraining->hour_start }} - {{ $relaxtraining->hour_finish }}</h4>
+                                                    <h4>{{ $relaxtraining->hour_start }}</h4>
                                                     <ul>
                                                         @foreach($relaxtraining->exercises as $exerciseindex => $exercise)
                                                             <li class="row mb-4">
