@@ -230,36 +230,75 @@
 
                             <div class="alert alert-warning" role="alert">
                                 История покупок
-                                @foreach($user->subscriptions as $subscription)
-                                    <p> #{{ $loop->iteration }} Название подписки - {{ $subscription->name }}</p>
-                                    <p>Цена - {{ $subscription->price }}</p>
-                                    <p>Дата истечения срока действия - {{ Date::parse($subscription->expires)->format('d M Y') }}</p>
-                                    <p>Дата покупки -  {{ Date::parse($subscription->created_at)->format('d M Y') }}
-                                    <br>
-                                @endforeach
                             </div>
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table ">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col">#</th>
+                                          <th scope="col">Название подписки</th>
+                                          <th scope="col">Цена</th>
+                                          <th scope="col">Дата истечения срока действия</th>
+                                          <th scope="col">Дата покупки</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                         @foreach($user->subscriptions as $subscription)
+                                        <tr>
+                                          <th scope="row">{{ $loop->iteration }}</th>
+                                          <td>{{ $subscription->name }}</td>
+                                          <td>{{ $subscription->price }}</td>
+                                          <td>{{ Date::parse($subscription->expires)->format('d M Y') }}</td>
+                                          <td>{{ Date::parse($subscription->created_at)->format('d M Y') }}</td>
+                                        </tr>
+                                        @endforeach
+                                      </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
 
                             <div class="alert alert-warning" role="alert">
                                 Список программ
-                                @php
-                                    $i = 1;
-                                @endphp
-                                @foreach($program_histories as $program)
-                                    <p>
-                                        #{{ $i++ }} Название: {{ $program->name }}. Описание: {{ $program->description }}. Статус -
-                                        @if (\Auth::user()->isActive($program))
-                                            Активная
-                                        @else
-                                            Использовано
+                            </div>
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table ">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col">#</th>
+                                          <th scope="col">Название</th>
+                                          <th scope="col">Описание</th>
+                                          <th scope="col">Статус</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                          @php
+                                              $i = 1;
+                                          @endphp
+                                        @foreach($program_histories as $program)
+                                            <tr>
+                                              <th scope="row">{{ $i++ }}</th>
+                                              <td>{{ $program->name }}</td>
+                                              <td>{{ $program->description }}</td>
+                                              <td>@if (\Auth::user()->isActive($program)) Активная @else Использовано @endif </td>
+                                            </tr>
+                                        @endforeach
+                                        @php
+                                            $next = \Auth::user()->next_programtraining;
+                                        @endphp
+                                        @if($next)
+                                            <tr>
+                                              <th scope="row">{{ $i++ }}</th>
+                                              <td>{{ $next->name }}</td>
+                                              <td>{{ $next->description }} </td>
+                                              <td>Будет активирована </td>
+                                            </tr>
                                         @endif
-                                    </p>
-                                @endforeach
-                                @php
-                                    $next = \Auth::user()->next_programtraining;
-                                @endphp
-                                @if($next)
-                                    <p>#{{ $i }} Название: {{ $next->name }}. Описание: {{ $next->description }}. Статус - Будет активирована</p>
-                                @endif
+                                      </tbody>
+                                    </table>
+                                </div>
                             </div>
 
                         </div>
