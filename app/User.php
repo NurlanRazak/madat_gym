@@ -389,10 +389,9 @@ class User extends Authenticatable implements MustVerifyEmail
             'status' => ProgramtrainingUser::NOT_ACTIVE,
         ]);
 
-
-        if (!ProgramtrainingUser::where('user_id', $this->id)->where('status', ProgramtrainingUser::ACTIVE)->exists()) {
-            return $this->setCurrentUserProgram($program);
-        }
+        // if (!ProgramtrainingUser::where('user_id', $this->id)->where('status', ProgramtrainingUser::ACTIVE)->exists()) {
+        //     return $this->setCurrentUserProgram($program);
+        // }
 
         $content = 'Программа - '.$program->name.' будет активирована в следующий понедельник.';
 

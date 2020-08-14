@@ -55,11 +55,11 @@ class DecreaseProgramDays extends Command
 
                 if (!$next) {
                     $next = ProgramtrainingUser::where('user_id', $item->user_id)->where('status', ProgramtrainingUser::NOT_ACTIVE)->first();
+                    if ($next) {
+                        $next->user->setNextUserProgram($next->programtraining);
+                    }
                 }
 
-                if ($next) {
-                    $next->user->setCurrentUserProgram($next->programtraining);
-                }
             } else {
                 $item->save();
             }
