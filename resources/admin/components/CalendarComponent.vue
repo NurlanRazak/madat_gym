@@ -25,21 +25,21 @@
                     <button v-for="(action, index) in actions" :key="index" :class="['action', action.class]" @click.prevent="callAction(action.action)">{{ action.label }}</button>
                 </div>
                 <div class="content">
-                    <div class="day" v-for="(day, index) in days" :key="index">
+                    <div class="day" v-for="(day, index) in days" :key="`day_${index}`">
                         <div class="d-content day-title">{{ day }}</div>
-                        <div class="d-content day-content">
-                            <div :class="['task', `${group.type}`]" v-for="(group, index) in data[activeWeek][index]" :key="index">
+                        <draggable :list="data[activeWeek][index]" group="days" class="d-content day-content" @start="drag = true" @end="drag = false">
+                            <div :class="['task', `${group.type}`]" v-for="(group, index) in data[activeWeek][index]" :key="`task_${index}`">
                                 <div>{{ group.name }}</div>
                                 <div>
                                     {{ group.hour_start }} - {{ group.hour_finish }}
                                 </div>
-                                <div class="task-content">
+                                <draggable :list="group.items" :group="`items_${group.type}`" class="task-content">
                                     <div class="task-item" v-for="(item, index) in group.items">
                                         {{ item.name }}
                                     </div>
-                                </div>
+                                </draggable>
                             </div>
-                        </div>
+                        </draggable>
                     </div>
                 </div>
                 <div class="save">
@@ -52,7 +52,12 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+
 export default {
+    components: {
+        draggable
+    },
     props: [
         'programs',
         'current_program',
@@ -60,6 +65,7 @@ export default {
     ],
     data() {
         return {
+            drag: false,
             data: this.groups,
             program_id: this.current_program ? this.current_program : (this.programs.length ? this.programs[0].id : null),
             days: [
