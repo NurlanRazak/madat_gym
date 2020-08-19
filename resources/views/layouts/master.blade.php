@@ -83,7 +83,17 @@
                 background: rgb(102, 51, 153);
                 border-radius: 3px;
                 padding: 5px;
+                margin: 5px 5px 0 5px;
            }
+           #timerWrap{
+              position: fixed;
+              bottom: 15px;
+              right: 15px;
+              background: #663399;
+              border-radius: 5px;
+              color: #fff;
+              padding: 10px;
+            }
         </style>
         <script src="https://kit.fontawesome.com/d1edd4ad8f.js"></script>
         {{-- page specific css --}}

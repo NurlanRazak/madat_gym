@@ -37,10 +37,12 @@
                     <li>Сегодня: {{ $time }}</li>
                     <li>Текущая программа: <b>{{ $user->programtraining->name }}</b></li>
                 </ul>
-                <input type="number" max="24" min="1" oninput="getval(this.value)" id="startval" placeholder="Укажите время в часах">
-                <input type="button" id="start" value="Старт">
-                <div id="timer">
-                    <div class="values"></div>
+                <button id="timerTrigger">Таймер</button>
+                <div id="timerWrap">
+                	<div id="timer"><div class="values"></div></div>
+	                <input type="number" value="0" id="time" placeholder="Введите время">
+	                <button id="start">Старт</button>
+	                <button id="stop">Стоп</button>
                 </div>
             </div>
             <div class="separator-breadcrumb border-top"></div>
@@ -210,6 +212,32 @@
                                                         @endif
                                                     </li>
                                                 </ul>
+
+
+                                                <h2>Затрак</h2>
+                                                <h4>9:00 - 10:00</h4>
+                                                   <ul>
+                                                           <li class="row mb-4">
+                                                               <div class="col-sm-3 col-lg-2"><div class="video"><img src="assets/images/no-image.png" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-model="\App\Models\Relaxexercise" ><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                               <div class="col-sm-7 col-lg-9">
+                                                                   <h5><b><a type="button" class="h2-pointer ex-desc" data-toggle="modal" data-target="#desc" ">Каша на молоке</a></b></h5>
+                                                                   <p>Крупа - 35 гр (овсянка, гречка, рис, перловка, пшенная крупа, булгур, кус-кус). Молоко - 90 гр (1-2,5%жирности)</p>
+                                                                   <p>Калорийность: <b>150</b></p><br>
+                                                               </div>
+                                                           </li>
+                                                           <li class="row mb-4">
+                                                               <div class="col-sm-3 col-lg-2"><div class="video"><img src="assets/images/no-image.png" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-model="\App\Models\Relaxexercise" ><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                               <div class="col-sm-7 col-lg-9">
+                                                                   <h5><b><a type="button" class="h2-pointer ex-desc" data-toggle="modal" data-target="#desc" ">Каша на молоке</a></b></h5>
+
+                                                                   <p>Крупа - 35 гр (овсянка, гречка, рис, перловка, пшенная крупа, булгур, кус-кус). Молоко - 90 гр (1-2,5%жирности)</p>
+                                                                   <p>Калорийность: <b>150</b></p><br>
+
+                                                               </div>
+                                                           </li>
+                                                   </ul>
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -418,33 +446,87 @@
      <script src="{{asset('assets/js/vendor/calendar/jquery-ui.min.js')}}"></script>
      <script src="{{asset('assets/js/vendor/calendar/moment.min.js')}}"></script>
     <script src="{{asset('assets/js/vendor/calendar/fullcalendar.min.js')}}"></script>
-    {{-- <script src="{{asset('assets/js/calendar.script.js')}}"></script> --}}
+     <script src="{{asset('assets/js/vendor/calendar/lang/ru.js')}}"></script>
     <script src="{{asset('assets/js/easytimer.min.js')}}"></script>
      <script>
         $(document).ready(function() {
+        $("#timerWrap").hide();
+        $("#timerTrigger").on("click", function(){
+        	$("#timerWrap").toggle();
+        });
+        $("#time").on("input", function(){
+        	time = $("#time").val();
+        	console.log(time);
+        });
+        var timer = new easytimer.Timer();
+        var	timeTotal = ('#timer .values'),
+        	timeKey = 'time_stored_seconds',
+        	timeStored = localStorage.getItem(timeKey),
+        	time;
+        	timer.addEventListener('secondsUpdated', function (e) {
+				var newValue = parseInt(localStorage.getItem(timeKey) | 0)+1
+				localStorage.setItem(timeKey, newValue);
+			    $(timeTotal).html(timer.getTimeValues().toString());
+			});
+
+			// Started Event
+			timer.addEventListener('started', function (e) {
+			    $(timeTotal).html(timer.getTimeValues().toString());
+			});
+			$("#stop").on('click', function(){
+				timer.stop();
+			});
+			$("#start").on("click", function(){
+				timer.start({countdown: true, startValues: {seconds: [0,0,0,time,0]}});
+			});
+			$('#timer .values').html(timer.getTimeValues().toString());
+			timer.addEventListener('targetAchieved', function (e) {
+			    alert('Время вышло!');
+			    $("#timerWrap").hide();
+			    localStorage.setItem('time', 0);
+			});
             var newDate = new Date,
                 date = newDate.getDate(),
                 month = newDate.getMonth(),
                 year = newDate.getFullYear();
             $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'agendaDay,agendaWeek'
-                },
-                themeSystem: "bootstrap4",
-                defaultView: 'agendaWeek',
-                editable: false,
-                eventLimit: true,
-                events: @json($events),
-                eventRender: function(event, element, view) {
-				  if (event.customRender == true)
-				  {
-				    var el = element.html();
-				    element.html("<div>" +  el + "<ul class='sub_event'><li>Блюдо 1</li><li>Блюдо 2</li></ul></div>");
-				    //...etc
-				  }
-				}
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'agendaDay,agendaWeek'
+                    },
+                    themeSystem: "bootstrap4",
+                    defaultView: 'agendaWeek',
+                    editable: false,
+                    eventLimit: true,
+                    events: @json($events),
+
+                    events: [{
+                       title: "Завтрак",
+                       start: new Date(year, month, date, 8, 0),
+                       end: new Date(year, month, date, 10, 0),
+                       color: "#ffc107",
+                       eventData: ['блюдо 1','Блюдо 2']
+                   },
+                   {
+                       title: "Завтрак",
+                       start: new Date(year, month, date, 11, 0),
+                       end: new Date(year, month, date, 14, 0),
+                       color: "#ffc107",
+                       eventData: []
+                   }],
+
+                    eventRender: function(event, element) {
+                        if (event.eventData.length != 0)
+                        {
+                        	var render = event.title + "<div><ul class='sub_event'>";
+                        	for(i=0; i < event.eventData.length; i++){
+                        		render = render + "<li>" + event.eventData[i] + "</li>";
+                        	}
+                        	render = render + "</ul></div>";
+                        element.html(render);
+                        }
+                    }
             });
 
 
@@ -517,32 +599,17 @@
                     'url': audio.attr('src'),
                 });
             });
+
+            if (timeStored) {
+                $(timeTotal).html(timeStored);
+            }else{
+                localStorage.setItem(timeKey, 0);
+                timeStored = 0
+            }
+            timer.start({ countdown: true, startValues: {seconds: parseInt(timeStored)}});
+
         });
 
-        var log;
-      var getval = function(val) {
-            log = val;
-          }
-          let timer = new easytimer.Timer();
-          $("#start").on('click', function(e){
-              if(log > 24){
-                  alert("Укажите время в пределах от 1 до 24 часов");
-              }else if(log < 1){
-                  alert("Укажите время в пределах от 1 до 24 часов");
-              } else{
-              console.log(log);
-              $("#start").hide();
-              $("#startval").hide();
-              timer.start({countdown: true, startValues: {seconds: log * 3600}});
-              timer.addEventListener('secondsUpdated', function (e) {
-                  $('#timer .values').html(timer.getTimeValues().toString());
-              });
-              timer.addEventListener('targetAchieved', function (e) {
-                  $('#timer .values').html('Время вышло!');
-                  $("#start").show();
-                  $("#startval").show();
-              });}
-          });
      </script>
 
 @endsection
