@@ -501,21 +501,6 @@
                     eventLimit: true,
                     events: @json($events),
 
-                    events: [{
-                       title: "Завтрак",
-                       start: new Date(year, month, date, 8, 0),
-                       end: new Date(year, month, date, 10, 0),
-                       color: "#ffc107",
-                       eventData: ['блюдо 1','Блюдо 2']
-                   },
-                   {
-                       title: "Завтрак",
-                       start: new Date(year, month, date, 11, 0),
-                       end: new Date(year, month, date, 14, 0),
-                       color: "#ffc107",
-                       eventData: []
-                   }],
-
                     eventRender: function(event, element) {
                         if (event.eventData.length != 0)
                         {
