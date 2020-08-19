@@ -6,6 +6,7 @@ use Alert;
 use Backpack\Base\app\Http\Controllers\Controller;
 use Backpack\Base\app\Http\Requests\AccountInfoRequest;
 use Backpack\Base\app\Http\Requests\ChangePasswordRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class MyAccountController extends Controller
@@ -33,7 +34,6 @@ class MyAccountController extends Controller
      */
      public function postAccountInfoForm(AccountInfoRequest $request)
      {
-         return redirect()->back();
          $result = $this->guard()->user()->update($request->except(['_token']));
 
          if ($result) {
@@ -42,6 +42,15 @@ class MyAccountController extends Controller
              Alert::error(trans('backpack::base.error_saving'))->flash();
          }
 
+         return redirect()->back();
+     }
+
+     public function postAvatarForm(Request $request)
+     {
+         $user = backpack_user();
+         $user->image = $request->image;
+         $user->save();
+         return back();
      }
 
      /**
