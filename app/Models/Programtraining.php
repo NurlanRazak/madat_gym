@@ -166,20 +166,24 @@ class Programtraining extends Model
             $day = now()->addDays($passed + $training->day_number - 1);
             $events[] = [
                 'title' => $training->name,
-                'allDay' => false,
                 'start' => $day->setTime(explode(':', $training->hour_start)[0] ?? 0, explode(':', $training->hour_start)[1] ?? 0)->format('D M d Y H:i:s O'),
                 'end' => $day->setTime(explode(':', $training->hour_finish)[0] ?? 0, explode(':', $training->hour_finish)[1] ?? 0)->format('D M d Y H:i:s O'),
                 'color' => '#d22346',
+                'eventData' => $training->exercises->map(function($item) {
+                    return $item->name;
+                }),
             ];
         }
         foreach($this->relaxprogram->relaxtrainings()->active()->get() as $relaxtraining) {
             $day = now()->addDays($passed + $relaxtraining->number_day - 1);
             $events[] = [
                 'title' => $relaxtraining->name,
-                'allDay' => false,
                 'start' => $day->setTime(explode(':', $relaxtraining->hour_start)[0] ?? 0, explode(':', $relaxtraining->hour_start)[1] ?? 0)->format('D M d Y H:i:s O'),
                 'end' => $day->setTime(explode(':', $relaxtraining->hour_finish)[0] ?? 0, explode(':', $relaxtraining->hour_finish)[1] ?? 0)->format('D M d Y H:i:s O'),
                 'color' => '#ffc107',
+                'eventData' => $relaxtraining->exercises->map(function($item) {
+                    return $item->name;
+                }),
             ];
         }
 
@@ -188,10 +192,12 @@ class Programtraining extends Model
             foreach($planeat->eathours ?? [] as $eathour) {
                 $events[] = [
                     'title' => $eathour->name,
-                    'allDay' => false,
                     'start' => $day->setTime(explode(':', $eathour->hour_start)[0] ?? 0, explode(':', $eathour->hour_start)[1] ?? 0)->format('D M d Y H:i:s O'),
                     'end' => $day->setTime(explode(':', $eathour->hour_finish)[0] ?? 0, explode(':', $eathour->hour_finish)[1] ?? 0)->format('D M d Y H:i:s O'),
                     'color' => '#4caf50',
+                    'eventData' => $planeat->meals->map(function($meal) {
+                        return $meal->name;
+                    }),
                 ];
             }
         }
