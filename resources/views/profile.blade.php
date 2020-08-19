@@ -55,8 +55,10 @@
                                     </div>
                                     <form class="mb-4">
                                         <p class="text-primary mb-1"><i class="i-Globe text-16 mr-1"></i> ПОЛ</p>
-                                        <select class="form-control userdataediti" name="sex" disabled id="sex">
-                                                <option value="{{ $user->sex }}"></option>
+                                        <select class="form-control userdataediti" name="gender" disabled id="gender">
+                                            @foreach(\App\User::getGenderOptions() as $key => $value)
+                                                <option value="{{ $key }}" @if($key == $user->gender) selected @endif>{{ $value }}</option>
+                                            @endforeach
                                         </select>
                                     </form>
                                     <div class="mb-4">
@@ -80,80 +82,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--<div class="col-lg-4 col-12">
-                                    <div class="alert alert-warning" role="alert">
-                                      ПАРАМЕТРЫ
-                                      <a id="userparamsedit" href="" class="float-right"><i class="i-Edit text-16"></i></a>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <p>11 авг 2915</p>
-                                            <hr>
-                                            <div class="mb-4">
-                                                <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Вес</p>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-4">
-                                                <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Email</p>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-4">
-                                                <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Website</p>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <p>17 авг 2915</p>
-                                            <hr>
-                                            <div class="mb-4">
-                                                <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Gender</p>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-4">
-                                                <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Email</p>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-4">
-                                                <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Website</p>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <p>24 авг 2915</p>
-                                            <hr>
-                                            <div class="mb-4">
-                                                <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Gender</p>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-4">
-                                                <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Email</p>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
-                                                </div>
-                                            </div>
-                                            <div class="mb-4">
-                                                <p class="text-primary mb-1"><i class="i-MaleFemale text-16 mr-1"></i> Website</p>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control userparamsediti"  aria-describedby="emailHelp" value="Ислам" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>-->
                                 <div class="col-lg-6 col-12">
                                 	<div class="alert alert-warning" role="alert">
                                       ЦЕЛЬ И ПЛАН
@@ -443,6 +371,7 @@ $.ajaxSetup({
             var name = $("input[name=name]").val();
             var last_name = $("input[name=last_name]").val();
             var middle_name = $("input[name=middle_name]").val();
+            var gender = $("select[name=gender]").val();
             var email = $("input[name=email]").val();
             var password = $("input[name=password]").val();
 
@@ -455,6 +384,7 @@ $.ajaxSetup({
                     last_name: last_name,
                     middle_name: middle_name,
                     email: email,
+                    gender: gender,
                     password: password,
                     _token: $('meta[name="csrf-token"]').attr('content')
                 },
