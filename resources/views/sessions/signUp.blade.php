@@ -76,34 +76,7 @@
     </div>
 
     <script src="{{asset('assets/js/common-bundle-script.js')}}"></script>
-    <script src="https://www.google.com/recaptcha/api.js?render=6LfJ9KsZAAAAAJGfZVpRwmunLDoeJBU5E1nzDOIw"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-         <script>
-           // when form is submit
-            //$('#form').submit(function() {
-                // we stoped it
-                event.preventDefault();
-                var email = $('#email').val();
-                var password = $("#password").val();
-                // needs for recaptacha ready
-                grecaptcha.ready(function() {
-                    // do request for recaptcha token
-                    // response is promise with passed token
-                    grecaptcha.execute('6LfJ9KsZAAAAAJGfZVpRwmunLDoeJBU5E1nzDOIw', {action: 'register'}).then(function(token) {
-                        // add token to form
-                        $('#form').prepend('<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
-                            $.post("form.php",{email: email, password: password, token: token}, function(result) {
-                                    console.log(result);
-                                    if(result.success) {
-
-                                    } else {
-                                            alert('Кажется вы робот!')
-                                    }
-                            });
-                    });;
-                });
-          //});
-         </script>
+    @include('brandstudio::recaptcha.scripts', ['recaptcha_action' => 'Registration'])
     <script src="{{asset('assets/js/script.js')}}"></script>
 </body>
 

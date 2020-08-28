@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "97b141e0db815194605ffb2a65d04c55",
+    "content-hash": "1ced9a523c7f6131d9ca85b44a69d6b5",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -376,6 +376,64 @@
                 "tinymce"
             ],
             "time": "2019-09-03T20:16:06+00:00"
+        },
+        {
+            "name": "brandstudio/recaptcha",
+            "version": "v2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/brandstudio-kz/recaptcha.git",
+                "reference": "8c861598714295847ec0cb545d25b0125cf0492c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/brandstudio-kz/recaptcha/zipball/8c861598714295847ec0cb545d25b0125cf0492c",
+                "reference": "8c861598714295847ec0cb545d25b0125cf0492c",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "BrandStudio\\Recaptcha\\RecaptchaServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BrandStudio\\Recaptcha\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nurdaulet",
+                    "email": "nurik9293709@gmail.com",
+                    "homepage": "https://sarsenovz2z.github.io/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Nurlan",
+                    "email": "nurlan.bboy@gmail.com",
+                    "homepage": "https://nurlanrazak.github.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "BrandStudio google recaptcha v3 package",
+            "homepage": "https://github.com/brandstudio-kz/recaptcha",
+            "keywords": [
+                "Google ReCaptcha",
+                "Laravel reCAPTCHA",
+                "laravel",
+                "laravel google recaptcha v3"
+            ],
+            "time": "2020-03-11T15:29:36+00:00"
         },
         {
             "name": "composer/installers",
@@ -1453,6 +1511,7 @@
                     "email": "jakub.onderka@gmail.com"
                 }
             ],
+            "abandoned": "php-parallel-lint/php-console-color",
             "time": "2018-09-29T17:23:10+00:00"
         },
         {
@@ -1499,6 +1558,7 @@
                 }
             ],
             "description": "Highlight PHP code in terminal",
+            "abandoned": "php-parallel-lint/php-console-highlighter",
             "time": "2018-09-29T18:48:56+00:00"
         },
         {
@@ -6345,5 +6405,6 @@
     "platform": {
         "php": "^7.1.3"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
