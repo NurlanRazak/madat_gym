@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         'subscribed' => \App\Http\Middleware\CheckSubscription::class,
         'programchecked' => \App\Http\Middleware\CheckProgram::class,
         'hasProgram' => \App\Http\Middleware\HasProgram::class,
+        'epay' => \App\Http\Middleware\Epay::class,
     ];
 
     /**

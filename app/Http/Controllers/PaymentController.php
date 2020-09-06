@@ -44,23 +44,8 @@ class PaymentController extends Controller
             ];
         }
 
-        return view('buy', compact('items', 'total'));
-    }
-
-    public function checkout(Request $request) {
-        $programtraining_id = $request->session()->get('programtraining_id');
-        $subscription_id = $request->session()->get('subscription_id');
         $user = $request->user();
 
-        $total = 0;
-        if ($subscription_id) {
-            $subscription = Subscription::findOrFail($subscription_id);
-            $total += $subscription->price;
-        }
-        if ($programtraining_id) {
-            $programtraining = Programtraining::findOrFail($programtraining_id);
-            $total += (int)$programtraining->price;
-        }
         $purchase = '';
         if($programtraining_id) {
             $purchase = Purchase::create([
@@ -78,83 +63,48 @@ class PaymentController extends Controller
             ]);
         }
 
+        $description = $programtraining->name ?? 'test';
+
+        $url = 'https://api.paybox.money/payment.php';
+
         $data = [
-            'CardCryptogramPacket' => $request->code,
-            'Amount' => $total,
-            'Currency' => $purchase->currency ?? 'USD',
-            'IpAddress' => config('services.payment.ip_address'),
-            'Name' => $request->name,
-            'Email' => $user->email,
-            'AccountId' => $user->id,
-            'InvoiceId' => $purchase->id,
+           'extra_user_id' => $user->id,
+           'pg_merchant_id' => config('epay.merchant_id'),//our id in Paybox, will be gived on contract
+           'pg_amount' => $total, //amount of payment
+           'pg_salt' => 'some string', //random string, required
+           'pg_order_id' => $purchase->id, //id of purchase, strictly unique
+           'pg_description' => $description, //will be shown to client in process of payment, required
+           'pg_result_url' => route('payment-result'),//route('payment-result')
+           'pg_user_phone' => $user->phone_number ?? '',
+           'pg_user_contact_email' => $user->email ?? '',
+           'pg_testing_mode' => 1,
+           'pg_success_url' => route('home'),
         ];
 
-        $data_string = json_encode($data);
+        ksort($data);
+        array_unshift($data, 'payment.php');
+        array_push($data, config('epay.secret'));
 
-        $ch = curl_init('https://api.cloudpayments.ru/payments/cards/charge');
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-        ));
-        curl_setopt($ch, CURLOPT_USERPWD, config('services.payment.public_id').":".config('services.payment.api_key'));
+        $data['pg_sig'] = md5(implode(';', $data));
 
-        $result = curl_exec($ch);
-        $result = json_decode($result);
+        unset($data[0], $data[1]);
 
-        if ($result->Success) {
-            $request->session()->forget('subscription_id');
-            $request->session()->forget('programtraining_id');
-	    return $this->successPurchase($purchase);
-        }
+        $query = http_build_query($data);
+        $arr = [$url, $query];
+        header('Location:https://api.paybox.money/payment.php?'.$query);
 
-        if ($result->Model && isset($result->Model->AcsUrl) && isset($result->Model->PaReq)) {
-            $request->session()->forget('subscription_id');
-            $request->session()->forget('programtraining_id');
-            return view('success_payment', compact('result', 'purchase'));
-        }
 
-        if ($result->Model && isset($result->Model->CardHolderMessage)) {
-            // Back with message
-            return redirect()->back()->with(['message' => $result->Model->CardHolderMessage, 'type' => 'error']);
-        }
-        return redirect()->back()->with(['message' => 'Упс... Что то пошло не так :(', 'type' => 'error']);
+
+        return view('buy', compact('items', 'total'));
     }
 
     public function successCheckout(Request $request)
     {
-        if(!$request->MD || !$request->PaRes) {
-            return redirect()->to('/')->with(['message' => 'Упс... Что то пошло не так :(', 'type' => 'error']);
-        }
-        $purchase_id = $request->purchase_id;
+        $purchase_id = $request->pg_order_id;
         $purchase = Purchase::findOrFail($purchase_id);
 
-        $data = [
-            'TransactionId' => $request->MD,
-            'PaRes' => $request->PaRes,
-        ];
-        $data_string = json_encode($data);
-
-        $ch = curl_init('https://api.cloudpayments.ru/payments/cards/post3ds');
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-        ));
-        curl_setopt($ch, CURLOPT_USERPWD, config('services.payment.public_id').":".config('services.payment.api_key'));
-
-        $result = curl_exec($ch);
-        $result = json_decode($result);
-
-        if ($result->Success) {
+        if ($request->pg_result) {
             return $this->successPurchase($purchase);
-        }
-
-        if ($result->Model && isset($result->Model->CardHolderMessage)) {
-            // Back with message
-            return redirect()->back()->with(['message' => $result->Model->CardHolderMessage, 'type' => 'error']);
         }
 
         return redirect()->to('/')->with(['message' => 'Упс... Что то пошло не так :(', 'type' => 'error']);
