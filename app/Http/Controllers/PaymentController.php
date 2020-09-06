@@ -118,7 +118,7 @@ class PaymentController extends Controller
         $purchase->status = Purchase::PAID;
         $purchase->save();
 
-        $user = request()->user();
+        $user = $purchase->user;
         $subscription = $purchase->subscription;
         $programtraining = $purchase->programtraing;
         if ($programtraining) {
