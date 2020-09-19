@@ -73,6 +73,7 @@ class PaymentController extends Controller
            'pg_amount' => $total, //amount of payment
            'pg_salt' => 'some string', //random string, required
            'pg_order_id' => $purchase->id, //id of purchase, strictly unique
+           'pg_currency' => $purchase->currency ?? 'USD',
            'pg_description' => $description, //will be shown to client in process of payment, required
            'pg_result_url' => route('payment-result'),//route('payment-result')
            'pg_user_phone' => $user->phone_number ?? '',
