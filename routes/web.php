@@ -11,6 +11,31 @@
 |
 */
 
+Route::get('/test', function() {
+    $service = new \App\Services\Jwplayer();
+    dd($service->getPlaylist('k8SJZLPw'));
+    $client = new \GuzzleHttp\Client();
+    $response = $client->request('GET', 'https://cdn.jwplayer.com/v2/playlists/k8SJZLPw');
+    dd(json_decode($response->getBody()));
+
+    $user = \App\User::where('email', 'nurik9293709@gmail.com')->first();
+    $programtraining = \App\Models\Programtraining::first();
+    // \App\Models\Pivots\ProgramtrainingUser::create([
+    //     'user_id' => $user->id,
+    //     'programtraining_id' => $programtraining->id,
+    //     'bought_at' => null,
+    //     'days_left' => 0,
+    //     'total_days' => 10,
+    // ]);
+    $user->programtrainings()->attach([
+        $programtraining->id => [
+            'bought_at' => null,
+            'days_left' => 10,
+        ],
+    ]);
+
+});
+
 Route::post('/checkout', 'PaymentController@checkout')->name('checkout');
 Route::post('/checkout/success', 'PaymentController@successCheckout')->name('checkout-success');
 
