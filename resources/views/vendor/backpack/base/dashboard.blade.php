@@ -18,6 +18,7 @@
         <div class="col-md-12">
             <div class="box" id="admin">
                 <div>
+                    <div id="createModal"></div>
                     <calendar
                         :current_program="{{ request()->program_id ?? 0 }}"
                         :groups="{{ json_encode($groups) }}"
@@ -49,5 +50,10 @@
 @endsection
 
 @push('after_scripts')
+    <script>
+        function setFormData(data) {
+            console.log(data)
+        }
+    </script>
     <script src="{{ asset('/assets/js/admin/app.js') }}"></script>
 @endpush

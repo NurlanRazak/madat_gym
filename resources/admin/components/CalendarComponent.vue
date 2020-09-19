@@ -1,5 +1,6 @@
 <template>
     <div class="container-fluid">
+        <mousemenu :type="type" :top="top" :left="left" v-click-outside="hideContextMenu" />
         <form action="">
             <select name="program_id" v-model="program_id">
                 <option :value="program.id" v-for="program in programs" :key="program.id">{{ program.name }}</option>
@@ -9,15 +10,13 @@
             <div class="col-sm-1 weeks">
                 <div class="top">
                     <h4>Недели</h4>
-                    <div class="week" v-for="week in Object.keys(data)" :key="week" >
-                        <button @click.prevent="setActiveWeek(week)" :class="{'--active': activeWeek == week}">
-                            {{ week }} неделя
-                        </button>
-                    </div>
-                </div>
-                <div class="bottom">
-                    <button class="left-action">Удалить неделю</button>
-                    <button class="left-action">Сделать активной/неактивной</button>
+                    <draggable :list="data" group="weeks" @start="drag = true" @end="drag = false">
+                        <div class="week" v-for="(week, index) of data" :key="index" >
+                            <button @click.prevent="setActiveWeek(index)" :class="{'--active': activeWeek == index}" @contextmenu="showContextMenu($event, index, 'week')">
+                                {{ week.week }} неделя
+                            </button>
+                        </div>
+                    </draggable>
                 </div>
             </div>
             <div class="col-sm-11">
@@ -27,8 +26,8 @@
                 <div class="content">
                     <div class="day" v-for="(day, index) in days" :key="`day_${index}`">
                         <div class="d-content day-title">{{ day }}</div>
-                        <draggable :list="data[activeWeek][index]" group="days" class="d-content day-content" @start="drag = true" @end="drag = false">
-                            <div :class="['task', `${group.type}`]" v-for="(group, index) in data[activeWeek][index]" :key="`task_${index}`">
+                        <draggable :list="data[activeWeek].data[index]" group="days" :sort="false" class="d-content day-content" @start="drag = true" @end="drag = false">
+                            <div :class="['task', `${group.type}`]" v-for="(group, index) in data[activeWeek].data[index]" :key="`task_${index}`">
                                 <div>{{ group.name }}</div>
                                 <div>
                                     {{ group.hour_start }} - {{ group.hour_finish }}
@@ -53,10 +52,14 @@
 
 <script>
 import draggable from 'vuedraggable'
+import ClickOutside from 'vue-click-outside'
 
 export default {
     components: {
         draggable
+    },
+    directives: {
+        ClickOutside
     },
     props: [
         'programs',
@@ -65,6 +68,11 @@ export default {
     ],
     data() {
         return {
+            modal: null,
+            target: null,
+            type: null,
+            top: null,
+            left: null,
             drag: false,
             data: this.groups,
             program_id: this.current_program ? this.current_program : (this.programs.length ? this.programs[0].id : null),
@@ -91,14 +99,32 @@ export default {
         callAction(action) {
             this[action]()
         },
+        duplicateWeek() {
+            this.data.push(Object.assign({}, this.data[this.target], { week: this.data[this.data.length - 1].week + 1 }))
+        },
         createWeek() {
-            alert('creat week')
+            this.data.push(Object.assign({}, { week: this.data[this.data.length - 1].week + 1, data: [] }))
+        },
+        removeWeek() {
+            alert('remove week')
         },
         createGroup() {
             alert('creat group')
         },
-        createExercise() {
-            alert('creat exercise')
+        async createExercise() {
+            this.modal = window.open('/admin/modal/exercise', 'modal', 'scrollbars=yes,resizable=yes,width=500,height=600')
+
+            // var newdiv = document.createElement('div');
+            // newdiv.innerHTML = resp.data
+            //
+            // document.getElementById('createModal').innerHTML = ''
+            // document.getElementById('createModal').appendChild(newdiv)
+            // jQuery.ready();
+            // var scripts = newdiv.getElementsByTagName('script');
+            // for (var ix = 0; ix < scripts.length; ix++) {
+            //     eval(scripts[ix].text);
+            // }
+
         },
         createMeal() {
             alert('creat meal')
@@ -106,6 +132,16 @@ export default {
         createAction() {
             alert('creat action')
         },
+        showContextMenu(e, target, type) {
+            e.preventDefault()
+            this.target = target
+            this.top = e.clientY
+            this.left = e.clientX
+            this.type = type
+        },
+        hideContextMenu() {
+            this.type = null
+        }
     }
 }
 </script>

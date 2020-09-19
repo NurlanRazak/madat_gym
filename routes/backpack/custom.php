@@ -53,4 +53,7 @@ Route::group([
     CRUD::resource('usedprogram', 'UsedprogramCrudController');
     CRUD::resource('uservisit', 'UservisitCrudController');
     CRUD::resource('contentview', 'ContentviewCrudController');
+
+    Route::get('modal/exercise', 'ExerciseCrudController@modal');
+    Route::post('modal/exercise', 'ExerciseCrudController@postModal');
 }); // this should be the absolute last line of this file

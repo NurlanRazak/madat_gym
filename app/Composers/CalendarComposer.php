@@ -88,8 +88,15 @@ class CalendarComposer
                 $groups[$week][$week_day] = collect($items)->sortBy('hour_start')->values()->all();
             }
         }
+        $groups_data = [];
+        foreach($groups as $week => $data) {
+            $groups_data[] = [
+                'week' => $week,
+                'data' => $data,
+            ];
+        }
 
-        $view->with('groups', $groups);
+        $view->with('groups', $groups_data);
         $view->with('programs', $programs);
     }
 
@@ -106,6 +113,7 @@ class CalendarComposer
         }
 
         $groups[$week][$day][] = $training;
+        $groups[$week+1][$day][] = $training;
     }
 
     private function getTrainings($current_program)
