@@ -481,7 +481,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $placeholder = 'https://placehold.it/160x160/00a65a/ffffff/&text='.$firstLetter;
 
         if (backpack_users_have_email()) {
-            return Gravatar::fallback('https://placehold.it/160x160/00a65a/ffffff/&text='.$firstLetter)->get($this->email);
+            return \Gravatar::fallback('https://placehold.it/160x160/00a65a/ffffff/&text='.$firstLetter)->get($this->email);
         } else {
             return $placeholder;
         }
