@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 class Relaxexercise extends Model
 {
     use CrudTrait;
+    use \Illuminate\Database\Eloquent\SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------
@@ -111,5 +112,5 @@ class Relaxexercise extends Model
 
         $this->uploadFileToDisk($value, $attribute_name, $disk, $destination_path);
     }
-    
+
 }
