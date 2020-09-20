@@ -7,12 +7,12 @@
             </select>
         </form>
         <div class="row weeks-wrapper">
-            <div class="col-sm-1 weeks">
+            <div class="col-sm-1 weeks" @contextmenu.prevent="showContextMenu($event, null, 'weeks')">
                 <div class="top">
                     <h4>Недели</h4>
                     <draggable :list="data" group="weeks" @start="drag = true" @end="drag = false">
                         <div class="week" v-for="(week, index) of data" :key="index" >
-                            <button @click.prevent="setActiveWeek(index)" :class="{'--active': activeWeek == index}" @contextmenu="showContextMenu($event, index, 'week')">
+                            <button @click.prevent="setActiveWeek(index)" :class="{'--active': activeWeek == index}" @contextmenu.prevent="showContextMenu($event, index, 'week')">
                                 {{ week.week }} неделя
                             </button>
                         </div>
@@ -20,20 +20,17 @@
                 </div>
             </div>
             <div class="col-sm-11">
-                <div class="head">
-                    <button v-for="(action, index) in actions" :key="index" :class="['action', action.class]" @click.prevent="callAction(action.action)">{{ action.label }}</button>
-                </div>
                 <div class="content">
-                    <div class="day" v-for="(day, index) in days" :key="`day_${index}`">
+                    <div class="day" v-for="(day, index) in days" :key="`day_${index}`" @contextmenu.prevent="showContextMenu($event, index, 'weekday')">
                         <div class="d-content day-title">{{ day }}</div>
                         <draggable :list="data[activeWeek].data[index]" group="days" :sort="false" class="d-content day-content" @start="drag = true" @end="drag = false">
-                            <div :class="['task', `${group.type}`]" v-for="(group, index) in data[activeWeek].data[index]" :key="`task_${index}`">
+                            <div :class="['task', `${group.type}`]" v-for="(group, index) in data[activeWeek].data[index]" :key="`task_${index}`" @contextmenu.prevent="showContextMenu($event, index, group.type)">
                                 <div>{{ group.name }}</div>
                                 <div>
                                     {{ group.hour_start }} - {{ group.hour_finish }}
                                 </div>
                                 <draggable :list="group.items" :group="`items_${group.type}`" class="task-content">
-                                    <div class="task-item" v-for="(item, index) in group.items">
+                                    <div class="task-item" v-for="(item, index) in group.items" @contextmenu.prevent="showContextMenu($event, index, 'group-item')">
                                         {{ item.name }}
                                     </div>
                                 </draggable>
@@ -79,13 +76,6 @@ export default {
             days: [
                 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье',
             ],
-            actions: [
-                {label:'Создать неделю', class: 'green', action: 'createWeek'},
-                {label:'Добавить группу', class: 'transparent', action: 'createGroup'},
-                {label:'Добавить упражнение', class: 'training', action: 'createExercise'},
-                {label:'Добавить блюдо', class: 'planeat', action: 'createMeal'},
-                {label:'Добавить занятие', class: 'relaxtraining', action: 'createAction'},
-            ],
             activeWeek: (this.groups && Object.keys(this.groups).length) ? Object.keys(this.groups)[0] : null,
         }
     },
@@ -93,6 +83,9 @@ export default {
         console.log(this.data)
     },
     methods: {
+        setItemData(id, name) {
+            console.log(id, name, this.type, this.target)
+        },
         setActiveWeek(week) {
             this.activeWeek = week
         },
@@ -111,33 +104,32 @@ export default {
         createGroup() {
             alert('creat group')
         },
-        async createExercise() {
-            this.modal = window.open('/admin/modal/exercise', 'modal', 'scrollbars=yes,resizable=yes,width=500,height=600')
-
-            // var newdiv = document.createElement('div');
-            // newdiv.innerHTML = resp.data
-            //
-            // document.getElementById('createModal').innerHTML = ''
-            // document.getElementById('createModal').appendChild(newdiv)
-            // jQuery.ready();
-            // var scripts = newdiv.getElementsByTagName('script');
-            // for (var ix = 0; ix < scripts.length; ix++) {
-            //     eval(scripts[ix].text);
-            // }
-
+        createExercise() {
+            this.showModal('exercise')
         },
         createMeal() {
-            alert('creat meal')
+            this.showModal('meal')
         },
-        createAction() {
-            alert('creat action')
+        createRelaxexercise() {
+            this.showModal('relaxexercise')
+        },
+        deleteItem() {
+
+        },
+        showModal(type) {
+            if (this.modal) {
+                this.modal.close()
+            }
+            this.modal = window.open(`/admin/modal/${type}`, 'modal', 'scrollbars=yes,resizable=yes,width=500,height=600')
         },
         showContextMenu(e, target, type) {
             e.preventDefault()
-            this.target = target
-            this.top = e.clientY
-            this.left = e.clientX
-            this.type = type
+            if (this.type == null) {
+                this.target = target
+                this.top = e.clientY
+                this.left = e.clientX
+                this.type = type
+            }
         },
         hideContextMenu() {
             this.type = null
@@ -179,7 +171,7 @@ export default {
     padding: 10px;
     padding-bottom: 0;
     margin: 10px;
-    margin-top: 20px;
+    margin-top: 0;
 }
 .task {
     cursor: pointer;
@@ -214,12 +206,6 @@ export default {
 
 .day:not(:last-child) {
     border-right: 1px solid grey;
-}
-.head {
-    padding: 5px;
-    margin: 10px;
-    margin-top: 0;
-    border: 1px solid grey;
 }
 .action {
     padding: 5px 20px;

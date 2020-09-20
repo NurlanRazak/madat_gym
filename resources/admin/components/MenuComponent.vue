@@ -1,6 +1,11 @@
 <template>
     <div class="context-menu" v-if="type" :style="`top: ${top}px;left: ${left}px;`">
-        <ul v-if="type == 'week'">
+        <ul v-if="type == 'weeks'">
+            <li>
+                <button @click="callAction('createWeek')">Создать неделю</button>
+            </li>
+        </ul>
+        <ul v-else-if="type == 'week'">
             <li>
                 <button @click="callAction('duplicateWeek')">Дублировать неделю</button>
             </li>
@@ -12,6 +17,31 @@
             </li>
             <li>
                 <button @click="callAction('removeWeek')">Сделать неактивной</button>
+            </li>
+        </ul>
+        <ul v-else-if="type == 'training'">
+            <li>
+                <button @click="callAction('createExercise')">Добавить упражнение</button>
+            </li>
+        </ul>
+        <ul v-else-if="type == 'planeat'">
+            <li>
+                <button @click="callAction('createMeal')">Добавить блюдо</button>
+            </li>
+        </ul>
+        <ul v-else-if="type == 'relaxtraining'">
+            <li>
+                <button @click="callAction('createRelaxexercise')">Добавить заняти</button>
+            </li>
+        </ul>
+        <ul v-else-if="type == 'weekday'">
+            <li>
+                <button @click="callAction('createGroup')">Добавить группу</button>
+            </li>
+        </ul>
+        <ul v-else-if="type == 'group-item'">
+            <li>
+                <button @click="callAction('deleteItem')">Удалить</button>
             </li>
         </ul>
     </div>
