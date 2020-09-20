@@ -17,7 +17,9 @@ use App\Services\MenuService\Traits\AccessLevelsTrait;
  */
 class MealCrudController extends CrudController
 {
+    use \App\Http\Controllers\Admin\Traits\CreateFromCalendar;
     use AccessLevelsTrait;
+
     public function setup()
     {
         /*

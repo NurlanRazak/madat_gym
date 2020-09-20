@@ -30,6 +30,6 @@ Vue.component('program', require('./components/ProgramLineChartComponent.vue').d
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
+window.app = new Vue({
     el: '#admin'
 });

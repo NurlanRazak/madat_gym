@@ -8,6 +8,7 @@ use Backpack\CRUD\CrudTrait;
 class Meal extends Model
 {
     use CrudTrait;
+    use \Illuminate\Database\Eloquent\SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------

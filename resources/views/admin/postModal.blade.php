@@ -2,6 +2,7 @@
 
 @section('content')
 <script>
-    window.opener.setFormData('qwe')
+    window.opener.app.$refs['calendar'].setItemData({{ $id }}, '{{ $name }}')
+    window.close()
 </script>
 @endsection

@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 class Exercise extends Model
 {
     use CrudTrait;
+    use \Illuminate\Database\Eloquent\SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------

@@ -26,7 +26,7 @@
 		    </div><!-- /.box-body -->
 		    <div class="">
 
-                @include('crud::inc.form_save_buttons')
+                @include('admin.form_save_buttons')
 
 		    </div><!-- /.box-footer-->
 

@@ -56,4 +56,15 @@ Route::group([
 
     Route::get('modal/exercise', 'ExerciseCrudController@modal');
     Route::post('modal/exercise', 'ExerciseCrudController@postModal');
+    Route::get('modal/relaxexercise', 'RelaxexerciseCrudController@modal');
+    Route::post('modal/relaxexercise', 'RelaxexerciseCrudController@postModal');
+    Route::get('modal/meal', 'MealCrudController@modal');
+    Route::post('modal/meal', 'MealCrudController@postModal');
+
+    Route::get('modal/training', 'TrainingCrudController@modal');
+    Route::post('modal/training', 'TrainingCrudController@postModal');
+    Route::get('modal/relaxtraining', 'RelaxtrainingCrudController@modal');
+    Route::post('modal/relaxtraining', 'RelaxtrainingCrudController@postModal');
+    Route::get('modal/planeat', 'PlaneatCrudController@modal');
+    Route::post('modal/planeat', 'PlaneatCrudController@postModal');
 }); // this should be the absolute last line of this file
