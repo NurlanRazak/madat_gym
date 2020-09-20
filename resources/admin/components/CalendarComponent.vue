@@ -129,7 +129,7 @@ export default {
             if (this.modal) {
                 this.closeModal()
             }
-            this.modal = window.open(`/admin/modal/${type}`, 'modal', 'scrollbars=yes,resizable=yes')
+            this.modal = window.open(`/admin/modal/${type}`, 'modal', `scrollbars=yes,resizable=yes,width=${0.8*window.screen.width},height=${0.8*window.screen.height},top=${Math.floor(window.screen.height*0.1)},left=${Math.floor(window.screen.width*0.1)}`)
         },
         closeModal() {
             this.modal.close()

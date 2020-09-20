@@ -1894,7 +1894,7 @@ __webpack_require__.r(__webpack_exports__);
         this.closeModal();
       }
 
-      this.modal = window.open("/admin/modal/".concat(type), 'modal', 'scrollbars=yes,resizable=yes');
+      this.modal = window.open("/admin/modal/".concat(type), 'modal', "scrollbars=yes,resizable=yes,width=".concat(0.8 * window.screen.width, ",height=").concat(0.8 * window.screen.height, ",top=").concat(Math.floor(window.screen.height * 0.1), ",left=").concat(Math.floor(window.screen.width * 0.1)));
     },
     closeModal: function closeModal() {
       this.modal.close();
@@ -1984,8 +1984,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     callAction: function callAction(action) {
-      this.$parent.type = null;
       this.$parent[action].call();
+      this.$parent.type = null;
     }
   }
 });
@@ -72807,7 +72807,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/work/madat_gym/resources/admin/app.js */"./resources/admin/app.js");
+module.exports = __webpack_require__(/*! /var/www/work/PayboxPay/madat_gym/resources/admin/app.js */"./resources/admin/app.js");
 
 
 /***/ })

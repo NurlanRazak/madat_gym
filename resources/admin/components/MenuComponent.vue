@@ -63,8 +63,8 @@ export default {
     },
     methods: {
         callAction(action) {
-            this.$parent.type = null
             this.$parent[action].call()
+            this.$parent.type = null
         }
     }
 }
