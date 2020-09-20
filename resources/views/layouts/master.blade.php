@@ -87,6 +87,7 @@
            }
            #timerWrap{
               position: fixed;
+              z-index: 999;
               bottom: 15px;
               right: 15px;
               background: #663399;
@@ -230,7 +231,96 @@
                   console.log()
                 $("#file-input").trigger('click');
               });
+              $.fn.isTimeSet();
             });
+            $.fn.setTime = function(){
+               //this function ensures that the user enter the correct format
+               var time = $("#time").val();
+               console.log(time);
+               var fields = time.split(':');
+               var hour = fields[0];
+               var min = fields[1];
+               var sec = fields[2];
+
+               if(time === ''){
+                   $("#status").html("Пожалуйста введите время!");
+               }else{
+                 if(hour < 24 && min < 60 && sec < 60){
+                    $("#status").html("Время идет!");
+                     $.fn.count(hour, min, min, sec, sec);
+                 }else{
+                    $("#status").html("Пожалуйста введите время правильно!");
+                 }
+               }
+             }
+             $.fn.count = function(hour, min, minLeft, sec, secLeft){
+                 //this function is the count control is will check if the count down is finish
+                 if(hour > 0 || min > 0 || minLeft > 0 || secLeft > 0){
+                     if(secLeft == 0){
+                       min -= 1;
+                       sec = 59;
+                     }
+                     if(minLeft == 0){
+                       hour -= 1;
+                       min = 59;
+                     }
+                     $("#hour").html(hour);
+                     $("#min").html(min);
+                     $.fn.countDown(hour, min, sec);
+                 }else{
+                   $("#status").html("Установите время:");
+                   localStorage.removeItem("time");
+                   alert("Время вышло!");
+                   $("#timeBtn").prop('disabled', false);
+                   $("#time").prop('disabled', false);
+                 }
+             }
+             $.fn.countDown = function(hour, min, sec){
+                //this function runs the seconds count
+                 var time = sec;
+                 $("#sec").html(time);
+                 var interval = setInterval(function(){
+                     $("#sec").html(-- time);
+                     $.fn.rememberMe(hour, min, time);
+                     if (time == 0) {
+                       clearInterval(interval);
+                       $.fn.count(hour, min, min, sec, "00");
+                     }
+                     if($('#sec').text().length < 2){
+                       $('#sec').prepend('0');
+                     }
+                     if($("#min").text().length < 2){
+                       $('#min').prepend('0');
+                     }
+                     if($("#hour").text().length < 2){
+                       $('#hour').prepend('0');
+                     }
+
+                 }, 1000);
+             }
+             $.fn.rememberMe = function(hour, min, sec){
+               //this function stores the time as a local storage incase the page refresh
+               if (typeof(Storage) !== "undefined") {
+                  localStorage.setItem("time",hour+':'+min+':'+sec);
+               }else{
+                  $("status").html("Ваш браузер не поддерживает наш таймер!");
+               }
+             }
+             $.fn.isTimeSet = function(){
+                  //this function checks if there is a time set
+                  if(localStorage.getItem("time") != null){
+                       var time = localStorage.getItem("time");
+                       var fields = time.split(':');
+                       hour = fields[0];
+                       min = fields[1];
+                       sec = fields[2];
+                       $("#status").html("Оставшееся время:");
+                       $("#timeBtn").prop('disabled', true);
+                       $("#time").prop('disabled', true);
+                       $.fn.count(hour, min, sec, sec);
+                       $("#timerWrap").show();
+                  }
+             }
         </script>
 
         {{-- laravel js --}}
