@@ -182,7 +182,9 @@
                                                         @if(count($eats[$i] ?? []) > 0)
                                                         @foreach($eats[$i] ?? [] as $start => $eat)
                                                         @foreach($eat as $end => $data)
-                                                            <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset('assets/images/no-image.png') }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-video="" disabled><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                            <div class="col-sm-3 col-lg-2">
+                                                                <div id="jwPlayer"></div>
+                                                                <div class="video"><img src="{{ asset('assets/images/no-image.png') }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-video="" disabled><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
                                                             <div class="col-sm-7 col-lg-9">
                                                                 <h2>{{ $eat_index++ }}. {{ $data['title'] ?? '' }}</h2>
                                                                     <p>Время приема пищи: <br><b>с {{ $start }} до {{ $end }}</b></p>
@@ -596,5 +598,12 @@
         });
 
      </script>
+    <script type="text/javascript">
+        jwplayer("jwPlayer").setup({
+            "playlist": [{
+                "file": "https://cdn.jwplayer.com/videos/uC4zesrN-kkwdMKcx.mp4"
+            }]
+        })
+    </script>
 
 @endsection
