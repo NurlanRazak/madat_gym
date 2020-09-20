@@ -1870,22 +1870,34 @@ __webpack_require__.r(__webpack_exports__);
     createGroup: function createGroup() {
       alert('creat group');
     },
-    createExercise: function createExercise() {
-      this.showModal('exercise');
-    },
     createMeal: function createMeal() {
       this.showModal('meal');
+    },
+    createExercise: function createExercise() {
+      this.showModal('exercise');
     },
     createRelaxexercise: function createRelaxexercise() {
       this.showModal('relaxexercise');
     },
+    createEatGroup: function createEatGroup() {
+      this.showModal('planeat');
+    },
+    createTraniningGroup: function createTraniningGroup() {
+      this.showModal('training');
+    },
+    createRelaxGroup: function createRelaxGroup() {
+      this.showModal('relaxtraining');
+    },
     deleteItem: function deleteItem() {},
     showModal: function showModal(type) {
       if (this.modal) {
-        this.modal.close();
+        this.closeModal();
       }
 
-      this.modal = window.open("/admin/modal/".concat(type), 'modal', 'scrollbars=yes,resizable=yes,width=500,height=600');
+      this.modal = window.open("/admin/modal/".concat(type), 'modal', 'scrollbars=yes,resizable=yes');
+    },
+    closeModal: function closeModal() {
+      this.modal.close();
     },
     showContextMenu: function showContextMenu(e, target, type) {
       e.preventDefault();
@@ -1914,6 +1926,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -18207,7 +18221,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.weeks-wrapper[data-v-9232cc04] {\n    padding: 10px;\n    display: flex;\n}\n.top[data-v-9232cc04] {\n    width: 100%;\n}\n.bottom[data-v-9232cc04] {\n    width: 100%;\n}\n.left-action[data-v-9232cc04] {\n    margin: 3px;\n    padding: 5px;\n}\n.weeks[data-v-9232cc04] {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    padding: 10px;\n    text-align: center;\n    border: 1px solid grey;\n}\n.week[data-v-9232cc04] {\n    padding: 5px;\n}\n.content[data-v-9232cc04] {\n    display: flex;\n    justify-content: space-between;\n    border: 1px solid grey;\n    padding: 10px;\n    padding-bottom: 0;\n    margin: 10px;\n    margin-top: 0;\n}\n.task[data-v-9232cc04] {\n    cursor: pointer;\n    padding: 10px;\n    margin: 10px;\n    border: 1px solid grey;\n    border-radius: 5px;\n    background-color: lightgrey;\n}\n.task-training[data-v-9232cc04] {\n    background-color:\n}\n.task-content[data-v-9232cc04] {\n    padding: 10px;\n}\n.task-item[data-v-9232cc04] {\n    padding: 2px;\n    margin: 5px;\n    background-color: rgba(178, 215, 247, 1);\n    border: 1px solid rgb(50 148 250);\n}\n.day[data-v-9232cc04] {\n    width:100%;\n    text-align: center;\n    display: flex;\n    flex-direction: column;\n}\n.day-title[data-v-9232cc04] {\n    padding: 10px;\n    border-bottom: 1px solid grey;\n}\n.day[data-v-9232cc04]:not(:last-child) {\n    border-right: 1px solid grey;\n}\n.action[data-v-9232cc04] {\n    padding: 5px 20px;\n    margin: 5px;\n    border-radius: 5px;\n    font-weight: 450;\n}\n.green[data-v-9232cc04] {\n    background-color: rgba(130, 200, 100, .5);\n    border: 1px solid rgba(130, 200, 100, 1);\n}\n.relaxtraining[data-v-9232cc04] {\n    background-color: rgba(255, 100, 100, .5);\n    border: 1px solid rgba(255, 100, 100, 1);\n}\n.transparent[data-v-9232cc04] {\n    background-color: transparent;\n    border: 1px solid black;\n}\n.training[data-v-9232cc04] {\n    background-color: rgba(250, 230, 160, .5);\n    border: 1px solid rgba(250, 230, 160, 1);\n}\n.planeat[data-v-9232cc04] {\n    background-color: rgba(220, 180, 150, .4);\n    border: 1px solid rgba(200, 170, 150, 1);\n}\n.save[data-v-9232cc04] {\n    padding: 5px;\n    margin: 10px;\n    margin-bottom: 0;\n    border: 1px solid grey;\n    text-align: right;\n}\n.save-action[data-v-9232cc04] {\n    padding: 5px;\n    margin: 3px;\n}\n", ""]);
+exports.push([module.i, "\n.weeks-wrapper[data-v-9232cc04] {\n    padding: 10px;\n    display: flex;\n}\n.top[data-v-9232cc04] {\n    width: 100%;\n}\n.bottom[data-v-9232cc04] {\n    width: 100%;\n}\n.left-action[data-v-9232cc04] {\n    margin: 3px;\n    padding: 5px;\n}\n.weeks[data-v-9232cc04] {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    padding: 10px;\n    text-align: center;\n    border: 1px solid grey;\n}\n.week[data-v-9232cc04] {\n    padding: 5px;\n}\n.content[data-v-9232cc04] {\n    display: flex;\n    justify-content: space-between;\n    border: 1px solid grey;\n    padding: 10px;\n    overflow: scroll;\n    padding-bottom: 0;\n    margin: 10px;\n    margin-top: 0;\n}\n.task[data-v-9232cc04] {\n    cursor: pointer;\n    padding: 10px;\n    margin: 10px;\n    border: 1px solid grey;\n    border-radius: 5px;\n    background-color: lightgrey;\n}\n.task-training[data-v-9232cc04] {\n    background-color:\n}\n.task-content[data-v-9232cc04] {\n    padding: 10px;\n}\n.task-item[data-v-9232cc04] {\n    padding: 2px;\n    margin: 5px;\n    background-color: rgba(178, 215, 247, 1);\n    border: 1px solid rgb(50 148 250);\n}\n.day[data-v-9232cc04] {\n    width:100%;\n    text-align: center;\n    display: flex;\n    flex-direction: column;\n}\n.day-title[data-v-9232cc04] {\n    padding: 10px;\n    border-bottom: 1px solid grey;\n}\n.day[data-v-9232cc04]:not(:last-child) {\n    border-right: 1px solid grey;\n}\n.action[data-v-9232cc04] {\n    padding: 5px 20px;\n    margin: 5px;\n    border-radius: 5px;\n    font-weight: 450;\n}\n.green[data-v-9232cc04] {\n    background-color: rgba(130, 200, 100, .5);\n    border: 1px solid rgba(130, 200, 100, 1);\n}\n.relaxtraining[data-v-9232cc04] {\n    background-color: rgba(255, 100, 100, .5);\n    border: 1px solid rgba(255, 100, 100, 1);\n}\n.transparent[data-v-9232cc04] {\n    background-color: transparent;\n    border: 1px solid black;\n}\n.training[data-v-9232cc04] {\n    background-color: rgba(250, 230, 160, .5);\n    border: 1px solid rgba(250, 230, 160, 1);\n}\n.planeat[data-v-9232cc04] {\n    background-color: rgba(220, 180, 150, .4);\n    border: 1px solid rgba(200, 170, 150, 1);\n}\n.save[data-v-9232cc04] {\n    padding: 5px;\n    margin: 10px;\n    margin-bottom: 0;\n    border: 1px solid grey;\n    text-align: right;\n}\n.save-action[data-v-9232cc04] {\n    padding: 5px;\n    margin: 3px;\n}\n", ""]);
 
 // exports
 
@@ -58261,7 +58275,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "col-sm-1 weeks",
+            staticClass: "col-xs-12 col-sm-2 col-md-1 col-lg-1 weeks",
             on: {
               contextmenu: function($event) {
                 $event.preventDefault()
@@ -58324,7 +58338,7 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "col-sm-11" }, [
+        _c("div", { staticClass: "col-xs-12 col-sm-10 col-md-11 col-lg-11" }, [
           _c(
             "div",
             { staticClass: "content" },
@@ -58456,7 +58470,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "save" }, [
       _c("button", { staticClass: "save-action" }, [
-        _vm._v("Сохранить изменения в неделе")
+        _vm._v("Сохранить изменения")
       ]),
       _vm._v(" "),
       _c("button", { staticClass: "save-action" }, [
@@ -58624,11 +58638,35 @@ var render = function() {
                               {
                                 on: {
                                   click: function($event) {
-                                    _vm.callAction("createGroup")
+                                    _vm.callAction("createTraniningGroup")
                                   }
                                 }
                               },
-                              [_vm._v("Добавить группу")]
+                              [_vm._v("Добавить тренировку")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                on: {
+                                  click: function($event) {
+                                    _vm.callAction("createEatGroup")
+                                  }
+                                }
+                              },
+                              [_vm._v("Добавить план питания")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                on: {
+                                  click: function($event) {
+                                    _vm.callAction("createRelaxGroup")
+                                  }
+                                }
+                              },
+                              [_vm._v("Добавить тренировку отдыха")]
                             )
                           ])
                         ])

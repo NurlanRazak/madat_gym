@@ -36,7 +36,9 @@
         </ul>
         <ul v-else-if="type == 'weekday'">
             <li>
-                <button @click="callAction('createGroup')">Добавить группу</button>
+                <button @click="callAction('createTraniningGroup')">Добавить тренировку</button>
+                <button @click="callAction('createEatGroup')">Добавить план питания</button>
+                <button @click="callAction('createRelaxGroup')">Добавить тренировку отдыха</button>
             </li>
         </ul>
         <ul v-else-if="type == 'group-item'">

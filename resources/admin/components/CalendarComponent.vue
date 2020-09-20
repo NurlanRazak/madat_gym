@@ -7,7 +7,7 @@
             </select>
         </form>
         <div class="row weeks-wrapper">
-            <div class="col-sm-1 weeks" @contextmenu.prevent="showContextMenu($event, null, 'weeks')">
+            <div class="col-xs-12 col-sm-2 col-md-1 col-lg-1 weeks" @contextmenu.prevent="showContextMenu($event, null, 'weeks')">
                 <div class="top">
                     <h4>Недели</h4>
                     <draggable :list="data" group="weeks" @start="drag = true" @end="drag = false">
@@ -19,7 +19,7 @@
                     </draggable>
                 </div>
             </div>
-            <div class="col-sm-11">
+            <div class="col-xs-12 col-sm-10 col-md-11 col-lg-11">
                 <div class="content">
                     <div class="day" v-for="(day, index) in days" :key="`day_${index}`" @contextmenu.prevent="showContextMenu($event, index, 'weekday')">
                         <div class="d-content day-title">{{ day }}</div>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="save">
-                    <button class="save-action">Сохранить изменения в неделе</button>
+                    <button class="save-action">Сохранить изменения</button>
                     <button class="save-action">Отменить изменения</button>
                 </div>
             </div>
@@ -104,23 +104,35 @@ export default {
         createGroup() {
             alert('creat group')
         },
-        createExercise() {
-            this.showModal('exercise')
-        },
         createMeal() {
             this.showModal('meal')
         },
+        createExercise() {
+            this.showModal('exercise')
+        },
         createRelaxexercise() {
             this.showModal('relaxexercise')
+        },
+        createEatGroup() {
+            this.showModal('planeat')
+        },
+        createTraniningGroup() {
+            this.showModal('training')
+        },
+        createRelaxGroup() {
+            this.showModal('relaxtraining')
         },
         deleteItem() {
 
         },
         showModal(type) {
             if (this.modal) {
-                this.modal.close()
+                this.closeModal()
             }
-            this.modal = window.open(`/admin/modal/${type}`, 'modal', 'scrollbars=yes,resizable=yes,width=500,height=600')
+            this.modal = window.open(`/admin/modal/${type}`, 'modal', 'scrollbars=yes,resizable=yes')
+        },
+        closeModal() {
+            this.modal.close()
         },
         showContextMenu(e, target, type) {
             e.preventDefault()
@@ -169,6 +181,7 @@ export default {
     justify-content: space-between;
     border: 1px solid grey;
     padding: 10px;
+    overflow: scroll;
     padding-bottom: 0;
     margin: 10px;
     margin-top: 0;
