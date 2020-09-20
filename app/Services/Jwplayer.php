@@ -5,37 +5,31 @@ namespace App\Services;
 class Jwplayer
 {
 
-    protected $client;
+    protected $jwplatform_api;
 
     public function __construct()
     {
-        $this->client = new \GuzzleHttp\Client();
+        $this->jwplatform_api = new \Jwplayer\JwplatformAPI('LJvZDNLz', 'q95DJQ5uYoISsl22hw9jG3Tq');
     }
 
     public function getPlaylists() : array
     {
-        return $this->sendRequest("playlists");
+        return $this->jwplatform_api->call('/channels/list', []);
     }
 
-    public function getPlaylist($playlist)
+    public function getPlaylist($channel_key)
     {
-        return $this->sendRequest("playlists/{$playlist}");
+        //returns list of videos of playlist
+        return $this->jwplatform_api->call('/channels/videos/list', array('channel_key'=>$channel_key));
     }
 
-    public function getVideos($playlist)
+    public function getVideos()
     {
-        return $this->sendRequest("playlists/{$playlist}");
+        return $this->jwplatform_api->call('/videos/list', []);
     }
 
-    public function getVideo($video)
+    public function getVideo($video_key)
     {
-        return $this->sendRequest("video/{$video}");
-    }
-
-    protected function sendRequest($url, $method = 'GET')
-    {
-        $url = "https://cdn.jwplayer.com/v2/{$url}";
-        $response = $this->client->request($method, $url);
-        return json_decode($response->getBody());
+        return $this->jwplatform_api->call('/videos/show', array('video_key' => $video_key));
     }
 }

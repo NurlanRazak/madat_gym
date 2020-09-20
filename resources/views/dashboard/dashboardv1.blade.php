@@ -175,7 +175,6 @@
 
                                         <div id="accordion-item-icon-right-{{ $i }}-2" class="collapse " data-parent="#accordionRightIcon-{{ $i }}">
                                             <div class="card-body">
-                                                <h2>Завтрак</h2>
                                                 <ul>
                                                     <li class="row mb-4">
                                                         @php
@@ -234,7 +233,7 @@
                                                                <div class="col-sm-7 col-lg-9">
                                                                    <h5><b><a type="button" class="h2-pointer ex-desc" data-toggle="modal" data-target="#desc" ">Каша на молоке</a></b></h5>
 
-                                                                   <p>Крупа - 35 гр (овсянка, гречка, рис, перловка, пшенная крупа, булгур, кус-кус). Молоко - 90 гр (1-2,5%жирности)</p>
+                                                                   <p>Крупа12 - 35 гр (овсянка, гречка, рис, перловка, пшенная крупа, булгур, кус-кус). Молоко - 90 гр (1-2,5%жирности)</p>
                                                                    <p>Калорийность: <b>150</b></p><br>
 
                                                                </div>
@@ -332,7 +331,8 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <video width="100%" src="{{ asset('assets/images/61.mp4') }}" controls></video>
+                            <video width="100%" src="https://cdn.jwplayer.com/v2/media/k8SJZLPw" controls></video>
+                            <!-- <video width="100%" src="{{ asset('assets/images/61.mp4') }}" controls></video> -->
                         </div>
                     </div>
                 </div>
@@ -563,9 +563,16 @@
      </script>
     <script type="text/javascript">
         jwplayer("jwPlayer").setup({
-            "playlist": [{
-                "file": "https://cdn.jwplayer.com/videos/uC4zesrN-kkwdMKcx.mp4"
-            }]
+            // "playlist": [{
+            //     "file": "https://cdn.jwplayer.com/videos/uC4zesrN",
+            //     "mediaid": "uC4zesrN"
+            // }]
+
+            "playlist": "https://cdn.jwplayer.com/v2/media/k8SJZLPw"
+
+            // "playlist": [{
+            //     "file": "https://cdn.jwplayer.com/videos/uC4zesrN-kkwdMKcx.mp4"
+            // }]
         })
     </script>
 
