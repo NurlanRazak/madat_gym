@@ -39,10 +39,12 @@
                 </ul>
                 <button id="timerTrigger">Таймер</button>
                 <div id="timerWrap">
-                	<div id="timer"><div class="values"></div></div>
-	                <input type="number" value="0" id="time" placeholder="Введите время">
-	                <button id="start">Старт</button>
-	                <button id="stop">Стоп</button>
+                    <span id="status">Установите время</span>
+                	<div id="timer"><span id="hour">00</span>:<span id="min">00</span>:<span id="sec">00</span></div>
+	                <!--<input type="time" value="0" id="time" placeholder="Введите время" min="00:00" max="24:00">-->
+                    <input type="time" value="00:00:00" list="limittimeslist" step="1" id="time" placeholder="Введите время">
+	                <button id="timeBtn" onclick="$.fn.setTime()">Старт</button>
+	                <button id="stop" onclick="$.fn.stopTimer()">Стоп</button>
                 </div>
             </div>
             <div class="separator-breadcrumb border-top"></div>
@@ -182,7 +184,9 @@
                                                         @if(count($eats[$i] ?? []) > 0)
                                                         @foreach($eats[$i] ?? [] as $start => $eat)
                                                         @foreach($eat as $end => $data)
-                                                            <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset('assets/images/no-image.png') }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-video="" disabled><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                            <div class="col-sm-3 col-lg-2">
+                                                                <div id="jwPlayer"></div>
+                                                                <div class="video"><img src="{{ asset('assets/images/no-image.png') }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-video="" disabled><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
                                                             <div class="col-sm-7 col-lg-9">
                                                                 <h2>{{ $eat_index++ }}. {{ $data['title'] ?? '' }}</h2>
                                                                     <p>Время приема пищи: <br><b>с {{ $start }} до {{ $end }}</b></p>
@@ -454,37 +458,6 @@
         $("#timerTrigger").on("click", function(){
         	$("#timerWrap").toggle();
         });
-        $("#time").on("input", function(){
-        	time = $("#time").val();
-        	console.log(time);
-        });
-        var timer = new easytimer.Timer();
-        var	timeTotal = ('#timer .values'),
-        	timeKey = 'time_stored_seconds',
-        	timeStored = localStorage.getItem(timeKey),
-        	time;
-        	timer.addEventListener('secondsUpdated', function (e) {
-				var newValue = parseInt(localStorage.getItem(timeKey) | 0)+1
-				localStorage.setItem(timeKey, newValue);
-			    $(timeTotal).html(timer.getTimeValues().toString());
-			});
-
-			// Started Event
-			timer.addEventListener('started', function (e) {
-			    $(timeTotal).html(timer.getTimeValues().toString());
-			});
-			$("#stop").on('click', function(){
-				timer.stop();
-			});
-			$("#start").on("click", function(){
-				timer.start({countdown: true, startValues: {seconds: [0,0,0,time,0]}});
-			});
-			$('#timer .values').html(timer.getTimeValues().toString());
-			timer.addEventListener('targetAchieved', function (e) {
-			    alert('Время вышло!');
-			    $("#timerWrap").hide();
-			    localStorage.setItem('time', 0);
-			});
             var newDate = new Date,
                 date = newDate.getDate(),
                 month = newDate.getMonth(),
@@ -585,16 +558,15 @@
                 });
             });
 
-            if (timeStored) {
-                $(timeTotal).html(timeStored);
-            }else{
-                localStorage.setItem(timeKey, 0);
-                timeStored = 0
-            }
-            timer.start({ countdown: true, startValues: {seconds: parseInt(timeStored)}});
-
         });
 
      </script>
+    <script type="text/javascript">
+        jwplayer("jwPlayer").setup({
+            "playlist": [{
+                "file": "https://cdn.jwplayer.com/videos/uC4zesrN-kkwdMKcx.mp4"
+            }]
+        })
+    </script>
 
 @endsection
