@@ -1891,7 +1891,7 @@ __webpack_require__.r(__webpack_exports__);
       this.showModal('eathour');
     },
     createPlaneat: function createPlaneat() {
-      this.showModal('planeat');
+      this.showModal('planeat?days=1');
     },
     createMeal: function createMeal() {
       this.showModal('meal');
@@ -1903,10 +1903,10 @@ __webpack_require__.r(__webpack_exports__);
       this.showModal('relaxexercise');
     },
     createTraniningGroup: function createTraniningGroup() {
-      this.showModal('training');
+      this.showModal('training?day_number=1');
     },
     createRelaxGroup: function createRelaxGroup() {
-      this.showModal('relaxtraining');
+      this.showModal('relaxtraining?number_day=1');
     },
     deleteItem: function deleteItem() {},
     deleteSubitem: function deleteSubitem() {},
@@ -72951,7 +72951,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/work/PayboxPay/madat_gym/resources/admin/app.js */"./resources/admin/app.js");
+module.exports = __webpack_require__(/*! /var/www/work/madat_gym/resources/admin/app.js */"./resources/admin/app.js");
 
 
 /***/ })

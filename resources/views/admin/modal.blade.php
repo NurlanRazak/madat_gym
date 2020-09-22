@@ -1,5 +1,4 @@
 @extends('admin.layout')
-
 @section('content')
 <div class="row m-t-20">
 	<div class="{{ $crud->getCreateContentClass() }}">
@@ -14,6 +13,9 @@
 				@endif
 		  		>
 		  {!! csrf_field() !!}
+		  @foreach($extra ?? [] as $key => $value)
+		  	<input type="hidden" name="{{ $key }}" value="{{ $value }}" />
+		  @endforeach
 		  <div class="col-md-12">
 
 		    <div class="row display-flex-wrap">

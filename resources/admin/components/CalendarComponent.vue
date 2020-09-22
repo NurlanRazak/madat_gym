@@ -127,7 +127,7 @@ export default {
             this.showModal('eathour')
         },
         createPlaneat() {
-            this.showModal('planeat')
+            this.showModal('planeat?days=1')
         },
         createMeal() {
             this.showModal('meal')
@@ -139,10 +139,10 @@ export default {
             this.showModal('relaxexercise')
         },
         createTraniningGroup() {
-            this.showModal('training')
+            this.showModal('training?day_number=1')
         },
         createRelaxGroup() {
-            this.showModal('relaxtraining')
+            this.showModal('relaxtraining?number_day=1')
         },
         deleteItem() {
 

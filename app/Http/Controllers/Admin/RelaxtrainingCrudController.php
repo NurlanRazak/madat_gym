@@ -269,10 +269,13 @@ class RelaxtrainingCrudController extends CrudController
 
     public function modal()
     {
+        $this->data['extra'] = request()->input();
+        foreach($this->data['extra'] as $key => $value) {
+            $this->crud->removeField($key);
+        }
         $this->data['crud'] = $this->crud;
         $this->data['saveAction'] = $this->getSaveAction();
         $this->data['fields'] = $this->crud->getCreateFields();
-        unset($this->data['fields']['number_day']);
         $this->data['title'] = $this->crud->getTitle() ?? trans('backpack::crud.add').' '.$this->crud->entity_name;
         // load the view from /resources/views/vendor/backpack/crud/ if it exists, otherwise load the one in the package
         return view('admin.modal', $this->data);
