@@ -1858,11 +1858,32 @@ __webpack_require__.r(__webpack_exports__);
       this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items.push(data);
       this.target = null;
       this.type = null;
-      console.log(data, this.type, this.target);
     },
-    setGroupData: function setGroupData(data) {},
+    setGroupData: function setGroupData(data) {
+      this.data[this.activeWeek].data[this.target.weekDay].push(data);
+      this.data[this.activeWeek].data[this.target.weekDay].sort(function (a, b) {
+        if (a.hour_start < b.hour_start) {
+          return -1;
+        }
+
+        if (a.hour_start > b.hour_start) {
+          return 1;
+        }
+
+        if (a.hour_finish < b.hour_finish) {
+          return -1;
+        }
+
+        if (a.hour_finish > b.hour_finish) {
+          return 1;
+        }
+
+        return 0;
+      });
+      this.target = null;
+      this.type = null;
+    },
     setSubitemData: function setSubitemData(data) {
-      console.log(this.data[this.activeWeek].data[this.target.weekDay][this.target.group]);
       this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems.push(data);
       this.target = null;
       this.type = null;

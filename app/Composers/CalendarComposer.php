@@ -63,7 +63,6 @@ class CalendarComposer
             }
 
             foreach($eathours as $eathour) {
-                $items = [];
                 foreach($eathour->planeats->groupBy('days') as $day => $planeats) {
                     $this->pushItem($groups, $day, [
                         'type' => 'planeat',
@@ -72,7 +71,6 @@ class CalendarComposer
                         'hour_start' => $eathour->hour_start,
                         'hour_finish' => $eathour->hour_finish,
                         'items' => $planeats->map(function($planeat) {
-                            // dd($planeat);
                             return [
                                 'id' => $planeat->id,
                                 'name' => $planeat->name,
@@ -82,25 +80,6 @@ class CalendarComposer
                                         'name' => $item->name,
                                     ];
                                 })
-                            ];
-                        }),
-                    ]);
-                }
-            }
-
-            foreach($planeats as $training) {
-                foreach($training->eathours as $item) {
-                    $this->pushItem($groups, $training->days, [
-                        'type' => 'planeat',
-                        'id' => $item->id,
-                        'planeat_id' => $training->id,
-                        'name' => $item->name,
-                        'hour_start' => $item->hour_start,
-                        'hour_finish' => $item->hour_finish,
-                        'items' => $training->meals->map(function($item) {
-                            return [
-                                'id' => $item->id,
-                                'name' => $item->name,
                             ];
                         }),
                     ]);

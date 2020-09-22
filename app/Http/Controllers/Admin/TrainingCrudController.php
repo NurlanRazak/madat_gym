@@ -295,7 +295,16 @@ class TrainingCrudController extends CrudController
         return view('admin.postModal', [
             'data' => [
                 'id' => $this->crud->entry->id,
-                'name' => $this->crud->entry->name
+                'name' => $this->crud->entry->name,
+                'type' => 'training',
+                'hour_start' => $this->crud->entry->hour_start,
+                'hour_finish' => $this->crud->entry->hour_finish,
+                'items' => $this->crud->entry->exercises->map(function($item) {
+                    return [
+                        'id' => $item->id,
+                        'name' => $item->name
+                    ];
+                })
             ]
         ]);
     }
