@@ -288,6 +288,11 @@ class TrainingCrudController extends CrudController
     {
         $redirect_location = parent::storeCrud(request());
         $this->crud->entry->delete();
-        return view('admin.postModal', ['id' => $this->crud->entry->id, 'name' => $this->crud->entry->name]);
+        return view('admin.postModal', [
+            'data' => [
+                'id' => $this->crud->entry->id,
+                'name' => $this->crud->entry->name
+            ]
+        ]);
     }
 }

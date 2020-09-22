@@ -26,9 +26,8 @@ class CalendarComposer
             $current_program = Programtraining::findOrFail($program_id);
 
             $trainings = $this->getTrainings($current_program);
-            $planeats = $this->getPlaneats($current_program);
             $relaxtrainings = $this->getRelaxtrainings($current_program);
-
+            $eathours = $this->getEathours($current_program);
             // dd($trainings, $planeats, $relaxtrainings);
 
             foreach($trainings as $training) {
@@ -61,6 +60,32 @@ class CalendarComposer
                         ];
                     }),
                 ]);
+            }
+
+            foreach($eathours as $eathour) {
+                $items = [];
+                foreach($eathour->planeats->groupBy('days') as $day => $planeats) {
+                    $this->pushItem($groups, $day, [
+                        'type' => 'planeat',
+                        'id' => $eathour->id,
+                        'name' => $eathour->name,
+                        'hour_start' => $eathour->hour_start,
+                        'hour_finish' => $eathour->hour_finish,
+                        'items' => $planeats->map(function($planeat) {
+                            // dd($planeat);
+                            return [
+                                'id' => $planeat->id,
+                                'name' => $planeat->name,
+                                'subitems' => $planeat->meals->map(function($item) {
+                                    return [
+                                        'id' => $item->id,
+                                        'name' => $item->name,
+                                    ];
+                                })
+                            ];
+                        }),
+                    ]);
+                }
             }
 
             foreach($planeats as $training) {
@@ -157,6 +182,24 @@ class CalendarComposer
                     }
                 ])
                 ->get();
+    }
+
+    private function getEathours($current_program)
+    {
+        return \App\Models\Eathour::whereHas('planeats', function($query) use($current_program) {
+            $query->active()
+                  ->where('foodprogram_id', $current_program->foodprogram_id);
+        })->with([
+            'planeats' => function($query) use($current_program) {
+                $query->active()
+                      ->where('foodprogram_id', $current_program->foodprogram_id)
+                      ->with([
+                          'meals' => function($query) {
+                              $query->active();
+                          }
+                      ]);
+            }
+        ])->get();
     }
 
 }

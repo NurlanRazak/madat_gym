@@ -1816,6 +1816,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1828,6 +1837,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['programs', 'current_program', 'groups'],
   data: function data() {
     return {
+      menuVisible: false,
       modal: null,
       target: null,
       type: null,
@@ -1844,8 +1854,18 @@ __webpack_require__.r(__webpack_exports__);
     console.log(this.data);
   },
   methods: {
-    setItemData: function setItemData(id, name) {
-      console.log(id, name, this.type, this.target);
+    setItemData: function setItemData(data) {
+      this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items.push(data);
+      this.target = null;
+      this.type = null;
+      console.log(data, this.type, this.target);
+    },
+    setGroupData: function setGroupData(data) {},
+    setSubitemData: function setSubitemData(data) {
+      console.log(this.data[this.activeWeek].data[this.target.weekDay][this.target.group]);
+      this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems.push(data);
+      this.target = null;
+      this.type = null;
     },
     setActiveWeek: function setActiveWeek(week) {
       this.activeWeek = week;
@@ -1867,8 +1887,11 @@ __webpack_require__.r(__webpack_exports__);
     removeWeek: function removeWeek() {
       alert('remove week');
     },
-    createGroup: function createGroup() {
-      alert('creat group');
+    createEathour: function createEathour() {
+      this.showModal('eathour');
+    },
+    createPlaneat: function createPlaneat() {
+      this.showModal('planeat');
     },
     createMeal: function createMeal() {
       this.showModal('meal');
@@ -1879,9 +1902,6 @@ __webpack_require__.r(__webpack_exports__);
     createRelaxexercise: function createRelaxexercise() {
       this.showModal('relaxexercise');
     },
-    createEatGroup: function createEatGroup() {
-      this.showModal('planeat');
-    },
     createTraniningGroup: function createTraniningGroup() {
       this.showModal('training');
     },
@@ -1889,6 +1909,7 @@ __webpack_require__.r(__webpack_exports__);
       this.showModal('relaxtraining');
     },
     deleteItem: function deleteItem() {},
+    deleteSubitem: function deleteSubitem() {},
     showModal: function showModal(type) {
       if (this.modal) {
         this.closeModal();
@@ -1900,17 +1921,16 @@ __webpack_require__.r(__webpack_exports__);
       this.modal.close();
     },
     showContextMenu: function showContextMenu(e, target, type) {
-      e.preventDefault();
-
-      if (this.type == null) {
+      if (!this.menuVisible) {
         this.target = target;
         this.top = e.clientY;
         this.left = e.clientX;
         this.type = type;
+        this.menuVisible = true;
       }
     },
     hideContextMenu: function hideContextMenu() {
-      this.type = null;
+      this.menuVisible = false;
     }
   }
 });
@@ -1977,15 +1997,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['type', 'top', 'left'],
+  props: ['type', 'top', 'left', 'visible'],
   data: function data() {
     return {};
   },
   methods: {
     callAction: function callAction(action) {
       this.$parent[action].call();
-      this.$parent.type = null;
+      this.$parent.menuVisible = false;
     }
   }
 });
@@ -18221,7 +18252,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.weeks-wrapper[data-v-9232cc04] {\n    padding: 10px;\n    display: flex;\n}\n.top[data-v-9232cc04] {\n    width: 100%;\n}\n.bottom[data-v-9232cc04] {\n    width: 100%;\n}\n.left-action[data-v-9232cc04] {\n    margin: 3px;\n    padding: 5px;\n}\n.weeks[data-v-9232cc04] {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    padding: 10px;\n    text-align: center;\n    border: 1px solid grey;\n}\n.week[data-v-9232cc04] {\n    padding: 5px;\n}\n.content[data-v-9232cc04] {\n    display: flex;\n    justify-content: space-between;\n    border: 1px solid grey;\n    padding: 10px;\n    overflow: scroll;\n    padding-bottom: 0;\n    margin: 10px;\n    margin-top: 0;\n}\n.task[data-v-9232cc04] {\n    cursor: pointer;\n    padding: 10px;\n    margin: 10px;\n    border: 1px solid grey;\n    border-radius: 5px;\n    background-color: lightgrey;\n}\n.task-training[data-v-9232cc04] {\n    background-color:\n}\n.task-content[data-v-9232cc04] {\n    padding: 10px;\n}\n.task-item[data-v-9232cc04] {\n    padding: 2px;\n    margin: 5px;\n    background-color: rgba(178, 215, 247, 1);\n    border: 1px solid rgb(50 148 250);\n}\n.day[data-v-9232cc04] {\n    width:100%;\n    text-align: center;\n    display: flex;\n    flex-direction: column;\n}\n.day-title[data-v-9232cc04] {\n    padding: 10px;\n    border-bottom: 1px solid grey;\n}\n.day[data-v-9232cc04]:not(:last-child) {\n    border-right: 1px solid grey;\n}\n.action[data-v-9232cc04] {\n    padding: 5px 20px;\n    margin: 5px;\n    border-radius: 5px;\n    font-weight: 450;\n}\n.green[data-v-9232cc04] {\n    background-color: rgba(130, 200, 100, .5);\n    border: 1px solid rgba(130, 200, 100, 1);\n}\n.relaxtraining[data-v-9232cc04] {\n    background-color: rgba(255, 100, 100, .5);\n    border: 1px solid rgba(255, 100, 100, 1);\n}\n.transparent[data-v-9232cc04] {\n    background-color: transparent;\n    border: 1px solid black;\n}\n.training[data-v-9232cc04] {\n    background-color: rgba(250, 230, 160, .5);\n    border: 1px solid rgba(250, 230, 160, 1);\n}\n.planeat[data-v-9232cc04] {\n    background-color: rgba(220, 180, 150, .4);\n    border: 1px solid rgba(200, 170, 150, 1);\n}\n.save[data-v-9232cc04] {\n    padding: 5px;\n    margin: 10px;\n    margin-bottom: 0;\n    border: 1px solid grey;\n    text-align: right;\n}\n.save-action[data-v-9232cc04] {\n    padding: 5px;\n    margin: 3px;\n}\n", ""]);
+exports.push([module.i, "\n.weeks-wrapper[data-v-9232cc04] {\n    padding: 10px;\n    display: flex;\n}\n.top[data-v-9232cc04] {\n    width: 100%;\n}\n.bottom[data-v-9232cc04] {\n    width: 100%;\n}\n.left-action[data-v-9232cc04] {\n    margin: 3px;\n    padding: 5px;\n}\n.weeks[data-v-9232cc04] {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    padding: 10px;\n    text-align: center;\n    border: 1px solid grey;\n}\n.week[data-v-9232cc04] {\n    padding: 5px;\n}\n.content[data-v-9232cc04] {\n    display: flex;\n    justify-content: space-between;\n    border: 1px solid grey;\n    padding: 10px;\n    overflow: scroll;\n    padding-bottom: 0;\n    margin: 10px;\n    margin-top: 0;\n}\n.task[data-v-9232cc04] {\n    cursor: pointer;\n    padding: 10px;\n    margin: 10px;\n    border: 1px solid grey;\n    border-radius: 5px;\n    background-color: lightgrey;\n}\n.task-training[data-v-9232cc04] {\n    background-color:\n}\n.task-content[data-v-9232cc04] {\n    padding: 10px;\n}\n.task-item[data-v-9232cc04] {\n    padding: 2px;\n    margin: 5px;\n    background-color: rgba(178, 215, 247, 1);\n    border: 1px solid rgb(50 148 250);\n}\n.day[data-v-9232cc04] {\n    width:100%;\n    text-align: center;\n    display: flex;\n    flex-direction: column;\n}\n.day-title[data-v-9232cc04] {\n    padding: 10px;\n    border-bottom: 1px solid grey;\n}\n.day[data-v-9232cc04]:not(:last-child) {\n    border-right: 1px solid grey;\n}\n.action[data-v-9232cc04] {\n    padding: 5px 20px;\n    margin: 5px;\n    border-radius: 5px;\n    font-weight: 450;\n}\n.green[data-v-9232cc04] {\n    background-color: rgba(130, 200, 100, .5);\n    border: 1px solid rgba(130, 200, 100, 1);\n}\n.relaxtraining[data-v-9232cc04] {\n    background-color: rgba(255, 100, 100, .5);\n    border: 1px solid rgba(255, 100, 100, 1);\n}\n.transparent[data-v-9232cc04] {\n    background-color: transparent;\n    border: 1px solid black;\n}\n.training[data-v-9232cc04] {\n    background-color: rgba(250, 230, 160, .5);\n    border: 1px solid rgba(250, 230, 160, 1);\n}\n.planeat[data-v-9232cc04] {\n    background-color: rgba(220, 180, 150, .4);\n    border: 1px solid rgba(200, 170, 150, 1);\n}\n.save[data-v-9232cc04] {\n    padding: 5px;\n    margin: 10px;\n    margin-bottom: 0;\n    border: 1px solid grey;\n    text-align: right;\n}\n.save-action[data-v-9232cc04] {\n    padding: 5px;\n    margin: 3px;\n}\n.subitems[data-v-9232cc04] {\n    padding: 3px;\n    margin: 3px;\n    background-color: rgba(178, 215, 247, 0.5);\n    border: 1px solid rgb(50 148 250);\n}\n", ""]);
 
 // exports
 
@@ -58228,7 +58259,12 @@ var render = function() {
             expression: "hideContextMenu"
           }
         ],
-        attrs: { type: _vm.type, top: _vm.top, left: _vm.left }
+        attrs: {
+          type: _vm.type,
+          top: _vm.top,
+          left: _vm.left,
+          visible: _vm.menuVisible
+        }
       }),
       _vm._v(" "),
       _c("form", { attrs: { action: "" } }, [
@@ -58316,7 +58352,11 @@ var render = function() {
                             },
                             contextmenu: function($event) {
                               $event.preventDefault()
-                              _vm.showContextMenu($event, index, "week")
+                              _vm.showContextMenu(
+                                $event,
+                                { week: index },
+                                "week"
+                              )
                             }
                           }
                         },
@@ -58342,16 +58382,20 @@ var render = function() {
           _c(
             "div",
             { staticClass: "content" },
-            _vm._l(_vm.days, function(day, index) {
+            _vm._l(_vm.days, function(day, dayIndex) {
               return _c(
                 "div",
                 {
-                  key: "day_" + index,
+                  key: "day_" + dayIndex,
                   staticClass: "day",
                   on: {
                     contextmenu: function($event) {
                       $event.preventDefault()
-                      _vm.showContextMenu($event, index, "weekday")
+                      _vm.showContextMenu(
+                        $event,
+                        { weekDay: dayIndex },
+                        "weekday"
+                      )
                     }
                   }
                 },
@@ -58361,36 +58405,25 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c(
-                    "draggable",
-                    {
-                      staticClass: "d-content day-content",
-                      attrs: {
-                        list: _vm.data[_vm.activeWeek].data[index],
-                        group: "days",
-                        sort: false
-                      },
-                      on: {
-                        start: function($event) {
-                          _vm.drag = true
-                        },
-                        end: function($event) {
-                          _vm.drag = false
-                        }
-                      }
-                    },
-                    _vm._l(_vm.data[_vm.activeWeek].data[index], function(
+                    "div",
+                    { staticClass: "d-content day-content" },
+                    _vm._l(_vm.data[_vm.activeWeek].data[dayIndex], function(
                       group,
-                      index
+                      groupIndex
                     ) {
                       return _c(
                         "div",
                         {
-                          key: "task_" + index,
+                          key: "task_" + groupIndex,
                           class: ["task", "" + group.type],
                           on: {
                             contextmenu: function($event) {
                               $event.preventDefault()
-                              _vm.showContextMenu($event, index, group.type)
+                              _vm.showContextMenu(
+                                $event,
+                                { weekDay: dayIndex, group: groupIndex },
+                                group.type
+                              )
                             }
                           }
                         },
@@ -58407,50 +58440,117 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _c(
-                            "draggable",
-                            {
-                              staticClass: "task-content",
-                              attrs: {
-                                list: group.items,
-                                group: "items_" + group.type
-                              }
-                            },
-                            _vm._l(group.items, function(item, index) {
-                              return _c(
+                          group.type == "planeat"
+                            ? _c(
                                 "div",
-                                {
-                                  staticClass: "task-item",
-                                  on: {
-                                    contextmenu: function($event) {
-                                      $event.preventDefault()
-                                      _vm.showContextMenu(
-                                        $event,
-                                        index,
-                                        "group-item"
+                                { staticClass: "task-content" },
+                                _vm._l(group.items, function(item, itemIndex) {
+                                  return _c(
+                                    "div",
+                                    {
+                                      key: itemIndex,
+                                      staticClass: "subitems",
+                                      on: {
+                                        contextmenu: function($event) {
+                                          $event.preventDefault()
+                                          _vm.showContextMenu(
+                                            $event,
+                                            {
+                                              weekDay: dayIndex,
+                                              group: groupIndex,
+                                              item: itemIndex
+                                            },
+                                            "group-item-planeat"
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "task-content" },
+                                        _vm._l(item.subitems, function(
+                                          subitem,
+                                          subitemIndex
+                                        ) {
+                                          return _c(
+                                            "div",
+                                            {
+                                              key: subitemIndex,
+                                              staticClass: "task-item",
+                                              on: {
+                                                contextmenu: function($event) {
+                                                  $event.preventDefault()
+                                                  _vm.showContextMenu(
+                                                    $event,
+                                                    {
+                                                      weekDay: dayIndex,
+                                                      group: groupIndex,
+                                                      item: itemIndex,
+                                                      subitem: subitemIndex
+                                                    },
+                                                    "group-subitem"
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                            " +
+                                                  _vm._s(subitem.name) +
+                                                  "\n                                        "
+                                              )
+                                            ]
+                                          )
+                                        }),
+                                        0
                                       )
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                    " +
-                                      _vm._s(item.name) +
-                                      "\n                                "
+                                    ]
                                   )
-                                ]
+                                }),
+                                0
                               )
-                            }),
-                            0
-                          )
-                        ],
-                        1
+                            : _c(
+                                "div",
+                                { staticClass: "task-content" },
+                                _vm._l(group.items, function(item, itemIndex) {
+                                  return _c(
+                                    "div",
+                                    {
+                                      key: itemIndex,
+                                      staticClass: "task-item",
+                                      on: {
+                                        contextmenu: function($event) {
+                                          $event.preventDefault()
+                                          _vm.showContextMenu(
+                                            $event,
+                                            {
+                                              weekDay: dayIndex,
+                                              group: groupIndex,
+                                              item: itemIndex
+                                            },
+                                            "group-item"
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(item.name) +
+                                          "\n                                "
+                                      )
+                                    ]
+                                  )
+                                }),
+                                0
+                              )
+                        ]
                       )
                     }),
                     0
                   )
-                ],
-                1
+                ]
               )
             }),
             0
@@ -58500,7 +58600,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.type
+  return _vm.visible
     ? _c(
         "div",
         {
@@ -58606,11 +58706,11 @@ var render = function() {
                           {
                             on: {
                               click: function($event) {
-                                _vm.callAction("createMeal")
+                                _vm.callAction("createPlaneat")
                               }
                             }
                           },
-                          [_vm._v("Добавить блюдо")]
+                          [_vm._v("Добавить план питания")]
                         )
                       ])
                     ])
@@ -58650,11 +58750,11 @@ var render = function() {
                               {
                                 on: {
                                   click: function($event) {
-                                    _vm.callAction("createEatGroup")
+                                    _vm.callAction("createEathour")
                                   }
                                 }
                               },
-                              [_vm._v("Добавить план питания")]
+                              [_vm._v("Добавить час приема")]
                             ),
                             _vm._v(" "),
                             _c(
@@ -58686,7 +58786,51 @@ var render = function() {
                               )
                             ])
                           ])
-                        : _vm._e()
+                        : _vm.type == "group-subitem"
+                          ? _c("ul", [
+                              _c("li", [
+                                _c(
+                                  "button",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        _vm.callAction("deleteSubitem")
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Удалить")]
+                                )
+                              ])
+                            ])
+                          : _vm.type == "group-item-planeat"
+                            ? _c("ul", [
+                                _c("li", [
+                                  _c(
+                                    "button",
+                                    {
+                                      on: {
+                                        click: function($event) {
+                                          _vm.callAction("deleteItem")
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Удалить план питания")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      on: {
+                                        click: function($event) {
+                                          _vm.callAction("createMeal")
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Добавить блюдо")]
+                                  )
+                                ])
+                              ])
+                            : _vm._e()
         ]
       )
     : _vm._e()

@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid">
-        <mousemenu :type="type" :top="top" :left="left" v-click-outside="hideContextMenu" />
+        <mousemenu :type="type" :top="top" :left="left" v-click-outside="hideContextMenu" :visible="menuVisible" />
         <form action="">
             <select name="program_id" v-model="program_id">
                 <option :value="program.id" v-for="program in programs" :key="program.id">{{ program.name }}</option>
@@ -12,7 +12,7 @@
                     <h4>Недели</h4>
                     <draggable :list="data" group="weeks" @start="drag = true" @end="drag = false">
                         <div class="week" v-for="(week, index) of data" :key="index" >
-                            <button @click.prevent="setActiveWeek(index)" :class="{'--active': activeWeek == index}" @contextmenu.prevent="showContextMenu($event, index, 'week')">
+                            <button @click.prevent="setActiveWeek(index)" :class="{'--active': activeWeek == index}" @contextmenu.prevent="showContextMenu($event, { week: index }, 'week')">
                                 {{ week.week }} неделя
                             </button>
                         </div>
@@ -21,21 +21,30 @@
             </div>
             <div class="col-xs-12 col-sm-10 col-md-11 col-lg-11">
                 <div class="content">
-                    <div class="day" v-for="(day, index) in days" :key="`day_${index}`" @contextmenu.prevent="showContextMenu($event, index, 'weekday')">
+                    <div class="day" v-for="(day, dayIndex) in days" :key="`day_${dayIndex}`" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex }, 'weekday')">
                         <div class="d-content day-title">{{ day }}</div>
-                        <draggable :list="data[activeWeek].data[index]" group="days" :sort="false" class="d-content day-content" @start="drag = true" @end="drag = false">
-                            <div :class="['task', `${group.type}`]" v-for="(group, index) in data[activeWeek].data[index]" :key="`task_${index}`" @contextmenu.prevent="showContextMenu($event, index, group.type)">
+                        <div class="d-content day-content">
+                            <div :class="['task', `${group.type}`]" v-for="(group, groupIndex) in data[activeWeek].data[dayIndex]" :key="`task_${groupIndex}`" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex }, group.type)">
                                 <div>{{ group.name }}</div>
                                 <div>
                                     {{ group.hour_start }} - {{ group.hour_finish }}
                                 </div>
-                                <draggable :list="group.items" :group="`items_${group.type}`" class="task-content">
-                                    <div class="task-item" v-for="(item, index) in group.items" @contextmenu.prevent="showContextMenu($event, index, 'group-item')">
+                                <div v-if="group.type == 'planeat'" class="task-content">
+                                    <div class="subitems" v-for="(item, itemIndex) in group.items" :key="itemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex }, 'group-item-planeat')">
+                                        <div class="task-content">
+                                            <div class="task-item" v-for="(subitem, subitemIndex) in item.subitems" :key="subitemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, subitem: subitemIndex }, 'group-subitem')">
+                                                {{ subitem.name }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-else class="task-content">
+                                    <div class="task-item" v-for="(item, itemIndex) in group.items" :key="itemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex }, 'group-item')">
                                         {{ item.name }}
                                     </div>
-                                </draggable>
+                                </div>
                             </div>
-                        </draggable>
+                        </div>
                     </div>
                 </div>
                 <div class="save">
@@ -65,6 +74,7 @@ export default {
     ],
     data() {
         return {
+            menuVisible: false,
             modal: null,
             target: null,
             type: null,
@@ -83,8 +93,20 @@ export default {
         console.log(this.data)
     },
     methods: {
-        setItemData(id, name) {
-            console.log(id, name, this.type, this.target)
+        setItemData(data) {
+            this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items.push(data)
+            this.target = null
+            this.type = null
+            console.log(data, this.type, this.target)
+        },
+        setGroupData(data) {
+
+        },
+        setSubitemData(data) {
+            console.log(this.data[this.activeWeek].data[this.target.weekDay][this.target.group])
+            this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems.push(data)
+            this.target = null
+            this.type = null
         },
         setActiveWeek(week) {
             this.activeWeek = week
@@ -101,8 +123,11 @@ export default {
         removeWeek() {
             alert('remove week')
         },
-        createGroup() {
-            alert('creat group')
+        createEathour() {
+            this.showModal('eathour')
+        },
+        createPlaneat() {
+            this.showModal('planeat')
         },
         createMeal() {
             this.showModal('meal')
@@ -113,9 +138,6 @@ export default {
         createRelaxexercise() {
             this.showModal('relaxexercise')
         },
-        createEatGroup() {
-            this.showModal('planeat')
-        },
         createTraniningGroup() {
             this.showModal('training')
         },
@@ -123,6 +145,9 @@ export default {
             this.showModal('relaxtraining')
         },
         deleteItem() {
+
+        },
+        deleteSubitem() {
 
         },
         showModal(type) {
@@ -135,16 +160,16 @@ export default {
             this.modal.close()
         },
         showContextMenu(e, target, type) {
-            e.preventDefault()
-            if (this.type == null) {
+            if (!this.menuVisible) {
                 this.target = target
                 this.top = e.clientY
                 this.left = e.clientX
                 this.type = type
+                this.menuVisible = true
             }
         },
         hideContextMenu() {
-            this.type = null
+            this.menuVisible = false
         }
     }
 }
@@ -256,5 +281,11 @@ export default {
 .save-action {
     padding: 5px;
     margin: 3px;
+}
+.subitems {
+    padding: 3px;
+    margin: 3px;
+    background-color: rgba(178, 215, 247, 0.5);
+    border: 1px solid rgb(50 148 250);
 }
 </style>

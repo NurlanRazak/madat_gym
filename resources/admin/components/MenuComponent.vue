@@ -1,5 +1,5 @@
 <template>
-    <div class="context-menu" v-if="type" :style="`top: ${top}px;left: ${left}px;`">
+    <div class="context-menu" v-if="visible" :style="`top: ${top}px;left: ${left}px;`">
         <ul v-if="type == 'weeks'">
             <li>
                 <button @click="callAction('createWeek')">Создать неделю</button>
@@ -26,7 +26,7 @@
         </ul>
         <ul v-else-if="type == 'planeat'">
             <li>
-                <button @click="callAction('createMeal')">Добавить блюдо</button>
+                <button @click="callAction('createPlaneat')">Добавить план питания</button>
             </li>
         </ul>
         <ul v-else-if="type == 'relaxtraining'">
@@ -37,13 +37,24 @@
         <ul v-else-if="type == 'weekday'">
             <li>
                 <button @click="callAction('createTraniningGroup')">Добавить тренировку</button>
-                <button @click="callAction('createEatGroup')">Добавить план питания</button>
+                <button @click="callAction('createEathour')">Добавить час приема</button>
                 <button @click="callAction('createRelaxGroup')">Добавить тренировку отдыха</button>
             </li>
         </ul>
         <ul v-else-if="type == 'group-item'">
             <li>
                 <button @click="callAction('deleteItem')">Удалить</button>
+            </li>
+        </ul>
+        <ul v-else-if="type == 'group-subitem'">
+            <li>
+                <button @click="callAction('deleteSubitem')">Удалить</button>
+            </li>
+        </ul>
+        <ul v-else-if="type == 'group-item-planeat'">
+            <li>
+                <button @click="callAction('deleteItem')">Удалить план питания</button>
+                <button @click="callAction('createMeal')">Добавить блюдо</button>
             </li>
         </ul>
     </div>
@@ -54,7 +65,7 @@
 
 export default {
     props: [
-        'type', 'top', 'left'
+        'type', 'top', 'left', 'visible'
     ],
     data() {
         return {
@@ -64,7 +75,7 @@ export default {
     methods: {
         callAction(action) {
             this.$parent[action].call()
-            this.$parent.type = null
+            this.$parent.menuVisible = false
         }
     }
 }

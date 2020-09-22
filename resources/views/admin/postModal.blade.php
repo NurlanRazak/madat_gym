@@ -2,7 +2,13 @@
 
 @section('content')
 <script>
-    window.opener.app.$refs['calendar'].setItemData({{ $id }}, '{{ $name }}')
-    window.close()
+    @if(isset($type) && $type == 'item')
+        window.opener.app.$refs['calendar'].setItemData(@json($data));
+    @elseif(isset($type) && $type == 'subitem')
+        window.opener.app.$refs['calendar'].setSubitemData(@json($data));
+    @else
+        window.opener.app.$refs['calendar'].setGroupData(@json($data));
+    @endif
+    window.close();
 </script>
 @endsection

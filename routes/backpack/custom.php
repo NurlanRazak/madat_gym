@@ -60,6 +60,8 @@ Route::group([
     Route::post('modal/relaxexercise', 'RelaxexerciseCrudController@postModal');
     Route::get('modal/meal', 'MealCrudController@modal');
     Route::post('modal/meal', 'MealCrudController@postModal');
+    Route::get('modal/eathour', 'EathourCrudController@modal');
+    Route::post('modal/eathour', 'EathourCrudController@postModal');
 
     Route::get('modal/training', 'TrainingCrudController@modal');
     Route::post('modal/training', 'TrainingCrudController@postModal');

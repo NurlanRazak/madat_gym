@@ -186,6 +186,10 @@ class RelaxexerciseCrudController extends CrudController
     {
         $redirect_location = parent::storeCrud($request);
         $this->crud->entry->delete();
-        return view('admin.postModal', ['id' => $this->crud->entry->id]);
+        return view('admin.postModal', [
+            'data' => [
+                'id' => $this->crud->entry->id
+            ]
+        ]);
     }
 }
