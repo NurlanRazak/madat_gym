@@ -12,8 +12,17 @@
 */
 
 Route::get('/test', function() {
+
+    // $jwplatform_api = new Jwplayer\JwplatformAPI('LJvZDNLz', 'q95DJQ5uYoISsl22hw9jG3Tq');
+    //
+    // $video_key = 'k8SJZLPw';
+    // $response = $jwplatform_api->call('/channels/videos/list', array('channel_key'=>$video_key));
+    // dd($response);
+
     $service = new \App\Services\Jwplayer();
-    dd($service->getPlaylist('k8SJZLPw'));
+    // dd($service->getVideos());
+    dd($service->getVideo('uC4zesrN'));
+    dd($service->getPlaylist('k8SJZLPw'), $service->getVideos());
     $client = new \GuzzleHttp\Client();
     $response = $client->request('GET', 'https://cdn.jwplayer.com/v2/playlists/k8SJZLPw');
     dd(json_decode($response->getBody()));
