@@ -1767,6 +1767,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_click_outside__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-click-outside */ "./node_modules/vue-click-outside/index.js");
 /* harmony import */ var vue_click_outside__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_click_outside__WEBPACK_IMPORTED_MODULE_1__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 //
 //
 //
@@ -1844,10 +1852,10 @@ __webpack_require__.r(__webpack_exports__);
       top: null,
       left: null,
       drag: false,
-      data: this.groups,
+      data: _toConsumableArray(this.groups),
       program_id: this.current_program ? this.current_program : this.programs.length ? this.programs[0].id : null,
       days: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
-      activeWeek: this.groups && Object.keys(this.groups).length ? Object.keys(this.groups)[0] : null
+      activeWeek: this.groups && this.groups.length ? 0 : null
     };
   },
   mounted: function mounted() {
@@ -1894,20 +1902,6 @@ __webpack_require__.r(__webpack_exports__);
     callAction: function callAction(action) {
       this[action]();
     },
-    duplicateWeek: function duplicateWeek() {
-      this.data.push(Object.assign({}, this.data[this.target], {
-        week: this.data[this.data.length - 1].week + 1
-      }));
-    },
-    createWeek: function createWeek() {
-      this.data.push(Object.assign({}, {
-        week: this.data[this.data.length - 1].week + 1,
-        data: []
-      }));
-    },
-    removeWeek: function removeWeek() {
-      alert('remove week');
-    },
     createEathour: function createEathour() {
       this.showModal('eathour');
     },
@@ -1929,8 +1923,47 @@ __webpack_require__.r(__webpack_exports__);
     createRelaxGroup: function createRelaxGroup() {
       this.showModal('relaxtraining?number_day=1');
     },
-    deleteItem: function deleteItem() {},
-    deleteSubitem: function deleteSubitem() {},
+    duplicateWeek: function duplicateWeek() {
+      var week = 1 + Math.max.apply(null, this.data.map(function (item) {
+        return item.week;
+      }));
+      this.data.push(Object.assign({}, this.data[this.target.week], {
+        week: week
+      }));
+    },
+    createWeek: function createWeek() {
+      var week = 1 + Math.max.apply(null, this.data.map(function (item) {
+        return item.week;
+      }));
+      this.data.push(Object.assign({}, {
+        week: week,
+        data: []
+      }));
+    },
+    removeWeek: function removeWeek() {
+      this.data[this.target.week].deleted = true;
+    },
+    restoreWeek: function restoreWeek() {
+      this.data[this.target.week].deleted = false;
+    },
+    deleteGroup: function deleteGroup() {
+      this.data[this.activeWeek].data[this.target.weekDay][this.target.group].deleted = true;
+    },
+    restoreGroup: function restoreGroup() {
+      this.data[this.activeWeek].data[this.target.weekDay][this.target.group].deleted = false;
+    },
+    deleteItem: function deleteItem() {
+      this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].deleted = true;
+    },
+    restoreItem: function restoreItem() {
+      this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].deleted = false;
+    },
+    deleteSubitem: function deleteSubitem() {
+      this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems[this.target.subitem].deleted = true;
+    },
+    restoreSubitem: function restoreSubitem() {
+      this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems[this.target.subitem].deleted = false;
+    },
     showModal: function showModal(type) {
       if (this.modal) {
         this.closeModal();
@@ -1967,6 +2000,42 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -18273,7 +18342,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.weeks-wrapper[data-v-9232cc04] {\n    padding: 10px;\n    display: flex;\n}\n.top[data-v-9232cc04] {\n    width: 100%;\n}\n.bottom[data-v-9232cc04] {\n    width: 100%;\n}\n.left-action[data-v-9232cc04] {\n    margin: 3px;\n    padding: 5px;\n}\n.weeks[data-v-9232cc04] {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    padding: 10px;\n    text-align: center;\n    border: 1px solid grey;\n}\n.week[data-v-9232cc04] {\n    padding: 5px;\n}\n.content[data-v-9232cc04] {\n    display: flex;\n    justify-content: space-between;\n    border: 1px solid grey;\n    padding: 10px;\n    overflow: scroll;\n    padding-bottom: 0;\n    margin: 10px;\n    margin-top: 0;\n}\n.task[data-v-9232cc04] {\n    cursor: pointer;\n    padding: 10px;\n    margin: 10px;\n    border: 1px solid grey;\n    border-radius: 5px;\n    background-color: lightgrey;\n}\n.task-training[data-v-9232cc04] {\n    background-color:\n}\n.task-content[data-v-9232cc04] {\n    padding: 10px;\n}\n.task-item[data-v-9232cc04] {\n    padding: 2px;\n    margin: 5px;\n    background-color: rgba(178, 215, 247, 1);\n    border: 1px solid rgb(50 148 250);\n}\n.day[data-v-9232cc04] {\n    width:100%;\n    text-align: center;\n    display: flex;\n    flex-direction: column;\n}\n.day-title[data-v-9232cc04] {\n    padding: 10px;\n    border-bottom: 1px solid grey;\n}\n.day[data-v-9232cc04]:not(:last-child) {\n    border-right: 1px solid grey;\n}\n.action[data-v-9232cc04] {\n    padding: 5px 20px;\n    margin: 5px;\n    border-radius: 5px;\n    font-weight: 450;\n}\n.green[data-v-9232cc04] {\n    background-color: rgba(130, 200, 100, .5);\n    border: 1px solid rgba(130, 200, 100, 1);\n}\n.relaxtraining[data-v-9232cc04] {\n    background-color: rgba(255, 100, 100, .5);\n    border: 1px solid rgba(255, 100, 100, 1);\n}\n.transparent[data-v-9232cc04] {\n    background-color: transparent;\n    border: 1px solid black;\n}\n.training[data-v-9232cc04] {\n    background-color: rgba(250, 230, 160, .5);\n    border: 1px solid rgba(250, 230, 160, 1);\n}\n.planeat[data-v-9232cc04] {\n    background-color: rgba(220, 180, 150, .4);\n    border: 1px solid rgba(200, 170, 150, 1);\n}\n.save[data-v-9232cc04] {\n    padding: 5px;\n    margin: 10px;\n    margin-bottom: 0;\n    border: 1px solid grey;\n    text-align: right;\n}\n.save-action[data-v-9232cc04] {\n    padding: 5px;\n    margin: 3px;\n}\n.subitems[data-v-9232cc04] {\n    padding: 3px;\n    margin: 3px;\n    background-color: rgba(178, 215, 247, 0.5);\n    border: 1px solid rgb(50 148 250);\n}\n", ""]);
+exports.push([module.i, "\n.weeks-wrapper[data-v-9232cc04] {\n    padding: 10px;\n    display: flex;\n}\n.top[data-v-9232cc04] {\n    width: 100%;\n}\n.bottom[data-v-9232cc04] {\n    width: 100%;\n}\n.left-action[data-v-9232cc04] {\n    margin: 3px;\n    padding: 5px;\n}\n.weeks[data-v-9232cc04] {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    padding: 10px;\n    text-align: center;\n    border: 1px solid grey;\n}\n.week[data-v-9232cc04] {\n    padding: 5px;\n}\n.content[data-v-9232cc04] {\n    display: flex;\n    justify-content: space-between;\n    border: 1px solid grey;\n    padding: 10px;\n    overflow: scroll;\n    padding-bottom: 0;\n    margin: 10px;\n    margin-top: 0;\n}\n.task[data-v-9232cc04] {\n    cursor: pointer;\n    padding: 10px;\n    margin: 10px;\n    border: 1px solid grey;\n    border-radius: 5px;\n    background-color: lightgrey;\n}\n.task-training[data-v-9232cc04] {\n    background-color:\n}\n.task-content[data-v-9232cc04] {\n    padding: 10px;\n}\n.task-item[data-v-9232cc04] {\n    padding: 2px;\n    margin: 5px;\n    background-color: rgba(178, 215, 247, 1);\n    border: 1px solid rgb(50 148 250);\n}\n.day[data-v-9232cc04] {\n    width:100%;\n    text-align: center;\n    display: flex;\n    flex-direction: column;\n}\n.day-title[data-v-9232cc04] {\n    padding: 10px;\n    border-bottom: 1px solid grey;\n}\n.day[data-v-9232cc04]:not(:last-child) {\n    border-right: 1px solid grey;\n}\n.action[data-v-9232cc04] {\n    padding: 5px 20px;\n    margin: 5px;\n    border-radius: 5px;\n    font-weight: 450;\n}\n.green[data-v-9232cc04] {\n    background-color: rgba(130, 200, 100, .5);\n    border: 1px solid rgba(130, 200, 100, 1);\n}\n.relaxtraining[data-v-9232cc04] {\n    background-color: rgba(255, 100, 100, .5);\n    border: 1px solid rgba(255, 100, 100, 1);\n}\n.transparent[data-v-9232cc04] {\n    background-color: transparent;\n    border: 1px solid black;\n}\n.training[data-v-9232cc04] {\n    background-color: rgba(250, 230, 160, .5);\n    border: 1px solid rgba(250, 230, 160, 1);\n}\n.planeat[data-v-9232cc04] {\n    background-color: rgba(220, 180, 150, .4);\n    border: 1px solid rgba(200, 170, 150, 1);\n}\n.save[data-v-9232cc04] {\n    padding: 5px;\n    margin: 10px;\n    margin-bottom: 0;\n    border: 1px solid grey;\n    text-align: right;\n}\n.save-action[data-v-9232cc04] {\n    padding: 5px;\n    margin: 3px;\n}\n.subitems[data-v-9232cc04] {\n    padding: 3px;\n    margin: 3px;\n    background-color: rgba(178, 215, 247, 0.5);\n    border: 1px solid rgb(50 148 250);\n}\n.\\--deleted[data-v-9232cc04] {\n    opacity: .5;\n}\n", ""]);
 
 // exports
 
@@ -58365,7 +58434,10 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          class: { "--active": _vm.activeWeek == index },
+                          class: {
+                            "--active": _vm.activeWeek == index,
+                            "--deleted": week.deleted
+                          },
                           on: {
                             click: function($event) {
                               $event.preventDefault()
@@ -58375,7 +58447,7 @@ var render = function() {
                               $event.preventDefault()
                               _vm.showContextMenu(
                                 $event,
-                                { week: index },
+                                { week: index, deleted: week.deleted },
                                 "week"
                               )
                             }
@@ -58436,13 +58508,21 @@ var render = function() {
                         "div",
                         {
                           key: "task_" + groupIndex,
-                          class: ["task", "" + group.type],
+                          class: [
+                            "task",
+                            "" + group.type,
+                            { "--deleted": group.deleted }
+                          ],
                           on: {
                             contextmenu: function($event) {
                               $event.preventDefault()
                               _vm.showContextMenu(
                                 $event,
-                                { weekDay: dayIndex, group: groupIndex },
+                                {
+                                  weekDay: dayIndex,
+                                  group: groupIndex,
+                                  deleted: group.deleted
+                                },
                                 group.type
                               )
                             }
@@ -58470,7 +58550,10 @@ var render = function() {
                                     "div",
                                     {
                                       key: itemIndex,
-                                      staticClass: "subitems",
+                                      class: [
+                                        "subitems",
+                                        { "--deleted": item.deleted }
+                                      ],
                                       on: {
                                         contextmenu: function($event) {
                                           $event.preventDefault()
@@ -58479,7 +58562,8 @@ var render = function() {
                                             {
                                               weekDay: dayIndex,
                                               group: groupIndex,
-                                              item: itemIndex
+                                              item: itemIndex,
+                                              deleted: item.deleted
                                             },
                                             "group-item-planeat"
                                           )
@@ -58498,7 +58582,10 @@ var render = function() {
                                             "div",
                                             {
                                               key: subitemIndex,
-                                              staticClass: "task-item",
+                                              class: [
+                                                "task-item",
+                                                { "--deleted": subitem.deleted }
+                                              ],
                                               on: {
                                                 contextmenu: function($event) {
                                                   $event.preventDefault()
@@ -58508,7 +58595,8 @@ var render = function() {
                                                       weekDay: dayIndex,
                                                       group: groupIndex,
                                                       item: itemIndex,
-                                                      subitem: subitemIndex
+                                                      subitem: subitemIndex,
+                                                      deleted: subitem.deleted
                                                     },
                                                     "group-subitem"
                                                   )
@@ -58539,7 +58627,10 @@ var render = function() {
                                     "div",
                                     {
                                       key: itemIndex,
-                                      staticClass: "task-item",
+                                      class: [
+                                        "task-item",
+                                        { "--deleted": item.deleted }
+                                      ],
                                       on: {
                                         contextmenu: function($event) {
                                           $event.preventDefault()
@@ -58548,7 +58639,8 @@ var render = function() {
                                             {
                                               weekDay: dayIndex,
                                               group: groupIndex,
-                                              item: itemIndex
+                                              item: itemIndex,
+                                              deleted: item.deleted
                                             },
                                             "group-item"
                                           )
@@ -58661,19 +58753,33 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("li", [
-                    _c(
-                      "button",
-                      {
-                        on: {
-                          click: function($event) {
-                            _vm.callAction("removeWeek")
-                          }
-                        }
-                      },
-                      [_vm._v("Удалить неделю")]
-                    )
-                  ]),
+                  _vm.$parent.target.deleted
+                    ? _c("li", [
+                        _c(
+                          "button",
+                          {
+                            on: {
+                              click: function($event) {
+                                _vm.callAction("restoreWeek")
+                              }
+                            }
+                          },
+                          [_vm._v("Восстановить неделю")]
+                        )
+                      ])
+                    : _c("li", [
+                        _c(
+                          "button",
+                          {
+                            on: {
+                              click: function($event) {
+                                _vm.callAction("removeWeek")
+                              }
+                            }
+                          },
+                          [_vm._v("Удалить неделю")]
+                        )
+                      ]),
                   _vm._v(" "),
                   _c("li", [
                     _c(
@@ -58717,7 +58823,35 @@ var render = function() {
                         },
                         [_vm._v("Добавить упражнение")]
                       )
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _vm.$parent.target.deleted
+                      ? _c("li", [
+                          _c(
+                            "button",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.callAction("restoreGroup")
+                                }
+                              }
+                            },
+                            [_vm._v("Восстановить")]
+                          )
+                        ])
+                      : _c("li", [
+                          _c(
+                            "button",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.callAction("deleteGroup")
+                                }
+                              }
+                            },
+                            [_vm._v("Удалить")]
+                          )
+                        ])
                   ])
                 : _vm.type == "planeat"
                   ? _c("ul", [
@@ -58733,7 +58867,35 @@ var render = function() {
                           },
                           [_vm._v("Добавить план питания")]
                         )
-                      ])
+                      ]),
+                      _vm._v(" "),
+                      _vm.$parent.target.deleted
+                        ? _c("li", [
+                            _c(
+                              "button",
+                              {
+                                on: {
+                                  click: function($event) {
+                                    _vm.callAction("restoreGroup")
+                                  }
+                                }
+                              },
+                              [_vm._v("Восстановить")]
+                            )
+                          ])
+                        : _c("li", [
+                            _c(
+                              "button",
+                              {
+                                on: {
+                                  click: function($event) {
+                                    _vm.callAction("deleteGroup")
+                                  }
+                                }
+                              },
+                              [_vm._v("Удалить")]
+                            )
+                          ])
                     ])
                   : _vm.type == "relaxtraining"
                     ? _c("ul", [
@@ -58747,9 +58909,37 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("Добавить заняти")]
+                            [_vm._v("Добавить занятие")]
                           )
-                        ])
+                        ]),
+                        _vm._v(" "),
+                        _vm.$parent.target.deleted
+                          ? _c("li", [
+                              _c(
+                                "button",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      _vm.callAction("restoreGroup")
+                                    }
+                                  }
+                                },
+                                [_vm._v("Восстановить")]
+                              )
+                            ])
+                          : _c("li", [
+                              _c(
+                                "button",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      _vm.callAction("deleteGroup")
+                                    }
+                                  }
+                                },
+                                [_vm._v("Удалить")]
+                              )
+                            ])
                       ])
                     : _vm.type == "weekday"
                       ? _c("ul", [
@@ -58764,8 +58954,10 @@ var render = function() {
                                 }
                               },
                               [_vm._v("Добавить тренировку")]
-                            ),
-                            _vm._v(" "),
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
                             _c(
                               "button",
                               {
@@ -58776,8 +58968,10 @@ var render = function() {
                                 }
                               },
                               [_vm._v("Добавить час приема")]
-                            ),
-                            _vm._v(" "),
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
                             _c(
                               "button",
                               {
@@ -58793,39 +58987,21 @@ var render = function() {
                         ])
                       : _vm.type == "group-item"
                         ? _c("ul", [
-                            _c("li", [
-                              _c(
-                                "button",
-                                {
-                                  on: {
-                                    click: function($event) {
-                                      _vm.callAction("deleteItem")
-                                    }
-                                  }
-                                },
-                                [_vm._v("Удалить")]
-                              )
-                            ])
-                          ])
-                        : _vm.type == "group-subitem"
-                          ? _c("ul", [
-                              _c("li", [
-                                _c(
-                                  "button",
-                                  {
-                                    on: {
-                                      click: function($event) {
-                                        _vm.callAction("deleteSubitem")
+                            _vm.$parent.target.deleted
+                              ? _c("li", [
+                                  _c(
+                                    "button",
+                                    {
+                                      on: {
+                                        click: function($event) {
+                                          _vm.callAction("restoreItem")
+                                        }
                                       }
-                                    }
-                                  },
-                                  [_vm._v("Удалить")]
-                                )
-                              ])
-                            ])
-                          : _vm.type == "group-item-planeat"
-                            ? _c("ul", [
-                                _c("li", [
+                                    },
+                                    [_vm._v("Восстановить")]
+                                  )
+                                ])
+                              : _c("li", [
                                   _c(
                                     "button",
                                     {
@@ -58835,9 +59011,71 @@ var render = function() {
                                         }
                                       }
                                     },
-                                    [_vm._v("Удалить план питания")]
-                                  ),
-                                  _vm._v(" "),
+                                    [_vm._v("Удалить")]
+                                  )
+                                ])
+                          ])
+                        : _vm.type == "group-subitem"
+                          ? _c("ul", [
+                              _vm.$parent.target.deleted
+                                ? _c("li", [
+                                    _c(
+                                      "button",
+                                      {
+                                        on: {
+                                          click: function($event) {
+                                            _vm.callAction("restoreSubitem")
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Восстановить")]
+                                    )
+                                  ])
+                                : _c("li", [
+                                    _c(
+                                      "button",
+                                      {
+                                        on: {
+                                          click: function($event) {
+                                            _vm.callAction("deleteSubitem")
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Удалить")]
+                                    )
+                                  ])
+                            ])
+                          : _vm.type == "group-item-planeat"
+                            ? _c("ul", [
+                                _vm.$parent.target.deleted
+                                  ? _c("li", [
+                                      _c(
+                                        "button",
+                                        {
+                                          on: {
+                                            click: function($event) {
+                                              _vm.callAction("restoreItem")
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Восстановить план питания")]
+                                      )
+                                    ])
+                                  : _c("li", [
+                                      _c(
+                                        "button",
+                                        {
+                                          on: {
+                                            click: function($event) {
+                                              _vm.callAction("deleteItem")
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Удалить план питания")]
+                                      )
+                                    ]),
+                                _vm._v(" "),
+                                _c("li", [
                                   _c(
                                     "button",
                                     {

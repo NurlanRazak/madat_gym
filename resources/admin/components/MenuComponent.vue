@@ -9,7 +9,10 @@
             <li>
                 <button @click="callAction('duplicateWeek')">Дублировать неделю</button>
             </li>
-            <li>
+            <li v-if="$parent.target.deleted">
+                <button @click="callAction('restoreWeek')">Восстановить неделю</button>
+            </li>
+            <li v-else>
                 <button @click="callAction('removeWeek')">Удалить неделю</button>
             </li>
             <li>
@@ -23,37 +26,70 @@
             <li>
                 <button @click="callAction('createExercise')">Добавить упражнение</button>
             </li>
+            <li v-if="$parent.target.deleted">
+                <button @click="callAction('restoreGroup')">Восстановить</button>
+            </li>
+            <li v-else>
+                <button @click="callAction('deleteGroup')">Удалить</button>
+            </li>
         </ul>
         <ul v-else-if="type == 'planeat'">
             <li>
                 <button @click="callAction('createPlaneat')">Добавить план питания</button>
             </li>
+            <li v-if="$parent.target.deleted">
+                <button @click="callAction('restoreGroup')">Восстановить</button>
+            </li>
+            <li v-else>
+                <button @click="callAction('deleteGroup')">Удалить</button>
+            </li>
         </ul>
         <ul v-else-if="type == 'relaxtraining'">
             <li>
-                <button @click="callAction('createRelaxexercise')">Добавить заняти</button>
+                <button @click="callAction('createRelaxexercise')">Добавить занятие</button>
+            </li>
+            <li v-if="$parent.target.deleted">
+                <button @click="callAction('restoreGroup')">Восстановить</button>
+            </li>
+            <li v-else>
+                <button @click="callAction('deleteGroup')">Удалить</button>
             </li>
         </ul>
         <ul v-else-if="type == 'weekday'">
             <li>
                 <button @click="callAction('createTraniningGroup')">Добавить тренировку</button>
+            </li>
+            <li>
                 <button @click="callAction('createEathour')">Добавить час приема</button>
+            </li>
+            <li>
                 <button @click="callAction('createRelaxGroup')">Добавить тренировку отдыха</button>
             </li>
         </ul>
         <ul v-else-if="type == 'group-item'">
-            <li>
+            <li v-if="$parent.target.deleted">
+                <button @click="callAction('restoreItem')">Восстановить</button>
+            </li>
+            <li v-else>
                 <button @click="callAction('deleteItem')">Удалить</button>
             </li>
         </ul>
         <ul v-else-if="type == 'group-subitem'">
-            <li>
+            <li v-if="$parent.target.deleted">
+                <button @click="callAction('restoreSubitem')">Восстановить</button>
+            </li>
+            <li v-else>
                 <button @click="callAction('deleteSubitem')">Удалить</button>
             </li>
         </ul>
         <ul v-else-if="type == 'group-item-planeat'">
-            <li>
+            <li v-if="$parent.target.deleted">
+                <button @click="callAction('restoreItem')">Восстановить план питания</button>
+            </li>
+            <li v-else>
                 <button @click="callAction('deleteItem')">Удалить план питания</button>
+            </li>
+            <li>
                 <button @click="callAction('createMeal')">Добавить блюдо</button>
             </li>
         </ul>

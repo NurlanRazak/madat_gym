@@ -12,7 +12,7 @@
                     <h4>Недели</h4>
                     <draggable :list="data" group="weeks" @start="drag = true" @end="drag = false">
                         <div class="week" v-for="(week, index) of data" :key="index" >
-                            <button @click.prevent="setActiveWeek(index)" :class="{'--active': activeWeek == index}" @contextmenu.prevent="showContextMenu($event, { week: index }, 'week')">
+                            <button @click.prevent="setActiveWeek(index)" :class="{'--active': activeWeek == index, '--deleted': week.deleted}" @contextmenu.prevent="showContextMenu($event, { week: index, deleted: week.deleted }, 'week')">
                                 {{ week.week }} неделя
                             </button>
                         </div>
@@ -24,22 +24,22 @@
                     <div class="day" v-for="(day, dayIndex) in days" :key="`day_${dayIndex}`" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex }, 'weekday')">
                         <div class="d-content day-title">{{ day }}</div>
                         <div class="d-content day-content">
-                            <div :class="['task', `${group.type}`]" v-for="(group, groupIndex) in data[activeWeek].data[dayIndex]" :key="`task_${groupIndex}`" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex }, group.type)">
+                            <div :class="['task', `${group.type}`, { '--deleted': group.deleted }]" v-for="(group, groupIndex) in data[activeWeek].data[dayIndex]" :key="`task_${groupIndex}`" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, deleted: group.deleted }, group.type)">
                                 <div>{{ group.name }}</div>
                                 <div>
                                     {{ group.hour_start }} - {{ group.hour_finish }}
                                 </div>
                                 <div v-if="group.type == 'planeat'" class="task-content">
-                                    <div class="subitems" v-for="(item, itemIndex) in group.items" :key="itemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex }, 'group-item-planeat')">
+                                    <div :class="['subitems', { '--deleted': item.deleted }]" v-for="(item, itemIndex) in group.items" :key="itemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, deleted: item.deleted }, 'group-item-planeat')">
                                         <div class="task-content">
-                                            <div class="task-item" v-for="(subitem, subitemIndex) in item.subitems" :key="subitemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, subitem: subitemIndex }, 'group-subitem')">
+                                            <div :class="['task-item', {'--deleted': subitem.deleted }]" v-for="(subitem, subitemIndex) in item.subitems" :key="subitemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, subitem: subitemIndex, deleted: subitem.deleted }, 'group-subitem')">
                                                 {{ subitem.name }}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div v-else class="task-content">
-                                    <div class="task-item" v-for="(item, itemIndex) in group.items" :key="itemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex }, 'group-item')">
+                                    <div :class="['task-item', { '--deleted': item.deleted }]" v-for="(item, itemIndex) in group.items" :key="itemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, deleted: item.deleted }, 'group-item')">
                                         {{ item.name }}
                                     </div>
                                 </div>
@@ -81,12 +81,12 @@ export default {
             top: null,
             left: null,
             drag: false,
-            data: this.groups,
+            data: [...this.groups],
             program_id: this.current_program ? this.current_program : (this.programs.length ? this.programs[0].id : null),
             days: [
                 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье',
             ],
-            activeWeek: (this.groups && Object.keys(this.groups).length) ? Object.keys(this.groups)[0] : null,
+            activeWeek: (this.groups && this.groups.length) ? 0 : null,
         }
     },
     mounted() {
@@ -129,15 +129,6 @@ export default {
         callAction(action) {
             this[action]()
         },
-        duplicateWeek() {
-            this.data.push(Object.assign({}, this.data[this.target], { week: this.data[this.data.length - 1].week + 1 }))
-        },
-        createWeek() {
-            this.data.push(Object.assign({}, { week: this.data[this.data.length - 1].week + 1, data: [] }))
-        },
-        removeWeek() {
-            alert('remove week')
-        },
         createEathour() {
             this.showModal('eathour')
         },
@@ -159,11 +150,41 @@ export default {
         createRelaxGroup() {
             this.showModal('relaxtraining?number_day=1')
         },
+        duplicateWeek() {
+            let week = 1 + Math.max.apply(null, this.data.map(function(item) {
+                return item.week;
+            }))
+            this.data.push(Object.assign({}, this.data[this.target.week], { week: week }))
+        },
+        createWeek() {
+            let week = 1 + Math.max.apply(null, this.data.map(function(item) {
+                return item.week;
+            }))
+            this.data.push(Object.assign({}, { week: week, data: [] }))
+        },
+        removeWeek() {
+            this.data[this.target.week].deleted = true
+        },
+        restoreWeek() {
+            this.data[this.target.week].deleted = false
+        },
+        deleteGroup() {
+            this.data[this.activeWeek].data[this.target.weekDay][this.target.group].deleted = true
+        },
+        restoreGroup() {
+            this.data[this.activeWeek].data[this.target.weekDay][this.target.group].deleted = false
+        },
         deleteItem() {
-
+            this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].deleted = true
+        },
+        restoreItem() {
+            this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].deleted = false
         },
         deleteSubitem() {
-
+            this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems[this.target.subitem].deleted = true
+        },
+        restoreSubitem() {
+            this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems[this.target.subitem].deleted = false
         },
         showModal(type) {
             if (this.modal) {
@@ -302,5 +323,8 @@ export default {
     margin: 3px;
     background-color: rgba(178, 215, 247, 0.5);
     border: 1px solid rgb(50 148 250);
+}
+.--deleted {
+    opacity: .5;
 }
 </style>
