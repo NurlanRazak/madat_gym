@@ -69,4 +69,6 @@ Route::group([
     Route::post('modal/relaxtraining', 'RelaxtrainingCrudController@postModal');
     Route::get('modal/planeat', 'PlaneatCrudController@modal');
     Route::post('modal/planeat', 'PlaneatCrudController@postModal');
+
+    Route::post('calendar/{program}', 'CalendarController@update');
 }); // this should be the absolute last line of this file

@@ -1,8 +1,8 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid" :key="renderKey">
         <mousemenu :type="type" :top="top" :left="left" v-click-outside="hideContextMenu" :visible="menuVisible" />
         <form action="">
-            <select name="program_id" v-model="program_id">
+            <select name="program_id" v-model="program_id" @change="setProgram">
                 <option :value="program.id" v-for="program in programs" :key="program.id">{{ program.name }}</option>
             </select>
         </form>
@@ -48,8 +48,8 @@
                     </div>
                 </div>
                 <div class="save">
-                    <button class="save-action">Сохранить изменения</button>
-                    <button class="save-action">Отменить изменения</button>
+                    <button class="save-action" @click="saveCurrentWeek">Сохранить изменения</button>
+                    <button class="save-action" @click="refreshPage">Отменить изменения</button>
                 </div>
             </div>
         </div>
@@ -74,6 +74,7 @@ export default {
     ],
     data() {
         return {
+            renderKey: 1,
             menuVisible: false,
             modal: null,
             target: null,
@@ -206,6 +207,16 @@ export default {
         },
         hideContextMenu() {
             this.menuVisible = false
+        },
+        setProgram() {
+            window.location.href = window.location.pathname + `?program_id=${this.program_id}`
+        },
+        refreshPage() {
+            window.location.reload()
+        },
+        async saveCurrentWeek() {
+            await axios.post(`calendar/${this.program_id}`, this.data)
+            // window.location.reload()
         }
     }
 }
