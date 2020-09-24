@@ -194,6 +194,8 @@ Route::group(['middleware' => 'verified'], function () {
         Route::post('userparameter_update', 'ProfileController@userParameters');
         Route::delete('userparameter/{id}', 'ProfileController@userParameterDelete')->name('userparameter');
         Route::post('user_update', 'ProfileController@userUpdate');
+        Route::post('user_auto-renewal_update', 'ProfileController@userAutoRenewalUpdate');
+        Route::post('user_notifiable_update', 'ProfileController@userNotifiableUpdate');
         Route::get('history', 'HistoryController@history')->name('history');
         Route::get('programs', 'ProgramController@programs')->name('programs')->middleware('hasProgram');
         Route::post('program', 'ProgramController@postProgram')->name('post-program');

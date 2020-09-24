@@ -47,7 +47,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name', 'last_name', 'middle_name', 'email', 'password', 'country', 'type_employee', 'city',
         'programtraining_id', 'programtraining_start',
-        'date_birth', 'gender', 'current_weight', 'height', 'iin', 'phone_number', 'social_media', 'comment', 'date_register', 'position', 'date_hired', 'date_fired', 'address','image'
+        'date_birth', 'gender', 'current_weight', 'height', 'iin', 'phone_number', 'social_media', 'comment', 'date_register', 'position', 'date_hired', 'date_fired', 'address','image',
+        'is_notifiable', 'is_auto_renewal'
     ];
 
     /**
