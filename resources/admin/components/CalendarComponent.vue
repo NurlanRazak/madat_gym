@@ -160,21 +160,14 @@ export default {
             let week = 1 + Math.max.apply(null, this.data.map(function(item) {
                 return item.week;
             }))
-            let newWeek = Object.assign({}, this.data[this.target.week], { week: week })
+            let newWeek = Object.assign({}, {...this.data[this.target.week]}, { week: week })
             newWeek.data = newWeek.data.map((groups) => {
                 return groups.map((group) => {
-                    group.items = group.items.map((item) => {
-                        if (item.subitems) {
-                            item.subitems = item.subitems.map((subitem) => {
-                                return Object.assign({ copy: true }, subitem)
-                            })
-                        }
-                        return Object.assign({ copy: true }, item)
-                    })
-                    return Object.assign({ copy: true }, group)
+                    return Object.assign({ copy: true }, {...group})
                 })
             })
             this.data.push(newWeek)
+            console.log(this.data)
         },
         createWeek() {
             let week = 1 + Math.max.apply(null, this.data.map(function(item) {

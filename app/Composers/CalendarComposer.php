@@ -106,12 +106,13 @@ class CalendarComposer
 
         $groups_data = collect($groups_data)->sortBy('week')->values()->all();
 
-        for($i = 0; $i<7;++$i) {
-            foreach($groups_data as $index => $group) {
+        foreach($groups_data as $index => $group) {
+            for($i = 0; $i<7;++$i) {
                 if (!isset($group['data'][$i])) {
                     $groups_data[$index]['data'][$i] = [];
                 }
             }
+            ksort($groups_data[$index]['data']);
         }
 
         $view->with('groups', $groups_data);

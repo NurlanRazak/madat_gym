@@ -1787,6 +1787,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -1950,30 +1954,18 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       var week = 1 + Math.max.apply(null, this.data.map(function (item) {
         return item.week;
       }));
-      var newWeek = Object.assign({}, this.data[this.target.week], {
+      var newWeek = Object.assign({}, _objectSpread({}, this.data[this.target.week]), {
         week: week
       });
       newWeek.data = newWeek.data.map(function (groups) {
         return groups.map(function (group) {
-          group.items = group.items.map(function (item) {
-            if (item.subitems) {
-              item.subitems = item.subitems.map(function (subitem) {
-                return Object.assign({
-                  copy: true
-                }, subitem);
-              });
-            }
-
-            return Object.assign({
-              copy: true
-            }, item);
-          });
           return Object.assign({
             copy: true
-          }, group);
+          }, _objectSpread({}, group));
         });
       });
       this.data.push(newWeek);
+      console.log(this.data);
     },
     createWeek: function createWeek() {
       var week = 1 + Math.max.apply(null, this.data.map(function (item) {

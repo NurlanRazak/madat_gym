@@ -12,11 +12,17 @@ class CalendarController extends Controller
     public function update(Request $request, Programtraining $program)
     {
         $data = $request->toArray();
+        $weekCnt = 0;
         foreach($data as $weekIndex => $week) {
             foreach($week['data'] as $weekDay => $groups) {
                 foreach($groups as $groupIndex => $group) {
-                    $this->handleGroup($group, $weekIndex * 7 + 1 + $weekDay, $program);
+                    $group['deleted'] = ($group['deleted'] ?? false) || ($week['deleted'] ?? false);
+                    $this->handleGroup($group, $weekCnt * 7 + 1 + $weekDay, $program);
                 }
+            }
+            $weekCnt++;
+            if ($week['deleted'] ?? false) {
+                $weekCnt--;
             }
         }
     }
@@ -24,6 +30,22 @@ class CalendarController extends Controller
     private function handleGroup($group, $day, $program) // training, relaxtraining, eathour
     {
         $elem = $this->getGroup($group);
+        if ($group['copy'] ?? false) {
+            if ($group['type'] != 'planeat') {
+                $copy = $elem->replicate();
+                $copy->push();
+
+                if ($group['type'] == 'training') {
+                    $copy->programtrainings()->sync($elem->programtrainings()->pluck('id')->toArray());
+                } else {
+                    $copy->programs()->sync($elem->programs()->pluck('id')->toArray());
+                    $copy->users()->sync($elem->users()->pluck('id')->toArray());
+                }
+
+                $elem = $copy;
+                $group['id'] = $elem->id;
+            }
+        }
         if ($group['deleted'] ?? false) {
             if ($elem->trashed()) {
                 $elem->forceDelete();
@@ -35,9 +57,6 @@ class CalendarController extends Controller
         } else {
             if ($elem->trashed()) {
                 $elem->restore();
-            }
-            if ($group['copy'] ?? false) {
-                //
             }
 
             if ($group['type'] != 'planeat') {
@@ -60,6 +79,15 @@ class CalendarController extends Controller
     private function handleItem($item, $group, $day, $parent, $program) // exercise, relaxexercise, planeat
     {
         $elem = $this->getItem($item, $group);
+        if ($group['copy'] ?? false) {
+            if ($group['type'] == 'planeat') {
+                $copy = $elem->replicate();
+                $copy->push();
+                // $copy->eathours()->sync($elem->eathours()->pluck('id'));
+                $elem = $copy;
+                $item['id'] = $elem->id;
+            }
+        }
         if ($item['deleted'] ?? false) {
             if ($elem->trashed()) {
                 $elem->forceDelete();
@@ -83,9 +111,6 @@ class CalendarController extends Controller
                 ]);
             }
 
-            if ($item['copy'] ?? false) {
-                //
-            }
             $this->attachItem($elem, $group);
         }
 
@@ -101,6 +126,9 @@ class CalendarController extends Controller
     private function handleSubitem($subitem, $item, $parent) // Meal
     {
         $elem = \App\Models\Meal::withTrashed()->find($subitem['id']);
+        if ($subitem['copy'] ?? false) {
+            //
+        }
         if ($subitem['deleted'] ?? false) {
             if ($elem->trashed()) {
                 $elem->forceDelete();
