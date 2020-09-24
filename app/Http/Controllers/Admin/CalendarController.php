@@ -50,7 +50,7 @@ class CalendarController extends Controller
         }
 
         foreach($group['items'] as $itemIndex => $item) {
-            $item['deleted'] = $group['deleted'] ?? false;
+            $item['deleted'] = ($item['deleted'] ?? false) || ($group['deleted'] ?? false);
             $this->handleItem($item, $group, $day, $elem, $program);
         }
     }
@@ -84,7 +84,7 @@ class CalendarController extends Controller
 
         if ($group['type'] == 'planeat') {
             foreach($item['subitems'] ?? [] as $subitemIndex => $subitem) {
-                $subitem['deleted'] = $item['deleted'] ?? false;
+                $subitem['deleted'] = ($subitem['deleted'] ?? false) || ($item['deleted'] ?? false);
                 $this->handleSubitem($subitem, $item, $elem);
             }
         }
@@ -97,7 +97,7 @@ class CalendarController extends Controller
             if ($elem->trashed()) {
                 $elem->forceDelete();
             } else {
-                $parent->meals()->detach($item['id']);
+                $parent->meals()->detach($elem->id);
             }
         } else {
             if ($elem->trashed()) {

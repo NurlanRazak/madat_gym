@@ -1924,25 +1924,25 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       this[action]();
     },
     createEathour: function createEathour() {
-      this.showModal('eathour');
+      this.showModal('eathour?active=1');
     },
     createPlaneat: function createPlaneat() {
-      this.showModal("planeat?days=".concat(this.activeWeek * 7 + 1 + this.target.weekDay, "&foodprogram_id=").concat(this.foodprogram, "&eathours%5B0%5D=").concat(this.data[this.activeWeek].data[this.target.weekDay][this.target.group].id));
+      this.showModal("planeat?days=".concat(this.activeWeek * 7 + 1 + this.target.weekDay, "&foodprogram_id=").concat(this.foodprogram, "&eathours%5B0%5D=").concat(this.data[this.activeWeek].data[this.target.weekDay][this.target.group].id, "&active=1"));
     },
     createMeal: function createMeal() {
-      this.showModal('meal');
+      this.showModal('meal?active=1');
     },
     createExercise: function createExercise() {
-      this.showModal('exercise');
+      this.showModal('exercise?active=1');
     },
     createRelaxexercise: function createRelaxexercise() {
-      this.showModal('relaxexercise');
+      this.showModal('relaxexercise?active=1');
     },
     createTraniningGroup: function createTraniningGroup() {
       this.showModal("training?day_number=".concat(this.activeWeek * 7 + 1 + this.target.weekDay, "&programtrainings%5B0%5D=").concat(this.program, "&active=1"));
     },
     createRelaxGroup: function createRelaxGroup() {
-      this.showModal("relaxtraining?number_day=".concat(this.activeWeek * 7 + 1 + this.target.weekDay, "&programs%5B0%5D=").concat(this.relaxprogram));
+      this.showModal("relaxtraining?number_day=".concat(this.activeWeek * 7 + 1 + this.target.weekDay, "&programs%5B0%5D=").concat(this.relaxprogram, "&active=1"));
     },
     duplicateWeek: function duplicateWeek() {
       var week = 1 + Math.max.apply(null, this.data.map(function (item) {
