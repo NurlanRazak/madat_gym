@@ -5,6 +5,9 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 use App\User;
+use App\Notifications\SubscriptionNotify;
+
+use Mail;
 
 class SendSubscriptionNotifications extends Command
 {
@@ -44,8 +47,14 @@ class SendSubscriptionNotifications extends Command
                         ->where('is_notifiable', true)
                         ->get();
 
+
         foreach($users as $user) {
-            dd($user->subscriptions()->whereRaw("DATE_ADD(subscription_user.created_at, INTERVAL subscriptions.days DAY) >= CURDATE()")->count());
+            if ($user->subscriptions()
+                     ->whereRaw("DATE(DATE_ADD(subscription_user.created_at, INTERVAL subscriptions.days DAY)) = DATE_ADD(CURDATE(), INTERVAL 7 DAY)")
+                     ->orWhereRaw("DATE(DATE_ADD(subscription_user.created_at, INTERVAL subscriptions.days DAY)) = DATE_ADD(CURDATE(), INTERVAL 1 DAY)")->count() > 0) {
+                $user->notify(new SubscriptionNotify());
+
+            }
         }
 
     }
