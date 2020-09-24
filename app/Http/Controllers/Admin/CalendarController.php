@@ -27,8 +27,10 @@ class CalendarController extends Controller
         if ($group['deleted'] ?? false) {
             if ($elem->trashed()) {
                 $elem->forceDelete();
-            } else if($group['type'] != 'planeat') {
+            } else if($group['type'] == 'training') {
                 $elem->programtrainings()->detach($program->id);
+            } else if ($group['type'] == 'relaxtraining') {
+                $elem->programs()->detach($program->relaxprogram_id);
             }
         } else {
             if ($elem->trashed()) {
@@ -73,6 +75,12 @@ class CalendarController extends Controller
         } else {
             if ($elem->trashed()) {
                 $elem->restore();
+            }
+
+            if ($group['type'] == 'planeat') {
+                $elem->update([
+                    'days' => $day,
+                ]);
             }
 
             if ($item['copy'] ?? false) {

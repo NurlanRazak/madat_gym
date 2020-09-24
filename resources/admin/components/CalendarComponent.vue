@@ -24,26 +24,28 @@
                     <div class="day" v-for="(day, dayIndex) in days" :key="`day_${dayIndex}`" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex }, 'weekday')">
                         <div class="d-content day-title">{{ day }}</div>
                         <div class="d-content day-content">
-                            <div :class="['task', `${group.type}`, { '--deleted': group.deleted }]" v-for="(group, groupIndex) in data[activeWeek].data[dayIndex]" :key="`task_${groupIndex}`" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, deleted: group.deleted }, group.type)">
-                                <div>{{ group.name }}</div>
-                                <div>
-                                    {{ group.hour_start }} - {{ group.hour_finish }}
-                                </div>
-                                <div v-if="group.type == 'planeat'" class="task-content">
-                                    <div :class="['subitems', { '--deleted': item.deleted }]" v-for="(item, itemIndex) in group.items" :key="itemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, deleted: item.deleted }, 'group-item-planeat')">
-                                        <div class="task-content">
-                                            <div :class="['task-item', {'--deleted': subitem.deleted }]" v-for="(subitem, subitemIndex) in item.subitems" :key="subitemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, subitem: subitemIndex, deleted: subitem.deleted }, 'group-subitem')">
-                                                {{ subitem.name }}
+                            <draggable :list="data[activeWeek].data[dayIndex]" :sort="false" group="groups" @start="drag = true" @end="drag = false">
+                                <div :class="['task', `${group.type}`, { '--deleted': group.deleted }]" v-for="(group, groupIndex) in data[activeWeek].data[dayIndex]" :key="`task_${groupIndex}`" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, deleted: group.deleted }, group.type)">
+                                    <div>{{ group.name }}</div>
+                                    <div>
+                                        {{ group.hour_start }} - {{ group.hour_finish }}
+                                    </div>
+                                    <div v-if="group.type == 'planeat'" class="task-content">
+                                        <div :class="['subitems', { '--deleted': item.deleted }]" v-for="(item, itemIndex) in group.items" :key="itemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, deleted: item.deleted }, 'group-item-planeat')">
+                                            <div class="task-content">
+                                                <div :class="['task-item', {'--deleted': subitem.deleted }]" v-for="(subitem, subitemIndex) in item.subitems" :key="subitemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, subitem: subitemIndex, deleted: subitem.deleted }, 'group-subitem')">
+                                                    {{ subitem.name }}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div v-else class="task-content">
-                                    <div :class="['task-item', { '--deleted': item.deleted }]" v-for="(item, itemIndex) in group.items" :key="itemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, deleted: item.deleted }, 'group-item')">
-                                        {{ item.name }}
+                                    <div v-else class="task-content">
+                                        <div :class="['task-item', { '--deleted': item.deleted }]" v-for="(item, itemIndex) in group.items" :key="itemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, deleted: item.deleted }, 'group-item')">
+                                            {{ item.name }}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </draggable>
                         </div>
                     </div>
                 </div>

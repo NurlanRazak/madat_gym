@@ -1853,6 +1853,8 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -59356,168 +59358,201 @@ var render = function() {
                   _c(
                     "div",
                     { staticClass: "d-content day-content" },
-                    _vm._l(_vm.data[_vm.activeWeek].data[dayIndex], function(
-                      group,
-                      groupIndex
-                    ) {
-                      return _c(
-                        "div",
+                    [
+                      _c(
+                        "draggable",
                         {
-                          key: "task_" + groupIndex,
-                          class: [
-                            "task",
-                            "" + group.type,
-                            { "--deleted": group.deleted }
-                          ],
+                          attrs: {
+                            list: _vm.data[_vm.activeWeek].data[dayIndex],
+                            sort: false,
+                            group: "groups"
+                          },
                           on: {
-                            contextmenu: function($event) {
-                              $event.preventDefault()
-                              _vm.showContextMenu(
-                                $event,
-                                {
-                                  weekDay: dayIndex,
-                                  group: groupIndex,
-                                  deleted: group.deleted
-                                },
-                                group.type
-                              )
+                            start: function($event) {
+                              _vm.drag = true
+                            },
+                            end: function($event) {
+                              _vm.drag = false
                             }
                           }
                         },
-                        [
-                          _c("div", [_vm._v(_vm._s(group.name))]),
-                          _vm._v(" "),
-                          _c("div", [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(group.hour_start) +
-                                " - " +
-                                _vm._s(group.hour_finish) +
-                                "\n                            "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          group.type == "planeat"
-                            ? _c(
-                                "div",
-                                { staticClass: "task-content" },
-                                _vm._l(group.items, function(item, itemIndex) {
-                                  return _c(
-                                    "div",
-                                    {
-                                      key: itemIndex,
-                                      class: [
-                                        "subitems",
-                                        { "--deleted": item.deleted }
-                                      ],
-                                      on: {
-                                        contextmenu: function($event) {
-                                          $event.preventDefault()
-                                          _vm.showContextMenu(
-                                            $event,
-                                            {
-                                              weekDay: dayIndex,
-                                              group: groupIndex,
-                                              item: itemIndex,
-                                              deleted: item.deleted
-                                            },
-                                            "group-item-planeat"
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "div",
-                                        { staticClass: "task-content" },
-                                        _vm._l(item.subitems, function(
-                                          subitem,
-                                          subitemIndex
-                                        ) {
-                                          return _c(
-                                            "div",
-                                            {
-                                              key: subitemIndex,
-                                              class: [
-                                                "task-item",
-                                                { "--deleted": subitem.deleted }
-                                              ],
-                                              on: {
-                                                contextmenu: function($event) {
-                                                  $event.preventDefault()
-                                                  _vm.showContextMenu(
-                                                    $event,
-                                                    {
-                                                      weekDay: dayIndex,
-                                                      group: groupIndex,
-                                                      item: itemIndex,
-                                                      subitem: subitemIndex,
-                                                      deleted: subitem.deleted
-                                                    },
-                                                    "group-subitem"
-                                                  )
-                                                }
+                        _vm._l(
+                          _vm.data[_vm.activeWeek].data[dayIndex],
+                          function(group, groupIndex) {
+                            return _c(
+                              "div",
+                              {
+                                key: "task_" + groupIndex,
+                                class: [
+                                  "task",
+                                  "" + group.type,
+                                  { "--deleted": group.deleted }
+                                ],
+                                on: {
+                                  contextmenu: function($event) {
+                                    $event.preventDefault()
+                                    _vm.showContextMenu(
+                                      $event,
+                                      {
+                                        weekDay: dayIndex,
+                                        group: groupIndex,
+                                        deleted: group.deleted
+                                      },
+                                      group.type
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("div", [_vm._v(_vm._s(group.name))]),
+                                _vm._v(" "),
+                                _c("div", [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(group.hour_start) +
+                                      " - " +
+                                      _vm._s(group.hour_finish) +
+                                      "\n                                "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                group.type == "planeat"
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "task-content" },
+                                      _vm._l(group.items, function(
+                                        item,
+                                        itemIndex
+                                      ) {
+                                        return _c(
+                                          "div",
+                                          {
+                                            key: itemIndex,
+                                            class: [
+                                              "subitems",
+                                              { "--deleted": item.deleted }
+                                            ],
+                                            on: {
+                                              contextmenu: function($event) {
+                                                $event.preventDefault()
+                                                _vm.showContextMenu(
+                                                  $event,
+                                                  {
+                                                    weekDay: dayIndex,
+                                                    group: groupIndex,
+                                                    item: itemIndex,
+                                                    deleted: item.deleted
+                                                  },
+                                                  "group-item-planeat"
+                                                )
                                               }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                            " +
-                                                  _vm._s(subitem.name) +
-                                                  "\n                                        "
-                                              )
-                                            ]
-                                          )
-                                        }),
-                                        0
-                                      )
-                                    ]
-                                  )
-                                }),
-                                0
-                              )
-                            : _c(
-                                "div",
-                                { staticClass: "task-content" },
-                                _vm._l(group.items, function(item, itemIndex) {
-                                  return _c(
-                                    "div",
-                                    {
-                                      key: itemIndex,
-                                      class: [
-                                        "task-item",
-                                        { "--deleted": item.deleted }
-                                      ],
-                                      on: {
-                                        contextmenu: function($event) {
-                                          $event.preventDefault()
-                                          _vm.showContextMenu(
-                                            $event,
-                                            {
-                                              weekDay: dayIndex,
-                                              group: groupIndex,
-                                              item: itemIndex,
-                                              deleted: item.deleted
-                                            },
-                                            "group-item"
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                    " +
-                                          _vm._s(item.name) +
-                                          "\n                                "
-                                      )
-                                    ]
-                                  )
-                                }),
-                                0
-                              )
-                        ]
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              { staticClass: "task-content" },
+                                              _vm._l(item.subitems, function(
+                                                subitem,
+                                                subitemIndex
+                                              ) {
+                                                return _c(
+                                                  "div",
+                                                  {
+                                                    key: subitemIndex,
+                                                    class: [
+                                                      "task-item",
+                                                      {
+                                                        "--deleted":
+                                                          subitem.deleted
+                                                      }
+                                                    ],
+                                                    on: {
+                                                      contextmenu: function(
+                                                        $event
+                                                      ) {
+                                                        $event.preventDefault()
+                                                        _vm.showContextMenu(
+                                                          $event,
+                                                          {
+                                                            weekDay: dayIndex,
+                                                            group: groupIndex,
+                                                            item: itemIndex,
+                                                            subitem: subitemIndex,
+                                                            deleted:
+                                                              subitem.deleted
+                                                          },
+                                                          "group-subitem"
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                " +
+                                                        _vm._s(subitem.name) +
+                                                        "\n                                            "
+                                                    )
+                                                  ]
+                                                )
+                                              }),
+                                              0
+                                            )
+                                          ]
+                                        )
+                                      }),
+                                      0
+                                    )
+                                  : _c(
+                                      "div",
+                                      { staticClass: "task-content" },
+                                      _vm._l(group.items, function(
+                                        item,
+                                        itemIndex
+                                      ) {
+                                        return _c(
+                                          "div",
+                                          {
+                                            key: itemIndex,
+                                            class: [
+                                              "task-item",
+                                              { "--deleted": item.deleted }
+                                            ],
+                                            on: {
+                                              contextmenu: function($event) {
+                                                $event.preventDefault()
+                                                _vm.showContextMenu(
+                                                  $event,
+                                                  {
+                                                    weekDay: dayIndex,
+                                                    group: groupIndex,
+                                                    item: itemIndex,
+                                                    deleted: item.deleted
+                                                  },
+                                                  "group-item"
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        " +
+                                                _vm._s(item.name) +
+                                                "\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      }),
+                                      0
+                                    )
+                              ]
+                            )
+                          }
+                        ),
+                        0
                       )
-                    }),
-                    0
+                    ],
+                    1
                   )
                 ]
               )
