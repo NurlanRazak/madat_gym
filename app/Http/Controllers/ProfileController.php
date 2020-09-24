@@ -125,4 +125,16 @@ class ProfileController extends Controller
             'message' => 'ok'
         ]);
     }
+
+    public function userAutoRenewalUpdate(Request $request)
+    {
+        $user = $request->user();
+        $user->update(['is_auto_renewal' => $request->is_auto_renewal]);
+    }
+
+    public function userNotifiableUpdate(Request $request)
+    {
+        $user = $request->user();
+        $user->update(['is_notifiable' => $request->is_notifiable]);
+    }
 }

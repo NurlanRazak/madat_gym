@@ -109,6 +109,14 @@
                                     <div class="alert alert-warning" role="alert">
                                         Почтовый адрес - {{ (($user->email_verified_at != null) ? 'подтвержден' : 'не был подтвержден' ) }}
                                     </div>
+                                    <div>
+                                        <input type="checkbox" id="notifiable" name="is_notifiable" {{ ($user->is_notifiable == true) ? 'checked' : null }}>
+                                        <label for="notifiable">Отправка писем с оповещением</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="autoRenewal" name="is_auto_renewal" {{ ($user->is_auto_renewal == true) ? 'checked' : null }}>
+                                        <label for="autoRenewal">Автоматическое продления подписки</label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -339,6 +347,34 @@ $.ajaxSetup({
     }
 });
     $(document).ready(function() {
+        $('#autoRenewal').click(function(event) {
+            $.ajax({
+                type: 'POST',
+                url: '{{ url("user_auto-renewal_update") }}',
+                header: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    is_auto_renewal: (event.target.checked == true ? 1 : 0),
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success:function(data) {
+                    window.location.reload();
+                }
+            })
+        });
+        $('#notifiable').click(function(event) {
+            $.ajax({
+                type: 'POST',
+                url: '{{ url("user_notifiable_update") }}',
+                header: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    is_notifiable: (event.target.checked == true ? 1 : 0),
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    window.location.reload();
+                }
+            })
+        });
         $('#submit').click(function (event) {
             if (!document.getElementById('user-info').reportValidity()) {
                 return;
