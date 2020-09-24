@@ -70,7 +70,10 @@ export default {
     props: [
         'programs',
         'current_program',
-        'groups'
+        'groups',
+        'program',
+        'foodprogram',
+        'relaxprogram',
     ],
     data() {
         return {
@@ -134,7 +137,7 @@ export default {
             this.showModal('eathour')
         },
         createPlaneat() {
-            this.showModal('planeat?days=1')
+            this.showModal(`planeat?days=${this.activeWeek * 7 + 1 + this.target.weekDay}&foodprogram_id=${this.foodprogram}&eathours%5B0%5D=${this.data[this.activeWeek].data[this.target.weekDay][this.target.group].id}`)
         },
         createMeal() {
             this.showModal('meal')
@@ -146,16 +149,30 @@ export default {
             this.showModal('relaxexercise')
         },
         createTraniningGroup() {
-            this.showModal('training?day_number=1')
+            this.showModal(`training?day_number=${this.activeWeek * 7 + 1 + this.target.weekDay}&programtrainings%5B0%5D=${this.program}&active=1`)
         },
         createRelaxGroup() {
-            this.showModal('relaxtraining?number_day=1')
+            this.showModal(`relaxtraining?number_day=${this.activeWeek * 7 + 1 + this.target.weekDay}&programs%5B0%5D=${this.relaxprogram}`)
         },
         duplicateWeek() {
             let week = 1 + Math.max.apply(null, this.data.map(function(item) {
                 return item.week;
             }))
-            this.data.push(Object.assign({}, this.data[this.target.week], { week: week }))
+            let newWeek = Object.assign({}, this.data[this.target.week], { week: week })
+            newWeek.data = newWeek.data.map((groups) => {
+                return groups.map((group) => {
+                    group.items = group.items.map((item) => {
+                        if (item.subitems) {
+                            item.subitems = item.subitems.map((subitem) => {
+                                return Object.assign({ copy: true }, subitem)
+                            })
+                        }
+                        return Object.assign({ copy: true }, item)
+                    })
+                    return Object.assign({ copy: true }, group)
+                })
+            })
+            this.data.push(newWeek)
         },
         createWeek() {
             let week = 1 + Math.max.apply(null, this.data.map(function(item) {

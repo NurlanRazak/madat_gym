@@ -19,11 +19,15 @@ class CalendarComposer
         if (!$program_id && $programs->count()) {
             $program_id = $programs[0]->id;
         }
-
         $groups = [];
+        $foodprogram_id = null;
+        $relaxprogram_id = null;
+
 
         if ($program_id) {
             $current_program = Programtraining::findOrFail($program_id);
+            $foodprogram_id = $current_program->foodprogram_id;
+            $relaxprogram_id = $current_program->relaxprogram_id;
 
             $trainings = $this->getTrainings($current_program);
             $relaxtrainings = $this->getRelaxtrainings($current_program);
@@ -100,8 +104,14 @@ class CalendarComposer
             ];
         }
 
+        $groups_data = collect($groups_data)->sortBy('week')->values()->all();
+
+
         $view->with('groups', $groups_data);
         $view->with('programs', $programs);
+        $view->with('program_id', $program_id);
+        $view->with('foodprogram_id', $foodprogram_id);
+        $view->with('relaxprogram_id', $relaxprogram_id);
     }
 
     private function pushItem(&$groups, int $day, $training)
@@ -117,7 +127,6 @@ class CalendarComposer
         }
 
         $groups[$week][$day][] = $training;
-        $groups[$week+1][$day][] = $training;
     }
 
     private function getTrainings($current_program)

@@ -271,6 +271,10 @@ class RelaxtrainingCrudController extends CrudController
     {
         $this->data['extra'] = request()->input();
         foreach($this->data['extra'] as $key => $value) {
+            if (!$value) {
+                unset($this->data['extra'][$key]);
+                continue;
+            }
             $this->crud->removeField($key);
         }
         $this->data['crud'] = $this->crud;

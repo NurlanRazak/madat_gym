@@ -14,7 +14,13 @@
 		  		>
 		  {!! csrf_field() !!}
 		  @foreach($extra ?? [] as $key => $value)
-		  	<input type="hidden" name="{{ $key }}" value="{{ $value }}" />
+		  	@if(is_array($value))
+				@foreach($value as $index => $val)
+					<input type="hidden" name="{{ $key }}[{{ $index }}]" value="{{ $val }}" />
+				@endforeach
+			@else
+				<input type="hidden" name="{{ $key }}" value="{{ $value }}" />
+			@endif
 		  @endforeach
 		  <div class="col-md-12">
 

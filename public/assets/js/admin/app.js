@@ -1862,7 +1862,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   directives: {
     ClickOutside: vue_click_outside__WEBPACK_IMPORTED_MODULE_2___default.a
   },
-  props: ['programs', 'current_program', 'groups'],
+  props: ['programs', 'current_program', 'groups', 'program', 'foodprogram', 'relaxprogram'],
   data: function data() {
     return {
       renderKey: 1,
@@ -1927,7 +1927,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       this.showModal('eathour');
     },
     createPlaneat: function createPlaneat() {
-      this.showModal('planeat?days=1');
+      this.showModal("planeat?days=".concat(this.activeWeek * 7 + 1 + this.target.weekDay, "&foodprogram_id=").concat(this.foodprogram, "&eathours%5B0%5D=").concat(this.data[this.activeWeek].data[this.target.weekDay][this.target.group].id));
     },
     createMeal: function createMeal() {
       this.showModal('meal');
@@ -1939,18 +1939,39 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       this.showModal('relaxexercise');
     },
     createTraniningGroup: function createTraniningGroup() {
-      this.showModal('training?day_number=1');
+      this.showModal("training?day_number=".concat(this.activeWeek * 7 + 1 + this.target.weekDay, "&programtrainings%5B0%5D=").concat(this.program, "&active=1"));
     },
     createRelaxGroup: function createRelaxGroup() {
-      this.showModal('relaxtraining?number_day=1');
+      this.showModal("relaxtraining?number_day=".concat(this.activeWeek * 7 + 1 + this.target.weekDay, "&programs%5B0%5D=").concat(this.relaxprogram));
     },
     duplicateWeek: function duplicateWeek() {
       var week = 1 + Math.max.apply(null, this.data.map(function (item) {
         return item.week;
       }));
-      this.data.push(Object.assign({}, this.data[this.target.week], {
+      var newWeek = Object.assign({}, this.data[this.target.week], {
         week: week
-      }));
+      });
+      newWeek.data = newWeek.data.map(function (groups) {
+        return groups.map(function (group) {
+          group.items = group.items.map(function (item) {
+            if (item.subitems) {
+              item.subitems = item.subitems.map(function (subitem) {
+                return Object.assign({
+                  copy: true
+                }, subitem);
+              });
+            }
+
+            return Object.assign({
+              copy: true
+            }, item);
+          });
+          return Object.assign({
+            copy: true
+          }, group);
+        });
+      });
+      this.data.push(newWeek);
     },
     createWeek: function createWeek() {
       var week = 1 + Math.max.apply(null, this.data.map(function (item) {
@@ -74045,7 +74066,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/work/madat_gym/resources/admin/app.js */"./resources/admin/app.js");
+module.exports = __webpack_require__(/*! /var/www/paybox/resources/admin/app.js */"./resources/admin/app.js");
 
 
 /***/ })

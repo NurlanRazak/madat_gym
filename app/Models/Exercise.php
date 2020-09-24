@@ -42,7 +42,10 @@ class Exercise extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function trainings()
+    {
+        return $this->belongsToMany(Training::class, 'training_exercise_pivot', 'exercise_id', 'training_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

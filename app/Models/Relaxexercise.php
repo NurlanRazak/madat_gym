@@ -42,7 +42,10 @@ class Relaxexercise extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function relaxtrainings()
+    {
+        return $this->belongsToMany(Relaxtraining::class, 'relaxtrainings_relaxexercises', 'exercise_id', 'relaxtraining_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

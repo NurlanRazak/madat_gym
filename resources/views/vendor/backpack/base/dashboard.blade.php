@@ -22,6 +22,9 @@
                         :current_program="{{ request()->program_id ?? 0 }}"
                         :groups="{{ json_encode($groups) }}"
                         :programs="{{ json_encode($programs) }}"
+                        :program="{{ $program_id }}"
+                        :foodprogram="{{ $foodprogram_id }}"
+                        :relaxprogram="{{ $relaxprogram_id }}"
                         ref="calendar"
                     ></calendar>
                 </div>

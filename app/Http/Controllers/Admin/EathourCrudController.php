@@ -160,6 +160,7 @@ class EathourCrudController extends CrudController
                 'id' => $this->crud->entry->id,
                 'name' => $this->crud->entry->name,
                 'type' => 'planeat',
+                'items' => [],
                 'hour_start' => $this->crud->entry->hour_start,
                 'hour_finish' => $this->crud->entry->hour_finish
             ]
