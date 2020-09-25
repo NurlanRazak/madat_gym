@@ -10,6 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/cache/clear', function() {
+	Artisan::call('migrate');
+	Artisan::call('cache:clear');
+	Artisan::call('config:clear');
+	return 'ok';
+});
 
 Route::get('/test', function() {
 

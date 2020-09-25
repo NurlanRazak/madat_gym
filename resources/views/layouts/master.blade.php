@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}" />
-        <title>MadAtGym.com</title>
+        <title>MadatGym.com</title>
         <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet">
         <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}">
         @yield('before-css')
@@ -198,7 +198,6 @@
             });
               $("#userdataedit").click(function (e) {
                   e.preventDefault();
-                  console.log("click");
                   var input = $('.userdataediti');
                   sost = !input.prop('disabled');
                   input.prop('disabled', sost);
@@ -214,21 +213,18 @@
               })
               $("#userparamsedit").click(function (e) {
                   e.preventDefault();
-                  console.log("click");
                   var input = $('.userparamsediti');
                   sost = !input.prop('disabled');
                   input.prop('disabled', sost);
                 });
               $("#userplanedit").click(function (e) {
                   e.preventDefault();
-                  console.log("click");
                   var input = $('.userplanediti');
                   sost = !input.prop('disabled');
                   input.prop('disabled', sost);
                 });
 
               $(".profile-picture").click(function(){
-                  console.log()
                 $("#file-input").trigger('click');
               });
               $.fn.isTimeSet();
