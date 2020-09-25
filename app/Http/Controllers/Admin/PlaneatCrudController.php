@@ -18,6 +18,14 @@ use App\Services\MenuService\Traits\AccessLevelsTrait;
 class PlaneatCrudController extends CrudController
 {
     use AccessLevelsTrait;
+    protected $jwplayer;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->jwPlayer = new \App\Services\Jwplayer();
+    }
+
     public function setup()
     {
         /*
@@ -118,6 +126,19 @@ class PlaneatCrudController extends CrudController
                 'model' => 'App\Models\Eathour',
             ],
             [
+                'name' => 'image',
+                'label' => 'Изображение',
+                'type' => 'image',
+                'prefix' => 'uploads/',
+                'height' => '150px',
+                'width' => '150px',
+            ],
+            [
+                'name' => 'video',
+                'label' => 'Видео',
+                'type' => 'jwvideo',
+            ],
+            [
                 'name' => 'active',
                 'label' => 'Опубликован',
                 'type' => 'check',
@@ -168,6 +189,21 @@ class PlaneatCrudController extends CrudController
                 'attributes' => [
                     'required' => 'required',
                 ],
+            ],
+            [
+                'name' => 'image',
+                'label' => 'Изображение',
+                'type' => 'image',
+                'upload' => true,
+                'crop' => true,
+                'aspect_ratio' => 0,
+                'disk' => 'uploads',
+            ],
+            [
+                'name' => 'video',
+                'label' => 'Видео',
+                'type' => 'select_video',
+                'options' => $this->jwPlayer->getVideoOptions(),
             ],
             [
                 'name' => 'active',
