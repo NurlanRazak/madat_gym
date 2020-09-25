@@ -13,6 +13,12 @@
                         $eats[$eathour->hour_start][$eathour->hour_finish] = ['title' => $eathour->name, 'meals' => []];
                     }
                     $eats[$eathour->hour_start][$eathour->hour_finish]['meals'][] = $meal;
+                    if (!isset($eats[$eathour->hour_start][$eathour->hour_finish]['image'])) {
+                        $eats[$eathour->hour_start][$eathour->hour_finish]['image'] = $planeat->image ?? '';
+                    }
+                    if (!isset($eats[$eathour->hour_start][$eathour->hour_finish]['video'])) {
+                        $eats[$eathour->hour_start][$eathour->hour_finish]['video'] = $planeat->video_key ?? '';
+                    }
                 }
             }
         }
@@ -193,10 +199,13 @@
                                                         @foreach($eat as $end => $data)
                                                             <div class="col-sm-3 col-lg-2">
                                                                 <div class="video">
-                                                                    <img src="{{ asset('assets/images/no-image.png') }}" width="100%">
-                                                                    <button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-video="" disabled>
-                                                                        <i class="i-Video-5 text-36 mr-1"></i>
-                                                                    </button>
+                                                                    @if($data['video'])
+                                                                        <script src="https://cdn.jwplayer.com/players/{{ $data['video'] }}-{{ config('jwplayer.player_id') }}.js"></script>
+                                                                    @elseif ($data['image'])
+                                                                        <img src="{{ url('uploads/'.$data['image']) }}" width="100%">
+                                                                    @else
+                                                                        <img src="{{ asset('assets/images/no-image.png') }}" width="100%">
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-7 col-lg-9">
