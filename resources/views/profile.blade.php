@@ -104,7 +104,7 @@
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $user->statistics ?? 0 }}%" aria-valuenow="{{ $user->statistics ?? 0 }}" aria-valuemin="0" aria-valuemax="100">{{ $user->statistics ?? 0 }}%</div>
                                     </div>
                                     <div class="alert alert-warning" role="alert">
-                                      ШКАЛА ВЫПОЛНЕНЫХ ЗАДАНИЙ week
+                                      Недельная эффективность
                                       <a href="#" class="float-right"><i class="i-Eye text-16"></i></a>
                                     </div>
                                     <div class="progress mb-3">
