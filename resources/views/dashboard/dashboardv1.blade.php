@@ -131,7 +131,7 @@
                                                         @foreach($training->exercises as $index => $exercise)
                                                             <li class="row mb-4">
                                                                 <div class="col-sm-3 col-lg-2">
-                                                                    <div class="video">
+                                                                    <div class="video" data-model="App\Models\Exercise" data-entity="{{ $exercise->id }}">
                                                                         @if($exercise->video_key)
                                                                             <script src="https://cdn.jwplayer.com/players/{{ $exercise->video_key }}-{{ config('jwplayer.player_id') }}.js"></script>
                                                                         @else
@@ -271,7 +271,7 @@
                                                         @foreach($relaxtraining->exercises as $exerciseindex => $exercise)
                                                             <li class="row mb-4">
                                                                 <div class="col-sm-3 col-lg-2">
-                                                                    <div class="video">
+                                                                    <div class="video" data-model="App\Models\Relaxexercise" data-entity="{{ $exercise->id }}">
                                                                         @if($exercise->video_key)
                                                                             <script src="https://cdn.jwplayer.com/players/{{ $exercise->video_key }}-{{ config('jwplayer.player_id') }}.js"></script>
                                                                         @else
@@ -536,9 +536,10 @@
                 $('#list2').modal();
             @endif
 
-            $('video').on('play', function(e) {
-                let video = $(e.target);
+            $('.video').on('click', function(e) {
+                let video = $(e.target).closest('.video');
                 let model = video.data('model');
+                console.log(e.target)
                 let entity = video.data('entity');
                 $.post('{{ route("save-view") }}', {
                     '_token': '{{ csrf_token() }}',

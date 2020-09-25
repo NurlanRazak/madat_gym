@@ -163,11 +163,11 @@ class Programtraining extends Model
         $events = [];
 
         foreach($this->trainings()->active()->get() as $training) {
-            $day = now()->addDays($passed + $training->day_number - 1);
+            $day = now()->setTime(0, 0)->addDays($training->day_number - $passed - 1);
             $events[] = [
                 'title' => $training->name,
-                'start' => $day->setTime(explode(':', $training->hour_start)[0] ?? 0, explode(':', $training->hour_start)[1] ?? 0)->format('D M d Y H:i:s O'),
-                'end' => $day->setTime(explode(':', $training->hour_finish)[0] ?? 0, explode(':', $training->hour_finish)[1] ?? 0)->format('D M d Y H:i:s O'),
+                'start' => $day->setTime(explode(':', $training->hour_start)[0] ?? 0, explode(':', $training->hour_start)[1] ?? 0)->format('D M d Y H:i:s'),
+                'end' => $day->setTime(explode(':', $training->hour_finish)[0] ?? 0, explode(':', $training->hour_finish)[1] ?? 0)->format('D M d Y H:i:s'),
                 'color' => '#d22346',
                 'eventData' => $training->exercises->map(function($item) {
                     return $item->name;
@@ -175,11 +175,11 @@ class Programtraining extends Model
             ];
         }
         foreach($this->relaxprogram->relaxtrainings()->active()->get() as $relaxtraining) {
-            $day = now()->addDays($passed + $relaxtraining->number_day - 1);
+            $day = now()->setTime(0, 0)->addDays($relaxtraining->number_day - $passed - 1);
             $events[] = [
                 'title' => $relaxtraining->name,
-                'start' => $day->setTime(explode(':', $relaxtraining->hour_start)[0] ?? 0, explode(':', $relaxtraining->hour_start)[1] ?? 0)->format('D M d Y H:i:s O'),
-                'end' => $day->setTime(explode(':', $relaxtraining->hour_finish)[0] ?? 0, explode(':', $relaxtraining->hour_finish)[1] ?? 0)->format('D M d Y H:i:s O'),
+                'start' => $day->setTime(explode(':', $relaxtraining->hour_start)[0] ?? 0, explode(':', $relaxtraining->hour_start)[1] ?? 0)->format('D M d Y H:i:s'),
+                'end' => $day->setTime(explode(':', $relaxtraining->hour_finish)[0] ?? 0, explode(':', $relaxtraining->hour_finish)[1] ?? 0)->format('D M d Y H:i:s'),
                 'color' => '#ffc107',
                 'eventData' => $relaxtraining->exercises->map(function($item) {
                     return $item->name;
@@ -188,12 +188,12 @@ class Programtraining extends Model
         }
 
         foreach($this->foodprogram->planeats()->active()->get() as $planeat) {
-            $day = now()->addDays($passed + $planeat->days - 1);
+            $day = now()->setTime(0, 0)->addDays($planeat->days - $passed - 1);
             foreach($planeat->eathours ?? [] as $eathour) {
                 $events[] = [
                     'title' => $eathour->name,
-                    'start' => $day->setTime(explode(':', $eathour->hour_start)[0] ?? 0, explode(':', $eathour->hour_start)[1] ?? 0)->format('D M d Y H:i:s O'),
-                    'end' => $day->setTime(explode(':', $eathour->hour_finish)[0] ?? 0, explode(':', $eathour->hour_finish)[1] ?? 0)->format('D M d Y H:i:s O'),
+                    'start' => $day->setTime(explode(':', $eathour->hour_start)[0] ?? 0, explode(':', $eathour->hour_start)[1] ?? 0)->format('D M d Y H:i:s'),
+                    'end' => $day->setTime(explode(':', $eathour->hour_finish)[0] ?? 0, explode(':', $eathour->hour_finish)[1] ?? 0)->format('D M d Y H:i:s'),
                     'color' => '#4caf50',
                     'eventData' => $planeat->meals->map(function($meal) {
                         return $meal->name;
