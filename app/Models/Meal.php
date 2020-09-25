@@ -39,6 +39,12 @@ class Meal extends Model
     {
         return $this->belongsToMany('App\Models\Listmeal', 'meal_listmeal_pivot', 'meal_id', 'listmeal_id');
     }
+
+    public function planeats()
+    {
+        return $this->belongsToMany('App\Models\Planeat', 'planeat_meal', 'meal_id', 'planeat_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

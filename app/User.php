@@ -34,6 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $guard_name = 'web';
     protected $statistics = null;
+    protected $weekStatistics = null;
 
     const MALE=1;
     const FEMALE=2;
@@ -297,7 +298,7 @@ class User extends Authenticatable implements MustVerifyEmail
             $today = 7;
         }
         $day = $passed + $today - $weekDay;
-        return $this->doneExersices()->where('key', $key)->where('day_number', $day)->exists();
+        return $this->doneExersices()->where('programtraining_id', $this->current_programtraining->id ?? null)->where('key', $key)->where('day_number', $day)->exists();
     }
 
     // TODO: fix
@@ -307,11 +308,11 @@ class User extends Authenticatable implements MustVerifyEmail
             return $this->statistics;
         }
 
-        if (!$this->programtraining) {
+        if (!$this->current_programtraining) {
             return 0;
         }
 
-        $duration = $this->programtraining->duration;
+        $duration = $this->current_programtraining->duration;
         $all = $duration * 3;
         $passed = $this->doneExersices()->count();
         if ($all == 0) {
@@ -320,6 +321,26 @@ class User extends Authenticatable implements MustVerifyEmail
             $this->statistics = ceil(100 * $passed / $all);
         }
         return $this->statistics;
+    }
+
+    public function getWeekStatisticsAttribute()
+    {
+        if ($this->weekStatistics) {
+            return $this->weekStatistics;
+        }
+
+        if (!$this->current_programtraining) {
+            return 0;
+        }
+        $program_passed = $this->getProgramtrainginDaysPassed();
+        $all = 21;
+        $passed = $this->doneExersices()->where('day_number', '>=', floor($program_passed / 7) * 7)->where('day_number', '<=', floor($program_passed / 7) * 7 + 6)->count();
+        if ($all == 0) {
+            $this->weekStatistics = 100;
+        } else {
+            $this->weekStatistics = ceil(100 * $passed / $all);
+        }
+        return $this->weekStatistics;
     }
 
     public function getNextProgramtrainingAttribute()

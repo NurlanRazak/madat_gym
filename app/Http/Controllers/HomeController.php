@@ -93,27 +93,27 @@ class HomeController extends Controller
             $nextEquipments = collect();
         }
 
-        if ((!isset($trainings_data[$today]) || count($trainings_data[$today]) == 0) && !$user->checkExersice($today, 1)) {
-            $user->doneExersices()->create([
-                'user_id' => $user->id,
-                'key' => 1,
-                'day_number' => $passed
-            ]);
-        }
-        if ((!isset($planeats_data[$today]) || count($planeats_data[$today]) == 0) && !$user->checkExersice($today, 2)) {
-            $user->doneExersices()->create([
-                'user_id' => $user->id,
-                'key' => 2,
-                'day_number' => $passed
-            ]);
-        }
-        if ((!isset($relaxtrainings_data[$today]) || count($relaxtrainings_data[$today]) == 0) && !$user->checkExersice($today, 3)) {
-            $user->doneExersices()->create([
-                'user_id' => $user->id,
-                'key' => 3,
-                'day_number' => $passed
-            ]);
-        }
+        // if ((!isset($trainings_data[$today]) || count($trainings_data[$today]) == 0) && !$user->checkExersice($today, 1)) {
+        //     $user->doneExersices()->create([
+        //         'user_id' => $user->id,
+        //         'key' => 1,
+        //         'day_number' => $passed
+        //     ]);
+        // }
+        // if ((!isset($planeats_data[$today]) || count($planeats_data[$today]) == 0) && !$user->checkExersice($today, 2)) {
+        //     $user->doneExersices()->create([
+        //         'user_id' => $user->id,
+        //         'key' => 2,
+        //         'day_number' => $passed
+        //     ]);
+        // }
+        // if ((!isset($relaxtrainings_data[$today]) || count($relaxtrainings_data[$today]) == 0) && !$user->checkExersice($today, 3)) {
+        //     $user->doneExersices()->create([
+        //         'user_id' => $user->id,
+        //         'key' => 3,
+        //         'day_number' => $passed
+        //     ]);
+        // }
 
         return view('dashboard.dashboardv1', [
             'events' => $user->programtraining->getEvents($user->getProgramtrainginDaysPassed()),
@@ -140,14 +140,17 @@ class HomeController extends Controller
         $user = $request->user();
         $passed = $user->getProgramtrainginDaysPassed();
 
-        $today = \Date::today()->dayOfWeek;
-        $day = $passed + $today - $request->day;
-        $doneExersice = $user->doneExersices()->where('key', $request->key)->where('day_number', $day)->first();
+        $doneExersice = $user->doneExersices()
+                             ->where('programtraining_id', $user->current_programtraining->id ?? null)
+                             ->where('key', $request->key)
+                             ->where('day_number', $passed)
+                             ->first();
+
         if (!$doneExersice) {
             $doneExersice = DoneExersice::create([
                 'user_id' => $user->id,
                 'key' => $request->key,
-                'day_number' => $day,
+                'day_number' => $passed,
             ]);
         } else {
             $doneExersice->delete();
