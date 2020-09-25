@@ -60,7 +60,15 @@ class Exercise extends Model
     | ACCESORS
     |--------------------------------------------------------------------------
     */
-
+    public function getVideoKeyAttribute()
+    {
+        try {
+			list($key, $name) = explode(':', $this->video);
+		} catch(\Exception $e) {
+			return null;
+		}
+        return $key;
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

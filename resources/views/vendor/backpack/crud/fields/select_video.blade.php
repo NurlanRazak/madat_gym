@@ -1,5 +1,5 @@
 @php
-    $itemValue = (isset($entry) && $entry) ? $entry->video : null;
+    $itemValue = (isset($entry) && $entry) ? $entry->video_key : null;
 @endphp
 <!-- select2 from array -->
 <div @include('crud::inc.field_wrapper_attributes') >
@@ -16,7 +16,7 @@
                         $class = 'active';
                     @endphp
                 @endif
-                <div class="col-sm-3 jwvideo-option {{ $class }}" data-key="{{ $key }}">
+                <div class="col-sm-3 jwvideo-option {{ $class }}" data-key="{{ $key }}:{{ $value }}">
                     <div class="jwvideo-video">
                         <script src="https://cdn.jwplayer.com/players/{{ $key }}-pu6XmB5Q.js\"></script>
                     </div>
