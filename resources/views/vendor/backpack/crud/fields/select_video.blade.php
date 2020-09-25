@@ -18,7 +18,7 @@
                 @endif
                 <div class="col-sm-3 jwvideo-option {{ $class }}" data-key="{{ $key }}:{{ $value }}">
                     <div class="jwvideo-video">
-                        <script src="https://cdn.jwplayer.com/players/{{ $key }}-pu6XmB5Q.js\"></script>
+                        <script src="https://cdn.jwplayer.com/players/{{ $key }}-{{ config('jwplayer.player_id') }}.js\"></script>
                     </div>
                     <div class="jwvideo-val">{{ $value }}</div>
                 </div>

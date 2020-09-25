@@ -97,7 +97,7 @@
             }
         </style>
         <script src="https://kit.fontawesome.com/d1edd4ad8f.js"></script>
-        <script src="https://cdn.jwplayer.com/libraries/pu6XmB5Q.js"></script>
+        <script src="https://cdn.jwplayer.com/libraries/{{ config('jwplayer.player_id') }}.js"></script>
         {{-- page specific css --}}
         @yield('page-css')
         @yield('head-js')

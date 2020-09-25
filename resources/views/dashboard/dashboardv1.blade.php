@@ -127,7 +127,7 @@
                                                                 <div class="col-sm-3 col-lg-2">
                                                                     <div class="video">
                                                                         @if($exercise->video_key)
-                                                                            <script src="https://cdn.jwplayer.com/players/{{ $exercise->video_key }}-pu6XmB5Q.js"></script>
+                                                                            <script src="https://cdn.jwplayer.com/players/{{ $exercise->video_key }}-{{ config('jwplayer.player_id') }}.js"></script>
                                                                         @else
                                                                             <img src="{{ asset('assets/images/no-image.png') }}" width="100%">
                                                                         @endif
@@ -264,7 +264,7 @@
                                                                 <div class="col-sm-3 col-lg-2">
                                                                     <div class="video">
                                                                         @if($exercise->video_key)
-                                                                            <script src="https://cdn.jwplayer.com/players/{{ $exercise->video_key }}-pu6XmB5Q.js"></script>
+                                                                            <script src="https://cdn.jwplayer.com/players/{{ $exercise->video_key }}-{{ config('jwplayer.player_id') }}.js"></script>
                                                                         @else
                                                                             <img src="{{ asset('assets/images/no-image.png') }}" width="100%">
                                                                         @endif

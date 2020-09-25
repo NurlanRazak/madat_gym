@@ -17,7 +17,7 @@
 @endphp
 
 @if($key)
-	<a href="https://cdn.jwplayer.com/players/{{ $key }}-pu6XmB5Q.html" target="_blank">{{ $name }}</a>
+	<a href="https://cdn.jwplayer.com/players/{{ $key }}-{{ config('jwplayer.player_id') }}.html" target="_blank">{{ $name }}</a>
 @else
     <span>-</span>
 @endif
