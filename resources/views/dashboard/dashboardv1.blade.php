@@ -124,7 +124,15 @@
                                                     <ul>
                                                         @foreach($training->exercises as $index => $exercise)
                                                             <li class="row mb-4">
-                                                                <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset($exercise->image ? 'uploads/'.$exercise->image : 'assets/images/no-image.png') }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-model="\App\Models\Exercise" data-entity="{{ $exercise->id }}" data-video="{{ asset('uploads/'.$exercise->video) }}" {{ $exercise->video ? '' :'disabled' }}><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                                <div class="col-sm-3 col-lg-2">
+                                                                    <div class="video">
+                                                                        @if($exercise->video)
+                                                                            <script src="https://cdn.jwplayer.com/players/{{ $exercise->video }}-pu6XmB5Q.js"></script>
+                                                                        @else
+                                                                            <img src="{{ asset('assets/images/no-image.png') }}" width="100%">
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
                                                                 <div class="col-sm-7 col-lg-9">
                                                                     <h2 >
                                                                         <b><a type="button" class="ex-desc h2-pointer" data-toggle="modal" data-target="#desc" data-title="{{ $exercise->name }}" data-description="{{ $exercise->long_desc }}">{{ $index + 1 }}. {{ $exercise->name }}</a></b>
@@ -184,8 +192,13 @@
                                                         @foreach($eats[$i] ?? [] as $start => $eat)
                                                         @foreach($eat as $end => $data)
                                                             <div class="col-sm-3 col-lg-2">
-                                                                <div id="jwPlayer"></div>
-                                                                <div class="video"><img src="{{ asset('assets/images/no-image.png') }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-video="" disabled><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                                <div class="video">
+                                                                    <img src="{{ asset('assets/images/no-image.png') }}" width="100%">
+                                                                    <button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-video="" disabled>
+                                                                        <i class="i-Video-5 text-36 mr-1"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
                                                             <div class="col-sm-7 col-lg-9">
                                                                 <h2>{{ $eat_index++ }}. {{ $data['title'] ?? '' }}</h2>
                                                                     <p>Время приема пищи: <br><b>с {{ $start }} до {{ $end }}</b></p>
@@ -215,32 +228,6 @@
                                                         @endif
                                                     </li>
                                                 </ul>
-
-
-                                                <h2>Затрак</h2>
-                                                <h4>9:00 - 10:00</h4>
-                                                   <ul>
-                                                           <li class="row mb-4">
-                                                               <div class="col-sm-3 col-lg-2"><div class="video"><img src="assets/images/no-image.png" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-model="\App\Models\Relaxexercise" ><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
-                                                               <div class="col-sm-7 col-lg-9">
-                                                                   <h5><b><a type="button" class="h2-pointer ex-desc" data-toggle="modal" data-target="#desc" ">Каша на молоке</a></b></h5>
-                                                                   <p>Крупа - 35 гр (овсянка, гречка, рис, перловка, пшенная крупа, булгур, кус-кус). Молоко - 90 гр (1-2,5%жирности)</p>
-                                                                   <p>Калорийность: <b>150</b></p><br>
-                                                               </div>
-                                                           </li>
-                                                           <li class="row mb-4">
-                                                               <div class="col-sm-3 col-lg-2"><div class="video"><img src="assets/images/no-image.png" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-model="\App\Models\Relaxexercise" ><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
-                                                               <div class="col-sm-7 col-lg-9">
-                                                                   <h5><b><a type="button" class="h2-pointer ex-desc" data-toggle="modal" data-target="#desc" ">Каша на молоке</a></b></h5>
-
-                                                                   <p>Крупа12 - 35 гр (овсянка, гречка, рис, перловка, пшенная крупа, булгур, кус-кус). Молоко - 90 гр (1-2,5%жирности)</p>
-                                                                   <p>Калорийность: <b>150</b></p><br>
-
-                                                               </div>
-                                                           </li>
-                                                   </ul>
-
-
                                             </div>
                                         </div>
                                     </div>
@@ -274,7 +261,15 @@
                                                     <ul>
                                                         @foreach($relaxtraining->exercises as $exerciseindex => $exercise)
                                                             <li class="row mb-4">
-                                                                <div class="col-sm-3 col-lg-2"><div class="video"><img src="{{ asset($exercise->image ? 'uploads/'.$exercise->image : 'assets/images/no-image.png') }}" width="100%"><button type="button" class="playbtn" data-toggle="modal" data-target="#vid" data-model="\App\Models\Relaxexercise" data-entity="{{ $exercise->id }}" data-video="{{ asset('uploads/'.$exercise->video) }}" {{ $exercise->video ? '' :'disabled' }}><i class="i-Video-5 text-36 mr-1"></i></button></div></div>
+                                                                <div class="col-sm-3 col-lg-2">
+                                                                    <div class="video">
+                                                                        @if($exercise->video)
+                                                                            <script src="https://cdn.jwplayer.com/players/{{ $exercise->video }}-pu6XmB5Q.js"></script>
+                                                                        @else
+                                                                            <img src="{{ asset('assets/images/no-image.png') }}" width="100%">
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
                                                                 <div class="col-sm-7 col-lg-9">
                                                                     <h5><b><a type="button" class="h2-pointer ex-desc" data-toggle="modal" data-target="#desc" data-title="{{ $exercise->name }}" data-description="{{ $exercise->long_description }}">{{ $index + 1 }}. {{ $exercise->name }}</a></b></h5>
                                                                     @if($exercise->audio)
@@ -561,19 +556,5 @@
         });
 
      </script>
-    <script type="text/javascript">
-        jwplayer("jwPlayer").setup({
-            // "playlist": [{
-            //     "file": "https://cdn.jwplayer.com/videos/uC4zesrN",
-            //     "mediaid": "uC4zesrN"
-            // }]
-
-            "playlist": "https://cdn.jwplayer.com/v2/media/k8SJZLPw"
-
-            // "playlist": [{
-            //     "file": "https://cdn.jwplayer.com/videos/uC4zesrN-kkwdMKcx.mp4"
-            // }]
-        })
-    </script>
 
 @endsection

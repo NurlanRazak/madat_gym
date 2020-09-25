@@ -20,6 +20,14 @@ class RelaxexerciseCrudController extends CrudController
     use \App\Http\Controllers\Admin\Traits\CreateFromCalendar;
     use AccessLevelsTrait;
 
+    protected $jwplayer;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->jwPlayer = new \App\Services\Jwplayer();
+    }
+
     public function setup()
     {
         /*
@@ -85,6 +93,7 @@ class RelaxexerciseCrudController extends CrudController
             [
                 'name' => 'video',
                 'label' => 'Видео',
+                'type' => 'jwvideo'
             ],
             [
                 'name' => 'active',
@@ -123,12 +132,8 @@ class RelaxexerciseCrudController extends CrudController
             [
                 'name' => 'video',
                 'label' => 'Видео',
-                'type' => 'upload',
-                'upload' => true,
-                'attributes' => [
-                    'accept' => 'video/*',
-                ],
-                'disk' => 'uploads',
+                'type' => 'select_video',
+                'options' => $this->jwPlayer->getVideoOptions(),
             ],
             [
                 'name' => 'audio',

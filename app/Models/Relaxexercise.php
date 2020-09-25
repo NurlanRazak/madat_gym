@@ -98,14 +98,6 @@ class Relaxexercise extends Model
         }
     }
 
-    public function setVideoAttribute($value)
-    {
-        $attribute_name = "video";
-        $disk = 'uploads';
-        $destination_path = "exercises/videos";
-
-        $this->uploadFileToDisk($value, $attribute_name, $disk, $destination_path);
-    }
 
     public function setAudioAttribute($value)
     {

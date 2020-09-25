@@ -9,7 +9,7 @@ class Jwplayer
 
     public function __construct()
     {
-        $this->jwplatform_api = new \Jwplayer\JwplatformAPI('LJvZDNLz', 'q95DJQ5uYoISsl22hw9jG3Tq');
+        $this->jwplatform_api = new \Jwplayer\JwplatformAPI('LJvZDNLz', 'q95DJQ5uYoISsl22hw9jG3Tq', 'Nbty2yX-SloUU9f5VeTBzGInTTJSRlZISnBkMmhMZEV4QmRXOVpabkZRV25GYVNWTkgn');
     }
 
     public function getPlaylists() : array
@@ -31,5 +31,17 @@ class Jwplayer
     public function getVideo($video_key)
     {
         return $this->jwplatform_api->call('/videos/show', array('video_key' => $video_key));
+    }
+
+    public function getSources($video_key)
+    {
+        return $this->jwplatform_api->call("/media/{$video_key}", [], 'v2');
+    }
+
+    public function getVideoOptions() : array
+    {
+        return collect($this->getVideos()['videos'])->keyBy('key')->map(function($video) {
+            return $video['title'];
+        })->toArray();
     }
 }

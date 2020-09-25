@@ -21,6 +21,7 @@ Route::get('/test', function() {
 
     $service = new \App\Services\Jwplayer();
     // dd($service->getVideos());
+    dd($service->getSources('TKIBlDOl'));
     dd($service->getVideo('uC4zesrN'));
     dd($service->getPlaylist('k8SJZLPw'), $service->getVideos());
     $client = new \GuzzleHttp\Client();
