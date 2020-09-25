@@ -59,4 +59,12 @@ class Meal extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    public function toCalendar()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
+    }
 }

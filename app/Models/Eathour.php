@@ -59,4 +59,15 @@ class Eathour extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+    public function toCalendar()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'type' => 'planeat',
+            'items' => [],
+            'hour_start' => $this->hour_start,
+            'hour_finish' => $this->hour_finish
+        ];
+    }
 }

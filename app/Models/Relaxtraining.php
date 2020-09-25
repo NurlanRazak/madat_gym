@@ -73,4 +73,17 @@ class Relaxtraining extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+    public function toCalendar()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'type' => 'relaxtraining',
+            'hour_start' => $this->hour_start,
+            'hour_finish' => $this->hour_finish,
+            'items' => $this->exercises->map(function($item) {
+                return $item->toCalendar();
+            })
+        ];
+    }
 }

@@ -228,7 +228,7 @@ export default {
         },
         async saveCurrentWeek() {
             await axios.post(`calendar/${this.program_id}`, this.data)
-            // window.location.reload()
+            window.location.reload()
         }
     }
 }

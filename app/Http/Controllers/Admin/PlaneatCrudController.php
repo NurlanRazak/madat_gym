@@ -214,6 +214,9 @@ class PlaneatCrudController extends CrudController
         $this->data['saveAction'] = $this->getSaveAction();
         $this->data['fields'] = $this->crud->getCreateFields();
         $this->data['title'] = $this->crud->getTitle() ?? trans('backpack::crud.add').' '.$this->crud->entity_name;
+        // $this->data['options'] = $this->crud->model->active()->get()->map(function($item) {
+        //     return $item->toCalendar();
+        // })->toArray();
         // load the view from /resources/views/vendor/backpack/crud/ if it exists, otherwise load the one in the package
         return view('admin.modal', $this->data);
     }
@@ -224,16 +227,7 @@ class PlaneatCrudController extends CrudController
         $this->crud->entry->delete();
         return view('admin.postModal', [
             'type' => 'item',
-            'data' => [
-                'id' => $this->crud->entry->id,
-                'name' => $this->crud->entry->name,
-                'subitems' => $this->crud->entry->meals->map(function($item) {
-                    return [
-                        'id' => $item->id,
-                        'name' => $item->name,
-                    ];
-                }),
-            ]
+            'data' => $this->crud->entry->toCalendar()
         ]);
     }
 }

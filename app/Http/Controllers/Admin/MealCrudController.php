@@ -246,6 +246,10 @@ class MealCrudController extends CrudController
         $this->data['saveAction'] = $this->getSaveAction();
         $this->data['fields'] = $this->crud->getCreateFields();
         $this->data['title'] = $this->crud->getTitle() ?? trans('backpack::crud.add').' '.$this->crud->entity_name;
+        $this->data['type'] = 'subitem';
+        $this->data['options'] = $this->crud->model->active()->get()->map(function($item) {
+            return $item->toCalendar();
+        })->toArray();
         // load the view from /resources/views/vendor/backpack/crud/ if it exists, otherwise load the one in the package
         return view('admin.modal', $this->data);
     }

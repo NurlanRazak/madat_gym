@@ -2040,6 +2040,9 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 return axios.post("calendar/".concat(this.program_id), this.data);
 
               case 2:
+                window.location.reload();
+
+              case 3:
               case "end":
                 return _context.stop();
             }

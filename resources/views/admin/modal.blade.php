@@ -1,11 +1,32 @@
 @extends('admin.layout')
 @section('content')
+<script>
+	function sendToParent(data) {
+		console.log(data)
+		@if(isset($type) && $type == 'item')
+	        window.opener.app.$refs['calendar'].setItemData(data);
+		@elseif(isset($type) && $type == 'subitem')
+	        window.opener.app.$refs['calendar'].setSubitemData(data);
+	    @else
+	        window.opener.app.$refs['calendar'].setGroupData(data);
+		@endif
+		window.close();
+	}
+</script>
+
 <div class="row m-t-20">
 	<div class="{{ $crud->getCreateContentClass() }}">
 		<!-- Default box -->
 
 		@include('crud::inc.grouped_errors')
 
+		@if(isset($options))
+			<div class="" style="margin-bottom: 30px;">
+				@foreach($options as $index => $option)
+					<button class="btn btn-primary" style="margin-bottom: 5px;" onclick='sendToParent(@json($option))'>{{ $option['name'] ?? '' }}</button>
+				@endforeach
+			</div>
+		@endif
 		  <form id="createForm"
                 method="post"
 				@if ($crud->hasUploadFields('create'))

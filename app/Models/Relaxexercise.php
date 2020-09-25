@@ -117,4 +117,12 @@ class Relaxexercise extends Model
         $this->uploadFileToDisk($value, $attribute_name, $disk, $destination_path);
     }
 
+    public function toCalendar()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
+    }
+
 }
