@@ -17,11 +17,12 @@ class CalendarController extends Controller
             foreach($week['data'] as $weekDay => $groups) {
                 foreach($groups as $groupIndex => $group) {
                     $group['deleted'] = ($group['deleted'] ?? false) || ($week['deleted'] ?? false);
+                    $group['draft'] = ($group['draft'] ?? false) || ($week['draft'] ?? false);
                     $this->handleGroup($group, $weekCnt * 7 + 1 + $weekDay, $program);
                 }
             }
             $weekCnt++;
-            if ($week['deleted'] ?? false) {
+            if (($week['deleted'] ?? false) || $week['draft'] ?? false) {
                 $weekCnt--;
             }
         }
@@ -55,6 +56,13 @@ class CalendarController extends Controller
                 $elem->programs()->detach($program->relaxprogram_id);
             }
         } else {
+            if ($group['draft'] ?? false) {
+                if ($group['type'] != 'planeat') {
+                    $elem->update([
+                        'active' => false
+                    ]);
+                }
+            }
             if ($elem->trashed()) {
                 $elem->restore();
             }
@@ -72,6 +80,7 @@ class CalendarController extends Controller
 
         foreach($group['items'] as $itemIndex => $item) {
             $item['deleted'] = ($item['deleted'] ?? false) || ($group['deleted'] ?? false);
+            $item['draft'] = ($item['draft'] ?? false) || ($group['draft'] ?? false);
             $this->handleItem($item, $group, $day, $elem, $program);
         }
     }
@@ -88,6 +97,14 @@ class CalendarController extends Controller
                 $item['id'] = $elem->id;
             }
         }
+        if ($group['draft'] ?? false) {
+            if ($group['type'] == 'planeat') {
+                $elem->update([
+                    'active' => false
+                ]);
+            }
+        }
+
         if ($item['deleted'] ?? false) {
             if ($elem->trashed()) {
                 $elem->forceDelete();

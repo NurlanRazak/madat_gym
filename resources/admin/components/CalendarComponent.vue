@@ -12,7 +12,7 @@
                     <h4>Недели</h4>
                     <draggable :list="data" group="weeks" @start="drag = true" @end="drag = false">
                         <div class="week" v-for="(week, index) of data" :key="index" >
-                            <button @click.prevent="setActiveWeek(index)" :class="{'--active': activeWeek == index, '--deleted': week.deleted}" @contextmenu.prevent="showContextMenu($event, { week: index, deleted: week.deleted }, 'week')">
+                            <button @click.prevent="setActiveWeek(index)" :class="{'--active': activeWeek == index, '--deleted': week.deleted, '--draft': week.draft }" @contextmenu.prevent="showContextMenu($event, { week: index, deleted: week.deleted, can_draft: week.can_draft, draft: week.draft }, 'week')">
                                 {{ week.week }} неделя
                             </button>
                         </div>
@@ -23,7 +23,7 @@
                 <div class="content">
                     <div class="day" v-for="(day, dayIndex) in days" :key="`day_${dayIndex}`" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex }, 'weekday')">
                         <div class="d-content day-title">{{ day }}</div>
-                        <div class="d-content day-content">
+                        <div class="d-content day-content" v-if="activeWeek != null">
                             <draggable :list="data[activeWeek].data[dayIndex]" :sort="false" group="groups" @start="drag = true" @end="drag = false">
                                 <div :class="['task', `${group.type}`, { '--deleted': group.deleted }]" v-for="(group, groupIndex) in data[activeWeek].data[dayIndex]" :key="`task_${groupIndex}`" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, deleted: group.deleted }, group.type)">
                                     <div>{{ group.name }}</div>
@@ -156,6 +156,12 @@ export default {
         createRelaxGroup() {
             this.showModal(`relaxtraining?number_day=${this.activeWeek * 7 + 1 + this.target.weekDay}&programs%5B0%5D=${this.relaxprogram}&active=1`)
         },
+        draftWeek() {
+            this.data[this.target.week].draft = true
+        },
+        publishWeek() {
+            this.data[this.target.week].draft = false
+        },
         duplicateWeek() {
             let week = 1 + Math.max.apply(null, this.data.map(function(item) {
                 return item.week;
@@ -163,7 +169,7 @@ export default {
             let newWeek = Object.assign({}, {...this.data[this.target.week]}, { week: week })
             newWeek.data = newWeek.data.map((groups) => {
                 return groups.map((group) => {
-                    return Object.assign({ copy: true }, {...group})
+                    return Object.assign({ copy: true }, {...group}, { can_draft: true })
                 })
             })
             this.data.push(newWeek)
@@ -349,5 +355,8 @@ export default {
 }
 .--deleted {
     opacity: .5;
+}
+.--draft {
+    background-color: #ffff005c;
 }
 </style>
