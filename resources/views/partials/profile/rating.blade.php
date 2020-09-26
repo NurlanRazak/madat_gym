@@ -8,8 +8,8 @@
       </div>
       <div class="modal-body">
         <ul class="nav nav-tabs rating-nav">
-            <li><a class="active show" data-toggle="tab" href="#ratingall">All</a></li>
-            <li><a data-toggle="tab" href="#ratingweek">Week</a></li>
+            <li><a class="active show" data-toggle="tab" href="#ratingall">Общий рейтинг</a></li>
+            <li><a data-toggle="tab" href="#ratingweek">За неделю</a></li>
         </ul>
 
         <div class="tab-content">
