@@ -56,6 +56,35 @@ class ProfileController extends Controller
 
         $day = $user->getProgramtrainginDaysPassed() - $today;
 
+        // SELECT 100 * (count(user_id) - sum(reverse)) / count(user_id) as rating, user_id
+        // FROM `exercise_user`
+        // WHERE 1
+        // GROUP BY user_id
+        // ORDER BY rating DESC
+        // LIMIT 100;
+
+        $rating = $user->current_programtraining
+                    ->doneExersices()
+                    ->groupBy('user_id')
+                    ->selectRaw('100 * (count(user_id) - sum(reverse)) / count(user_id) as rating, user_id')
+                    ->orderBy('rating', 'desc')
+                    ->with(['user' => function($query) {
+                        $query->select(['id', 'name']);
+                    }])
+                    // ->take(100)
+                    ->get();
+
+        $weekRating = $user->current_programtraining
+                    ->doneExersices()
+                    ->groupBy('user_id')
+                    ->where('day_number', '>=', $day)
+                    ->selectRaw('100 * (count(user_id) - sum(reverse)) / count(user_id) as rating, user_id')
+                    ->orderBy('rating', 'desc')
+                    ->with(['user' => function($query) {
+                        $query->select(['id', 'name']);
+                    }])
+                    // ->take(100)
+                    ->get();
         $statistics = $user->doneExersices()->where('programtraining_id', $user->programtraining_id)->get();
         $weekStatistics = $user->doneExersices()->where('day_number', '>=', $day)->where('programtraining_id', $user->programtraining_id)->get();
 
@@ -67,6 +96,8 @@ class ProfileController extends Controller
             'programs' => $programs,
             'statistics' => $statistics,
             'weekStatistics' => $weekStatistics,
+            'rating' => $rating,
+            'weekRating' => $weekRating,
         ]);
     }
 
