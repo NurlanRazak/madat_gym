@@ -238,6 +238,7 @@
               });
               $.fn.isTimeSet();
             });
+            let timerInterval;
             $.fn.setTime = function(){
                //this function ensures that the user enter the correct format
                var time = $("#time").val();
@@ -280,15 +281,30 @@
                    $("#time").prop('disabled', false);
                  }
              }
+             $.fn.stopTimer = function() {
+                 clearInterval(timerInterval);
+                 localStorage.removeItem("time");
+
+                 $("#status").html("Установите время:");
+                 $("#hour").html(00);
+                 $("#min").html(00);
+                 $("#sec").html(00);
+
+                 $("#timeBtn").prop('disabled', false);
+                 $("#time").prop('disabled', false);
+             }
              $.fn.countDown = function(hour, min, sec){
                 //this function runs the seconds count
                  var time = sec;
                  $("#sec").html(time);
-                 var interval = setInterval(function(){
+                 if (timerInterval) {
+                     clearInterval(timerInterval);
+                 }
+                 timerInterval = setInterval(function(){
                      $("#sec").html(-- time);
                      $.fn.rememberMe(hour, min, time);
                      if (time == 0) {
-                       clearInterval(interval);
+                         clearInterval(timerInterval);
                        $.fn.count(hour, min, min, sec, "00");
                      }
                      if($('#sec').text().length < 2){
