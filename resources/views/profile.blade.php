@@ -112,6 +112,11 @@
                                     <div class="progress mb-3">
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $user->weekStatistics ?? 0 }}%" aria-valuenow="{{ $user->weekStatistics ?? 0 }}" aria-valuemin="0" aria-valuemax="100">{{ $user->weekStatistics ?? 0 }}%</div>
                                     </div>
+                                    <div class="alert alert-warning" role="alert">
+                                        Рейтинг среди пользователей
+                                        <a href="#" data-toggle="modal" data-target="#usersStatisticsModal" class="float-right"><i class="i-Eye text-16"></i></a>
+                                        @include('partials.profile.rating', ['id' => 'usersStatisticsModal', 'weekRating' => $weekRating, 'ratings' => $rating])
+                                    </div>
                                     <a href="{{ route('subscription') }}" class="btn btn-block btn-warning">ПРОДЛИТЬ ПОДПИСКУ</a>
                                     {{-- <a href="#" class="btn btn-block btn-danger">ОТМЕНИТЬ ПОДПИСКУ</a> --}}
                                     <br>
