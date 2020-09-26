@@ -98,14 +98,16 @@
                                     </form>
                                     <div class="alert alert-warning" role="alert">
                                       ШКАЛА ВЫПОЛНЕНЫХ ЗАДАНИЙ
-                                      <a href="#" class="float-right"><i class="i-Eye text-16"></i></a>
+                                      <a href="#" data-toggle="modal" data-target="#statisticsModal" class="float-right"><i class="i-Eye text-16"></i></a>
+                                      @include('partials.profile.donelist', ['id' => 'statisticsModal', 'items' => $statistics])
                                     </div>
                                     <div class="progress mb-3">
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $user->statistics ?? 0 }}%" aria-valuenow="{{ $user->statistics ?? 0 }}" aria-valuemin="0" aria-valuemax="100">{{ $user->statistics ?? 0 }}%</div>
                                     </div>
                                     <div class="alert alert-warning" role="alert">
                                       Недельная эффективность
-                                      <a href="#" class="float-right"><i class="i-Eye text-16"></i></a>
+                                      <a href="#" data-toggle="modal" data-target="#weekStatisticsModal" class="float-right"><i class="i-Eye text-16"></i></a>
+                                      @include('partials.profile.donelist', ['id' => 'weekStatisticsModal', 'items' => $weekStatistics])
                                     </div>
                                     <div class="progress mb-3">
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $user->weekStatistics ?? 0 }}%" aria-valuenow="{{ $user->weekStatistics ?? 0 }}" aria-valuemin="0" aria-valuemax="100">{{ $user->weekStatistics ?? 0 }}%</div>

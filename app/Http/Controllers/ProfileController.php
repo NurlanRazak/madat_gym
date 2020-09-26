@@ -49,7 +49,25 @@ class ProfileController extends Controller
                   ->where('date_finish', '>=', \DB::raw('NOW()'));
         })->get();
 
-        return view('profile', ['user' => $user, 'program_histories' => $program_histories, 'dates' => $dates, 'userparameters' => $userparameters, 'programs' => $programs]);
+        $today = \Date::today()->dayOfWeek;
+        if($today == 0) {
+            $today = 7;
+        }
+
+        $day = $user->getProgramtrainginDaysPassed() - $today;
+
+        $statistics = $user->doneExersices()->get();
+        $weekStatistics = $user->doneExersices()->where('day_number', '>=', $day)->get();
+
+        return view('profile', [
+            'user' => $user,
+            'program_histories' => $program_histories,
+            'dates' => $dates,
+            'userparameters' => $userparameters,
+            'programs' => $programs,
+            'statistics' => $statistics,
+            'weekStatistics' => $weekStatistics,
+        ]);
     }
 
     public function imageUpload(Request $request)

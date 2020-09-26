@@ -13,7 +13,7 @@ class DoneExersice extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['user_id', 'day_number', 'description', 'key', 'programtraining_id'];
+    protected $fillable = ['user_id', 'day_number', 'description', 'key', 'programtraining_id', 'reverse'];
 
     public static function boot()
     {

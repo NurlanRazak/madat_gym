@@ -29,9 +29,9 @@ class CalendarComposer
             $foodprogram_id = $current_program->foodprogram_id;
             $relaxprogram_id = $current_program->relaxprogram_id;
 
-            $trainings = $this->getTrainings($current_program);
-            $relaxtrainings = $this->getRelaxtrainings($current_program);
-            $eathours = $this->getEathours($current_program);
+            $trainings = $current_program->getTrainings();
+            $relaxtrainings = $current_program->getRelaxtrainings();
+            $eathours = $current_program->getEathours();
             // dd($trainings, $planeats, $relaxtrainings);
 
             foreach($trainings as $training) {
@@ -135,67 +135,6 @@ class CalendarComposer
         }
 
         $groups[$week][$day][] = $training;
-    }
-
-    private function getTrainings($current_program)
-    {
-        return $current_program
-                ->trainings()
-                ->active()
-                ->with([
-                    'exercises' => function($query) {
-                        $query->active();
-                    },
-                ])
-                ->get();
-    }
-
-    private function getRelaxtrainings($current_program)
-    {
-        return $current_program
-                ->relaxprogram
-                ->relaxtrainings()
-                ->active()
-                ->with([
-                    'exercises' => function($query) {
-                        $query->active();
-                    }
-                ])
-                ->get();
-    }
-
-    private function getPlaneats($current_program)
-    {
-        return $current_program->foodprogram
-                ->planeats()
-                ->active()
-                ->with([
-                    'eathours' => function($query) {
-                        $query->active();
-                    },
-                    'meals' => function($query) {
-                        $query->active();
-                    }
-                ])
-                ->get();
-    }
-
-    private function getEathours($current_program)
-    {
-        return \App\Models\Eathour::whereHas('planeats', function($query) use($current_program) {
-            $query->active()
-                  ->where('foodprogram_id', $current_program->foodprogram_id);
-        })->with([
-            'planeats' => function($query) use($current_program) {
-                $query->active()
-                      ->where('foodprogram_id', $current_program->foodprogram_id)
-                      ->with([
-                          'meals' => function($query) {
-                              $query->active();
-                          }
-                      ]);
-            }
-        ])->get();
     }
 
 }

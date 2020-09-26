@@ -204,6 +204,83 @@ class Programtraining extends Model
 
         return $events;
     }
+
+    public function getTrainings($day = null)
+    {
+        $query = $this
+                ->trainings()
+                ->active()
+                ->with([
+                    'exercises' => function($query) {
+                        $query->active();
+                    },
+                ]);
+        if ($day) {
+            $query->where('day_number', $day);
+        }
+        return $query->get();
+    }
+
+
+    public function getRelaxtrainings($day = null)
+    {
+        $query = $this
+                ->relaxprogram
+                ->relaxtrainings()
+                ->active()
+                ->with([
+                    'exercises' => function($query) {
+                        $query->active();
+                    }
+                ]);
+        if ($day) {
+            $query->where('number_day', $day);
+        }
+        return $query->get();
+    }
+
+    public function getPlaneats($day = null)
+    {
+        $query = $this->foodprogram
+                ->planeats()
+                ->active()
+                ->with([
+                    'eathours' => function($query) {
+                        $query->active();
+                    },
+                    'meals' => function($query) {
+                        $query->active();
+                    }
+                ]);
+        if ($day) {
+            $query->where('days', $day);
+        }
+
+        return $query->get();
+    }
+
+    public function getEathours($day = null)
+    {
+        return \App\Models\Eathour::whereHas('planeats', function($query) use($day) {
+            $query->active()
+                  ->where('foodprogram_id', $this->foodprogram_id);
+        })->with([
+            'planeats' => function($query) use($day) {
+                $query->active()
+                      ->where('foodprogram_id', $this->foodprogram_id)
+                      ->with([
+                          'meals' => function($query) {
+                              $query->active();
+                          }
+                      ]);
+
+                if ($day) {
+                    $query->where('days', $day);
+                }
+            }
+        ])->get();
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
