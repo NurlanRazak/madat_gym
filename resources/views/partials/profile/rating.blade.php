@@ -7,25 +7,55 @@
         </button>
       </div>
       <div class="modal-body">
-          <div class="table-responsive">
-              <table class="table">
-                <tbody>
-                    @foreach ($ratings as $raiting)
-                        <tr>
-                            <td>
-                                {{ $loop->iteration }}
-                            </td>
-                            <td>
-                                {{ $raiting->user->name }}
-                            </td>
-                            <td>
-                                {{ ceil($raiting->rating) }}
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-              </table>
-          </div>
+        <ul class="nav nav-tabs rating-nav">
+            <li><a class="active show" data-toggle="tab" href="#ratingall">All</a></li>
+            <li><a data-toggle="tab" href="#ratingweek">Week</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="ratingall" class="tab-pane active">
+                <div class="table-responsive">
+                    <table class="table">
+                      <tbody>
+                          @foreach ($ratings as $raiting)
+                              <tr>
+                                  <td>
+                                      {{ $loop->iteration }}
+                                  </td>
+                                  <td>
+                                      {{ $raiting->user->name }}
+                                  </td>
+                                  <td>
+                                      {{ ceil($raiting->rating) }}
+                                  </td>
+                              </tr>
+                          @endforeach
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="ratingweek" class="tab-pane">
+                <div class="table-responsive">
+                    <table class="table">
+                      <tbody>
+                          @foreach ($weekRatings as $raiting)
+                              <tr>
+                                  <td>
+                                      {{ $loop->iteration }}
+                                  </td>
+                                  <td>
+                                      {{ $raiting->user->name }}
+                                  </td>
+                                  <td>
+                                      {{ ceil($raiting->rating) }}
+                                  </td>
+                              </tr>
+                          @endforeach
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
       </div>
     </div>
   </div>

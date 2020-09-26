@@ -115,7 +115,7 @@
                                     <div class="alert alert-warning" role="alert">
                                         Рейтинг среди пользователей
                                         <a href="#" data-toggle="modal" data-target="#usersStatisticsModal" class="float-right"><i class="i-Eye text-16"></i></a>
-                                        @include('partials.profile.rating', ['id' => 'usersStatisticsModal', 'weekRating' => $weekRating, 'ratings' => $rating])
+                                        @include('partials.profile.rating', ['id' => 'usersStatisticsModal', 'weekRatings' => $weekRating, 'ratings' => $rating])
                                     </div>
                                     <a href="{{ route('subscription') }}" class="btn btn-block btn-warning">ПРОДЛИТЬ ПОДПИСКУ</a>
                                     {{-- <a href="#" class="btn btn-block btn-danger">ОТМЕНИТЬ ПОДПИСКУ</a> --}}

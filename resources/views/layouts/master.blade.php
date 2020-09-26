@@ -18,6 +18,15 @@
         <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
 
         <style>
+            .rating-nav a {
+                padding: 10px 20px;
+            }
+            .rating-nav li {
+                padding: 10px 0px;
+            }
+            .rating-nav a.active {
+                background-color: #fff3cd;
+            }
             .owl-nav{
                 position: absolute;
                 /* margin: auto 20px; */
