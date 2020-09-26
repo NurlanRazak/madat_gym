@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
                  ->mondays()->at('06:00');
         $schedule->command('subscription:notifications')
                  ->daily()->at('16:00');
-        $schedule->command('subscription:notifications')
+        $schedule->command('exercise:daily')
                  ->daily()->at('00:01');
     }
 
