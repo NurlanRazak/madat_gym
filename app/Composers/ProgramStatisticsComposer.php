@@ -16,7 +16,7 @@ class ProgramStatisticsComposer
             $labels[] = mb_ucfirst($date_first->format('F'));
         }
 
-        $programs = \App\Models\Programtraining::active()->get();
+        $programs = \App\Models\Programtraining::all();
         $data = [];
 
         foreach($programs as $index => $program) {
