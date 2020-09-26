@@ -56,8 +56,8 @@ class ProfileController extends Controller
 
         $day = $user->getProgramtrainginDaysPassed() - $today;
 
-        $statistics = $user->doneExersices()->get();
-        $weekStatistics = $user->doneExersices()->where('day_number', '>=', $day)->get();
+        $statistics = $user->doneExersices()->where('programtraining_id', $user->programtraining_id)->get();
+        $weekStatistics = $user->doneExersices()->where('day_number', '>=', $day)->where('programtraining_id', $user->programtraining_id)->get();
 
         return view('profile', [
             'user' => $user,

@@ -44,6 +44,12 @@
                                 </h3>
                                 <program :data="{{ json_encode($program_statistics_data) }}" :labels="{{ json_encode($program_statistics_labels) }}" style="width: 100%;"></program>
                             </div>
+                            <div class="col-sm-6">
+                                <h3>
+                                    Программы2
+                                </h3>
+                                <bar-chart :data="{{ json_encode($program_efficiency_statistics_data) }}" :labels="{{ json_encode($program_efficiency_statistics_labels) }}" style="width: 100%;"></bar-chart>
+                            </div>
                         </div>
                     </div>
                 </div>

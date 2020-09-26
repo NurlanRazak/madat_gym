@@ -309,7 +309,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $all = $this->current_programtraining->trainings()->active()->count(\DB::raw('DISTINCT day_number'));
         $all+= $this->current_programtraining->relaxprogram->relaxtrainings()->active()->count(\DB::raw('DISTINCT number_day'));
         $all+= $this->current_programtraining->foodprogram->planeats()->active()->count(\DB::raw('DISTINCT days'));
-        $passed = $this->doneExersices()->where('reverse', 0)->count();
+        $passed = $this->doneExersices()->where('programtraining_id', $this->programtraining_id)->where('reverse', 0)->count();
 
         if ($all == 0) {
             $this->statistics = 100;
@@ -331,8 +331,18 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $program_passed = $this->getProgramtrainginDaysPassed();
 
-        $all = $this->doneExersices()->where('day_number', '>=', floor($program_passed / 7) * 7)->where('day_number', '<=', floor($program_passed / 7) * 7 + 6)->count();
-        $passed = $this->doneExersices()->where('reverse', 0)->where('day_number', '>=', floor($program_passed / 7) * 7)->where('day_number', '<=', floor($program_passed / 7) * 7 + 6)->count();
+        $all = $this->doneExersices()->where('programtraining_id', $this->programtraining_id)->where('day_number', '>=', floor($program_passed / 7) * 7)->where('day_number', '<=', floor($program_passed / 7) * 7 + 6)->count();
+        if (!$this->checkExersice($program_passed, 1)) {
+            $all += $this->current_programtraining->trainings()->where('day_number', $program_passed)->active()->count();
+        }
+        if (!$this->checkExersice($program_passed, 2)) {
+            $all += $this->current_programtraining->foodprogram->planeats()->where('days', $program_passed)->active()->count();
+        }
+        if (!$this->checkExersice($program_passed, 3)) {
+            $all += $this->current_programtraining->relaxprogram->relaxtrainings()->where('number_day', $program_passed)->active()->count();
+        }
+
+        $passed = $this->doneExersices()->where('programtraining_id', $this->programtraining_id)->where('reverse', 0)->where('day_number', '>=', floor($program_passed / 7) * 7)->where('day_number', '<=', floor($program_passed / 7) * 7 + 6)->count();
 
         if ($all == 0) {
             $this->weekStatistics = 100;

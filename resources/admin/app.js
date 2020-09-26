@@ -23,6 +23,7 @@ Vue.component('calendar', require('./components/CalendarComponent.vue').default)
 Vue.component('mousemenu', require('./components/MenuComponent.vue').default);
 Vue.component('subscription', require('./components/SubscriptionLineChartComponent.vue').default);
 Vue.component('program', require('./components/ProgramLineChartComponent.vue').default);
+Vue.component('bar-chart', require('./components/BarChartComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
