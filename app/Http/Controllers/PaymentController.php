@@ -19,11 +19,13 @@ class PaymentController extends Controller
         $programtraining_id = $request->session()->get('programtraining_id');
         $items = [];
         $total = 0;
+        $description = '';
 
         if ($subscription_id) {
             $subscription = Subscription::findOrFail($subscription_id);
 
             $total += $subscription->price;
+            $description = $subscription->name;
 
             $items[] = [
                 'name' => $subscription->name,
@@ -35,6 +37,7 @@ class PaymentController extends Controller
         if ($programtraining_id) {
             $programtraining = Programtraining::findOrFail($programtraining_id);
             $total += (int)$programtraining->price;
+            $description = $programtraining->name;
 
             $items[] = [
                 'name' => $programtraining->name,
@@ -63,8 +66,6 @@ class PaymentController extends Controller
             ]);
         }
 
-        $description = $programtraining->name ?? 'test';
-
         $url = 'https://api.paybox.money/payment.php';
 
         $data = [
@@ -74,7 +75,7 @@ class PaymentController extends Controller
            'pg_salt' => 'some string', //random string, required
            'pg_order_id' => $purchase->id, //id of purchase, strictly unique
            'pg_currency' => $purchase->currency ?? 'USD',
-           'pg_description' => $description, //will be shown to client in process of payment, required
+           'pg_description' => $description ?? 'test', //will be shown to client in process of payment, required
            'pg_result_url' => route('payment-result'),//route('payment-result')
            'pg_user_phone' => $user->phone_number ?? '',
            'pg_user_contact_email' => $user->email ?? '',
