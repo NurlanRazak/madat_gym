@@ -6,11 +6,11 @@
             </li>
         </ul>
         <ul v-else-if="type == 'week'">
-            <li v-if="$parent.target.can_draft && !$parent.target.deleted">
-                <button @click="callAction('draftWeek')">Draft неделю</button>
+            <li v-if="$parent.target.can_draft && !$parent.target.deleted && false">
+                <button @click="callAction('draftWeek')">Сделать неактивной</button>
             </li>
-            <li v-else-if="$parent.target.draft">
-                <button @click="callAction('publishWeek')">Publish неделю</button>
+            <li v-else-if="$parent.target.draft && false">
+                <button @click="callAction('publishWeek')">Сделать активной</button>
             </li>
             <li>
                 <button @click="callAction('duplicateWeek')">Дублировать неделю</button>
@@ -20,12 +20,6 @@
             </li>
             <li v-else-if="$parent.target.can_draft">
                 <button @click="callAction('removeWeek')">Удалить неделю</button>
-            </li>
-            <li>
-                <button @click="callAction('removeWeek')">Сделать активной</button>
-            </li>
-            <li>
-                <button @click="callAction('removeWeek')">Сделать неактивной</button>
             </li>
         </ul>
         <ul v-else-if="type == 'training'">

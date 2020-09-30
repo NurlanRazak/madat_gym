@@ -98,13 +98,13 @@ class CalendarComposer
         }
         $groups_data = [];
         foreach($groups as $week => $data) {
-            // $week_start = 7 * ($week - 1);
-            // $week_end = 7 * $week;
-            // $can_draft = \DB::table('programtraining_user')->where('programtraining_id', $current_program->id)->whereRaw("total_days - days_left BETWEEN {$week_start} AND {$week_end}")->exists() == false;
+            $week_start = 7 * ($week - 1);
+            $week_end = 7 * $week;
+            $can_draft = \DB::table('programtraining_user')->where('programtraining_id', $current_program->id)->whereRaw("total_days - days_left BETWEEN {$week_start} AND {$week_end}")->exists() == false;
             $groups_data[] = [
                 'week' => $week,
                 'data' => $data,
-                'can_draft' => false//$can_draft
+                'can_draft' => $can_draft
             ];
         }
 

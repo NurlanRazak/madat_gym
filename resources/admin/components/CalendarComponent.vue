@@ -13,7 +13,7 @@
                     <draggable :list="data" group="weeks" @start="drag = true" @end="drag = false">
                         <div class="week" v-for="(week, index) of data" :key="index" >
                             <button @click.prevent="setActiveWeek(index)" :class="{'--active': activeWeek == index, '--deleted': week.deleted, '--draft': week.draft }" @contextmenu.prevent="showContextMenu($event, { week: index, deleted: week.deleted, can_draft: week.can_draft, draft: week.draft }, 'week')">
-                                {{ week.week }} неделя
+                                {{ index + 1 }} неделя
                             </button>
                         </div>
                     </draggable>
@@ -24,7 +24,7 @@
                     <div class="day" v-for="(day, dayIndex) in days" :key="`day_${dayIndex}`" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex }, 'weekday')">
                         <div class="d-content day-title">{{ day }}</div>
                         <div class="d-content day-content" v-if="activeWeek != null">
-                            <draggable :list="data[activeWeek].data[dayIndex]" :sort="false" group="groups" @start="drag = true" @end="drag = false">
+                            <draggable :list="data[activeWeek].data[dayIndex]" :sort="false" group="groups" @start="drag = true" @end="sortGroups">
                                 <div :class="['task', `${group.type}`, { '--deleted': group.deleted }]" v-for="(group, groupIndex) in data[activeWeek].data[dayIndex]" :key="`task_${groupIndex}`" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, deleted: group.deleted }, group.type)">
                                     <div>{{ group.name }}</div>
                                     <div>
@@ -99,6 +99,25 @@ export default {
         console.log(this.data)
     },
     methods: {
+        sortGroups() {
+            this.data[this.activeWeek].data.map((groups) => {
+                return groups.sort((a, b) => {
+                    if (a.hour_start < b.hour_start) {
+                        return -1
+                    }
+                    if (a.hour_start > b.hour_start) {
+                        return 1
+                    }
+                    if (a.hour_finish < b.hour_finish) {
+                        return -1
+                    }
+                    if (a.hour_finish > b.hour_finish) {
+                        return 1
+                    }
+                    return 0
+                })
+            })
+        },
         setItemData(data) {
             this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items.push(data)
             this.target = null
@@ -106,21 +125,7 @@ export default {
         },
         setGroupData(data) {
             this.data[this.activeWeek].data[this.target.weekDay].push(data)
-            this.data[this.activeWeek].data[this.target.weekDay].sort((a, b) => {
-                if (a.hour_start < b.hour_start) {
-                    return -1
-                }
-                if (a.hour_start > b.hour_start) {
-                    return 1
-                }
-                if (a.hour_finish < b.hour_finish) {
-                    return -1
-                }
-                if (a.hour_finish > b.hour_finish) {
-                    return 1
-                }
-                return 0
-            })
+            this.sortGroups()
             this.target = null
             this.type = null
         },
@@ -166,14 +171,16 @@ export default {
             let week = 1 + Math.max.apply(null, this.data.map(function(item) {
                 return item.week;
             }))
-            let newWeek = Object.assign({}, {...this.data[this.target.week]}, { week: week })
+            let newWeek = Object.assign({}, {...this.data[this.target.week]}, { week: week }, { can_draft: true })
             newWeek.data = newWeek.data.map((groups) => {
                 return groups.map((group) => {
                     return Object.assign({ copy: true }, {...group}, { can_draft: true })
                 })
             })
-            this.data.push(newWeek)
-            console.log(this.data)
+            this.data.splice(this.target.week + 1, 0, newWeek)
+            // this.data = [...this.data]
+            // this.data.push(newWeek)
+            // console.log(this.data)
         },
         createWeek() {
             let week = 1 + Math.max.apply(null, this.data.map(function(item) {
@@ -233,8 +240,13 @@ export default {
             window.location.reload()
         },
         async saveCurrentWeek() {
-            await axios.post(`calendar/${this.program_id}`, this.data)
-            window.location.reload()
+            try {
+                await axios.post(`calendar/${this.program_id}`, this.data)
+                window.location.reload()
+            } catch (e) {
+                alert('Ошибка! Данные не сохранились.');
+            }
+
         }
     }
 }

@@ -11,21 +11,33 @@ class CalendarController extends Controller
 
     public function update(Request $request, Programtraining $program)
     {
-        $data = $request->toArray();
-        $weekCnt = 0;
-        foreach($data as $weekIndex => $week) {
-            foreach($week['data'] as $weekDay => $groups) {
-                foreach($groups as $groupIndex => $group) {
-                    $group['deleted'] = ($group['deleted'] ?? false) || ($week['deleted'] ?? false);
-                    $group['draft'] = ($group['draft'] ?? false) || ($week['draft'] ?? false);
-                    $this->handleGroup($group, $weekCnt * 7 + 1 + $weekDay, $program);
+        $success = true;
+        \DB::beginTransaction();
+        try {
+            $data = $request->toArray();
+            $weekCnt = 0;
+            foreach($data as $weekIndex => $week) {
+                foreach($week['data'] as $weekDay => $groups) {
+                    foreach($groups as $groupIndex => $group) {
+                        $group['deleted'] = ($group['deleted'] ?? false) || ($week['deleted'] ?? false);
+                        $group['draft'] = ($group['draft'] ?? false) || ($week['draft'] ?? false);
+                        $this->handleGroup($group, $weekCnt * 7 + 1 + $weekDay, $program);
+                    }
+                }
+                $weekCnt++;
+                if (($week['deleted'] ?? false) || ($week['draft'] ?? false)) {
+                    $weekCnt--;
                 }
             }
-            $weekCnt++;
-            if (($week['deleted'] ?? false) || $week['draft'] ?? false) {
-                $weekCnt--;
-            }
+
+            \DB::commit();
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            $success = false;
         }
+        return response()->json([
+            'success' => $success,
+        ]);
     }
 
     private function handleGroup($group, $day, $program) // training, relaxtraining, eathour
