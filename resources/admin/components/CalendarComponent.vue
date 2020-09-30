@@ -242,6 +242,7 @@ export default {
         async saveCurrentWeek() {
             try {
                 await axios.post(`calendar/${this.program_id}`, this.data)
+                window.scrollTo(0, 0)
                 window.location.reload()
             } catch (e) {
                 alert('Ошибка! Данные не сохранились.');

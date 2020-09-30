@@ -2083,21 +2083,22 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 return axios.post("calendar/".concat(this.program_id), this.data);
 
               case 3:
+                window.scrollTo(0, 0);
                 window.location.reload();
-                _context.next = 9;
+                _context.next = 10;
                 break;
 
-              case 6:
-                _context.prev = 6;
+              case 7:
+                _context.prev = 7;
                 _context.t0 = _context["catch"](0);
                 alert('Ошибка! Данные не сохранились.');
 
-              case 9:
+              case 10:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 6]]);
+        }, _callee, this, [[0, 7]]);
       }));
 
       function saveCurrentWeek() {
