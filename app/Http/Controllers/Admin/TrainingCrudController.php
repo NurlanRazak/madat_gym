@@ -30,7 +30,7 @@ class TrainingCrudController extends CrudController
         $this->crud->setModel('App\Models\Training');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/training');
         $this->crud->setEntityNameStrings(trans_choice('admin.training', 1), trans_choice('admin.training', 2));
-        $this->setAccessLevels();s
+        $this->setAccessLevels();
         $this->crud->addFilter([
             'name' => 'active',
             'type' => 'select2',
