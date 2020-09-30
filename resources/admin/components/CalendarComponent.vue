@@ -122,17 +122,26 @@ export default {
             this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items.push(data)
             this.target = null
             this.type = null
+            this.closeModal()
         },
         setGroupData(data) {
             this.data[this.activeWeek].data[this.target.weekDay].push(data)
             this.sortGroups()
-            this.target = null
-            this.type = null
+            if (data.type == 'planeat') {
+                this.type = 'planeat'
+                this.target.group = this.data[this.activeWeek].data[this.target.weekDay].findIndex(group => group.id == data.id)
+                this.createPlaneat()
+            } else {
+                this.target = null
+                this.type = null
+                this.closeModal()
+            }
         },
         setSubitemData(data) {
             this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems.push(data)
             this.target = null
             this.type = null
+            this.closeModal()
         },
         setActiveWeek(week) {
             this.activeWeek = week
@@ -214,12 +223,13 @@ export default {
         },
         showModal(type) {
             if (this.modal) {
-                this.closeModal()
+                this.modal.location = `/admin/modal/${type}`
             }
             this.modal = window.open(`/admin/modal/${type}`, 'modal', `scrollbars=yes,resizable=yes,width=${0.8*window.screen.width},height=${0.8*window.screen.height},top=${Math.floor(window.screen.height*0.1)},left=${Math.floor(window.screen.width*0.1)}`)
         },
         closeModal() {
             this.modal.close()
+            this.modal = null
         },
         showContextMenu(e, target, type) {
             if (!this.menuVisible) {

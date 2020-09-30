@@ -10,7 +10,6 @@
 	    @else
 	        window.opener.app.$refs['calendar'].setGroupData(data);
 		@endif
-		window.close();
 	}
 </script>
 

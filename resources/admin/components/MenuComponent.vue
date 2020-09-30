@@ -46,7 +46,7 @@
         </ul>
         <ul v-else-if="type == 'relaxtraining'">
             <li>
-                <button @click="callAction('createRelaxexercise')">Добавить занятие</button>
+                <button @click="callAction('createRelaxexercise')">Добавить упражнение</button>
             </li>
             <li v-if="$parent.target.deleted">
                 <button @click="callAction('restoreGroup')">Восстановить</button>
@@ -57,13 +57,13 @@
         </ul>
         <ul v-else-if="type == 'weekday'">
             <li>
-                <button @click="callAction('createTraniningGroup')">Добавить тренировку</button>
+                <button @click="callAction('createTraniningGroup')">Добавить группу тренировки</button>
             </li>
             <li>
-                <button @click="callAction('createEathour')">Добавить час приема</button>
+                <button @click="callAction('createEathour')">Добавить группу питания</button>
             </li>
             <li>
-                <button @click="callAction('createRelaxGroup')">Добавить тренировку отдыха</button>
+                <button @click="callAction('createRelaxGroup')">Добавить группу отдыха</button>
             </li>
         </ul>
         <ul v-else-if="type == 'group-item'">

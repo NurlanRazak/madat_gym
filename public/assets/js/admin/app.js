@@ -1942,17 +1942,29 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items.push(data);
       this.target = null;
       this.type = null;
+      this.closeModal();
     },
     setGroupData: function setGroupData(data) {
       this.data[this.activeWeek].data[this.target.weekDay].push(data);
       this.sortGroups();
-      this.target = null;
-      this.type = null;
+
+      if (data.type == 'planeat') {
+        this.type = 'planeat';
+        this.target.group = this.data[this.activeWeek].data[this.target.weekDay].findIndex(function (group) {
+          return group.id == data.id;
+        });
+        this.createPlaneat();
+      } else {
+        this.target = null;
+        this.type = null;
+        this.closeModal();
+      }
     },
     setSubitemData: function setSubitemData(data) {
       this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems.push(data);
       this.target = null;
       this.type = null;
+      this.closeModal();
     },
     setActiveWeek: function setActiveWeek(week) {
       this.activeWeek = week;
@@ -2044,13 +2056,14 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     },
     showModal: function showModal(type) {
       if (this.modal) {
-        this.closeModal();
+        this.modal.location = "/admin/modal/".concat(type);
       }
 
       this.modal = window.open("/admin/modal/".concat(type), 'modal', "scrollbars=yes,resizable=yes,width=".concat(0.8 * window.screen.width, ",height=").concat(0.8 * window.screen.height, ",top=").concat(Math.floor(window.screen.height * 0.1), ",left=").concat(Math.floor(window.screen.width * 0.1)));
     },
     closeModal: function closeModal() {
       this.modal.close();
+      this.modal = null;
     },
     showContextMenu: function showContextMenu(e, target, type) {
       if (!this.menuVisible) {
@@ -59869,7 +59882,7 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("Добавить занятие")]
+                            [_vm._v("Добавить упражнение")]
                           )
                         ]),
                         _vm._v(" "),
@@ -59913,7 +59926,7 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Добавить тренировку")]
+                              [_vm._v("Добавить группу тренировки")]
                             )
                           ]),
                           _vm._v(" "),
@@ -59927,7 +59940,7 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Добавить час приема")]
+                              [_vm._v("Добавить группу питания")]
                             )
                           ]),
                           _vm._v(" "),
@@ -59941,7 +59954,7 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Добавить тренировку отдыха")]
+                              [_vm._v("Добавить группу отдыха")]
                             )
                           ])
                         ])

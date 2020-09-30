@@ -9,6 +9,5 @@
     @else
         window.opener.app.$refs['calendar'].setGroupData(@json($data));
     @endif
-    window.close();
 </script>
 @endsection
