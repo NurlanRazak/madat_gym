@@ -125,17 +125,21 @@ export default {
             this.closeModal()
         },
         setGroupData(data) {
-            this.data[this.activeWeek].data[this.target.weekDay].push(data)
-            this.sortGroups()
-            if (data.type == 'planeat') {
-                this.type = 'planeat'
-                this.target.group = this.data[this.activeWeek].data[this.target.weekDay].findIndex(group => group.id == data.id)
-                this.createPlaneat()
-            } else {
-                this.target = null
-                this.type = null
-                this.closeModal()
+            let check_duplicate = this.data[this.activeWeek].data[this.target.weekDay].findIndex(group => group.id == data.id)
+            if (check_duplicate == -1) { // duplicate index
+                this.data[this.activeWeek].data[this.target.weekDay].push(data)
+                this.sortGroups()
+                if (data.type == 'planeat') {
+                    this.type = 'planeat'
+                    this.target.group = this.data[this.activeWeek].data[this.target.weekDay].findIndex(group => group.id == data.id)
+                    this.createPlaneat()
+                    return
+                }
             }
+
+            this.target = null
+            this.type = null
+            this.closeModal()
         },
         setSubitemData(data) {
             this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems.push(data)
@@ -187,9 +191,6 @@ export default {
                 })
             })
             this.data.splice(this.target.week + 1, 0, newWeek)
-            // this.data = [...this.data]
-            // this.data.push(newWeek)
-            // console.log(this.data)
         },
         createWeek() {
             let week = 1 + Math.max.apply(null, this.data.map(function(item) {

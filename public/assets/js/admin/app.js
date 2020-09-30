@@ -1945,20 +1945,28 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       this.closeModal();
     },
     setGroupData: function setGroupData(data) {
-      this.data[this.activeWeek].data[this.target.weekDay].push(data);
-      this.sortGroups();
+      var check_duplicate = this.data[this.activeWeek].data[this.target.weekDay].findIndex(function (group) {
+        return group.id == data.id;
+      });
 
-      if (data.type == 'planeat') {
-        this.type = 'planeat';
-        this.target.group = this.data[this.activeWeek].data[this.target.weekDay].findIndex(function (group) {
-          return group.id == data.id;
-        });
-        this.createPlaneat();
-      } else {
-        this.target = null;
-        this.type = null;
-        this.closeModal();
+      if (check_duplicate == -1) {
+        // duplicate index
+        this.data[this.activeWeek].data[this.target.weekDay].push(data);
+        this.sortGroups();
+
+        if (data.type == 'planeat') {
+          this.type = 'planeat';
+          this.target.group = this.data[this.activeWeek].data[this.target.weekDay].findIndex(function (group) {
+            return group.id == data.id;
+          });
+          this.createPlaneat();
+          return;
+        }
       }
+
+      this.target = null;
+      this.type = null;
+      this.closeModal();
     },
     setSubitemData: function setSubitemData(data) {
       this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems.push(data);
@@ -2017,9 +2025,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
           });
         });
       });
-      this.data.splice(this.target.week + 1, 0, newWeek); // this.data = [...this.data]
-      // this.data.push(newWeek)
-      // console.log(this.data)
+      this.data.splice(this.target.week + 1, 0, newWeek);
     },
     createWeek: function createWeek() {
       var week = 1 + Math.max.apply(null, this.data.map(function (item) {
