@@ -139,6 +139,30 @@ export default {
                     this.createPlaneat()
                     return
                 }
+            } else {
+                let text = 'Вы добавили ранее добавленную группу '
+                switch(data.type) {
+                    case 'planeat':
+                        text+= 'питания!'
+                        break;
+                    case 'training':
+                        text+= 'тренировки!'
+                        break;
+                    case 'relaxtraining':
+                        text+= 'отдыха!'
+                        break;
+                    default:
+                        text+='!'
+                }
+                $(function(){
+                  new PNotify({
+                    // title: 'Regular Notice',
+                    text: text,
+                    type: "warning",
+                    icon: false
+                  });
+                });
+
             }
 
             this.target = null
@@ -419,5 +443,8 @@ export default {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+.week button {
+    border: none;
 }
 </style>
