@@ -17,18 +17,6 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box" id="admin">
-                <div>
-                    <calendar
-                        :current_program="{{ request()->program_id ?? 0 }}"
-                        :groups="{{ json_encode($groups) }}"
-                        :programs="{{ json_encode($programs) }}"
-                        :program="{{ $program_id }}"
-                        :foodprogram="{{ $foodprogram_id }}"
-                        :relaxprogram="{{ $relaxprogram_id }}"
-                        ref="calendar"
-                    ></calendar>
-                </div>
-
                 <div class="box-body">
                     <div>
                         <div class="row">
@@ -46,7 +34,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <h3>
-                                    Программы2
+                                    Средняя эффективность программ
                                 </h3>
                                 <bar-chart :data="{{ json_encode($program_efficiency_statistics_data) }}" :labels="{{ json_encode($program_efficiency_statistics_labels) }}" style="width: 100%;"></bar-chart>
                             </div>

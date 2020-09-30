@@ -33,7 +33,7 @@ class ViewServiceProvider extends ServiceProvider
         View::composer('backpack::dashboard', AbonimentStatisticsComposer::class);
         View::composer('backpack::dashboard', ProgramStatisticsComposer::class);
         View::composer('backpack::dashboard', ProgramEfficiencyStatisticsComposer::class);
-        View::composer('backpack::dashboard', CalendarComposer::class);
+        View::composer('admin.programs', CalendarComposer::class);
 
         View::composer('layouts.master', function($view) {
             $view->with(['user' => request()->user()]);

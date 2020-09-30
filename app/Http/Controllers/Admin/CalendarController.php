@@ -9,6 +9,11 @@ use App\Models\Programtraining;
 class CalendarController extends Controller
 {
 
+    public function index()
+    {
+        return view('admin.programs');
+    }
+
     public function update(Request $request, Programtraining $program)
     {
         $success = true;

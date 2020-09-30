@@ -14,6 +14,11 @@ trait MenuTrait
                 'label'         => trans('backpack::base.dashboard'),
             ],
             [
+                'route'         => backpack_url('programs'),
+                'icon'          => 'fa fa-table',
+                'label'         => 'Редактор программ',
+            ],
+            [
                 'route'         => '#',
                 'icon'          => 'fa fa-thumb-tack',
                 'label'         => 'Тренировки',

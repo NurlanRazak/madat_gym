@@ -1,11 +1,13 @@
 <template>
     <div class="container-fluid" :key="renderKey">
         <mousemenu :type="type" :top="top" :left="left" v-click-outside="hideContextMenu" :visible="menuVisible" />
-        <form action="">
-            <select name="program_id" v-model="program_id" @change="setProgram">
-                <option :value="program.id" v-for="program in programs" :key="program.id">{{ program.name }}</option>
-            </select>
-        </form>
+        <div class="row weeks-wrapper">
+            <form action="">
+                <select name="program_id" class="program-select" v-model="program_id" @change="setProgram">
+                    <option :value="program.id" v-for="program in programs" :key="program.id">{{ program.name }}</option>
+                </select>
+            </form>
+        </div>
         <div class="row weeks-wrapper">
             <div class="col-xs-12 col-sm-2 col-md-1 col-lg-1 weeks" @contextmenu.prevent="showContextMenu($event, null, 'weeks')">
                 <div class="top">
@@ -23,30 +25,32 @@
                 <div class="content">
                     <div class="day" v-for="(day, dayIndex) in days" :key="`day_${dayIndex}`" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex }, 'weekday')">
                         <div class="d-content day-title">{{ day }}</div>
-                        <div class="d-content day-content" v-if="activeWeek != null">
-                            <draggable :list="data[activeWeek].data[dayIndex]" :sort="false" group="groups" @start="drag = true" @end="sortGroups">
-                                <div :class="['task', `${group.type}`, { '--deleted': group.deleted }]" v-for="(group, groupIndex) in data[activeWeek].data[dayIndex]" :key="`task_${groupIndex}`" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, deleted: group.deleted }, group.type)">
-                                    <div>{{ group.name }}</div>
-                                    <div>
-                                        {{ group.hour_start }} - {{ group.hour_finish }}
-                                    </div>
-                                    <div v-if="group.type == 'planeat'" class="task-content">
-                                        <div :class="['subitems', { '--deleted': item.deleted }]" v-for="(item, itemIndex) in group.items" :key="itemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, deleted: item.deleted }, 'group-item-planeat')">
-                                            <div class="task-content">
-                                                <div :class="['task-item', {'--deleted': subitem.deleted }]" v-for="(subitem, subitemIndex) in item.subitems" :key="subitemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, subitem: subitemIndex, deleted: subitem.deleted }, 'group-subitem')">
-                                                    {{ subitem.name }}
+                        <transition name="fade">
+                            <div class="d-content day-content" v-if="activeWeek != null">
+                                <draggable :list="data[activeWeek].data[dayIndex]" :sort="false" group="groups" @start="drag = true" @end="sortGroups">
+                                    <div :class="['task', `${group.type}`, { '--deleted': group.deleted }]" v-for="(group, groupIndex) in data[activeWeek].data[dayIndex]" :key="`task_${groupIndex}`" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, deleted: group.deleted }, group.type)">
+                                        <div>{{ group.name }}</div>
+                                        <div>
+                                            {{ group.hour_start }} - {{ group.hour_finish }}
+                                        </div>
+                                        <div v-if="group.type == 'planeat'" class="task-content">
+                                            <div :class="['subitems', { '--deleted': item.deleted }]" v-for="(item, itemIndex) in group.items" :key="itemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, deleted: item.deleted }, 'group-item-planeat')">
+                                                <div class="task-content">
+                                                    <div :class="['task-item', {'--deleted': subitem.deleted }]" v-for="(subitem, subitemIndex) in item.subitems" :key="subitemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, subitem: subitemIndex, deleted: subitem.deleted }, 'group-subitem')">
+                                                        {{ subitem.name }}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div v-else class="task-content">
-                                        <div :class="['task-item', { '--deleted': item.deleted }]" v-for="(item, itemIndex) in group.items" :key="itemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, deleted: item.deleted }, 'group-item')">
-                                            {{ item.name }}
+                                        <div v-else class="task-content">
+                                            <div :class="['task-item', { '--deleted': item.deleted }]" v-for="(item, itemIndex) in group.items" :key="itemIndex" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, item: itemIndex, deleted: item.deleted }, 'group-item')">
+                                                {{ item.name }}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </draggable>
-                        </div>
+                                </draggable>
+                            </div>
+                        </transition>
                     </div>
                 </div>
                 <div class="save">
@@ -148,7 +152,10 @@ export default {
             this.closeModal()
         },
         setActiveWeek(week) {
-            this.activeWeek = week
+            this.activeWeek = null
+            this.$nextTick(() => {
+                this.activeWeek = week
+            })
         },
         callAction(action) {
             this[action]()
@@ -253,10 +260,25 @@ export default {
         async saveCurrentWeek() {
             try {
                 await axios.post(`calendar/${this.program_id}`, this.data)
-                window.scrollTo(0, 0)
-                window.location.reload()
+                $(function(){
+                  new PNotify({
+                    // title: 'Regular Notice',
+                    text: `Изменения в успешно сохранились!`,
+                    type: "success",
+                    icon: false
+                  });
+                });
+                // window.scrollTo(0, 0)
+                // window.location.reload()
             } catch (e) {
-                alert('Ошибка! Данные не сохранились.');
+                $(function(){
+                  new PNotify({
+                    // title: 'Regular Notice',
+                    text: 'Ошибка! Данные не сохранились.',
+                    type: "error",
+                    icon: false
+                  });
+                });
             }
 
         }
@@ -377,10 +399,25 @@ export default {
     background-color: rgba(178, 215, 247, 0.5);
     border: 1px solid rgb(50 148 250);
 }
+.program-select {
+    padding: 5px 20px;
+    margin-top: 10px;
+    font-size: 1.1em;
+    font-weight: 500;
+}
 .--deleted {
     opacity: .5;
 }
 .--draft {
     background-color: #ffff005c;
+}
+.--active {
+    background-color: #b9e6c0;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

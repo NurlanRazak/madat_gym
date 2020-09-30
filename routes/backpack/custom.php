@@ -20,6 +20,8 @@ Route::group([
     'middleware' => ['web', config('backpack.base.middleware_key', 'admin')],
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
+    Route::get('programs', 'CalendarController@index');
+
     CRUD::resource('subscription', 'SubscriptionCrudController');
     CRUD::resource('programtype', 'ProgramtypeCrudController');
     CRUD::resource('foodprogram', 'FoodprogramCrudController');
