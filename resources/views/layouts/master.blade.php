@@ -104,6 +104,12 @@
               color: #fff;
               padding: 10px;
             }
+            #timerTrigger{
+              position: absolute;
+              bottom: 15px;
+              right: 15px;
+              z-index: 998;
+            }
         </style>
         <script src="https://kit.fontawesome.com/d1edd4ad8f.js"></script>
         <script src="https://cdn.jwplayer.com/libraries/{{ config('jwplayer.player_id') }}.js"></script>
@@ -254,6 +260,8 @@
                  if(hour < 24 && min < 60 && sec < 60){
                     $("#status").html("Время идет!");
                      $.fn.count(hour, min, min, sec, sec);
+                     $("#timeBtn").prop('disabled', false);
+                    $("#time").prop('disabled', false);
                  }else{
                     $("#status").html("Пожалуйста введите время правильно!");
                  }
@@ -267,8 +275,13 @@
                        sec = 59;
                      }
                      if(minLeft == 0){
-                       hour -= 1;
-                       min = 59;
+                       if(hour != 0){
+                          hour -= 1;
+                          min = 59;
+                        } else {
+                          hour = 0;
+                          min = 0;
+                        }
                      }
                      $("#hour").html(hour);
                      $("#min").html(min);

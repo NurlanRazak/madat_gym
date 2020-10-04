@@ -43,14 +43,16 @@
                     <li>Сегодня: {{ $time }}</li>
                     <li>Текущая программа: <b>{{ $user->programtraining->name }}</b></li>
                 </ul>
-                <button id="timerTrigger">Таймер</button>
+                <button class="btn btn-primary" id="timerTrigger">Таймер</button>
                 <div id="timerWrap">
                     <span id="status">Установите время</span>
                 	<div id="timer"><span id="hour">00</span>:<span id="min">00</span>:<span id="sec">00</span></div>
 	                <!--<input type="time" value="0" id="time" placeholder="Введите время" min="00:00" max="24:00">-->
-                    <input type="time" value="00:00:00" list="limittimeslist" step="1" id="time" placeholder="Введите время">
+                    <input type="time" value="00:00:00" max="23:59:59" min="00:00:00" step="1" id="time" placeholder="Введите время">
 	                <button id="timeBtn" onclick="$.fn.setTime()">Старт</button>
 	                <button id="stop" onclick="$.fn.stopTimer()">Стоп</button>
+                    <button id="timerTriggerr">Скрыть</button>
+
                 </div>
             </div>
             <div class="separator-breadcrumb border-top"></div>
@@ -140,24 +142,27 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-7 col-lg-9">
-                                                                    <h2 >
+                                                                    <h5 >
                                                                         <b><a type="button" class="ex-desc h2-pointer" data-toggle="modal" data-target="#desc" data-title="{{ $exercise->name }}" data-description="{{ $exercise->long_desc }}">{{ $index + 1 }}. {{ $exercise->name }}</a></b>
-                                                                    </h2>
+                                                                    </h5>
                                                                     <p>{{ $exercise->short_desc }}</p>
-                                                                    <div class="row">
-                                                                        <div class="col-12 col-lg-3 text-lg-center">
-                                                                            <div class="text-lg-center">Количество подходов: <b>{{ $training->approaches_number ?? '-' }}</b></div>
-                                                                        </div>
-                                                                        <div class="col-12 col-lg-3 text-lg-center">
-                                                                            <div class="text-lg-center">Количество повторений: <b>{{ $training->repetitions_number ?? '-' }}</b></div>
-                                                                        </div>
-                                                                        <div class="col-12 col-lg-3 text-lg-center">
-                                                                            <div class="text-lg-center">Вес: <b>{{ $training->weight ?? '-' }}</b></div>
-                                                                        </div>
-                                                                        <div class="col-12 col-lg-3 text-lg-center">
-                                                                            <div class="text-lg-center">Время выполнения: <b>{{ $training->lead_time ?? '-' }}</b></div>
-                                                                        </div>
-                                                                    </div>
+                                                                    <p>
+                                                                        Количество подходов: <b>{{ $training->approaches_number ?? '-' }}</b>
+                                                                    </p>
+                                                                    <p>
+                                                                        Количество повторений: <b>{{ $training->repetitions_number ?? '-' }}</b>
+                                                                    </p>
+                                                                    <p>
+                                                                        Вес: <b>{{ $training->weight ?? '-' }}</b>
+                                                                    </p>
+                                                                    <p>
+                                                                        Время выполнения: <b>{{ $training->lead_time ?? '-' }}</b>
+                                                                    </p>
+                                                                    <p>
+                                                                        Время отдыха: <b>{{ $training->hour_finish ?? '-' }}</b>
+                                                                    </p>
+
+                                                                    <button class="btn btn-primary" data-toggle="modal" data-target="#desc" data-title="{{ $exercise->name }}" data-description="{{ $exercise->long_desc }}">Подробнее</button>
                                                                 </div>
                                                             </li>
                                                         @endforeach
@@ -286,9 +291,10 @@
                                                                     @endif
 
                                                                     <p>{{ $exercise->short_description }}</p>
-                                                                    <p>Длительность выполнения: <b>00:15 мин.</b></p><br>
+                                                                    <p>Длительность выполнения: <b>{{ $relaxtraining->hour_finish }}</b></p><br>
 
                                                                 </div>
+                                                                <button class="btn btn-primary" data-toggle="modal" data-target="#desc" data-title="{{ $exercise->name }}" data-description="{{ $exercise->long_description }}">Подробнее</button>
                                                             </li>
                                                         @endforeach
                                                     </ul>
@@ -461,6 +467,9 @@
         $("#timerWrap").hide();
         $("#timerTrigger").on("click", function(){
         	$("#timerWrap").toggle();
+        });
+        $("#timerTriggerr").on("click", function(){
+            $("#timerWrap").hide();
         });
             var newDate = new Date,
                 date = newDate.getDate(),

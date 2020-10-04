@@ -97,7 +97,7 @@ class PaymentController extends Controller
 
 
 
-        return view('buy', compact('items', 'total'));
+        // return view('buy', compact('items', 'total'));
     }
 
     public function successCheckout(Request $request)
