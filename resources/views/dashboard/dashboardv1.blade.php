@@ -155,7 +155,7 @@
                                                                             <div class="text-lg-center">Вес: <b>{{ $training->weight ?? '-' }}</b></div>
                                                                         </div>
                                                                         <div class="col-12 col-lg-3 text-lg-center">
-                                                                            <div class="text-lg-center">Время выполнения: <b>{{ $training->time ?? '-' }}</b></div>
+                                                                            <div class="text-lg-center">Время выполнения: <b>{{ $training->lead_time ?? '-' }}</b></div>
                                                                         </div>
                                                                     </div>
                                                                 </div>

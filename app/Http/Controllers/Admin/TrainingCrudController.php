@@ -204,6 +204,15 @@ class TrainingCrudController extends CrudController
                 ],
             ],
             [
+                'name' => 'lead_time',
+                'label' => 'Время выполнения',
+                'type' => 'time',
+                'default' => '00:01',
+                'wrapperAttributes' => [
+                    'class' => 'form-group col-md-12 required',
+                ],
+            ],
+            [
                 'name' => 'day_number',
                 'label' => 'Номер дня',
                 'type' => 'number',
