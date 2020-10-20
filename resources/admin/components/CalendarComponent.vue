@@ -27,7 +27,7 @@
                         <div class="d-content day-title">{{ day }}</div>
                         <transition name="fade">
                             <div class="d-content day-content" v-if="activeWeek != null">
-                                <draggable :list="data[activeWeek].data[dayIndex]" :sort="false" group="groups" @start="drag = true" @end="sortGroups">
+                                <draggable :list="data[activeWeek].data[dayIndex]" :sort="false" group="groups" @start="drag = true" @end="sortGroups" :move="validateGroup">
                                     <div :class="['task', `${group.type}`, { '--deleted': group.deleted }]" v-for="(group, groupIndex) in data[activeWeek].data[dayIndex]" :key="`task_${groupIndex}`" @contextmenu.prevent="showContextMenu($event, { weekDay: dayIndex, group: groupIndex, deleted: group.deleted }, group.type)">
                                         <div>{{ group.name }}</div>
                                         <div>
@@ -103,6 +103,17 @@ export default {
         console.log(this.data)
     },
     methods: {
+        validateGroup(e) {
+            if (e.draggedContext.element.type == 'planeat') {
+                let i = 0
+                for(;i<e.relatedContext.list.length;++i) {
+                    if (e.relatedContext.list[i].id == e.draggedContext.element.id) {
+                        return false
+                    }
+                }
+            }
+            return true
+        },
         sortGroups() {
             this.data[this.activeWeek].data.map((groups) => {
                 return groups.sort((a, b) => {
