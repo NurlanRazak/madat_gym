@@ -140,8 +140,9 @@ export default {
             this.closeModal()
         },
         setGroupData(data) {
+            console.log(this.data[this.activeWeek].data)
             let check_duplicate = this.data[this.activeWeek].data[this.target.weekDay].findIndex(group => group.id == data.id)
-            if (check_duplicate == -1) { // duplicate index
+            if (data.type != 'planeat' || check_duplicate == -1) { // duplicate index
                 this.data[this.activeWeek].data[this.target.weekDay].push(data)
                 this.sortGroups()
                 if (data.type == 'planeat') {
@@ -181,7 +182,19 @@ export default {
             this.closeModal()
         },
         setSubitemData(data) {
-            this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems.push(data)
+            let check_duplicate = this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems.findIndex(subitem => subitem.id == data.id)
+            if (check_duplicate != -1) {
+                $(function(){
+                  new PNotify({
+                    // title: 'Regular Notice',
+                    text: "Вы добавили ранее добавленное блюдо!",
+                    type: "warning",
+                    icon: false
+                  });
+                });
+            } else {
+                this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems.push(data)
+            }
             this.target = null
             this.type = null
             this.closeModal()
@@ -238,7 +251,7 @@ export default {
             let week = 1 + Math.max.apply(null, this.data.map(function(item) {
                 return item.week;
             }))
-            this.data.push(Object.assign({}, { week: week, data: [] }))
+            this.data.push(Object.assign({}, { week: week, data: [[],[],[],[],[],[],[]] }))
         },
         removeWeek() {
             this.data[this.target.week].deleted = true

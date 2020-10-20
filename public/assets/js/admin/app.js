@@ -1962,11 +1962,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       this.closeModal();
     },
     setGroupData: function setGroupData(data) {
+      console.log(this.data[this.activeWeek].data);
       var check_duplicate = this.data[this.activeWeek].data[this.target.weekDay].findIndex(function (group) {
         return group.id == data.id;
       });
 
-      if (check_duplicate == -1) {
+      if (data.type != 'planeat' || check_duplicate == -1) {
         // duplicate index
         this.data[this.activeWeek].data[this.target.weekDay].push(data);
         this.sortGroups();
@@ -2014,7 +2015,23 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       this.closeModal();
     },
     setSubitemData: function setSubitemData(data) {
-      this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems.push(data);
+      var check_duplicate = this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems.findIndex(function (subitem) {
+        return subitem.id == data.id;
+      });
+
+      if (check_duplicate != -1) {
+        $(function () {
+          new PNotify({
+            // title: 'Regular Notice',
+            text: "Вы добавили ранее добавленное блюдо!",
+            type: "warning",
+            icon: false
+          });
+        });
+      } else {
+        this.data[this.activeWeek].data[this.target.weekDay][this.target.group].items[this.target.item].subitems.push(data);
+      }
+
       this.target = null;
       this.type = null;
       this.closeModal();
@@ -2083,7 +2100,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       }));
       this.data.push(Object.assign({}, {
         week: week,
-        data: []
+        data: [[], [], [], [], [], [], []]
       }));
     },
     removeWeek: function removeWeek() {
