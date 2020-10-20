@@ -107,7 +107,7 @@ export default {
             if (e.draggedContext.element.type == 'planeat') {
                 let i = 0
                 for(;i<e.relatedContext.list.length;++i) {
-                    if (e.relatedContext.list[i].id == e.draggedContext.element.id) {
+                    if (e.relatedContext.list[i].type == 'planeat' && e.relatedContext.list[i].id == e.draggedContext.element.id) {
                         return false
                     }
                 }

@@ -1924,7 +1924,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         var i = 0;
 
         for (; i < e.relatedContext.list.length; ++i) {
-          if (e.relatedContext.list[i].id == e.draggedContext.element.id) {
+          if (e.relatedContext.list[i].type == 'planeat' && e.relatedContext.list[i].id == e.draggedContext.element.id) {
             return false;
           }
         }
