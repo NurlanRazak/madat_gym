@@ -312,4 +312,38 @@ class TrainingCrudController extends CrudController
             'data' => $this->crud->entry->toCalendar()
         ]);
     }
+
+
+    public function editModal($id)
+    {
+        $this->crud->setOperation('update');
+        $this->data['extra'] = request()->input();
+        foreach($this->data['extra'] as $key => $value) {
+            if (!$value) {
+                unset($this->data['extra'][$key]);
+                continue;
+            }
+            $this->crud->removeField($key);
+        }
+        $id = $this->crud->getCurrentEntryId() ?? $id;
+
+        $this->data['entry'] = $this->crud->getEntry($id);
+        $this->data['crud'] = $this->crud;
+        $this->data['saveAction'] = $this->getSaveAction();
+        $this->data['fields'] = $this->crud->getUpdateFields($id);
+        $this->data['title'] = $this->crud->getTitle() ?? trans('backpack::crud.add').' '.$this->crud->entity_name;
+        $this->data['id'] = $id;
+        $this->data['type'] = 'item';
+
+        return view('admin.edit-modal', $this->data);
+    }
+
+    public function postEditModal()
+    {
+        $redirect_location = parent::updateCrud(request());
+        return view('admin.postEditModal', [
+            'data' => $this->crud->entry->toCalendar()
+        ]);
+    }
+
 }

@@ -67,10 +67,18 @@ Route::group([
 
     Route::get('modal/training', 'TrainingCrudController@modal');
     Route::post('modal/training', 'TrainingCrudController@postModal');
+    Route::get('modal/training/{id}/edit', 'TrainingCrudController@editModal');
+    Route::put('modal/training/{id}/edit', 'TrainingCrudController@postEditModal');
+
     Route::get('modal/relaxtraining', 'RelaxtrainingCrudController@modal');
     Route::post('modal/relaxtraining', 'RelaxtrainingCrudController@postModal');
+    // Route::get('modal/relaxtraining/{id}/edit', 'RelaxtrainingCrudController@editModal');
+    // Route::put('modal/relaxtraining/{id}/edit', 'RelaxtrainingCrudController@postEditModal');
+
     Route::get('modal/planeat', 'PlaneatCrudController@modal');
     Route::post('modal/planeat', 'PlaneatCrudController@postModal');
+    // Route::get('modal/planeat/{id}/edit', 'PlaneatCrudController@editModal');
+    // Route::put('modal/planeat/{id}/edit', 'PlaneatCrudController@postEditModal');
 
     Route::post('calendar/{program}', 'CalendarController@update');
 }); // this should be the absolute last line of this file

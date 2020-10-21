@@ -139,6 +139,26 @@ export default {
             this.type = null
             this.closeModal()
         },
+        setGroupEditData(data) {
+            let check_duplicate = this.data[this.activeWeek].data[this.target.weekDay].findIndex(group => group.id == data.id)
+            if (check_duplicate == -1) {
+                return
+            }
+            Object.assign(this.data[this.activeWeek].data[this.target.weekDay][check_duplicate], data)
+            this.sortGroups()
+            this.target = null
+            this.type = null
+            this.closeModal()
+            $(function(){
+              new PNotify({
+                // title: 'Regular Notice',
+                text: "Изменения в успешно сохранились!",
+                type: "success",
+                icon: false
+              });
+            });
+
+        },
         setGroupData(data) {
             console.log(this.data[this.activeWeek].data)
             let check_duplicate = this.data[this.activeWeek].data[this.target.weekDay].findIndex(group => group.id == data.id)
@@ -222,6 +242,9 @@ export default {
         },
         createRelaxexercise() {
             this.showModal('relaxexercise?active=1')
+        },
+        editTraining() {
+            this.showModal(`training/${this.data[this.activeWeek].data[this.target.weekDay][this.target.group].id}/edit?day_number=${this.activeWeek * 7 + 1 + this.target.weekDay}&programtrainings%5B0%5D=${this.program}&active=1`)
         },
         createTraniningGroup() {
             this.showModal(`training?day_number=${this.activeWeek * 7 + 1 + this.target.weekDay}&programtrainings%5B0%5D=${this.program}&active=1`)

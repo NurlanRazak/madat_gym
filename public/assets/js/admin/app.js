@@ -1961,6 +1961,29 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       this.type = null;
       this.closeModal();
     },
+    setGroupEditData: function setGroupEditData(data) {
+      var check_duplicate = this.data[this.activeWeek].data[this.target.weekDay].findIndex(function (group) {
+        return group.id == data.id;
+      });
+
+      if (check_duplicate == -1) {
+        return;
+      }
+
+      Object.assign(this.data[this.activeWeek].data[this.target.weekDay][check_duplicate], data);
+      this.sortGroups();
+      this.target = null;
+      this.type = null;
+      this.closeModal();
+      $(function () {
+        new PNotify({
+          // title: 'Regular Notice',
+          text: "Изменения в успешно сохранились!",
+          type: "success",
+          icon: false
+        });
+      });
+    },
     setGroupData: function setGroupData(data) {
       console.log(this.data[this.activeWeek].data);
       var check_duplicate = this.data[this.activeWeek].data[this.target.weekDay].findIndex(function (group) {
@@ -2061,6 +2084,9 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     },
     createRelaxexercise: function createRelaxexercise() {
       this.showModal('relaxexercise?active=1');
+    },
+    editTraining: function editTraining() {
+      this.showModal("training/".concat(this.data[this.activeWeek].data[this.target.weekDay][this.target.group].id, "/edit?day_number=").concat(this.activeWeek * 7 + 1 + this.target.weekDay, "&programtrainings%5B0%5D=").concat(this.program, "&active=1"));
     },
     createTraniningGroup: function createTraniningGroup() {
       this.showModal("training?day_number=".concat(this.activeWeek * 7 + 1 + this.target.weekDay, "&programtrainings%5B0%5D=").concat(this.program, "&active=1"));
@@ -2222,6 +2248,9 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -59884,6 +59913,20 @@ var render = function() {
                 ])
               : _vm.type == "training"
                 ? _c("ul", [
+                    _c("li", [
+                      _c(
+                        "button",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.callAction("editTraining")
+                            }
+                          }
+                        },
+                        [_vm._v("Редактировать группу тренировки")]
+                      )
+                    ]),
+                    _vm._v(" "),
                     _c("li", [
                       _c(
                         "button",

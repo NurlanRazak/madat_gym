@@ -24,6 +24,9 @@
         </ul>
         <ul v-else-if="type == 'training'">
             <li>
+                <button @click="callAction('editTraining')">Редактировать группу тренировки</button>
+            </li>
+            <li>
                 <button @click="callAction('createExercise')">Добавить упражнение</button>
             </li>
             <li v-if="$parent.target.deleted">
