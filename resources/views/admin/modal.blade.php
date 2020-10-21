@@ -20,6 +20,9 @@
 		@include('crud::inc.grouped_errors')
 
 		@if(isset($options))
+			@php
+				$options = collect($options)->unique('name');
+			@endphp
 			<div class="" style="margin-bottom: 30px;">
 				@foreach($options as $index => $option)
 					<button class="btn btn-primary" style="margin-bottom: 5px;" onclick='sendToParent(@json($option))'>{{ $option['name'] ?? '' }}</button>
