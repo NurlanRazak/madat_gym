@@ -24,7 +24,7 @@
         </ul>
         <ul v-else-if="type == 'training'">
             <li>
-                <button @click="callAction('editTraining')">Редактировать группу тренировки</button>
+                <button @click="callAction('editTraining')">Редактировать тренировку</button>
             </li>
             <li>
                 <button @click="callAction('createExercise')">Добавить упражнение</button>
@@ -87,10 +87,10 @@
         </ul>
         <ul v-else-if="type == 'group-item-planeat'">
             <li v-if="$parent.target.deleted">
-                <button @click="callAction('restoreItem')">Восстановить план питания</button>
+                <button @click="callAction('restoreItem')">Восстановить блюдо</button>
             </li>
             <li v-else>
-                <button @click="callAction('deleteItem')">Удалить план питания</button>
+                <button @click="callAction('deleteItem')">Удалить блюдо</button>
             </li>
             <li>
                 <button @click="callAction('createMeal')">Добавить блюдо</button>
