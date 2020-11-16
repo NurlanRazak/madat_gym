@@ -59981,7 +59981,7 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Добавить план питания")]
+                          [_vm._v("Добавить блюдо")]
                         )
                       ]),
                       _vm._v(" "),
@@ -60069,7 +60069,7 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Добавить группу тренировки")]
+                              [_vm._v("Добавить тренировкy")]
                             )
                           ]),
                           _vm._v(" "),
@@ -60083,7 +60083,7 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Добавить группу питания")]
+                              [_vm._v("Добавить блюдо")]
                             )
                           ]),
                           _vm._v(" "),
@@ -60097,7 +60097,7 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Добавить группу отдыха")]
+                              [_vm._v("Добавить упражнение")]
                             )
                           ])
                         ])
@@ -74377,7 +74377,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/paybox/resources/admin/app.js */"./resources/admin/app.js");
+module.exports = __webpack_require__(/*! /var/www/work/madat_gym/resources/admin/app.js */"./resources/admin/app.js");
 
 
 /***/ })
