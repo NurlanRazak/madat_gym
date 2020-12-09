@@ -63,7 +63,7 @@ class ProfileController extends Controller
         // ORDER BY rating DESC
         // LIMIT 100;
 
-        $rating = $user->current_programtraining
+        $rating = ($user->current_programtraining ?? $user->programtraining)
                     ->doneExersices()
                     ->groupBy('user_id')
                     ->selectRaw('100 * (count(user_id) - sum(reverse)) / count(user_id) as rating, user_id')
@@ -74,7 +74,7 @@ class ProfileController extends Controller
                     // ->take(100)
                     ->get();
 
-        $weekRating = $user->current_programtraining
+        $weekRating = ($user->current_programtraining ?? $user->programtraining)
                     ->doneExersices()
                     ->groupBy('user_id')
                     ->where('day_number', '>=', $day)
