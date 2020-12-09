@@ -210,16 +210,17 @@ class Programtraining extends Model
         return $events;
     }
 
-    public function getTrainings($day = null)
+    public function getTrainings($day = null, $all = false)
     {
-        $query = $this
-                ->trainings()
-                ->active()
-                ->with([
-                    'exercises' => function($query) {
-                        $query->active();
-                    },
-                ]);
+        $query = $this->trainings();
+        if (!$all) {
+            $query->active();
+        }
+        $query->with([
+            'exercises' => function($query) {
+                $query->active();
+            },
+        ]);
         if ($day) {
             $query->where('day_number', $day);
         }
@@ -227,36 +228,39 @@ class Programtraining extends Model
     }
 
 
-    public function getRelaxtrainings($day = null)
+    public function getRelaxtrainings($day = null, $all = false)
     {
         $query = $this
                 ->relaxprogram
-                ->relaxtrainings()
-                ->active()
-                ->with([
-                    'exercises' => function($query) {
-                        $query->active();
-                    }
-                ]);
+                ->relaxtrainings();
+        if (!$all) {
+            $query->active();
+        }
+        $query->with([
+            'exercises' => function($query) {
+                $query->active();
+            }
+        ]);
         if ($day) {
             $query->where('number_day', $day);
         }
         return $query->get();
     }
 
-    public function getPlaneats($day = null)
+    public function getPlaneats($day = null, $all = false)
     {
-        $query = $this->foodprogram
-                ->planeats()
-                ->active()
-                ->with([
-                    'eathours' => function($query) {
-                        $query->active();
-                    },
-                    'meals' => function($query) {
-                        $query->active();
-                    }
-                ]);
+        $query = $this->foodprogram->planeats();
+        if (!$all) {
+            $query->active();
+        }
+        $query->with([
+            'eathours' => function($query) {
+                $query->active();
+            },
+            'meals' => function($query) {
+                $query->active();
+            }
+        ]);
         if ($day) {
             $query->where('days', $day);
         }
@@ -264,18 +268,24 @@ class Programtraining extends Model
         return $query->get();
     }
 
-    public function getEathours($day = null)
+    public function getEathours($day = null, $all = false)
     {
-        return \App\Models\Eathour::whereHas('planeats', function($query) use($day) {
-            $query->active()
-                  ->where('foodprogram_id', $this->foodprogram_id);
+        return \App\Models\Eathour::whereHas('planeats', function($query) use($day, $all) {
+            if (!$all) {
+                $query->active();
+            }
+            $query->where('foodprogram_id', $this->foodprogram_id);
         })->with([
-            'planeats' => function($query) use($day) {
-                $query->active()
-                      ->where('foodprogram_id', $this->foodprogram_id)
+            'planeats' => function($query) use($day, $all) {
+                if (!$all) {
+                    $query->active();
+                }
+                $query->where('foodprogram_id', $this->foodprogram_id)
                       ->with([
-                          'meals' => function($query) {
-                              $query->active();
+                          'meals' => function($query) use($all) {
+                              if (!$all) {
+                                  $query->active();
+                              }
                           }
                       ]);
 

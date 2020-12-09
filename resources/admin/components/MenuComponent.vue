@@ -6,11 +6,11 @@
             </li>
         </ul>
         <ul v-else-if="type == 'week'">
-            <li v-if="$parent.target.can_draft && !$parent.target.deleted && false">
-                <button @click="callAction('draftWeek')">Сделать неактивной</button>
-            </li>
-            <li v-else-if="$parent.target.draft && false">
+            <li v-if="$parent.target.draft">
                 <button @click="callAction('publishWeek')">Сделать активной</button>
+            </li>
+            <li v-else-if="$parent.target.can_draft && !$parent.target.deleted">
+                <button @click="callAction('draftWeek')">Сделать неактивной</button>
             </li>
             <li>
                 <button @click="callAction('duplicateWeek')">Дублировать неделю</button>
@@ -37,7 +37,7 @@
             </li>
         </ul>
         <ul v-else-if="type == 'planeat'">
-            <li>
+            <li v-if="$parent.data[$parent.activeWeek].data[$parent.target.weekDay][$parent.target.group].items.length == 0">
                 <button @click="callAction('createPlaneat')">Добавить блюдо</button>
             </li>
             <li v-if="$parent.target.deleted">

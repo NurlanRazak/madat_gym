@@ -79,6 +79,12 @@ class CalendarController extends Controller
                         'active' => false
                     ]);
                 }
+            } else {
+                if ($group['type'] != 'planeat') {
+                    $elem->update([
+                        'active' => true
+                    ]);
+                }
             }
             if ($elem->trashed()) {
                 $elem->restore();
@@ -118,6 +124,12 @@ class CalendarController extends Controller
             if ($group['type'] == 'planeat') {
                 $elem->update([
                     'active' => false
+                ]);
+            }
+        } else {
+            if ($group['type'] == 'planeat') {
+                $elem->update([
+                    'active' => true
                 ]);
             }
         }

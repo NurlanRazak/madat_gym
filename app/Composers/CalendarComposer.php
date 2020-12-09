@@ -8,6 +8,8 @@ use App\Models\Programtraining;
 class CalendarComposer
 {
 
+    protected $draft = [];
+
     public function compose(View $view)
     {
         $programs = Programtraining::whereHas('activeprograms', function($query) {
@@ -29,9 +31,9 @@ class CalendarComposer
             $foodprogram_id = $current_program->foodprogram_id;
             $relaxprogram_id = $current_program->relaxprogram_id;
 
-            $trainings = $current_program->getTrainings();
-            $relaxtrainings = $current_program->getRelaxtrainings();
-            $eathours = $current_program->getEathours();
+            $trainings = $current_program->getTrainings(null, true);
+            $relaxtrainings = $current_program->getRelaxtrainings(null, true);
+            $eathours = $current_program->getEathours(null, true);
             // dd($trainings, $planeats, $relaxtrainings);
 
             foreach($trainings as $training) {
@@ -41,6 +43,7 @@ class CalendarComposer
                     'name' => $training->name,
                     'hour_start' => $training->hour_start,
                     'hour_finish' => $training->hour_finish,
+                    'active' => $training->active ?? true,
                     'items' => $training->exercises->map(function($item) {
                         return [
                             'id' => $item->id,
@@ -57,6 +60,7 @@ class CalendarComposer
                     'name' => $training->name,
                     'hour_start' => $training->hour_start,
                     'hour_finish' => $training->hour_finish,
+                    'active' => $training->active ?? true,
                     'items' => $training->exercises->map(function($item) {
                         return [
                             'id' => $item->id,
@@ -74,10 +78,12 @@ class CalendarComposer
                         'name' => $eathour->name,
                         'hour_start' => $eathour->hour_start,
                         'hour_finish' => $eathour->hour_finish,
+                        'active' => $eathour->active ?? true,
                         'items' => $planeats->map(function($planeat) {
                             return [
                                 'id' => $planeat->id,
                                 'name' => $planeat->name,
+                                'active' => $planeat->active ?? true,
                                 'subitems' => $planeat->meals->map(function($item) {
                                     return [
                                         'id' => $item->id,
@@ -101,7 +107,9 @@ class CalendarComposer
             $week_start = 7 * ($week - 1);
             $week_end = 7 * $week;
             $can_draft = \DB::table('programtraining_user')->where('programtraining_id', $current_program->id)->whereRaw("total_days - days_left BETWEEN {$week_start} AND {$week_end}")->exists() == false;
+            $is_draft = $this->draft[$week] ?? false;
             $groups_data[] = [
+                'draft' => $is_draft,
                 'week' => $week,
                 'data' => $data,
                 'can_draft' => $can_draft
@@ -129,6 +137,16 @@ class CalendarComposer
     private function pushItem(&$groups, int $day, $training)
     {
         $week = ceil($day/7);
+        $is_active = ($training['active'] ?? 1) == 1;
+        if (!isset($this->draft[$week])) {
+            $this->draft[$week] = !$is_active;
+        } else if ($training['type'] != 'planeat') {
+            if ($week == 2 && $is_active) {
+                // dd($training);
+            }
+            $this->draft[$week] = ($this->draft[$week] && !$is_active);
+        }
+
         $day = $day%7;
         $day = $day ? $day - 1 : 6;
         if (!isset($groups[$week])) {
